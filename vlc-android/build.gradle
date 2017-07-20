@@ -44,7 +44,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "org.videolan.vlc"
+        applicationId "com.wenjoyai.videoplayer"
 
         resValue "string", "build_time", buildTime()
         resValue "string", "build_host", hostName()
@@ -64,30 +64,30 @@ android {
         }
 
         //Set the build ABI according to build types only if not launched from compile.sh
-        if (System.getenv('CLI') == null)
-            tasks.whenTaskAdded { task ->
-                if (task.name.startsWith('assemble')) {
-                    if (task.name.endsWith('ARMv7Debug'))
-                        task.dependsOn(":libvlc:buildDebugARMv7")
-                    else if (task.name.endsWith('ARMv8Debug'))
-                        task.dependsOn(":libvlc:buildDebugARM64")
-                    else if (task.name.endsWith('X86Debug'))
-                        task.dependsOn(":libvlc:buildDebugx86")
-                    else if (task.name.endsWith('X86_64Debug'))
-                        task.dependsOn(":libvlc:buildDebugx86_64")
-                    else if (task.name.endsWith('MIPSDebug'))
-                        task.dependsOn(":libvlc:buildDebugMIPS")
-                    else if (task.name.endsWith('MIPS64Debug'))
-                        task.dependsOn(":libvlc:buildDebugMIPS64")
-                }
-            }
+//        if (System.getenv('CLI') == null)
+//            tasks.whenTaskAdded { task ->
+//                if (task.name.startsWith('assemble')) {
+//                    if (task.name.endsWith('ARMv7Debug'))
+//                        task.dependsOn(":libvlc:buildDebugARMv7")
+//                    else if (task.name.endsWith('ARMv8Debug'))
+//                        task.dependsOn(":libvlc:buildDebugARM64")
+//                    else if (task.name.endsWith('X86Debug'))
+//                        task.dependsOn(":libvlc:buildDebugx86")
+//                    else if (task.name.endsWith('X86_64Debug'))
+//                        task.dependsOn(":libvlc:buildDebugx86_64")
+//                    else if (task.name.endsWith('MIPSDebug'))
+//                        task.dependsOn(":libvlc:buildDebugMIPS")
+//                    else if (task.name.endsWith('MIPS64Debug'))
+//                        task.dependsOn(":libvlc:buildDebugMIPS64")
+//                }
+//            }
     }
 
     buildTypes {
         release {
             signingConfig null
             minifyEnabled true
-            shrinkResources false
+            shrinkResources true
             proguardFile 'proguard.cfg'
         }
         debug {
@@ -138,7 +138,7 @@ android {
 
         //Custom APK name
         variant.outputs.each { output ->
-            def outputName = "VLC-Android-"
+            def outputName = "TubePlayer-"
             if (variant.productFlavors.get(0).name != "vanilla")
                 outputName += variant.productFlavors.get(0).name.toUpperCase() + "-"
             outputName += variant.versionName + "-" + variant.productFlavors.get(1).name + ".apk"

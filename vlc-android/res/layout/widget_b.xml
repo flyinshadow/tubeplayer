@@ -14,7 +14,7 @@
         android:layout_width="82dp"
         android:layout_height="82dp"
         android:background="@color/grey850"
-        android:src="@drawable/icon" />
+        android:src="@drawable/tube_icon" />
 
     <RelativeLayout
         android:layout_width="match_parent"

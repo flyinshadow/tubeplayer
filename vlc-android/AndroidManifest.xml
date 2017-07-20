@@ -49,11 +49,9 @@
         android:hardwareAccelerated="true"
         android:allowBackup="true"
         android:largeHeap="true"
-        android:icon="@drawable/icon"
-        android:roundIcon="@drawable/roundicon"
-        android:banner="@drawable/banner"
+        android:icon="@drawable/tube_icon"
         android:label="@string/app_name"
-        android:logo="@drawable/icon"
+        android:logo="@drawable/tube_icon"
         android:theme="@style/Theme.VLC.Transparent"
         android:supportsRtl="true"
         tools:targetAPI="lollipop">
@@ -424,7 +422,7 @@
         </activity>
         <activity
             android:name=".gui.MainActivity"
-            android:icon="@drawable/icon"
+            android:icon="@drawable/tube_icon"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan"

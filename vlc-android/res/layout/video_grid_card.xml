@@ -39,7 +39,7 @@
 
         <variable
             name="holder"
-            type="org.videolan.vlc.gui.video.VideoListAdapter.ViewHolder" />
+            type="org.videolan.videoplayer.gui.video.VideoListAdapter.ViewHolder" />
     </data>
     <android.support.constraint.ConstraintLayout
         android:layout_width="@dimen/grid_card_thumb_width"
@@ -53,7 +53,7 @@
         android:paddingRight="@dimen/left_right_1610_margin"
         android:paddingBottom="@dimen/top_bottom_1610_margin"
         android:paddingTop="@dimen/top_bottom_1610_margin" >
-        <!-- Image loading is handled by org.videolan.vlc.gui.helpers.AsyncImageLoader.loadPicture() -->
+        <!-- Image loading is handled by com.wenjoyai.videoplayer.wenjoyai.videoplayer.gui.helpers.AsyncImageLoader.loadPicture() -->
         <ImageView
             android:id="@+id/ml_item_thumbnail"
             android:layout_width="match_parent"

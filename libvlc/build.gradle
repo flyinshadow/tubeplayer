@@ -6,10 +6,8 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
-    sourceSets {
-    main {
+    sourceSets.main {
         jni.srcDirs = [] // Prevent gradle from building native code with ndk; we have our own Makefile for it.
-        jniLibs.srcDirs = [ 'jni/libs', 'private_libs/libs' ] // Where generated .so files are placed.
         manifest.srcFile 'AndroidManifest.xml'
         java.srcDirs = ['src']
         resources.srcDirs = ['src']
@@ -18,6 +16,12 @@ android {
         res.srcDirs = ['res']
         assets.srcDirs = ['assets' ]
     }
+
+    sourceSets.release {
+        jniLibs.srcDirs = [ 'jni/libs', 'private_libs/libs' ] // Where generated .so files are placed.
+    }
+    sourceSets.debug {
+        jniLibs.srcDirs = [ 'jni/libs', 'private_libs/libs' ] // Where generated .so files are placed.
     }
 
     buildTypes {
@@ -100,7 +104,8 @@ task generateSources (type: Jar) {
 }
 
 clean {
-    delete 'build', 'jni/libs', 'jni/obj'
+//    delete 'build', 'jni/libs', 'jni/obj'
+    delete 'build', 'jni/obj'
 }
 
 dependencies {

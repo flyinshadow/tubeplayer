@@ -4,10 +4,30 @@
     <color name="black">#000001</color>
     <color name="white">#ffffff</color>
 
-<!--
-    Material color swatches
-    The main color is always xxx500
--->
+    <color name="tube_primary">#e62117</color>
+    <color name="tube_primary_dark">#ba1115</color>
+    <color name="tube_background_actionbar">#e62117</color>
+    <color name="tube_red50">#fdf3f3</color>
+    <color name="tube_red100">#fce8e7</color>
+    <color name="tube_red200">#fad2d0</color>
+    <color name="tube_red300">#f7bcb9</color>
+    <color name="tube_red400">#f5a6a2</color>
+    <!--<color name="tube_red500">#f2908b</color>-->
+    <!--<color name="tube_red600">#f07973</color>-->
+    <!--<color name="tube_red700">#ed635c</color>-->
+    <!--<color name="tube_red800">#eb4d45</color>-->
+    <color name="tube_red500">#ed635c</color>
+    <color name="tube_red600">#ed635c</color>
+    <color name="tube_red700">#ed635c</color>
+    <color name="tube_red800">#eb4d45</color>
+    <color name="tube_red900">#e8372e</color>
+
+    <color name="tube_red500transparent">#b4ed635c</color>
+    <color name="tube_red200transparent">#64f2908b</color>
+    <!--
+        Material color swatches
+        The main color is always xxx500
+    -->
     <color name="orange50">#fff3e0</color>
     <color name="orange100">#ffdfae</color>
     <color name="orange200">#ffca7d</color>

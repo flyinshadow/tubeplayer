@@ -13,8 +13,8 @@
         android:id="@+id/cover"
         android:layout_width="82dp"
         android:layout_height="82dp"
-        android:background="@color/orange100"
-        android:src="@drawable/icon" />
+        android:background="@color/tube_red100"
+        android:src="@drawable/tube_icon" />
 
     <RelativeLayout
         android:layout_width="match_parent"

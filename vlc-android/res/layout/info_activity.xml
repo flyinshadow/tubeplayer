@@ -148,7 +148,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <android.support.design.widget.FloatingActionButton
-            vlc:rippleColor="@color/orange50"
+            vlc:rippleColor="@color/tube_red50"
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

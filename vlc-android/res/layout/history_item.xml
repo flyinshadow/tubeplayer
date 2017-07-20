@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="holder"
-            type="org.videolan.vlc.gui.HistoryAdapter.ViewHolder"/>
+            type="org.videolan.videoplayer.gui.HistoryAdapter.ViewHolder"/>
         <variable
             name="media"
             type="MediaWrapper"/>

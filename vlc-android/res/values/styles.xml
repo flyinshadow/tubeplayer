@@ -18,15 +18,21 @@
         <item name="android:dropDownListViewStyle">@style/Theme.VLC.List</item>
         <item name="preferenceTheme">@style/VLCPreferenceTheme.Light</item>
 
-        <item name="colorPrimary">@color/orange800</item>
-        <item name="colorPrimaryDark">@color/orange700</item>
-        <item name="colorAccent">@color/orange500</item>
+
+        <!--<item name="colorPrimary">@color/orange800</item>-->
+        <!--<item name="colorPrimaryDark">@color/orange700</item>-->
+        <!--<item name="colorAccent">@color/orange500</item>-->
+        <item name="colorPrimary">@color/tube_primary</item>s
+        <item name="colorPrimaryDark">@color/tube_primary_dark</item>
+        <item name="colorAccent">@color/tube_red900</item>
+
         <item name="windowActionModeOverlay">true</item>
-        <item name="actionModeBackground">@color/orange500</item>
+        <item name="actionModeBackground">@color/tube_red500</item>
         <item name="item_footer">@color/grey300</item>
         <item name="background_default">@color/grey50</item>
         <item name="background_default_darker">@color/grey100</item>
-        <item name="background_actionbar">@color/orange500</item>
+        <item name="background_actionbar">@color/tube_background_actionbar</item>
+        <!--<item name="background_actionbar">@color/orange500</item>-->
         <item name="background_menu_divider">@color/grey400</item>
         <item name="background_menu">@color/grey200</item>
         <item name="background_menu_selected">@color/grey300</item>
@@ -34,12 +40,12 @@
         <item name="background_header">@color/grey300</item>
         <item name="background_audio_tips">@color/grey50transparent</item>
         <item name="audio_player_background_tint">@color/whitetransparent</item>
-        <item name="audio_browser_separator">@color/orange500</item>
-        <item name="playlist_item_drag_shadow">@color/orange500</item>
-        <item name="audio_player_header_time">@color/orange500</item>
+        <item name="audio_browser_separator">@color/tube_red500</item>
+        <item name="playlist_item_drag_shadow">@color/tube_red500</item>
+        <item name="audio_player_header_time">@color/tube_red500</item>
         <item name="font_default">@color/grey900</item>
         <item name="font_light">@color/grey600</item>
-        <item name="font_actionbar">@color/orange200</item>
+        <item name="font_actionbar">@color/tube_red200</item>
         <item name="font_actionbar_selected">@color/grey50</item>
         <item name="navigationview_item_color">@color/navigationview_color</item>
         <item name="list_menu">@color/grey600</item>
@@ -113,9 +119,12 @@
         <item name="android:dropDownListViewStyle">@style/Theme.VLC.List</item>
         <item name="preferenceTheme">@style/VLCPreferenceTheme.Dark</item>
 
-        <item name="colorPrimary">@color/orange800</item>
+        <!--<item name="colorPrimary">@color/orange800</item>-->
         <item name="colorPrimaryDark">@color/transparent</item>
-        <item name="colorAccent">@color/orange600</item>
+        <!--<item name="colorAccent">@color/orange600</item>-->
+        <item name="colorPrimary">@color/tube_primary</item>
+        <item name="colorAccent">@color/tube_red900</item>
+
         <item name="item_footer">@color/grey700</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeBackground">@color/grey875</item>
@@ -129,9 +138,9 @@
         <item name="background_header">@color/grey900</item>
         <item name="background_audio_tips">@color/grey900transparent</item>
         <item name="audio_player_background_tint">@color/grey900transparent</item>
-        <item name="audio_browser_separator">@color/orange500</item>
-        <item name="playlist_item_drag_shadow">@color/orange500</item>
-        <item name="audio_player_header_time">@color/orange500</item>
+        <item name="audio_browser_separator">@color/tube_red500</item>
+        <item name="playlist_item_drag_shadow">@color/tube_red500</item>
+        <item name="audio_player_header_time">@color/tube_red500</item>
         <item name="font_default">@color/grey50</item>
         <item name="font_light">@color/grey600</item>
         <item name="font_actionbar">@color/grey600</item>
@@ -231,9 +240,11 @@
         <item name="android:windowBackground">@color/black</item>
         <item name="windowActionBarOverlay">true</item>
 
-        <item name="colorPrimary">@color/orange800</item>
+        <!--<item name="colorPrimary">@color/orange800</item>-->
+        <item name="colorPrimary">@color/tube_primary</item>
         <item name="colorPrimaryDark">@color/transparent</item>
-        <item name="colorAccent">@color/orange800</item>
+        <!--<item name="colorAccent">@color/orange800</item>-->
+        <item name="colorAccent">@color/tube_red900</item>
 
         <item name="rounded_bg">@drawable/rounded_corners</item>
         <item name="advanced_options_style">@style/Theme.AppCompat.Dialog</item>
@@ -286,7 +297,7 @@
 
     <style name="Result.Title" parent="Base.TextAppearance.AppCompat.Subhead">
         <item name="textAllCaps">true</item>
-        <item name="android:textColor">@color/orange500</item>
+        <item name="android:textColor">@color/tube_red500</item>
     </style>
 
     <style name="Result.List" parent="Base.Widget.AppCompat.ListView">
@@ -309,7 +320,7 @@
     <!-- Tips Apearance-->
 
     <style name="TipsFontStyle">
-      <item name="android:textColor">@color/orange700</item>
+      <item name="android:textColor">@color/tube_red700</item>
       <item name="android:textStyle">bold</item>
     </style>
 
