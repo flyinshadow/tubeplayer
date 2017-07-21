@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main VLC Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Cancelar</string>
     <string name="other">Outro</string>
@@ -38,7 +38,7 @@
     <string name="ringtone_error">Ocorreu um erro ao definir o toque de chamada.</string>
     <string name="pause">Pausar</string>
     <string name="not_show_again">Não voltar a mostrar esta mensagem.</string>
-    <string name="info_title">VLC</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">Intérprete desconhecido</string>
     <string name="unknown_album">Álbum desconhecido</string>
     <string name="unknown_genre">Género desconhecido</string>
@@ -160,11 +160,11 @@
     <string name="open_mrl">Emissão</string>
     <string name="open_mrl_dialog_title">Abrir emissão de rede</string>
     <string name="open_mrl_dialog_msg">Digite o endereço http://, mms:// ou rtsp://</string>
-    <string name="error_not_compatible">Desculpe, o seu dispositivo não é suportado por esta versão do VLC para Android™.</string>
-    <string name="error_problem">Desculpe, o VLC para Android encontrou um problema ao carregar e foi fechado.</string>
+    <string name="error_not_compatible">Desculpe, o seu dispositivo não é suportado por esta versão do TubePlayer para Android™.</string>
+    <string name="error_problem">Desculpe, o TubePlayer para Android encontrou um problema ao carregar e foi fechado.</string>
     <string name="error_message_is">A mensagem de erro é (por favor, mencione-a quando depurar):\n</string>
     <string name="encountered_error_title">Erro de reprodução</string>
-    <string name="encountered_error_message">O VLC encontrou um erro com este ficheiro.\nPor favor, tente atualizar a biblioteca de multimédia.</string>
+    <string name="encountered_error_message">O TubePlayer encontrou um erro com este ficheiro.\nPor favor, tente atualizar a biblioteca de multimédia.</string>
     <string name="invalid_location">A localização %1$s não pode ser reproduzida.</string>
     <string name="search">Pesquisa</string>
     <string name="search_history">Histórico de pesquisa</string>
@@ -191,13 +191,13 @@
     <string name="show_playlist">Mostrar lista de reprodução</string>
     <string name="hold_to_stop">Toque sem soltar para parar</string>
     <!-- About -->
-    <string name="app_name_full">VLC para Android</string>
+    <string name="app_name_full">TubePlayer para Android</string>
     <string name="licence">Licença</string>
     <string name="revision">Revisão</string>
     <string name="about">Informações</string>
-    <string name="about_text">O VLC para Android™ é uma versão especial do VLC, o reprodutor de multimédia popular e de código aberto. A versão para Android™ pode reproduzir a maioria dos ficheiros e transmissões de rede.</string>
-    <string name="compiled_by">Esta versão do VLC foi compilada por:</string>
-    <string name="vlc_authors">Autores do VLC.</string>
+    <string name="about_text">O TubePlayer para Android™ é uma versão especial do TubePlayer, o reprodutor de multimédia popular e de código aberto. A versão para Android™ pode reproduzir a maioria dos ficheiros e transmissões de rede.</string>
+    <string name="compiled_by">Esta versão do TubePlayer foi compilada por:</string>
+    <string name="vlc_authors">Autores do TubePlayer.</string>
     <!-- Preferences -->
     <string name="preferences">Definições</string>
     <string name="general_prefs_category">Geral</string>
@@ -288,7 +288,7 @@
     <string name="enable_steal_remote_control">Controlo remoto exclusivo do auscultador</string>
     <string name="enable_steal_remote_control_summary">Evita conflitos obtendo o controlo remoto das outras aplicações. Isto evita a marcação de números com duplo clique nos telefones HTC</string>
     <string name="aout">Saída de áudio</string>
-    <string name="aout_summary">Alterar o método que o VLC utiliza para a saída de áudio.</string>
+    <string name="aout_summary">Alterar o método que o TubePlayer utiliza para a saída de áudio.</string>
     <string name="controls_prefs_category">Controlos</string>
     <string name="performance_prefs_category">Desempenho</string>
     <string name="chroma_format">Forçar vídeo chroma</string>
@@ -310,12 +310,12 @@
     <string name="auto_rescan">Reanalisar automaticamente</string>
     <string name="auto_rescan_summary">Ao iniciar a aplicação, analisar o dipositivo para procurar por alterações à coleção.</string>
     <string name="clear_media_db">Limpar base de dados multimédia</string>
-    <string name="clear_media_db_summary">Aceder ao Android VLC info para limpar os dados</string>
+    <string name="clear_media_db_summary">Aceder ao Android TubePlayer info para limpar os dados</string>
     <string name="clear_history">Limpar histórico</string>
     <string name="media_db_cleared">A base de dados foi limpa!</string>
     <string name="set_locale">Definir idioma</string>
     <string name="set_locale_detail">Deixe em branco para repor</string>
-    <string name="set_locale_popup">Reinicie o VLC para aplicar as alterações</string>
+    <string name="set_locale_popup">Reinicie o TubePlayer para aplicar as alterações</string>
     <string name="network_caching">Valor da cache de rede</string>
     <string name="network_caching_summary">O valor de tempo para processar as emissões de rede (em ms). Não funciona com a descodificação de hardware. Deixe em branco para repor.</string>
     <string name="resume_playback_title">Continuar reprodução após a chamada</string>
@@ -329,16 +329,16 @@
     <string name="start_logging">Iniciar gravação de registos</string>
     <string name="stop_logging">Parar gravação de registos</string>
     <string name="clear_log">Limpar registo</string>
-    <string name="log_service_title">Gravação de registos do VLC</string>
+    <string name="log_service_title">Gravação de registos do TubePlayer</string>
     <string name="log_service_text">Abrir consola de registos</string>
     <string name="copy_to_clipboard">Copiar para a área de transferência</string>
     <string name="copied_to_clipboard">Registo copiado para a área de transferência</string>
     <string name="dump_logcat">Enviar ficheiro de registos</string>
     <string name="dump_logcat_success">O ficheiro de registos foi enviado com sucesso para %1$s!</string>
     <string name="dump_logcat_failure">Não foi possível enviar o ficheiro de registos.</string>
-    <string name="serious_crash">Infelizmente, ocorreu um erro grave e o VLC foi encerrado.</string>
-    <string name="help_us_send_log">Ajude-nos a melhorar o VLC enviando-nos o seguinte registo de erro:</string>
-    <string name="restart_vlc">Reiniciar o VLC</string>
+    <string name="serious_crash">Infelizmente, ocorreu um erro grave e o TubePlayer foi encerrado.</string>
+    <string name="help_us_send_log">Ajude-nos a melhorar o TubePlayer enviando-nos o seguinte registo de erro:</string>
+    <string name="restart_vlc">Reiniciar o TubePlayer</string>
     <string name="send_log">Enviar o registo</string>
     <string name="sending_log">A enviar o registo...</string>
     <string name="drawer_open">Abrir menu de navegação</string>
@@ -384,16 +384,16 @@
     <!--Widget-->
     <string name="widget_name_w">Widget claro</string>
     <string name="widget_name_b">Widget escuro</string>
-    <string name="allow_storage_access_title">Permitir que o VLC aceda a ficheiros de vídeo e áudio</string>
-    <string name="allow_storage_access_description">O VLC necessita desta permissão para aceder aos ficheiros multimédia deste dispositivo.</string>
-    <string name="allow_settings_access_ringtone_title">Permitir que o VLC defina o toque</string>
-    <string name="allow_settings_access_ringtone_description">O VLC necessita que você conceda as permissões para definir esta faixa como toque.</string>
-    <string name="allow_settings_access_brightness_title">Permitir que o VLC altere o brilho</string>
-    <string name="allow_settings_access_brightness_description">O VLC necessita que você conceda as permissões para alterar o modo de brilho.</string>
-    <string name="allow_draw_overlays_title">Permitir que o VLC surja por cima das outras aplicações</string>
-    <string name="allow_sdraw_overlays_description">O VLC necessita que você conceda as permissões para mostrar o vídeo por cima de outras aplicações.</string>
+    <string name="allow_storage_access_title">Permitir que o TubePlayer aceda a ficheiros de vídeo e áudio</string>
+    <string name="allow_storage_access_description">O TubePlayer necessita desta permissão para aceder aos ficheiros multimédia deste dispositivo.</string>
+    <string name="allow_settings_access_ringtone_title">Permitir que o TubePlayer defina o toque</string>
+    <string name="allow_settings_access_ringtone_description">O TubePlayer necessita que você conceda as permissões para definir esta faixa como toque.</string>
+    <string name="allow_settings_access_brightness_title">Permitir que o TubePlayer altere o brilho</string>
+    <string name="allow_settings_access_brightness_description">O TubePlayer necessita que você conceda as permissões para alterar o modo de brilho.</string>
+    <string name="allow_draw_overlays_title">Permitir que o TubePlayer surja por cima das outras aplicações</string>
+    <string name="allow_sdraw_overlays_description">O TubePlayer necessita que você conceda as permissões para mostrar o vídeo por cima de outras aplicações.</string>
     <string name="permission_ask_again">Permitir</string>
-    <string name="exit_app">Fechar o VLC</string>
+    <string name="exit_app">Fechar o TubePlayer</string>
     <!--fast scroller-->
     <string name="fastscroller_track">Faixa FastScroller</string>
     <string name="fastscroller_handle">Manipulação FastScroller</string>
@@ -442,5 +442,5 @@
     <string name="length">Duração</string>
     <string name="tv_settings_hint">Toque longo no botão OK para marcar/desmarcar diretórios</string>
     <string name="ml_external_storage_title">Detetado novo armazenamento externo</string>
-    <string name="ml_external_storage_msg">Deseja que o VLC adicione o dispositivo %1$s à sua coleção?</string>
+    <string name="ml_external_storage_msg">Deseja que o TubePlayer adicione o dispositivo %1$s à sua coleção?</string>
 </resources>

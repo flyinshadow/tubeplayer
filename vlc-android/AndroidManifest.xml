@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.videolan.vlc"
+    package="com.wenjoyai.videoplayer"
     android:installLocation="auto">
 
     <uses-sdk
@@ -45,7 +45,7 @@
         android:required="false" />
 
     <application
-        android:name="org.videolan.vlc.VLCApplication"
+        android:name="com.wenjoyai.videoplayer.VLCApplication"
         android:hardwareAccelerated="true"
         android:allowBackup="true"
         android:largeHeap="true"
@@ -526,13 +526,13 @@
 
         <!-- TV components -->
         <activity
-            android:name="org.videolan.vlc.gui.tv.MainTvActivity"
+            android:name="com.wenjoyai.videoplayer.gui.tv.MainTvActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.VLC.TV" />
         <activity
-            android:name="org.videolan.vlc.gui.tv.DetailsActivity"
+            android:name="com.wenjoyai.videoplayer.gui.tv.DetailsActivity"
             android:exported="true"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.Leanback.Details" />
@@ -542,12 +542,12 @@
             android:screenOrientation="landscape"
             android:theme="@style/Theme.VLC.TV"  />
         <activity
-            android:name="org.videolan.vlc.gui.tv.SearchActivity"
+            android:name="com.wenjoyai.videoplayer.gui.tv.SearchActivity"
             android:exported="true"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.VLC.TV"  />
         <activity
-            android:name="org.videolan.vlc.gui.tv.audioplayer.AudioPlayerActivity"
+            android:name="com.wenjoyai.videoplayer.gui.tv.audioplayer.AudioPlayerActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="fragment"
-            type="org.videolan.videoplayer.gui.audio.AudioPlayer" />
+            type="com.wenjoyai.videoplayer.gui.audio.AudioPlayer" />
     </data>
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/content_layout"
@@ -70,7 +70,7 @@
                 android:contentDescription="@string/play_as_audio"
                 android:src="?attr/ic_playasaudio_off" />
 
-            <com.videolan.videoplayer.gui.view.HeaderMediaSwitcher
+            <com.wenjoyai.videoplayer.gui.view.HeaderMediaSwitcher
                 android:id="@+id/audio_media_switcher"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -173,7 +173,7 @@
             android:background="?attr/background_default"
             android:paddingBottom="@dimen/listview_bottom_padding" />
 
-        <com.videolan.videoplayer.gui.view.CoverMediaSwitcher
+        <com.wenjoyai.videoplayer.gui.view.CoverMediaSwitcher
             android:id="@+id/cover_media_switcher"
             android:layout_width="0dp"
             android:layout_height="0dp"

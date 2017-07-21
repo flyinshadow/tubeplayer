@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main VLC Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">ठीक</string>
     <string name="cancel">रद्द गर्नुहोस</string>
     <string name="other">अन्य</string>
@@ -110,8 +110,8 @@
     <string name="open_mrl">MRL खोल्नुहोस</string>
     <string name="open_mrl_dialog_title">सञ्जाल प्रवाह खोल्नुहोस</string>
     <string name="open_mrl_dialog_msg">नेटवर्क MRL प्रविष्ट गर्नुहोस्: जस्तै http://, mms:// or rtsp://</string>
-    <string name="error_not_compatible">माफ गर्नुहोला, तपाईँको उपकरण हाल  VLC यो संस्करण द्वारा समर्थित छैन।</string>
-    <string name="error_problem">माफ गर्नुहोस, एन्ड्रोइडको लागि VLC लाई खुल्नमा सस्या भएकोले बन्दगर्नुपरेको छ ।</string>
+    <string name="error_not_compatible">माफ गर्नुहोला, तपाईँको उपकरण हाल  TubePlayer यो संस्करण द्वारा समर्थित छैन।</string>
+    <string name="error_problem">माफ गर्नुहोस, एन्ड्रोइडको लागि TubePlayer लाई खुल्नमा सस्या भएकोले बन्दगर्नुपरेको छ ।</string>
     <string name="encountered_error_title">बजाउँदा त्रुटि</string>
     <string name="search">खोज्नुहोस </string>
     <string name="search_history">खोज इतिहास</string>
@@ -129,7 +129,7 @@
     <string name="licence">लाइसेन्स</string>
     <string name="revision">संशोधन</string>
     <string name="about">बारे</string>
-    <string name="vlc_authors">VLC विकासकर्ताहरु ।</string>
+    <string name="vlc_authors">TubePlayer विकासकर्ताहरु ।</string>
     <!-- Preferences -->
     <string name="preferences">प्राथमिकता</string>
     <string name="general_prefs_category">सामान्य</string>
@@ -150,7 +150,7 @@
     <string name="enable_verbose_mode">वाचाल</string>
     <string name="clear_log">लग खाली गर्नुहोस्</string>
     <string name="copy_to_clipboard">क्लिपबोर्डमा प्रतिलिपीगर्नुहोस्</string>
-    <string name="help_us_send_log">निम्न त्रुटिलग पठाएर VLC लाई राम्रो बनाउन सहयोग गर्नुहोस:</string>
+    <string name="help_us_send_log">निम्न त्रुटिलग पठाएर TubePlayer लाई राम्रो बनाउन सहयोग गर्नुहोस:</string>
     <string name="restart_vlc">VLCलाई फेरि सुरु गर्नुहोस </string>
     <string name="send_log">लग पठाउनुहोस्</string>
     <string name="sending_log">लग पठाउँदै...</string>

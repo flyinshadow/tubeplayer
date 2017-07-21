@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main VLC Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">Ok</string>
     <string name="cancel">Annulearje</string>
     <string name="other">Oars</string>
@@ -38,7 +38,7 @@
     <string name="ringtone_error">Der is in flater bard by it ynstellen fan de beltoan.</string>
     <string name="pause">Pausearje</string>
     <string name="not_show_again">Net mear werjaan.</string>
-    <string name="info_title">VLC</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">Unbekende artyst</string>
     <string name="unknown_album">Unbekend album</string>
     <string name="unknown_genre">Unbekend sjenre</string>
@@ -159,11 +159,11 @@
     <string name="open_mrl">MRL iepenje</string>
     <string name="open_mrl_dialog_title">Netwurkstream iepenje</string>
     <string name="open_mrl_dialog_msg">Jou netwurk-MRL op: bygelyks http://, mms:// of rtsp://</string>
-    <string name="error_not_compatible">Sorry, jo apparaat wurdt op dit stuit net stipe troch dizze ferzje fan VLC foar Android™.</string>
-    <string name="error_problem">Sorry, VLC foar Android hie in probleem by it laden en moast ôfsluten wurde.</string>
+    <string name="error_not_compatible">Sorry, jo apparaat wurdt op dit stuit net stipe troch dizze ferzje fan TubePlayer foar Android™.</string>
+    <string name="error_problem">Sorry, TubePlayer foar Android hie in probleem by it laden en moast ôfsluten wurde.</string>
     <string name="error_message_is">De flatermelding is (fermeld dit by it debuggen):\n\n</string>
     <string name="encountered_error_title">Flater by ôfspyljen</string>
-    <string name="encountered_error_message">VLC hat in flater oantroffen by dit mediabestân.\nProbearje de mediabiblioteek te fernijen.</string>
+    <string name="encountered_error_message">TubePlayer hat in flater oantroffen by dit mediabestân.\nProbearje de mediabiblioteek te fernijen.</string>
     <string name="invalid_location">De lokaasje %1$s kin net ôfspile wurde.</string>
     <string name="search">Sykje</string>
     <string name="search_history">Sykskiednis</string>
@@ -190,13 +190,13 @@
     <string name="show_playlist">Ofspyllist werjaan</string>
     <string name="hold_to_stop">Ynhâlde om te stopjen</string>
     <!-- About -->
-    <string name="app_name_full">VLC foar Android™</string>
+    <string name="app_name_full">TubePlayer foar Android™</string>
     <string name="licence">Lisinsje</string>
     <string name="revision">Revyzje</string>
     <string name="about">Oer</string>
-    <string name="about_text">VLC foar Android™ is in port fan VLC media player, de populêre iepen boarne mediaspiler. De Android™-ferzje kin de measte bestannen en netwurkstreams lêze.</string>
-    <string name="compiled_by">DIzze ferzje fan VLC waard kompilearre troch:</string>
-    <string name="vlc_authors">VLC-auteurs.</string>
+    <string name="about_text">TubePlayer foar Android™ is in port fan TubePlayer media player, de populêre iepen boarne mediaspiler. De Android™-ferzje kin de measte bestannen en netwurkstreams lêze.</string>
+    <string name="compiled_by">DIzze ferzje fan TubePlayer waard kompilearre troch:</string>
+    <string name="vlc_authors">TubePlayer-auteurs.</string>
     <!-- Preferences -->
     <string name="preferences">Ynstellingen</string>
     <string name="general_prefs_category">Algemien</string>
@@ -284,7 +284,7 @@
     <string name="enable_steal_remote_control">Eksklusive koptelefoan-ôfstânsbetsjinning</string>
     <string name="enable_steal_remote_control_summary">Mij konflikten troch de ôfstânsbetsjinning fan oare apps te stellen. Dit foarkomt bellen by dûbelklikken op HTC-telefoans.</string>
     <string name="aout">Audio-útfier</string>
-    <string name="aout_summary">Wizigje de audio-útfiermetoade dy\'t VLC brûkt.</string>
+    <string name="aout_summary">Wizigje de audio-útfiermetoade dy\'t TubePlayer brûkt.</string>
     <string name="controls_prefs_category">Betsjinningen</string>
     <string name="performance_prefs_category">Prestaasjes</string>
     <string name="chroma_format">Chroma forsearje</string>
@@ -310,7 +310,7 @@
     <string name="media_db_cleared">Media-database wiske!</string>
     <string name="set_locale">Taal ynstelle</string>
     <string name="set_locale_detail">Leechlitte om te werstellen</string>
-    <string name="set_locale_popup">VLC ôfslute en opnij starte om wizigingen ta te passen.</string>
+    <string name="set_locale_popup">TubePlayer ôfslute en opnij starte om wizigingen ta te passen.</string>
     <string name="network_caching">Netwurkbuffergrutte</string>
     <string name="network_caching_summary">De hoemannichte tiid om netwurkmedia te  bufferjen (yn ms). Wurket net mei hardware-dekodearjen. Leech litte om te werstellen.</string>
     <string name="quit">Tapassing ôfslute en opnij starte</string>
@@ -321,16 +321,16 @@
     <string name="start_logging">Start loggen</string>
     <string name="stop_logging">Stop loggen</string>
     <string name="clear_log">Loch wiskje</string>
-    <string name="log_service_title">VLC loch-opname</string>
+    <string name="log_service_title">TubePlayer loch-opname</string>
     <string name="log_service_text">Loch-konsole iepenje</string>
     <string name="copy_to_clipboard">Nei klamboerd kopiearje</string>
     <string name="copied_to_clipboard">Loch nei klamboerd kopiearre.</string>
     <string name="dump_logcat">Logcat-log dumpe</string>
     <string name="dump_logcat_success">Logcat suksesfol dumpt nei %1$s!</string>
     <string name="dump_logcat_failure">Logcat dumpe mislearre.</string>
-    <string name="serious_crash">Der is spitigernôch in grutte flater bard en VLC moast ôfslute.</string>
-    <string name="help_us_send_log">Help ús om VLC te ferbetterjen troch de folgjende ûngelok-loch te stjoeren:</string>
-    <string name="restart_vlc">VLC opnij starte</string>
+    <string name="serious_crash">Der is spitigernôch in grutte flater bard en TubePlayer moast ôfslute.</string>
+    <string name="help_us_send_log">Help ús om TubePlayer te ferbetterjen troch de folgjende ûngelok-loch te stjoeren:</string>
+    <string name="restart_vlc">TubePlayer opnij starte</string>
     <string name="send_log">Loch ferstjoere</string>
     <string name="sending_log">Loch ferstjoere...</string>
     <string name="drawer_open">Navigaasjela iepenje</string>
@@ -371,18 +371,18 @@
     <string name="no_subs_found">Gjin ûndertitels yn dizze map</string>
     <string name="music_now_playing">No ôfspyljend</string>
     <!--Widget-->
-    <string name="widget_name_w">VLC Widget ljocht</string>
-    <string name="widget_name_b">VLC Widget donker</string>
-    <string name="allow_storage_access_title">VLC tagong jaan ta fideo- en audiobestannen</string>
-    <string name="allow_storage_access_description">VLC moat jo tastimming hawwe om tagong te krijen ta de mediabestannen op dit apparaat.</string>
-    <string name="allow_settings_access_ringtone_title">VLC tastean om de ringtone yn te stellen</string>
-    <string name="allow_settings_access_ringtone_description">VLC moat jo tastimming hawwe om dit nûmer yn te stellen as jo ringtone.</string>
-    <string name="allow_settings_access_brightness_title">VLC tastean om helderheidsmoadus te wizigjen</string>
-    <string name="allow_settings_access_brightness_description">VLC moat jo tastimming hawwe om jo helderheidsmoadus te wizigjen</string>
-    <string name="allow_draw_overlays_title">Pop-up fan VLC-spiler tastean oer oare apps</string>
-    <string name="allow_sdraw_overlays_description">VLC moat jo tastimming hawwe om jo fideo wer te jaan yn in pop-up boppe-op oare tapassingen.</string>
+    <string name="widget_name_w">TubePlayer Widget ljocht</string>
+    <string name="widget_name_b">TubePlayer Widget donker</string>
+    <string name="allow_storage_access_title">TubePlayer tagong jaan ta fideo- en audiobestannen</string>
+    <string name="allow_storage_access_description">TubePlayer moat jo tastimming hawwe om tagong te krijen ta de mediabestannen op dit apparaat.</string>
+    <string name="allow_settings_access_ringtone_title">TubePlayer tastean om de ringtone yn te stellen</string>
+    <string name="allow_settings_access_ringtone_description">TubePlayer moat jo tastimming hawwe om dit nûmer yn te stellen as jo ringtone.</string>
+    <string name="allow_settings_access_brightness_title">TubePlayer tastean om helderheidsmoadus te wizigjen</string>
+    <string name="allow_settings_access_brightness_description">TubePlayer moat jo tastimming hawwe om jo helderheidsmoadus te wizigjen</string>
+    <string name="allow_draw_overlays_title">Pop-up fan TubePlayer-spiler tastean oer oare apps</string>
+    <string name="allow_sdraw_overlays_description">TubePlayer moat jo tastimming hawwe om jo fideo wer te jaan yn in pop-up boppe-op oare tapassingen.</string>
     <string name="permission_ask_again">Tagong tastean</string>
-    <string name="exit_app">VLC slute</string>
+    <string name="exit_app">TubePlayer slute</string>
     <!--fast scroller-->
     <!--Plugins-->
     <string name="plugins">Ynstekkers</string>

@@ -8,7 +8,7 @@
         <import type="org.videolan.medialibrary.media.MediaLibraryItem"/>
         <variable
             name="holder"
-            type="org.videolan.videoplayer.gui.browser.BaseBrowserAdapter.ViewHolder"/>
+            type="com.wenjoyai.videoplayer.gui.browser.BaseBrowserAdapter.ViewHolder"/>
         <variable
             name="item"
             type="MediaLibraryItem"/>

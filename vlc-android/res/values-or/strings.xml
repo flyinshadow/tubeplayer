@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main VLC Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">ଠିକ ଅଛି</string>
     <string name="cancel">ବାତିଲ୍ କରନ୍ତୁ</string>
     <string name="other">ଅନ୍ୟ</string>
@@ -101,20 +101,20 @@
     <string name="open_mrl">MRL ଖୋଲନ୍ତୁ</string>
     <string name="open_mrl_dialog_title">ନେଟୱର୍କ ଷ୍ଟ୍ରିମ୍ ଖୋଲନ୍ତୁ</string>
     <string name="open_mrl_dialog_msg">ନେଟୱର୍କ MRL ପ୍ରବେଶ କରନ୍ତୁ: ଉ.ଦା. http://, mms:// or rtsp://</string>
-    <string name="error_not_compatible">କ୍ଷମା କରିବେ, Android™ ପାଇଁ VLC ର ଏହି ସଂସ୍କରଣକୁ ଆପଣଙ୍କ ଯନ୍ତ୍ର ବର୍ତ୍ତମାନ ସମର୍ଥନ କରୁନାହିଁ|</string>
-    <string name="error_problem">କ୍ଷମା କରିବେ, Android ପାଇଁ VLC କୁ ଲୋଡ୍ କରିବାରେ ଅସୁବିଧା ହେଉଥିଲା ଏବଂ ବନ୍ଦ କରିବାକୁ ପଡିଲା|</string>
+    <string name="error_not_compatible">କ୍ଷମା କରିବେ, Android™ ପାଇଁ TubePlayer ର ଏହି ସଂସ୍କରଣକୁ ଆପଣଙ୍କ ଯନ୍ତ୍ର ବର୍ତ୍ତମାନ ସମର୍ଥନ କରୁନାହିଁ|</string>
+    <string name="error_problem">କ୍ଷମା କରିବେ, Android ପାଇଁ TubePlayer କୁ ଲୋଡ୍ କରିବାରେ ଅସୁବିଧା ହେଉଥିଲା ଏବଂ ବନ୍ଦ କରିବାକୁ ପଡିଲା|</string>
     <string name="encountered_error_title">ପଶ୍ଚାତ୍ ଚାଳନ  ତ୍ରୁଟି  </string>
     <string name="search">ସନ୍ଧାନ</string>
     <string name="search_history">ସନ୍ଧାନ ଇତିହାସ</string>
     <!--Tips-->
     <!-- About -->
-    <string name="app_name_full">Android™ ପାଇଁ VLC</string>
+    <string name="app_name_full">Android™ ପାଇଁ TubePlayer</string>
     <string name="licence">ଲାଇସେନ୍ସ</string>
     <string name="revision">ପୁନରୀକ୍ଷଣ</string>
     <string name="about">ବିଷୟରେ</string>
-    <string name="about_text">Android™ ପାଇଁ VLC ହେଉଛି ଲୋକପ୍ରିୟ ମୁକ୍ତ ସ୍ରୋତ ମିଡିଆ ପ୍ଲେୟାର, VLC ମିଡିଆ ପ୍ଲେୟାରର ଏକ ଅନୁଭାଗ| Android™ ସଂସ୍କରଣ ପ୍ରାୟ ଫାଇଲ ଏବଂ ନେଟୱର୍କ ଷ୍ଟ୍ରିମ୍‌ ଗୁଡିକକୁ ଚଳାଇ ପାରିବ|</string>
-    <string name="compiled_by">VLC ର ଏହି ସଂସ୍କରଣକୁ ସଙ୍କଳନ କରିଛନ୍ତି:</string>
-    <string name="vlc_authors">VLC ର ଲେଖକମାନେ</string>
+    <string name="about_text">Android™ ପାଇଁ TubePlayer ହେଉଛି ଲୋକପ୍ରିୟ ମୁକ୍ତ ସ୍ରୋତ ମିଡିଆ ପ୍ଲେୟାର, TubePlayer ମିଡିଆ ପ୍ଲେୟାରର ଏକ ଅନୁଭାଗ| Android™ ସଂସ୍କରଣ ପ୍ରାୟ ଫାଇଲ ଏବଂ ନେଟୱର୍କ ଷ୍ଟ୍ରିମ୍‌ ଗୁଡିକକୁ ଚଳାଇ ପାରିବ|</string>
+    <string name="compiled_by">TubePlayer ର ଏହି ସଂସ୍କରଣକୁ ସଙ୍କଳନ କରିଛନ୍ତି:</string>
+    <string name="vlc_authors">TubePlayer ର ଲେଖକମାନେ</string>
     <!-- Preferences -->
     <string name="preferences">ଅଗ୍ରାଧିକାରସମୂହ</string>
     <string name="add_custom_path">ଇଚ୍ଛାରୂପୀ ପଥ ଯୋଗ କରନ୍ତୁ</string>
@@ -138,7 +138,7 @@
     <string name="media_db_cleared">ମିଡ଼ିଆ ଡାଟାବେସ୍ ଖାଲି କରିଦିଆଗଲା!</string>
     <string name="set_locale">ଆଂଚଳିକ ସେଟ କରନ୍ତୁ</string>
     <string name="set_locale_detail">ପୁନଃସ୍ଥାପନ କରିବା ପାଇଁ ଖାଲି ଛାଡି ଦିଅନ୍ତୁ</string>
-    <string name="set_locale_popup">ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ କାର୍ଯ୍ୟକାରୀ କରିବା ପାଇଁ VLC କୁ ତ୍ୟାଗ କରନ୍ତୁ ଏବଂ ପୁନର୍ବାର ଆରମ୍ଭ କରନ୍ତୁ|</string>
+    <string name="set_locale_popup">ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ କାର୍ଯ୍ୟକାରୀ କରିବା ପାଇଁ TubePlayer କୁ ତ୍ୟାଗ କରନ୍ତୁ ଏବଂ ପୁନର୍ବାର ଆରମ୍ଭ କରନ୍ତୁ|</string>
     <string name="enable_verbose_mode">ବହୁଶବ୍ଦକ</string>
     <string name="start_logging">ଲଗ ଆରମ୍ଭ କରନ୍ତୁ</string>
     <string name="stop_logging">ଲଗ ବନ୍ଦ କରନ୍ତୁ</string>

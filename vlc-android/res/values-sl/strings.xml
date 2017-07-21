@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main VLC Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">V redu</string>
     <string name="cancel">Prekliči</string>
     <string name="other">Drugo</string>
@@ -41,7 +41,7 @@
     <string name="ringtone_error">Pri nastavljanju posnetka kot zvoka zvonjenja je prišlo do napake.</string>
     <string name="pause">Premor</string>
     <string name="not_show_again">Tega sporočila ne pokaži več.</string>
-    <string name="info_title">VLC</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">Neznan izvajalec</string>
     <string name="unknown_album">Neznan album</string>
     <string name="unknown_genre">Neznana zvrst</string>
@@ -175,7 +175,7 @@
     <string name="open_mrl">Pretok</string>
     <string name="open_mrl_dialog_title">Odpri omrežni pretok</string>
     <string name="open_mrl_dialog_msg">Vpis omrežnih naslovov: http://, mms:// ali rtsp://</string>
-    <string name="error_not_compatible">Različica predvajalnika VLC za Android™ še ne podpira te naprave.</string>
+    <string name="error_not_compatible">Različica predvajalnika TubePlayer za Android™ še ne podpira te naprave.</string>
     <string name="error_problem">Prišlo je do napake med nalaganjem programa.</string>
     <string name="error_message_is">Sporočilo napake je (pošljite v sporočilu za razhroščevanje):\n</string>
     <string name="encountered_error_title">Napaka predvajanja</string>
@@ -206,13 +206,13 @@
     <string name="show_playlist">Pokaži seznam predvajanja</string>
     <string name="hold_to_stop">Zadržite pritisk za ustavitev</string>
     <!-- About -->
-    <string name="app_name_full">VLC za Android™</string>
+    <string name="app_name_full">TubePlayer za Android™</string>
     <string name="licence">Dovoljenje</string>
     <string name="revision">Predelava</string>
     <string name="about">O programu</string>
-    <string name="about_text">VLC za Android™ je prilagojena različica predvajalnika VLC, priljubljenega odprto-kodnega predvajalnika predstavnih vsebin. Različica za Android™ podpira večino znanih zapisov in  omrežnih pretokov.</string>
-    <string name="compiled_by">Kodni prevod različice VLC:</string>
-    <string name="vlc_authors">Razvijalci predvajalnika VLC</string>
+    <string name="about_text">TubePlayer za Android™ je prilagojena različica predvajalnika TubePlayer, priljubljenega odprto-kodnega predvajalnika predstavnih vsebin. Različica za Android™ podpira večino znanih zapisov in  omrežnih pretokov.</string>
+    <string name="compiled_by">Kodni prevod različice TubePlayer:</string>
+    <string name="vlc_authors">Razvijalci predvajalnika TubePlayer</string>
     <!-- Preferences -->
     <string name="preferences">Nastavitve</string>
     <string name="general_prefs_category">Splošno</string>
@@ -307,7 +307,7 @@
     <string name="enable_steal_remote_control">Enoznačen daljinski nadzor slušalk</string>
     <string name="enable_steal_remote_control_summary">Izognite se težavam z motenjem signala daljinskega upravljalnika drugih naprav. Možnost prepreči funkcijo klicanja z dvoklikom na napravah HTC.</string>
     <string name="aout">Zvočni odvod</string>
-    <string name="aout_summary">Spreminjanje načina odvoda zvoka med predvajanjem v predvajalniku VLC.</string>
+    <string name="aout_summary">Spreminjanje načina odvoda zvoka med predvajanjem v predvajalniku TubePlayer.</string>
     <string name="controls_prefs_category">Nadzorne tipke</string>
     <string name="performance_prefs_category">Zmogljivost</string>
     <string name="chroma_format">Vsili barve videa</string>
@@ -334,7 +334,7 @@
     <string name="media_db_cleared">Podatkovna zbirka predstavnih vsebin je počiščena!</string>
     <string name="set_locale">Nastavi jezikovne nastavitve</string>
     <string name="set_locale_detail">Pustite prazno za ponastavitev</string>
-    <string name="set_locale_popup">Za uveljavitev sprememb končajte in ponovno zaženite predvajalnik VLC.</string>
+    <string name="set_locale_popup">Za uveljavitev sprememb končajte in ponovno zaženite predvajalnik TubePlayer.</string>
     <string name="network_caching">Vrednost omrežnega predpomnjenja</string>
     <string name="network_caching_summary">Nastavitev določa čas medpomnjenja omrežnega pretoka (v milisekundah). Možnost ne deluje s strojnim odkodiranjem. Za ponastavitev pustite polje prazno.</string>
     <string name="resume_playback_title">Po klicu nadaljuj s predvajanjem</string>
@@ -348,16 +348,16 @@
     <string name="start_logging">Začni beleženje</string>
     <string name="stop_logging">Ustavi beleženje</string>
     <string name="clear_log">Počisti dnevnik</string>
-    <string name="log_service_title">Beleženje dnevnikov VLC</string>
+    <string name="log_service_title">Beleženje dnevnikov TubePlayer</string>
     <string name="log_service_text">Odpri konzolo dnevnika</string>
     <string name="copy_to_clipboard">Kopiraj v odložišče</string>
     <string name="copied_to_clipboard">Dnevnik je kopiran v odložišče.</string>
     <string name="dump_logcat">Odloži dnevnik logcat</string>
     <string name="dump_logcat_success">Dnevnik logcat je uspešno odložen v %1$s!</string>
     <string name="dump_logcat_failure">Odlaganje dnevnika logcat je spodletelo.</string>
-    <string name="serious_crash">Prišlo do resne programske napake in predvajalnik VLC se je zaprl.</string>
-    <string name="help_us_send_log">Pomagajte izboljšati program VLC in pošljite poročilo o sesutju:</string>
-    <string name="restart_vlc">Ponovno zaženi VLC</string>
+    <string name="serious_crash">Prišlo do resne programske napake in predvajalnik TubePlayer se je zaprl.</string>
+    <string name="help_us_send_log">Pomagajte izboljšati program TubePlayer in pošljite poročilo o sesutju:</string>
+    <string name="restart_vlc">Ponovno zaženi TubePlayer</string>
     <string name="send_log">Pošlji dnevnik</string>
     <string name="sending_log">Pošiljanje dnevnika ...</string>
     <string name="drawer_open">Odpri predalnik krmarjenja</string>
@@ -401,8 +401,8 @@
     <string name="no_subs_found">V tej mapi ni datotek s podnapisi</string>
     <string name="music_now_playing">Trenutno se predvaja</string>
     <!--Widget-->
-    <string name="widget_name_w">Svetla tema VLC</string>
-    <string name="widget_name_b">Temna tema VLC</string>
+    <string name="widget_name_w">Svetla tema TubePlayer</string>
+    <string name="widget_name_b">Temna tema TubePlayer</string>
     <string name="allow_storage_access_title">Dovoli programu dostop do datotek videa in zvoka</string>
     <string name="allow_storage_access_description">Program zahteva odobritev dostopa do datotek predstavnih vsebin na napravi.</string>
     <string name="allow_settings_access_ringtone_title">Dovoli nastavitev melodije zvonjenja</string>
@@ -412,7 +412,7 @@
     <string name="allow_draw_overlays_title">Dovoli pojavna okna predvajalnika čez okna drugih programov</string>
     <string name="allow_sdraw_overlays_description">Program zahteva odobritev nastavitve za prikaz pojavnih oken čez okna drugih programov.</string>
     <string name="permission_ask_again">Odobri dovoljenje</string>
-    <string name="exit_app">Zapri VLC</string>
+    <string name="exit_app">Zapri TubePlayer</string>
     <!--fast scroller-->
     <string name="fastscroller_track">Hitri drsnik</string>
     <string name="fastscroller_handle">Ročnik hitrega drsnika</string>

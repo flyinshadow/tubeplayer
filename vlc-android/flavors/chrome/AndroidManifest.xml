@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.videolan.vlc" >
+    package="com.wenjoyai.videoplayer" >
 
     <uses-sdk
         android:minSdkVersion="19" />
 
     <application
-        android:name="org.videolan.vlc.VLCApplication" >
+        android:name="com.wenjoyai.videoplayer.VLCApplication" >
         <activity
-            android:name="org.videolan.vlc.StartActivity"
+            android:name="com.wenjoyai.videoplayer.StartActivity"
             tools:node="replace">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

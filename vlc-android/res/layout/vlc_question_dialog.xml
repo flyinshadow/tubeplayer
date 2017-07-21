@@ -5,7 +5,7 @@
         <import type="android.text.TextUtils" />
         <import type="android.view.View" />
         <variable name="dialog" type="org.videolan.libvlc.Dialog.QuestionDialog"/>
-        <variable name="handler" type="org.videolan.videoplayer.gui.dialogs.VlcQuestionDialog"/>
+        <variable name="handler" type="com.wenjoyai.videoplayer.gui.dialogs.VlcQuestionDialog"/>
     </data>
     <ScrollView>
         <RelativeLayout

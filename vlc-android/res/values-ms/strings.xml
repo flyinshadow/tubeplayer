@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main VLC Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Batal</string>
     <string name="other">Lain-lain</string>
@@ -38,7 +38,7 @@
     <string name="ringtone_error">Ralat berlaku ketika menetapkan nada dering.</string>
     <string name="pause">Jeda</string>
     <string name="not_show_again">Jangan tunjuk mesej ini lagi.</string>
-    <string name="info_title">VLC</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">Artis Tidak Diketahui</string>
     <string name="unknown_album">Album Tidak Diketahui</string>
     <string name="unknown_genre">Genre Tidak Diketahui</string>
@@ -154,11 +154,11 @@
     <string name="open_mrl">Buka MRL</string>
     <string name="open_mrl_dialog_title">Buka strim rangkaian</string>
     <string name="open_mrl_dialog_msg">Masukkan MRL rangkaian: cth. http://, mms:// atau rtsp://</string>
-    <string name="error_not_compatible">Maaf, peranti anda belum lagi menyokong versi VLC untuk Android™ ini. </string>
-    <string name="error_problem">Maaf, VLC untuk Android mengalami masalah memuatkan dan perlu ditutup.</string>
+    <string name="error_not_compatible">Maaf, peranti anda belum lagi menyokong versi TubePlayer untuk Android™ ini. </string>
+    <string name="error_problem">Maaf, TubePlayer untuk Android mengalami masalah memuatkan dan perlu ditutup.</string>
     <string name="error_message_is">Ralat mesej ialah (sila jelaskan perkara ini bila menyahpepijat):\n</string>
     <string name="encountered_error_title">Ralat mainbalik</string>
-    <string name="encountered_error_message">VLC menghadapi ralat dengan media ini.\nSila segar semula pustaka media.</string>
+    <string name="encountered_error_message">TubePlayer menghadapi ralat dengan media ini.\nSila segar semula pustaka media.</string>
     <string name="invalid_location">Lokasi %1$s tidak dapat dimainkan.</string>
     <string name="search">Gelintar</string>
     <string name="search_history">Gelintar sejarah</string>
@@ -185,13 +185,13 @@
     <string name="show_playlist">Tunjuk Senarai Main</string>
     <string name="hold_to_stop">Tahan untuk henti</string>
     <!-- About -->
-    <string name="app_name_full">VLC untuk Android™</string>
+    <string name="app_name_full">TubePlayer untuk Android™</string>
     <string name="licence">Lesen</string>
     <string name="revision">Revisi</string>
     <string name="about">Perihal</string>
-    <string name="about_text">VLC untuk Android™ adalah port pemain media VLC, pemain media sumber terbuka yang popular. Versi Android™ boleh membaca kebanyakan fail dan strim rangkaian.</string>
-    <string name="compiled_by">Versi VLC ini dikompil oleh:</string>
-    <string name="vlc_authors">Pengarang VLC.</string>
+    <string name="about_text">TubePlayer untuk Android™ adalah port pemain media TubePlayer, pemain media sumber terbuka yang popular. Versi Android™ boleh membaca kebanyakan fail dan strim rangkaian.</string>
+    <string name="compiled_by">Versi TubePlayer ini dikompil oleh:</string>
+    <string name="vlc_authors">Pengarang TubePlayer.</string>
     <!-- Preferences -->
     <string name="preferences">Keutamaan</string>
     <string name="general_prefs_category">Am</string>
@@ -282,7 +282,7 @@
     <string name="enable_steal_remote_control">Kawalan jauh set kepala ekslusif</string>
     <string name="enable_steal_remote_control_summary">Jauhkan konflik dengan mencuri kawalan jauh daripada apl lain. Ini mengelakkan mendail apabila dwi-klik pada fon HTC.</string>
     <string name="aout">Output audio</string>
-    <string name="aout_summary">Ubah kaedah yang VLC gunakan untuk audio output</string>
+    <string name="aout_summary">Ubah kaedah yang TubePlayer gunakan untuk audio output</string>
     <string name="controls_prefs_category">Kawalan</string>
     <string name="performance_prefs_category">Prestasi</string>
     <string name="chroma_format">Paksa kroma video</string>
@@ -304,12 +304,12 @@
     <string name="auto_rescan">Auto imbas semula</string>
     <string name="auto_rescan_summary">Imbas peranti secara automatik untuk media baharu atau dipadam ketika permulaan aplikasi</string>
     <string name="clear_media_db">Kosongkan pangkalan data media</string>
-    <string name="clear_media_db_summary">Capai maklumat VLC Android untuk kosongkan data</string>
+    <string name="clear_media_db_summary">Capai maklumat TubePlayer Android untuk kosongkan data</string>
     <string name="clear_history">Kosongkan sejarah gelintar</string>
     <string name="media_db_cleared">Pangkalan data media dikosongkan!</string>
     <string name="set_locale">Tetapkan lokaliti</string>
     <string name="set_locale_detail">Tinggalkan kosong untuk tetap semula</string>
-    <string name="set_locale_popup">Keluar dan mula semula VLC suoaya perubahan berkesan.</string>
+    <string name="set_locale_popup">Keluar dan mula semula TubePlayer suoaya perubahan berkesan.</string>
     <string name="network_caching">Nilai caching rangkaian</string>
     <string name="network_caching_summary">Amaun masa untuk menimbal media rangkaian (dalam ms). Tidak berfungsi dengan menyahkog perkakasan. Tinggalkan kosong untuk tetap semula.</string>
     <string name="resume_playback_title">Sambung semula main balik selepas panggilan</string>
@@ -323,16 +323,16 @@
     <string name="start_logging">Mula mengelog</string>
     <string name="stop_logging">Henti mengelog</string>
     <string name="clear_log">Kosongkan log</string>
-    <string name="log_service_title">Log VLC merakam</string>
+    <string name="log_service_title">Log TubePlayer merakam</string>
     <string name="log_service_text">Buka konsol log</string>
     <string name="copy_to_clipboard">Salin ke papan keratan</string>
     <string name="copied_to_clipboard">Log disalin ke papan keratan.</string>
     <string name="dump_logcat">Longgok log logcat</string>
     <string name="dump_logcat_success">Logcat berjaya dilonggok ke %1$s!</string>
     <string name="dump_logcat_failure">Gagal longgokkan logcat.</string>
-    <string name="serious_crash">Malangnya, satu ralat yang serius telah berlaku dan VLC perlu ditutup.</string>
-    <string name="help_us_send_log">Bantu kami mempertingkatkan VLC dengan menghantar log kerosakan berikut:</string>
-    <string name="restart_vlc">Mula semula VLC</string>
+    <string name="serious_crash">Malangnya, satu ralat yang serius telah berlaku dan TubePlayer perlu ditutup.</string>
+    <string name="help_us_send_log">Bantu kami mempertingkatkan TubePlayer dengan menghantar log kerosakan berikut:</string>
+    <string name="restart_vlc">Mula semula TubePlayer</string>
     <string name="send_log">Hantar log</string>
     <string name="sending_log">Menghantar log...</string>
     <string name="drawer_open">Buka laci navigasi</string>
@@ -376,18 +376,18 @@
     <string name="no_subs_found">Tiada sarikata dalam direktori ini</string>
     <string name="music_now_playing">Kini Dimainkan</string>
     <!--Widget-->
-    <string name="widget_name_w">Widjet Putih VLC</string>
-    <string name="widget_name_b">Widjet Gelap VLC</string>
-    <string name="allow_storage_access_title">Benarkan VLC mencapai fail video dan audio</string>
-    <string name="allow_storage_access_description">VLC perlu kebenaran anda untuk mencapai fail media dalam peranti ini.</string>
-    <string name="allow_settings_access_ringtone_title">Benarkan VLC tetapkan nada dering</string>
-    <string name="allow_settings_access_ringtone_description">VLC perlu kebenaran anda untuk memasang lagu ini sebagai nada dering anda.</string>
-    <string name="allow_settings_access_brightness_title">Benarkan VLC mengubah mod kecerahan</string>
-    <string name="allow_settings_access_brightness_description">VLC perlu kebenaran anda untuk mengubah mod kecerahan anda.</string>
-    <string name="allow_draw_overlays_title">Benarkan pemain VLC timbul berbanding apl lain</string>
-    <string name="allow_sdraw_overlays_description">VLC perlu kebenaran anda untuk paparkan video anda secara timbul berbanding aplikasi lain.</string>
+    <string name="widget_name_w">Widjet Putih TubePlayer</string>
+    <string name="widget_name_b">Widjet Gelap TubePlayer</string>
+    <string name="allow_storage_access_title">Benarkan TubePlayer mencapai fail video dan audio</string>
+    <string name="allow_storage_access_description">TubePlayer perlu kebenaran anda untuk mencapai fail media dalam peranti ini.</string>
+    <string name="allow_settings_access_ringtone_title">Benarkan TubePlayer tetapkan nada dering</string>
+    <string name="allow_settings_access_ringtone_description">TubePlayer perlu kebenaran anda untuk memasang lagu ini sebagai nada dering anda.</string>
+    <string name="allow_settings_access_brightness_title">Benarkan TubePlayer mengubah mod kecerahan</string>
+    <string name="allow_settings_access_brightness_description">TubePlayer perlu kebenaran anda untuk mengubah mod kecerahan anda.</string>
+    <string name="allow_draw_overlays_title">Benarkan pemain TubePlayer timbul berbanding apl lain</string>
+    <string name="allow_sdraw_overlays_description">TubePlayer perlu kebenaran anda untuk paparkan video anda secara timbul berbanding aplikasi lain.</string>
     <string name="permission_ask_again">Beri keizinan</string>
-    <string name="exit_app">Tutup VLC</string>
+    <string name="exit_app">Tutup TubePlayer</string>
     <!--fast scroller-->
     <string name="fastscroller_track">Trek PenatalPantas</string>
     <string name="fastscroller_handle">Pemegang PenatalPantas</string>
@@ -437,7 +437,7 @@
     <string name="length">Tempoh</string>
     <string name="tv_settings_hint">Tahan butang OK untuk tanda/nyahtanda direktori</string>
     <string name="ml_external_storage_title">Storan luar baharu dikesan</string>
-    <string name="ml_external_storage_msg">Anda mahu VLC menambah peranti %1$s ke dalam pustaka media anda?</string>
+    <string name="ml_external_storage_msg">Anda mahu TubePlayer menambah peranti %1$s ke dalam pustaka media anda?</string>
     <string name="last_added_media">terakhir ditambah</string>
     <string name="no">Tidak</string>
     <string name="loading_medialibrary">Memuat Pustaka Media...</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main VLC Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">Đồng ý</string>
     <string name="cancel">Hủy bỏ</string>
     <string name="other">Khác</string>
@@ -98,18 +98,18 @@
     <string name="open_mrl">Mở MRL</string>
     <string name="open_mrl_dialog_title">Mở một luồng dữ liệu trong mạng</string>
     <string name="open_mrl_dialog_msg">Điền vào đường dẫn MRL: ví dụ http://, mms:// hoặc rtsp://</string>
-    <string name="error_not_compatible">Thật đáng tiếc, phiên bản VLC dành cho Android™ này hiện không hỗ trợ đối với thiết bị của bạn.</string>
-    <string name="error_problem">Thật đáng tiếc, VLC dành cho Android đã gặp phải trục trặc trong quá trình khởi động và buộc phải đóng lại.</string>
+    <string name="error_not_compatible">Thật đáng tiếc, phiên bản TubePlayer dành cho Android™ này hiện không hỗ trợ đối với thiết bị của bạn.</string>
+    <string name="error_problem">Thật đáng tiếc, TubePlayer dành cho Android đã gặp phải trục trặc trong quá trình khởi động và buộc phải đóng lại.</string>
     <string name="encountered_error_title">Lỗi xảy ra khi phát lại</string>
     <!--Tips-->
     <!-- About -->
-    <string name="app_name_full">VLC dành cho </string>
+    <string name="app_name_full">TubePlayer dành cho </string>
     <string name="licence">Bản quyền</string>
     <string name="revision">Duyệt lại</string>
     <string name="about">Thông tin</string>
-    <string name="about_text">VLC dành cho  Android™ là một chương trình nằm trong dự án VLC Media Player, vốn được biết tới với đại đa số người dùng trên khắp thế giới vì tính miễn phí, mã nguồn mở và đầy tiện dụng của mình. Phiên bản dành cho Android™ có thể xem/đọc được hầu hết các định dạng file/tập tin lẫn tương tác với luồng dữ liệu trực tuyến. Bản dịch Việt Ngữ được thực hiện bởi Phan Anh.</string>
-    <string name="compiled_by">Phiên bản VLC này được biên dịch bởi:</string>
-    <string name="vlc_authors">Tác giả VLC.</string>
+    <string name="about_text">TubePlayer dành cho  Android™ là một chương trình nằm trong dự án TubePlayer Media Player, vốn được biết tới với đại đa số người dùng trên khắp thế giới vì tính miễn phí, mã nguồn mở và đầy tiện dụng của mình. Phiên bản dành cho Android™ có thể xem/đọc được hầu hết các định dạng file/tập tin lẫn tương tác với luồng dữ liệu trực tuyến. Bản dịch Việt Ngữ được thực hiện bởi Phan Anh.</string>
+    <string name="compiled_by">Phiên bản TubePlayer này được biên dịch bởi:</string>
+    <string name="vlc_authors">Tác giả TubePlayer.</string>
     <!-- Preferences -->
     <string name="preferences">Tùy biến</string>
     <string name="directories_summary">Chọn thư mục để chứa Thư Viện Media</string>

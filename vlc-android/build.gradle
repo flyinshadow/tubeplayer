@@ -91,7 +91,7 @@ android {
             proguardFile 'proguard.cfg'
         }
         debug {
-            applicationIdSuffix ".debug"
+//            applicationIdSuffix ".debug"
             jniDebuggable true
         }
     }

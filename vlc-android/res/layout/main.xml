@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.videolan.videoplayer.gui.view.HackyDrawerLayout
+<com.wenjoyai.videoplayer.gui.view.HackyDrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_container"
@@ -43,7 +43,7 @@
             app:rippleColor="@color/tube_red50"
             app:layout_anchor="@+id/fragment_placeholder"
             app:layout_anchorGravity="bottom|end"
-            app:layout_behavior="org.videolan.vlc.gui.helpers.FloatingActionButtonBehavior"
+            app:layout_behavior="com.wenjoyai.videoplayer.gui.helpers.FloatingActionButtonBehavior"
             android:visibility="invisible"
             android:layout_margin="16dp"/>
     </android.support.design.widget.CoordinatorLayout>
@@ -70,4 +70,4 @@
         android:layout_height="match_parent"
         android:layout="@layout/audio_player_tips"/>
 
-</com.videolan.videoplayer.gui.view.HackyDrawerLayout>
+</com.wenjoyai.videoplayer.gui.view.HackyDrawerLayout>

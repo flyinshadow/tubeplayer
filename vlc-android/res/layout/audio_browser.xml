@@ -31,7 +31,7 @@
         android:textSize="20sp"
         android:visibility="gone" />
 
-    <com.videolan.videoplayer.gui.view.SwipeRefreshLayout
+    <com.wenjoyai.videoplayer.gui.view.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,8 +47,8 @@
             <include layout="@layout/audio_recyclerview" />
             <include layout="@layout/audio_recyclerview" />
         </android.support.v4.view.ViewPager>
-    </com.videolan.videoplayer.gui.view.SwipeRefreshLayout>
-    <com.videolan.videoplayer.gui.view.FastScroller
+    </com.wenjoyai.videoplayer.gui.view.SwipeRefreshLayout>
+    <com.wenjoyai.videoplayer.gui.view.FastScroller
         android:id="@+id/songs_fast_scroller"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

@@ -16,7 +16,7 @@
             type="android.graphics.drawable.BitmapDrawable"/>
         <variable
             name="holder"
-            type="org.videolan.videoplayer.gui.audio.AudioBrowserAdapter.MediaItemViewHolder" />
+            type="com.wenjoyai.videoplayer.gui.audio.AudioBrowserAdapter.MediaItemViewHolder" />
     </data>
 
     <android.support.constraint.ConstraintLayout

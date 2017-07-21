@@ -40,7 +40,7 @@
 
         <variable
             name="holder"
-            type="org.videolan.videoplayer.gui.video.VideoListAdapter.ViewHolder" />
+            type="com.wenjoyai.videoplayer.gui.video.VideoListAdapter.ViewHolder" />
     </data>
 
     <android.support.constraint.ConstraintLayout

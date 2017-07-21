@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main VLC Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Renunțare</string>
     <string name="other">Altul</string>
@@ -31,7 +31,7 @@
     <string name="ringtone_error">A apărut o eroare la setarea tonului de apel.</string>
     <string name="pause">Pauză</string>
     <string name="not_show_again">Acest mesaj nu se  va mai afişa.</string>
-    <string name="info_title">VLC</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">Artist necunoscut</string>
     <string name="unknown_album">Album necunoscut</string>
     <string name="unknown_genre">Gen necunoscut</string>
@@ -122,8 +122,8 @@
     <string name="open_mrl">Deschideți MRL</string>
     <string name="open_mrl_dialog_title">Deschideți fluxul de rețea</string>
     <string name="open_mrl_dialog_msg">Introduceți adresa MRL: ex. http://, mms:// sau rtsp://</string>
-    <string name="error_not_compatible">Ne pare rău, dispozitivul tău nu este momentan suportat de această versiune de VLC pentru Android™.</string>
-    <string name="error_problem">Ne pare rău, VLC pentru Android a întâmpinat o problemă la încărcare, și a fost închis.</string>
+    <string name="error_not_compatible">Ne pare rău, dispozitivul tău nu este momentan suportat de această versiune de TubePlayer pentru Android™.</string>
+    <string name="error_problem">Ne pare rău, TubePlayer pentru Android a întâmpinat o problemă la încărcare, și a fost închis.</string>
     <string name="encountered_error_title">Eroare de redare</string>
     <string name="invalid_location">Locaţia %1$s nu poate fi redată.</string>
     <string name="search">Căutare</string>
@@ -135,13 +135,13 @@
     <string name="remove_song">Înlătură melodie</string>
     <string name="rearrange_order">Rearanjează ordinea</string>
     <!-- About -->
-    <string name="app_name_full">VLC pentru Android™</string>
+    <string name="app_name_full">TubePlayer pentru Android™</string>
     <string name="licence">Licență</string>
     <string name="revision">Revizie</string>
     <string name="about">Despre</string>
-    <string name="about_text">VLC pentru Android™ este o portare a media player-ului VLC, popularul media player de tip open source. Versiunea pentru Android™ poate citi majoritatea fișierelor și fluxurilor de rețea.</string>
-    <string name="compiled_by">Această versiune de VLC este compilată de:</string>
-    <string name="vlc_authors">Autorii VLC.</string>
+    <string name="about_text">TubePlayer pentru Android™ este o portare a media player-ului TubePlayer, popularul media player de tip open source. Versiunea pentru Android™ poate citi majoritatea fișierelor și fluxurilor de rețea.</string>
+    <string name="compiled_by">Această versiune de TubePlayer este compilată de:</string>
+    <string name="vlc_authors">Autorii TubePlayer.</string>
     <!-- Preferences -->
     <string name="preferences">Preferințe</string>
     <string name="general_prefs_category">General</string>
@@ -192,13 +192,13 @@
     <string name="enable_time_stretching_audio_summary">Accelerează sau încetinește pista audio fără schimbarea tonalității (necesită un dispozitiv rapid).</string>
     <string name="advanced_prefs_category">Avansat</string>
     <string name="aout">Ieșire audio</string>
-    <string name="aout_summary">Schimbă metoda folosită de VLC pentru a reda audio.</string>
+    <string name="aout_summary">Schimbă metoda folosită de TubePlayer pentru a reda audio.</string>
     <string name="clear_media_db">Curăță baza de date media</string>
     <string name="clear_history">Curățați istoricul căutărilor</string>
     <string name="media_db_cleared">Baza de date media curățată!</string>
     <string name="set_locale">Stabiliţi localizarea</string>
     <string name="set_locale_detail">Pentru restabilire, lăsaţi necompletat</string>
-    <string name="set_locale_popup">Restartaţi VLC pentru a aplica modificările.</string>
+    <string name="set_locale_popup">Restartaţi TubePlayer pentru a aplica modificările.</string>
     <string name="network_caching">Valoarea cache-ului rețelei</string>
     <string name="network_caching_summary">Timpul necesar pentru a umple tamponul pentru fișiere din rețea (în ms). Nu funcționează cu decodarea hardware. Lasă gol pentru a reseta.</string>
     <string name="developer_prefs_category">Dezvoltator</string>
@@ -214,8 +214,8 @@
     <string name="dump_logcat">Colectează jurnalul logcat</string>
     <string name="dump_logcat_success">Logcat a fost colectat cu succes în %1$s!</string>
     <string name="dump_logcat_failure">Colectarea logcat a eșuat.</string>
-    <string name="serious_crash">Din păcate, o eroare gravă a apărut și VLC-ul trebuie închis.</string>
-    <string name="restart_vlc">Repornește VLC</string>
+    <string name="serious_crash">Din păcate, o eroare gravă a apărut și TubePlayer-ul trebuie închis.</string>
+    <string name="restart_vlc">Repornește TubePlayer</string>
     <string name="send_log">Trimite jurnalul</string>
     <string name="sending_log">Se trimite jurnalul...</string>
     <!--Accessibility-->

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main VLC Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">确定</string>
     <string name="cancel">取消</string>
     <string name="other">其他</string>
@@ -38,7 +38,7 @@
     <string name="ringtone_error">设置铃声时发生错误。</string>
     <string name="pause">暂停</string>
     <string name="not_show_again">不再显示此提示信息。</string>
-    <string name="info_title">VLC</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">未知艺术家</string>
     <string name="unknown_album">未知专辑</string>
     <string name="unknown_genre">未知流派</string>
@@ -154,11 +154,11 @@
     <string name="open_mrl">流</string>
     <string name="open_mrl_dialog_title">打开网络流</string>
     <string name="open_mrl_dialog_msg">请输入网络地址: 如 http://、mms:// 或 rtsp://</string>
-    <string name="error_not_compatible">抱歉，该版本的 VLC for Android™ 尚不支持您的设备。</string>
-    <string name="error_problem">抱歉，VLC for Android 加载时出现问题，需要关闭。</string>
+    <string name="error_not_compatible">抱歉，该版本的 TubePlayer for Android™ 尚不支持您的设备。</string>
+    <string name="error_problem">抱歉，TubePlayer for Android 加载时出现问题，需要关闭。</string>
     <string name="error_message_is">错误消息为 (请在汇报问题时附上这些内容):\n</string>
     <string name="encountered_error_title">回放错误</string>
-    <string name="encountered_error_message">VLC 处理该媒体时发生错误。\n请尝试刷新媒体库。</string>
+    <string name="encountered_error_message">TubePlayer 处理该媒体时发生错误。\n请尝试刷新媒体库。</string>
     <string name="invalid_location">无法播放位置 %1$s。</string>
     <string name="search">搜索</string>
     <string name="search_history">搜索历史</string>
@@ -185,13 +185,13 @@
     <string name="show_playlist">显示播放列表</string>
     <string name="hold_to_stop">按住可停止</string>
     <!-- About -->
-    <string name="app_name_full">VLC for Android</string>
+    <string name="app_name_full">TubePlayer for Android</string>
     <string name="licence">授权许可</string>
     <string name="revision">修订版本</string>
     <string name="about">关于</string>
-    <string name="about_text">VLC for Android™ 是广受欢迎的开源媒体播放器 VLC media player 的移植版本。Android™ 版本可以读取大多数文件及网络流。</string>
-    <string name="compiled_by">此版本 VLC 的编译者为:</string>
-    <string name="vlc_authors">VLC 全体作者。</string>
+    <string name="about_text">TubePlayer for Android™ 是广受欢迎的开源媒体播放器 TubePlayer media player 的移植版本。Android™ 版本可以读取大多数文件及网络流。</string>
+    <string name="compiled_by">此版本 TubePlayer 的编译者为:</string>
+    <string name="vlc_authors">TubePlayer 全体作者。</string>
     <!-- Preferences -->
     <string name="preferences">设置</string>
     <string name="general_prefs_category">常规</string>
@@ -290,7 +290,7 @@
     <string name="enable_steal_remote_control">独占耳机远程控制</string>
     <string name="enable_steal_remote_control_summary">通过拦截其他应用的远程控制请求来避免冲突。可能导致 HTC 手机的双击拨号功能无法使用。</string>
     <string name="aout">音频输出</string>
-    <string name="aout_summary">更改 VLC 输出音频的方式。</string>
+    <string name="aout_summary">更改 TubePlayer 输出音频的方式。</string>
     <string name="controls_prefs_category">控制</string>
     <string name="performance_prefs_category">性能</string>
     <string name="chroma_format">强制画面色度</string>
@@ -312,12 +312,12 @@
     <string name="auto_rescan">自动重新扫描</string>
     <string name="auto_rescan_summary">应用启动时，自动扫描设备中新增或删除的媒体文件</string>
     <string name="clear_media_db">清除媒体数据库</string>
-    <string name="clear_media_db_summary">前往 Android 系统的应用管理页，查看 VLC 的信息，清空数据</string>
+    <string name="clear_media_db_summary">前往 Android 系统的应用管理页，查看 TubePlayer 的信息，清空数据</string>
     <string name="clear_history">清除搜索历史记录</string>
     <string name="media_db_cleared">媒体数据库已清除!</string>
     <string name="set_locale">设置区域变量</string>
     <string name="set_locale_detail">留空可重置</string>
-    <string name="set_locale_popup">退出并重启 VLC 使更改生效。</string>
+    <string name="set_locale_popup">退出并重启 TubePlayer 使更改生效。</string>
     <string name="network_caching">网络缓存值</string>
     <string name="network_caching_summary">缓冲网络媒体的时间量 (单位为毫秒)。硬件解码时无效。留空可重置。</string>
     <string name="resume_playback_title">通话结束后继续播放</string>
@@ -331,16 +331,16 @@
     <string name="start_logging">开始记录日志</string>
     <string name="stop_logging">停止记录日志</string>
     <string name="clear_log">清除日志</string>
-    <string name="log_service_title">VLC 日志正在记录</string>
+    <string name="log_service_title">TubePlayer 日志正在记录</string>
     <string name="log_service_text">打开日志控制台</string>
     <string name="copy_to_clipboard">复制到剪贴板</string>
     <string name="copied_to_clipboard">日志内容已复制到剪贴板。</string>
     <string name="dump_logcat">logcat 日志转储</string>
     <string name="dump_logcat_success">Logcat 日志已成功转储至 %1$s!</string>
     <string name="dump_logcat_failure">logcat 转储失败。</string>
-    <string name="serious_crash">真不走运，发生了很严重的错误，VLC 不得不关闭鸟。</string>
-    <string name="help_us_send_log">您可以将下述崩溃日志发送给我们，协助改进 VLC:</string>
-    <string name="restart_vlc">重新启动 VLC</string>
+    <string name="serious_crash">真不走运，发生了很严重的错误，TubePlayer 不得不关闭鸟。</string>
+    <string name="help_us_send_log">您可以将下述崩溃日志发送给我们，协助改进 TubePlayer:</string>
+    <string name="restart_vlc">重新启动 TubePlayer</string>
     <string name="send_log">发送日志</string>
     <string name="sending_log">正在发送日志…</string>
     <string name="drawer_open">打开导航栏</string>
@@ -384,18 +384,18 @@
     <string name="no_subs_found">该目录下无字幕文件</string>
     <string name="music_now_playing">正在播放</string>
     <!--Widget-->
-    <string name="widget_name_w">VLC 白色小挂件</string>
-    <string name="widget_name_b">VLC 深色小挂件</string>
-    <string name="allow_storage_access_title">允许 VLC 访问视频与音频文件</string>
-    <string name="allow_storage_access_description">VLC 需要您授权方可访问该设备上的媒体文件。</string>
-    <string name="allow_settings_access_ringtone_title">允许 VLC 设置铃声</string>
-    <string name="allow_settings_access_ringtone_description">VLC 需要您的授权方可将本歌曲设为您的铃声。</string>
-    <string name="allow_settings_access_brightness_title">允许 VLC 更改亮度模式</string>
-    <string name="allow_settings_access_brightness_description">VLC 需要您的授权方可更改您的亮度模式。</string>
-    <string name="allow_draw_overlays_title">允许 VLC 播放器浮动在其他应用之上</string>
-    <string name="allow_sdraw_overlays_description">VLC 需要您的授权方可在其他应用程序之上的浮层显示您的视频。</string>
+    <string name="widget_name_w">TubePlayer 白色小挂件</string>
+    <string name="widget_name_b">TubePlayer 深色小挂件</string>
+    <string name="allow_storage_access_title">允许 TubePlayer 访问视频与音频文件</string>
+    <string name="allow_storage_access_description">TubePlayer 需要您授权方可访问该设备上的媒体文件。</string>
+    <string name="allow_settings_access_ringtone_title">允许 TubePlayer 设置铃声</string>
+    <string name="allow_settings_access_ringtone_description">TubePlayer 需要您的授权方可将本歌曲设为您的铃声。</string>
+    <string name="allow_settings_access_brightness_title">允许 TubePlayer 更改亮度模式</string>
+    <string name="allow_settings_access_brightness_description">TubePlayer 需要您的授权方可更改您的亮度模式。</string>
+    <string name="allow_draw_overlays_title">允许 TubePlayer 播放器浮动在其他应用之上</string>
+    <string name="allow_sdraw_overlays_description">TubePlayer 需要您的授权方可在其他应用程序之上的浮层显示您的视频。</string>
     <string name="permission_ask_again">授予权限</string>
-    <string name="exit_app">关闭 VLC</string>
+    <string name="exit_app">关闭 TubePlayer</string>
     <!--fast scroller-->
     <string name="fastscroller_track">FastScroller 轨道</string>
     <string name="fastscroller_handle">FastScroller 句柄</string>
@@ -445,7 +445,7 @@
     <string name="length">长度</string>
     <string name="tv_settings_hint">长按 OK 按钮可选中/取消选中目录</string>
     <string name="ml_external_storage_title">发现新的外部存储设备</string>
-    <string name="ml_external_storage_msg">是否希望 VLC 将设备“%1$s”添加到您的媒体库?</string>
+    <string name="ml_external_storage_msg">是否希望 TubePlayer 将设备“%1$s”添加到您的媒体库?</string>
     <string name="last_added_media">添加时间</string>
     <string name="no">否</string>
     <string name="loading_medialibrary">正在加载媒体库...</string>

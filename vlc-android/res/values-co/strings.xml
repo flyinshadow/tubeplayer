@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main VLC Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">Vai</string>
     <string name="cancel">Abbandunà</string>
     <string name="other">Altru</string>
@@ -38,7 +38,7 @@
     <string name="ringtone_error">Un sbagliu s\'hè accadatu durante a definizione di a suneria.</string>
     <string name="pause">Pausa</string>
     <string name="not_show_again">Ùn affissà più stu messaghju.</string>
-    <string name="info_title">VLC</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">Artista Scunnisciutu</string>
     <string name="unknown_album">Albumu Scunnisciutu</string>
     <string name="unknown_genre">Generu Scunnisciutu</string>
@@ -159,11 +159,11 @@
     <string name="open_mrl">Flussu</string>
     <string name="open_mrl_dialog_title">Apre un flussu di reta</string>
     <string name="open_mrl_dialog_msg">Scrivite un indirizzu di reta : p.i. http://, mms:// o rtsp://</string>
-    <string name="error_not_compatible">Per disgrazia, u vostru apparechju ùn hè micca accettatu da sta versione di VLC per Android™.</string>
-    <string name="error_problem">Per disgrazia, VLC per Android™ hè statu chjosu per via d\'un penseru.</string>
+    <string name="error_not_compatible">Per disgrazia, u vostru apparechju ùn hè micca accettatu da sta versione di TubePlayer per Android™.</string>
+    <string name="error_problem">Per disgrazia, TubePlayer per Android™ hè statu chjosu per via d\'un penseru.</string>
     <string name="error_message_is">U messaghju di sbagliu, chì hè à indicà fer favvi spannà, hè :\n</string>
     <string name="encountered_error_title">Sbagliu di ripruduzzione</string>
-    <string name="encountered_error_message">VLC hà scuntratu un sbagliu cù stu media.\nCi vole à pruvà di rinfrescà a vostra bibliuteca media.</string>
+    <string name="encountered_error_message">TubePlayer hà scuntratu un sbagliu cù stu media.\nCi vole à pruvà di rinfrescà a vostra bibliuteca media.</string>
     <string name="invalid_location">A lucalizazione %1$s ùn pò micca esse sunata.</string>
     <string name="search">Circà</string>
     <string name="search_history">Crunulogia di ricerca</string>
@@ -190,13 +190,13 @@
     <string name="show_playlist">Affissà a lista di lettura</string>
     <string name="hold_to_stop">Mentene per piantà</string>
     <!-- About -->
-    <string name="app_name_full">VLC per Android</string>
+    <string name="app_name_full">TubePlayer per Android</string>
     <string name="licence">Licenza</string>
     <string name="revision">Revisione</string>
     <string name="about">Apprupositu</string>
-    <string name="about_text">VLC per Android™ hè una purtera di VLC media player, u lettore media pupulare in \'open source\'. A versione Android™ pò leghje a maiò parte di i schedarii è di flussi di reta.</string>
-    <string name="compiled_by">Sta versione di VLC hè cumpilata da :</string>
-    <string name="vlc_authors">Autori di VLC.</string>
+    <string name="about_text">TubePlayer per Android™ hè una purtera di TubePlayer media player, u lettore media pupulare in \'open source\'. A versione Android™ pò leghje a maiò parte di i schedarii è di flussi di reta.</string>
+    <string name="compiled_by">Sta versione di TubePlayer hè cumpilata da :</string>
+    <string name="vlc_authors">Autori di TubePlayer.</string>
     <!-- Preferences -->
     <string name="preferences">Preferenze</string>
     <string name="general_prefs_category">Generale</string>
@@ -285,7 +285,7 @@
     <string name="enable_steal_remote_control">Cuntrollu esclusivu da a telecumanda di l\'elmu</string>
     <string name="enable_steal_remote_control_summary">Scarta i cunflitti cù d\'altre appiecazioni blucchendu a telecumanda. Quessu impedisce di richjamà un numeru cù un dopiu-cliccu nant\'à i telefuni HTC.</string>
     <string name="aout">Esciuta audio</string>
-    <string name="aout_summary">Cambià u metoda chì VLC impiega per l\'esciuta audio s\'ellu ùn funzioneghja micca.</string>
+    <string name="aout_summary">Cambià u metoda chì TubePlayer impiega per l\'esciuta audio s\'ellu ùn funzioneghja micca.</string>
     <string name="controls_prefs_category">Cuntrolli</string>
     <string name="performance_prefs_category">Andamentu</string>
     <string name="chroma_format">Sfurzà crominanza video</string>
@@ -311,7 +311,7 @@
     <string name="media_db_cleared">A banca di dati media hè stata viutata !</string>
     <string name="set_locale">Definisce a lingua</string>
     <string name="set_locale_detail">Lascià viotu per rimette à zeru</string>
-    <string name="set_locale_popup">Ci vole à chità è rilancià VLC per piglià sti cambiamenti in contu.</string>
+    <string name="set_locale_popup">Ci vole à chità è rilancià TubePlayer per piglià sti cambiamenti in contu.</string>
     <string name="network_caching">Valore di l\'impiatta di reta</string>
     <string name="network_caching_summary">A quantità di tempu dedicata à u stampone di media di reta (in ms). Ùn funziuneghja micca cù a discudificazione materiale. Lascià viotu per rimette à zeru.</string>
     <string name="quit">Ci vole à chità è rilancià l\'appiecazione</string>
@@ -322,16 +322,16 @@
     <string name="start_logging">Principià l\'arregistramentu di messaghju</string>
     <string name="stop_logging">Piantà l\'arregistramentu di messaghju</string>
     <string name="clear_log">Viutà u ghjurnale di i messaghji</string>
-    <string name="log_service_title">Arregistramentu di i ghjurnali di VLC</string>
+    <string name="log_service_title">Arregistramentu di i ghjurnali di TubePlayer</string>
     <string name="log_service_text">Apre u dialogu di u ghjurnale di i messaghji</string>
     <string name="copy_to_clipboard">Cupià ver di u preme\'papei</string>
     <string name="copied_to_clipboard">Ghjurnale di i messaghji cupiatu ver di u preme\'papei.</string>
     <string name="dump_logcat">Arregistrà u ghjurnale logcat</string>
     <string name="dump_logcat_success">Logcat arregistratu bè ver di %1$s !</string>
     <string name="dump_logcat_failure">Fiascu à l\'arregistramentu di logcat.</string>
-    <string name="serious_crash">Per disgrazia, un sbagliu seriu s\'hè accadatu è VLC hè statu chjosu.</string>
-    <string name="help_us_send_log">Aiutatecci à megliurà VLC mandenduci stu ghjurnale di fiascu :</string>
-    <string name="restart_vlc">Rilancià VLC</string>
+    <string name="serious_crash">Per disgrazia, un sbagliu seriu s\'hè accadatu è TubePlayer hè statu chjosu.</string>
+    <string name="help_us_send_log">Aiutatecci à megliurà TubePlayer mandenduci stu ghjurnale di fiascu :</string>
+    <string name="restart_vlc">Rilancià TubePlayer</string>
     <string name="send_log">Mandà u ghjurnale di i messaghji</string>
     <string name="sending_log">Inviu in corsu di u ghjurnale...</string>
     <string name="drawer_open">Apre a tiretta di navigazione</string>
@@ -374,18 +374,18 @@
     <string name="no_subs_found">Alcunu sottutitulu in stu cartulare</string>
     <string name="music_now_playing">Lettura in corsu</string>
     <!--Widget-->
-    <string name="widget_name_w">Widget VLC Biancu</string>
-    <string name="widget_name_b">Widget VLC Scuru</string>
-    <string name="allow_storage_access_title">Permette à VLC d\'accede à i schedarii video è audio</string>
-    <string name="allow_storage_access_description">VLC hà bisognu di stu permessu per accede à i schedarii media nant\'à st\'apparechju.</string>
-    <string name="allow_settings_access_ringtone_title">Permette à VLC di definisce a suneria</string>
-    <string name="allow_settings_access_ringtone_description">VLC hà bisognu di stu permessu per definisce sta canzona cum\'è a vostra suneria.</string>
-    <string name="allow_settings_access_brightness_title">Permette à VLC di cambià u modu di lucidezza</string>
-    <string name="allow_settings_access_brightness_description">VLC hà bisognu di stu permessu per cambià u vostru modu di lucidezza.</string>
-    <string name="allow_draw_overlays_title">Permette à u lettore VLC d\'affissassi sopra à l\'altre appiecazioni</string>
-    <string name="allow_sdraw_overlays_description">VLC hà bisognu di stu permessu per affissà a vistra video in una finestra chì s\'apre sopra à l\'altre appiecazioni.</string>
+    <string name="widget_name_w">Widget TubePlayer Biancu</string>
+    <string name="widget_name_b">Widget TubePlayer Scuru</string>
+    <string name="allow_storage_access_title">Permette à TubePlayer d\'accede à i schedarii video è audio</string>
+    <string name="allow_storage_access_description">TubePlayer hà bisognu di stu permessu per accede à i schedarii media nant\'à st\'apparechju.</string>
+    <string name="allow_settings_access_ringtone_title">Permette à TubePlayer di definisce a suneria</string>
+    <string name="allow_settings_access_ringtone_description">TubePlayer hà bisognu di stu permessu per definisce sta canzona cum\'è a vostra suneria.</string>
+    <string name="allow_settings_access_brightness_title">Permette à TubePlayer di cambià u modu di lucidezza</string>
+    <string name="allow_settings_access_brightness_description">TubePlayer hà bisognu di stu permessu per cambià u vostru modu di lucidezza.</string>
+    <string name="allow_draw_overlays_title">Permette à u lettore TubePlayer d\'affissassi sopra à l\'altre appiecazioni</string>
+    <string name="allow_sdraw_overlays_description">TubePlayer hà bisognu di stu permessu per affissà a vistra video in una finestra chì s\'apre sopra à l\'altre appiecazioni.</string>
     <string name="permission_ask_again">Cunsente u permessu</string>
-    <string name="exit_app">Chjode VLC</string>
+    <string name="exit_app">Chjode TubePlayer</string>
     <!--fast scroller-->
     <string name="fastscroller_track">Strisciata di a SfilarataInFuria</string>
     <string name="fastscroller_handle">Manighjà a SfilarataInFuria</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main VLC Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">အိုကေ</string>
     <string name="cancel">ပယ်ဖျက်</string>
     <string name="other">အခြား</string>

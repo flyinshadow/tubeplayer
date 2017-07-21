@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main VLC Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">	\nঠিক আছে</string>
     <string name="cancel">	\nরদ করা</string>
     <string name="other">	\nঅন্য</string>
@@ -87,16 +87,16 @@
     <string name="open_mrl_dialog_title">ওপেন সোর্স নেটওয়ার্ক প্রবাহ</string>
     <string name="open_mrl_dialog_msg">নেটওযারক MRL লিখন: যেমন এখানে http://, mms:// বা  rtsp://</string>
     <string name="error_not_compatible">দুঃখিত, আপনার ডিভাইস Android™এর জন্য VLCএর এই সংস্করণটির দ্বারা বর্তমানে সমর্থন করা হয় না।</string>
-    <string name="error_problem">দুঃখিত, Android এর জন্য VLC একটি সমস্যা লোড হয় এবং বন্ধ ছিল.</string>
+    <string name="error_problem">দুঃখিত, Android এর জন্য TubePlayer একটি সমস্যা লোড হয় এবং বন্ধ ছিল.</string>
     <!--Tips-->
     <!-- About -->
-    <string name="app_name_full">Android এর জন্য VLC ™</string>
+    <string name="app_name_full">Android এর জন্য TubePlayer ™</string>
     <string name="licence">লাইসেন্স</string>
     <string name="revision">সংস্করণ</string>
     <string name="about">সম্পর্কে</string>
-    <string name="about_text">অ্যানড্রইড ™ জন্য VLC হয় VLC মিডিয়া প্লেয়ার, জনপ্রিয় ওপেন সোর্স মিডিয়া প্লেয়ার একটি বন্দর. অ্যানড্রইড ™ সংস্করণে সর্বাধিক ফাইল এবং নেটওয়ার্ক স্ট্রিম পড়তে পারেন.</string>
-    <string name="compiled_by">VLC \'র এই সংস্করণ দ্বারা কম্পাইল করা হয়:</string>
-    <string name="vlc_authors">VLC লেখক।</string>
+    <string name="about_text">অ্যানড্রইড ™ জন্য TubePlayer হয় TubePlayer মিডিয়া প্লেয়ার, জনপ্রিয় ওপেন সোর্স মিডিয়া প্লেয়ার একটি বন্দর. অ্যানড্রইড ™ সংস্করণে সর্বাধিক ফাইল এবং নেটওয়ার্ক স্ট্রিম পড়তে পারেন.</string>
+    <string name="compiled_by">TubePlayer \'র এই সংস্করণ দ্বারা কম্পাইল করা হয়:</string>
+    <string name="vlc_authors">TubePlayer লেখক।</string>
     <!-- Preferences -->
     <string name="preferences">পছন্দ</string>
     <string name="automatic">স্বয়ংক্রিয়</string>

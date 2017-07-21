@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main VLC Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">Ok</string>
     <string name="cancel">Annuleren</string>
     <string name="other">Andere</string>
@@ -39,7 +39,7 @@
     <string name="ringtone_error">Er trad een fout op bij het instellen van de beltoon.</string>
     <string name="pause">Pauzeren</string>
     <string name="not_show_again">Niet meer weergeven.</string>
-    <string name="info_title">VLC</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">Onbekende artiest</string>
     <string name="unknown_album">Onbekend album</string>
     <string name="unknown_genre">Onbekend genre</string>
@@ -161,11 +161,11 @@
     <string name="open_mrl">MRL openen</string>
     <string name="open_mrl_dialog_title">Netwerkstream openen</string>
     <string name="open_mrl_dialog_msg">Geef netwerk-MRL op: bijvoorbeeld http://, mms:// of rtsp://</string>
-    <string name="error_not_compatible">Sorry, uw toestel wordt op dit moment niet ondersteund door deze versie van VLC voor Android™.</string>
-    <string name="error_problem">Sorry, VLC voor Android had een probleem bij het laden en moest afgesloten worden.</string>
+    <string name="error_not_compatible">Sorry, uw toestel wordt op dit moment niet ondersteund door deze versie van TubePlayer voor Android™.</string>
+    <string name="error_problem">Sorry, TubePlayer voor Android had een probleem bij het laden en moest afgesloten worden.</string>
     <string name="error_message_is">De foutmelding is (vermeld dit bij het debuggen):\n\n</string>
     <string name="encountered_error_title">Fout bij afspelen</string>
-    <string name="encountered_error_message">VLC heeft een fout aangetroffen bij dit mediabestand.\nProbeer de mediabibliotheek te vernieuwen.</string>
+    <string name="encountered_error_message">TubePlayer heeft een fout aangetroffen bij dit mediabestand.\nProbeer de mediabibliotheek te vernieuwen.</string>
     <string name="invalid_location">De locatie %1$s kan niet afgespeeld worden.</string>
     <string name="search">Zoeken</string>
     <string name="search_history">Zoekgeschiedenis</string>
@@ -192,13 +192,13 @@
     <string name="show_playlist">Afspeellijst weergeven</string>
     <string name="hold_to_stop">Inhouden om te stoppen</string>
     <!-- About -->
-    <string name="app_name_full">VLC voor Android™</string>
+    <string name="app_name_full">TubePlayer voor Android™</string>
     <string name="licence">Licentie</string>
     <string name="revision">Revisie</string>
     <string name="about">Over</string>
-    <string name="about_text">VLC voor Android™ is een port van VLC media player, de populaire open source mediaspeler. De Android™-versie kan de meeste bestanden en netwerkstreams lezen.</string>
-    <string name="compiled_by">Deze versie van VLC werd gecompileerd door:</string>
-    <string name="vlc_authors">VLC-auteurs.</string>
+    <string name="about_text">TubePlayer voor Android™ is een port van TubePlayer media player, de populaire open source mediaspeler. De Android™-versie kan de meeste bestanden en netwerkstreams lezen.</string>
+    <string name="compiled_by">Deze versie van TubePlayer werd gecompileerd door:</string>
+    <string name="vlc_authors">TubePlayer-auteurs.</string>
     <!-- Preferences -->
     <string name="preferences">Voorkeuren</string>
     <string name="general_prefs_category">Algemeen</string>
@@ -297,7 +297,7 @@
     <string name="enable_steal_remote_control">Exclusieve headset-afstandsbediening</string>
     <string name="enable_steal_remote_control_summary">Vermijd conflicten door de afstandsbediening van andere apps te stelen. Dit voorkomt bellen bij dubbelklikken op HTC-telefoons.</string>
     <string name="aout">Audio-uitvoer</string>
-    <string name="aout_summary">Verander de audio-uitvoermethode die VLC gebruikt.</string>
+    <string name="aout_summary">Verander de audio-uitvoermethode die TubePlayer gebruikt.</string>
     <string name="controls_prefs_category">Besturing</string>
     <string name="performance_prefs_category">Prestaties</string>
     <string name="chroma_format">Chroma forceren</string>
@@ -319,12 +319,12 @@
     <string name="auto_rescan">Automatisch opnieuw scannen</string>
     <string name="auto_rescan_summary">Apparaat automatisch scannen op nieuwe of verwijderde media bij het starten van de toepassing</string>
     <string name="clear_media_db">Media-database wissen</string>
-    <string name="clear_media_db_summary">Ga naar Android VLC-info om data te wissen</string>
+    <string name="clear_media_db_summary">Ga naar Android TubePlayer-info om data te wissen</string>
     <string name="clear_history">Zoekgeschiedenis wissen</string>
     <string name="media_db_cleared">Media-database gewist!</string>
     <string name="set_locale">Taal instellen</string>
     <string name="set_locale_detail">Leeglaten om te herstellen</string>
-    <string name="set_locale_popup">VLC afsluiten en opnieuw starten om wijzigingen toe te passen.</string>
+    <string name="set_locale_popup">TubePlayer afsluiten en opnieuw starten om wijzigingen toe te passen.</string>
     <string name="network_caching">Netwerkbuffergrootte</string>
     <string name="network_caching_summary">De hoeveelheid tijd om netwerkmedia te  bufferen (in ms). Werkt niet met hardware-decoderen. Leeg laten om te herstellen.</string>
     <string name="resume_playback_title">Afspelen hervatten na een oproep</string>
@@ -338,16 +338,16 @@
     <string name="start_logging">Start loggen</string>
     <string name="stop_logging">Stop loggen</string>
     <string name="clear_log">Log wissen</string>
-    <string name="log_service_title">VLC log-opname</string>
+    <string name="log_service_title">TubePlayer log-opname</string>
     <string name="log_service_text">Log-console openen</string>
     <string name="copy_to_clipboard">Naar klembord kopiëren</string>
     <string name="copied_to_clipboard">Log naar klembord gekopieerd.</string>
     <string name="dump_logcat">Logcat-log dumpen</string>
     <string name="dump_logcat_success">Logcat succesvol gedumpt naar %1$s!</string>
     <string name="dump_logcat_failure">Logcat dumpen mislukt.</string>
-    <string name="serious_crash">Er trad spijtig genoeg een ernstige fout op en VLC moest afsluiten.</string>
-    <string name="help_us_send_log">Help ons om VLC te verbeteren door de volgende crash-log te verzenden:</string>
-    <string name="restart_vlc">VLC opnieuw starten</string>
+    <string name="serious_crash">Er trad spijtig genoeg een ernstige fout op en TubePlayer moest afsluiten.</string>
+    <string name="help_us_send_log">Help ons om TubePlayer te verbeteren door de volgende crash-log te verzenden:</string>
+    <string name="restart_vlc">TubePlayer opnieuw starten</string>
     <string name="send_log">Log verzenden</string>
     <string name="sending_log">Log verzenden...</string>
     <string name="drawer_open">Navigatielade openen</string>
@@ -391,18 +391,18 @@
     <string name="no_subs_found">Geen ondertitels in deze map</string>
     <string name="music_now_playing">Nu afspelend</string>
     <!--Widget-->
-    <string name="widget_name_w">VLC Widget licht</string>
-    <string name="widget_name_b">VLC Widget donker</string>
-    <string name="allow_storage_access_title">VLC toegang geven tot video- en audiobestanden</string>
-    <string name="allow_storage_access_description">VLC moet uw toestemming hebben om toegang te krijgen tot de mediabestanden op dit apparaat.</string>
-    <string name="allow_settings_access_ringtone_title">VLC toelaten om de ringtone in te stellen</string>
-    <string name="allow_settings_access_ringtone_description">VLC moet uw toestemming hebben om dit nummer in te stellen als uw ringtone.</string>
-    <string name="allow_settings_access_brightness_title">VLC toelaten om helderheidsmodus te wijzigen</string>
-    <string name="allow_settings_access_brightness_description">VLC moet uw toestemming hebben om uw helderheidsmodus te wijzigen</string>
-    <string name="allow_draw_overlays_title">Popup van VLC-speler toestaan over andere apps</string>
-    <string name="allow_sdraw_overlays_description">VLC moet uw toestemming hebben om uw video weer te geven in een popup bovenop andere toepassingen.</string>
+    <string name="widget_name_w">TubePlayer Widget licht</string>
+    <string name="widget_name_b">TubePlayer Widget donker</string>
+    <string name="allow_storage_access_title">TubePlayer toegang geven tot video- en audiobestanden</string>
+    <string name="allow_storage_access_description">TubePlayer moet uw toestemming hebben om toegang te krijgen tot de mediabestanden op dit apparaat.</string>
+    <string name="allow_settings_access_ringtone_title">TubePlayer toelaten om de ringtone in te stellen</string>
+    <string name="allow_settings_access_ringtone_description">TubePlayer moet uw toestemming hebben om dit nummer in te stellen als uw ringtone.</string>
+    <string name="allow_settings_access_brightness_title">TubePlayer toelaten om helderheidsmodus te wijzigen</string>
+    <string name="allow_settings_access_brightness_description">TubePlayer moet uw toestemming hebben om uw helderheidsmodus te wijzigen</string>
+    <string name="allow_draw_overlays_title">Popup van TubePlayer-speler toestaan over andere apps</string>
+    <string name="allow_sdraw_overlays_description">TubePlayer moet uw toestemming hebben om uw video weer te geven in een popup bovenop andere toepassingen.</string>
     <string name="permission_ask_again">Toegang toestaan</string>
-    <string name="exit_app">VLC sluiten</string>
+    <string name="exit_app">TubePlayer sluiten</string>
     <!--fast scroller-->
     <string name="fastscroller_track">FastScroller-track</string>
     <string name="fastscroller_handle">FastScroller-bediening</string>
@@ -452,7 +452,7 @@
     <string name="length">Lengte</string>
     <string name="tv_settings_hint">De ok-knop lang ingedrukt houden om mappen aan/uit te vinken.</string>
     <string name="ml_external_storage_title">Nieuwe externe opslag gedetecteerd</string>
-    <string name="ml_external_storage_msg">Wilt u dat VLC apparaat %1$s aan uw mediabibliotheek toevoegt?</string>
+    <string name="ml_external_storage_msg">Wilt u dat TubePlayer apparaat %1$s aan uw mediabibliotheek toevoegt?</string>
     <string name="last_added_media">laatst toegevoegd</string>
     <string name="no">Nee</string>
     <string name="loading_medialibrary">Mediabibliotheek laden...</string>

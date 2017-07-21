@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main VLC Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Mégsem</string>
     <string name="other">Egyéb</string>
@@ -38,7 +38,7 @@
     <string name="ringtone_error">Hiba történt a csengőhang beállítása közben.</string>
     <string name="pause">Szünet</string>
     <string name="not_show_again">Ne mutassa újra ezt az üzenetet.</string>
-    <string name="info_title">VLC</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">Ismeretlen előadó</string>
     <string name="unknown_album">Ismeretlen album</string>
     <string name="unknown_genre">Ismeretlen műfaj</string>
@@ -159,11 +159,11 @@
     <string name="open_mrl">Műsorszórás</string>
     <string name="open_mrl_dialog_title">Hálózati műsor megnyitása</string>
     <string name="open_mrl_dialog_msg">Írja be a hálózati címet: pl. http://, mms:// vagy rtsp://</string>
-    <string name="error_not_compatible">Sajnáljuk, a készüléke jelenleg nem támogatott ebben a VLC Android™-ra verzióban.</string>
-    <string name="error_problem">Sajnáljuk, a VLC Androidra problémába ütközött a betöltés közben és bezárult.</string>
+    <string name="error_not_compatible">Sajnáljuk, a készüléke jelenleg nem támogatott ebben a TubePlayer Android™-ra verzióban.</string>
+    <string name="error_problem">Sajnáljuk, a TubePlayer Androidra problémába ütközött a betöltés közben és bezárult.</string>
     <string name="error_message_is">A hibaüzenet (kérjük említse meg hibakeresésnél):\n</string>
     <string name="encountered_error_title">Lejátszási hiba</string>
-    <string name="encountered_error_message">A VLC hibát tapasztalt ezzel a médiával.\nKérjük próbálja meg frissíteni a médiatárat.</string>
+    <string name="encountered_error_message">A TubePlayer hibát tapasztalt ezzel a médiával.\nKérjük próbálja meg frissíteni a médiatárat.</string>
     <string name="invalid_location">A(z) %1$s helyet nem lehet lejátszani.</string>
     <string name="search">Keresés</string>
     <string name="search_history">Keresési napló</string>
@@ -190,13 +190,13 @@
     <string name="show_playlist">Lejátszólista megjelenítése</string>
     <string name="hold_to_stop">Tartsd a leállításhoz</string>
     <!-- About -->
-    <string name="app_name_full">VLC Android™-ra</string>
+    <string name="app_name_full">TubePlayer Android™-ra</string>
     <string name="licence">Licenc</string>
     <string name="revision">Javítás</string>
     <string name="about">Névjegy</string>
-    <string name="about_text">A VLC Android™-ra a népszerű nyílt forráskódú VLC médialejátszó androidos változata. Ez a változat képes a legtöbb fájlból és hálózati forrásból lejátszani.</string>
-    <string name="compiled_by">Ezt a VLC verziót lefordította:</string>
-    <string name="vlc_authors">VLC szerzők.</string>
+    <string name="about_text">A TubePlayer Android™-ra a népszerű nyílt forráskódú TubePlayer médialejátszó androidos változata. Ez a változat képes a legtöbb fájlból és hálózati forrásból lejátszani.</string>
+    <string name="compiled_by">Ezt a TubePlayer verziót lefordította:</string>
+    <string name="vlc_authors">TubePlayer szerzők.</string>
     <!-- Preferences -->
     <string name="preferences">Beállítások</string>
     <string name="general_prefs_category">Általános</string>
@@ -275,7 +275,7 @@
     <string name="enable_steal_remote_control">Kizárólagosan vezérelje a fejhallgatót</string>
     <string name="enable_steal_remote_control_summary">A fejhallgató vezérlőit ne használhassák más alkalmazások. Ezzel megakadályozható a tárcsázás duplakattintáskor HTC telefonokon.</string>
     <string name="aout">Hangkimenet</string>
-    <string name="aout_summary">Változtassa meg a VLC hangkimenetét</string>
+    <string name="aout_summary">Változtassa meg a TubePlayer hangkimenetét</string>
     <string name="performance_prefs_category">Teljesítmény</string>
     <string name="chroma_format">Videó színtartomány kényszerítése</string>
     <string name="chroma_format_summary">RGB 32-bit: alapértelmezett színtartomány\nRGB 16-bit: jobb teljesítmény, de rosszabb minőség\nYUV: legjobb teljesítmény, de nem minden eszköz támogatja. Android 2.3 vagy újabb szükséges.</string>
@@ -297,7 +297,7 @@
     <string name="media_db_cleared">Média adatbázis törölve!</string>
     <string name="set_locale">Hely beállítása</string>
     <string name="set_locale_detail">Hagyja üresen a visszaállításhoz</string>
-    <string name="set_locale_popup">Lépjen ki és indítsa újra a VLC-t a beállítások érvénybe lépéséhez.</string>
+    <string name="set_locale_popup">Lépjen ki és indítsa újra a TubePlayer-t a beállítások érvénybe lépéséhez.</string>
     <string name="network_caching">Hálózati gyorsítótárazás időtartama</string>
     <string name="network_caching_summary">Hálózati műsor pufferelési ideje (ms). Nem működik hardveres dekódolásnál. Hagyja üresen az alapértelmezett értékhez.</string>
     <string name="quit">Kilépés és újraindítás</string>
@@ -308,16 +308,16 @@
     <string name="start_logging">Naplózás indítása</string>
     <string name="stop_logging">Naplózás befejezése</string>
     <string name="clear_log">Napló törlése</string>
-    <string name="log_service_title">VLC naplók felvétele</string>
+    <string name="log_service_title">TubePlayer naplók felvétele</string>
     <string name="log_service_text">Naplókonzol megnyitása</string>
     <string name="copy_to_clipboard">Másolás a vágólapra</string>
     <string name="copied_to_clipboard">Másolva a vágólapra!</string>
     <string name="dump_logcat">Logcat napló mentése</string>
     <string name="dump_logcat_success">Logcat sikeresen kimentve ide: %1$s!</string>
     <string name="dump_logcat_failure">Logcat mentése sikertelen.</string>
-    <string name="serious_crash">Sajnos egy komoly hiba történt és a VLC-nek be kellett záródnia.</string>
-    <string name="help_us_send_log">Segítsen a VLC tökéletesítésében a következő hibanapló elküldésével:</string>
-    <string name="restart_vlc">VLC újraindítása</string>
+    <string name="serious_crash">Sajnos egy komoly hiba történt és a TubePlayer-nek be kellett záródnia.</string>
+    <string name="help_us_send_log">Segítsen a TubePlayer tökéletesítésében a következő hibanapló elküldésével:</string>
+    <string name="restart_vlc">TubePlayer újraindítása</string>
     <string name="send_log">Naplófájl küldése</string>
     <string name="sending_log">Naplófájl küldése… </string>
     <string name="drawer_open">Navigációs fiók megnyitása</string>
@@ -351,12 +351,12 @@
     <string name="no_subs_found">Nincs felirat ebben a könyvtárban</string>
     <string name="music_now_playing">Most játszott</string>
     <!--Widget-->
-    <string name="widget_name_w">VLC fehér ablakelem</string>
-    <string name="widget_name_b">VLC sötét ablakelem</string>
-    <string name="allow_storage_access_title">A VLC hozzáférhet a videó és hangfájllokhoz</string>
-    <string name="allow_storage_access_description">A VLC-nek szüksége van erre az engedélyre a médiafájlok elérésére az eszözén.</string>
+    <string name="widget_name_w">TubePlayer fehér ablakelem</string>
+    <string name="widget_name_b">TubePlayer sötét ablakelem</string>
+    <string name="allow_storage_access_title">A TubePlayer hozzáférhet a videó és hangfájllokhoz</string>
+    <string name="allow_storage_access_description">A TubePlayer-nek szüksége van erre az engedélyre a médiafájlok elérésére az eszözén.</string>
     <string name="permission_ask_again">Engedély megadása</string>
-    <string name="exit_app">VLC bezárása</string>
+    <string name="exit_app">TubePlayer bezárása</string>
     <!--fast scroller-->
     <!--Plugins-->
     <string name="download_on_device">Letöltés</string>

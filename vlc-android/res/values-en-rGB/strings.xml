@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main VLC Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="other">Other</string>
@@ -38,7 +38,7 @@
     <string name="ringtone_error">An error occurred while setting the ringtone.</string>
     <string name="pause">Pause</string>
     <string name="not_show_again">Don\'t show this message again.</string>
-    <string name="info_title">VLC</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">Unknown Artist</string>
     <string name="unknown_album">Unknown Album</string>
     <string name="unknown_genre">Unknown Genre</string>
@@ -140,11 +140,11 @@
     <string name="open_mrl">Open MRL</string>
     <string name="open_mrl_dialog_title">Open network stream</string>
     <string name="open_mrl_dialog_msg">Enter network MRL: e.g. http://, mms:// or rtsp://</string>
-    <string name="error_not_compatible">Sorry, your device is currently not supported by this version of VLC for Android™.</string>
-    <string name="error_problem">Sorry, VLC for Android had a problem loading and had to close.</string>
+    <string name="error_not_compatible">Sorry, your device is currently not supported by this version of TubePlayer for Android™.</string>
+    <string name="error_problem">Sorry, TubePlayer for Android had a problem loading and had to close.</string>
     <string name="error_message_is">The error message is (please mention this when debugging):\n</string>
     <string name="encountered_error_title">Playback error</string>
-    <string name="encountered_error_message">VLC encountered an error with this media.\nPlease try refreshing the media library.</string>
+    <string name="encountered_error_message">TubePlayer encountered an error with this media.\nPlease try refreshing the media library.</string>
     <string name="invalid_location">The location %1$s cannot be played.</string>
     <string name="search">Search</string>
     <string name="search_history">Search history</string>
@@ -166,13 +166,13 @@
     <string name="show_playlist">Show playlist</string>
     <string name="hold_to_stop">Hold to stop</string>
     <!-- About -->
-    <string name="app_name_full">VLC for Android™</string>
+    <string name="app_name_full">TubePlayer for Android™</string>
     <string name="licence">License</string>
     <string name="revision">Revision</string>
     <string name="about">About</string>
-    <string name="about_text">VLC for Android™ is a port of VLC media player, the popular open source media player. The Android™ version can read most files and network streams.</string>
-    <string name="compiled_by">This version of VLC is compiled by:</string>
-    <string name="vlc_authors">VLC Authors.</string>
+    <string name="about_text">TubePlayer for Android™ is a port of TubePlayer media player, the popular open source media player. The Android™ version can read most files and network streams.</string>
+    <string name="compiled_by">This version of TubePlayer is compiled by:</string>
+    <string name="vlc_authors">TubePlayer Authors.</string>
     <!-- Preferences -->
     <string name="preferences">Preferences</string>
     <string name="general_prefs_category">General</string>
@@ -224,7 +224,7 @@
     <string name="enable_steal_remote_control">Exclusive headset remote control</string>
     <string name="enable_steal_remote_control_summary">Avoid conflicts by stealing the remote control from other apps. This prevents dialing on double click on HTC phones.</string>
     <string name="aout">Audio output</string>
-    <string name="aout_summary">Change the method that VLC uses to output audio.</string>
+    <string name="aout_summary">Change the method that TubePlayer uses to output audio.</string>
     <string name="performance_prefs_category">Performance</string>
     <string name="chroma_format">Force video chroma</string>
     <string name="chroma_format_summary">RGB 32-bit: default chroma\nRGB 16-bit: better performance but lower quality\nYUV: best performance but does not work on all devices. Android 2.3 and later only.</string>
@@ -246,7 +246,7 @@
     <string name="media_db_cleared">Media database cleared!</string>
     <string name="set_locale">Set locale</string>
     <string name="set_locale_detail">Leave blank to reset</string>
-    <string name="set_locale_popup">Quit and restart VLC for changes to take effect.</string>
+    <string name="set_locale_popup">Quit and restart TubePlayer for changes to take effect.</string>
     <string name="network_caching">Network caching value</string>
     <string name="network_caching_summary">The amount of time to buffer network media (in ms). Does not work with hardware decoding. Leave blank to reset.</string>
     <string name="quit">Quit and restart application</string>
@@ -257,16 +257,16 @@
     <string name="start_logging">Start logging</string>
     <string name="stop_logging">Stop logging</string>
     <string name="clear_log">Clear log</string>
-    <string name="log_service_title">VLC logs recording</string>
+    <string name="log_service_title">TubePlayer logs recording</string>
     <string name="log_service_text">Open the log console</string>
     <string name="copy_to_clipboard">Copy to clipboard</string>
     <string name="copied_to_clipboard">Copied log to clipboard.</string>
     <string name="dump_logcat">Dump logcat log</string>
     <string name="dump_logcat_success">Logcat successfully dumped to %1$s!</string>
     <string name="dump_logcat_failure">Failed to dump logcat.</string>
-    <string name="serious_crash">Unfortunately, a serious error has occurred and VLC had to close.</string>
-    <string name="help_us_send_log">Help us improving VLC by sending the following crash log:</string>
-    <string name="restart_vlc">Restart VLC</string>
+    <string name="serious_crash">Unfortunately, a serious error has occurred and TubePlayer had to close.</string>
+    <string name="help_us_send_log">Help us improving TubePlayer by sending the following crash log:</string>
+    <string name="restart_vlc">Restart TubePlayer</string>
     <string name="send_log">Send the log</string>
     <string name="sending_log">Sending the log…</string>
     <string name="drawer_open">Open navigation drawer</string>
@@ -300,12 +300,12 @@
     <string name="no_subs_found">No subtitles in this directory</string>
     <string name="music_now_playing">Now Playing</string>
     <!--Widget-->
-    <string name="widget_name_w">VLC White Widget</string>
-    <string name="widget_name_b">VLC Dark Widget</string>
-    <string name="allow_storage_access_title">Allow VLC to access video and audio files</string>
-    <string name="allow_storage_access_description">VLC needs you to grant this permission to access the media files on this device.</string>
+    <string name="widget_name_w">TubePlayer White Widget</string>
+    <string name="widget_name_b">TubePlayer Dark Widget</string>
+    <string name="allow_storage_access_title">Allow TubePlayer to access video and audio files</string>
+    <string name="allow_storage_access_description">TubePlayer needs you to grant this permission to access the media files on this device.</string>
     <string name="permission_ask_again">Grant permission</string>
-    <string name="exit_app">Close VLC</string>
+    <string name="exit_app">Close TubePlayer</string>
     <!--fast scroller-->
     <!--Plugins-->
 </resources>

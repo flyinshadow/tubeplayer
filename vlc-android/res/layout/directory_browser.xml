@@ -6,7 +6,7 @@
 
     <include layout="@layout/button_search" />
 
-    <com.videolan.videoplayer.gui.view.SwipeRefreshLayout
+    <com.wenjoyai.videoplayer.gui.view.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,7 +14,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <com.videolan.videoplayer.gui.view.ContextMenuRecyclerView
+            <com.wenjoyai.videoplayer.gui.view.ContextMenuRecyclerView
                 android:id="@+id/network_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -26,7 +26,7 @@
                 android:gravity="center"
                 android:text="@string/directory_empty"/>
         </FrameLayout>
-    </com.videolan.videoplayer.gui.view.SwipeRefreshLayout>
+    </com.wenjoyai.videoplayer.gui.view.SwipeRefreshLayout>
 
     <include layout="@layout/shadow_top"/>
 </RelativeLayout>

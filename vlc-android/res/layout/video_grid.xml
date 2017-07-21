@@ -5,12 +5,12 @@
 
     <include layout="@layout/button_search" />
 
-    <com.videolan.videoplayer.gui.view.SwipeRefreshLayout
+    <com.wenjoyai.videoplayer.gui.view.SwipeRefreshLayout
                 android:id="@+id/swipeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/searchButton">
-        <com.videolan.videoplayer.gui.view.AutoFitRecyclerView
+        <com.wenjoyai.videoplayer.gui.view.AutoFitRecyclerView
             android:id="@id/android:list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -23,7 +23,7 @@
             android:fadingEdge="none"
             android:stretchMode="none"
             android:gravity="center" />
-    </com.videolan.videoplayer.gui.view.SwipeRefreshLayout>
+    </com.wenjoyai.videoplayer.gui.view.SwipeRefreshLayout>
 
     <LinearLayout
         android:id="@id/android:empty"

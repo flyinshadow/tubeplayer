@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main VLC Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">U redu</string>
     <string name="cancel">Odustani</string>
     <string name="other">Ostalo</string>
@@ -39,7 +39,7 @@
     <string name="ringtone_error">Nastala je greška pri postavljanju melodije zvona.</string>
     <string name="pause">Pauza</string>
     <string name="not_show_again">Ne prikazuj ponovno ovu poruku.</string>
-    <string name="info_title">VLC</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">Nepoznati izvođač</string>
     <string name="unknown_album">Nepoznati album</string>
     <string name="unknown_genre">Nepoznati žanr</string>
@@ -166,11 +166,11 @@
     <string name="open_mrl">Otvori MRL</string>
     <string name="open_mrl_dialog_title">Otvori mrežno strujanje</string>
     <string name="open_mrl_dialog_msg">Upišite mrežni MRL: npr. http://, mms:// ili rtsp://</string>
-    <string name="error_not_compatible">Isprika, trenutna VLC inačica nije podržana vašim Android™ uređajem.</string>
-    <string name="error_problem">Isprika, VLC za Android™ je imao poteškoća pri učitavanju i morao se zatvoriti.</string>
+    <string name="error_not_compatible">Isprika, trenutna TubePlayer inačica nije podržana vašim Android™ uređajem.</string>
+    <string name="error_problem">Isprika, TubePlayer za Android™ je imao poteškoća pri učitavanju i morao se zatvoriti.</string>
     <string name="error_message_is">Poruka greške je (navedite ovo pri prijavi greške):\n</string>
     <string name="encountered_error_title">Geška izvođenja</string>
-    <string name="encountered_error_message">VLC je naišao na grešku s ovim medijem.\nPokušajte osvježiti medijsku zbirku.</string>
+    <string name="encountered_error_message">TubePlayer je naišao na grešku s ovim medijem.\nPokušajte osvježiti medijsku zbirku.</string>
     <string name="invalid_location">Lokacija %1$s se ne može reproducirati.</string>
     <string name="search">Pretraživanje</string>
     <string name="search_history">Povijest pretraživanja</string>
@@ -197,13 +197,13 @@
     <string name="show_playlist">Prikaži popis izvođenja</string>
     <string name="hold_to_stop">Drži za zasutavljanje</string>
     <!-- About -->
-    <string name="app_name_full">VLC za Android™</string>
+    <string name="app_name_full">TubePlayer za Android™</string>
     <string name="licence">Licenca</string>
     <string name="revision">Izdanje</string>
     <string name="about">O aplikaciji</string>
-    <string name="about_text">VLC za Android™ je izdanje popularnog VLC medijskog reproduktora otvorenog kôda. Inačica za Android™ može reproducirati većinu datoteka i mrežnih strujanja.</string>
-    <string name="compiled_by">Ovu VLC inačicu su kompilirali:</string>
-    <string name="vlc_authors">Autori VLC-a.</string>
+    <string name="about_text">TubePlayer za Android™ je izdanje popularnog TubePlayer medijskog reproduktora otvorenog kôda. Inačica za Android™ može reproducirati većinu datoteka i mrežnih strujanja.</string>
+    <string name="compiled_by">Ovu TubePlayer inačicu su kompilirali:</string>
+    <string name="vlc_authors">Autori TubePlayer-a.</string>
     <!-- Preferences -->
     <string name="preferences">Osobitosti</string>
     <string name="general_prefs_category">Općenito</string>
@@ -294,7 +294,7 @@
     <string name="enable_steal_remote_control">Isključivo daljinsko upravljanje slušalicama</string>
     <string name="enable_steal_remote_control_summary">Izbjegavanje sukoba oduzimanjem funkcija daljinskog upravljanja drugim aplikacijama. Ovime se onemogućuje pozivanje dvostrukim dodirom na HTC mobitelima.</string>
     <string name="aout">Zvučni izlaz</string>
-    <string name="aout_summary">Promjena načina izlaza koji VLC koristi za zvučni zapis.</string>
+    <string name="aout_summary">Promjena načina izlaza koji TubePlayer koristi za zvučni zapis.</string>
     <string name="controls_prefs_category">Upravljanje</string>
     <string name="performance_prefs_category">Pefomanse</string>
     <string name="chroma_format">Nametni boju</string>
@@ -320,7 +320,7 @@
     <string name="media_db_cleared">Baza medijskih podataka je obrisana!</string>
     <string name="set_locale">Postavi lokalizaciju</string>
     <string name="set_locale_detail">Ostavite prazno za zadano sustavom</string>
-    <string name="set_locale_popup">Zatvorite i ponovno pokrenite VLC kako bi se promjene omogućile.</string>
+    <string name="set_locale_popup">Zatvorite i ponovno pokrenite TubePlayer kako bi se promjene omogućile.</string>
     <string name="network_caching">Vrijednost mrežne predmemorije</string>
     <string name="network_caching_summary">Vremensko trajanje predmemorije mrežnog medija (u ms). Ne radi s omogućenim hardverskim dekôdiranjem. Ostavite prazno za zadano sustavom.</string>
     <string name="resume_playback_title">Nastavi reprodukciju nakon završetka poziva</string>
@@ -333,16 +333,16 @@
     <string name="start_logging">Pokreni zapisivanje</string>
     <string name="stop_logging">Zaustavi zapisivanje</string>
     <string name="clear_log">Obriši zapis</string>
-    <string name="log_service_title">VLC zapisi snimanja</string>
+    <string name="log_service_title">TubePlayer zapisi snimanja</string>
     <string name="log_service_text">Otvori konzolu zapisa</string>
     <string name="copy_to_clipboard">Kopiraj u međuspremnik</string>
     <string name="copied_to_clipboard">Kopirano u međuspremnik</string>
     <string name="dump_logcat">Kopiraj logcat zapis</string>
     <string name="dump_logcat_success">Logcat uspješno kopiran u %1$s!</string>
     <string name="dump_logcat_failure">Neuspjelo kopiranje logcata.</string>
-    <string name="serious_crash">Nažalost, dogodile su se ozbiljne greške i VLC se morao zatvoriti.</string>
-    <string name="help_us_send_log">Pomozite nam poboljšati VLC slanjem sljedećeg zapisa rušenja:</string>
-    <string name="restart_vlc">Ponovno pokreni VLC</string>
+    <string name="serious_crash">Nažalost, dogodile su se ozbiljne greške i TubePlayer se morao zatvoriti.</string>
+    <string name="help_us_send_log">Pomozite nam poboljšati TubePlayer slanjem sljedećeg zapisa rušenja:</string>
+    <string name="restart_vlc">Ponovno pokreni TubePlayer</string>
     <string name="send_log">Pošalji zapis</string>
     <string name="sending_log">Slanje zapisa…</string>
     <string name="drawer_open">Otvori pretinac navigacije</string>
@@ -385,18 +385,18 @@
     <string name="no_subs_found">Nema podnaslova u ovom direktoriju</string>
     <string name="music_now_playing">Trenutno se reporducira</string>
     <!--Widget-->
-    <string name="widget_name_w">VLC bijeli widget</string>
-    <string name="widget_name_b">VLC tamni widget</string>
-    <string name="allow_storage_access_title">Dopusti VLC-u pristup glazbenim i video datotekama</string>
+    <string name="widget_name_w">TubePlayer bijeli widget</string>
+    <string name="widget_name_b">TubePlayer tamni widget</string>
+    <string name="allow_storage_access_title">Dopusti TubePlayer-u pristup glazbenim i video datotekama</string>
     <string name="allow_storage_access_description">Vlc treba dozvolu za pristup medijskim datotekama na ovom uređaju.</string>
-    <string name="allow_settings_access_ringtone_title">Dopusti VLC-u postavljanje melodije zvona</string>
+    <string name="allow_settings_access_ringtone_title">Dopusti TubePlayer-u postavljanje melodije zvona</string>
     <string name="allow_settings_access_ringtone_description">Vlc treba dozvolu za postavljanje ove pjesme kao melodije zvona.</string>
-    <string name="allow_settings_access_brightness_title">Dopusti VLC-u promjenu svjetline</string>
+    <string name="allow_settings_access_brightness_title">Dopusti TubePlayer-u promjenu svjetline</string>
     <string name="allow_settings_access_brightness_description">Vlc treba dozvolu za promjenu svjetline.</string>
-    <string name="allow_draw_overlays_title">Dopusti VLC skočni prozor preko drugih aplikacija</string>
+    <string name="allow_draw_overlays_title">Dopusti TubePlayer skočni prozor preko drugih aplikacija</string>
     <string name="allow_sdraw_overlays_description">Vlc treba dozvolu za prikaz video snimke u skočnom prozor preko drugih aplikacija.</string>
     <string name="permission_ask_again">Odobri dozvolu </string>
-    <string name="exit_app">Zatvori VLC</string>
+    <string name="exit_app">Zatvori TubePlayer</string>
     <!--fast scroller-->
     <!--Plugins-->
     <string name="plugins">Priključci</string>
