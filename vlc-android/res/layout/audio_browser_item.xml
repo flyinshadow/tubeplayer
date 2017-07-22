@@ -16,7 +16,7 @@
             type="android.graphics.drawable.BitmapDrawable"/>
         <variable
             name="holder"
-            type="com.wenjoyai.videoplayer.gui.audio.AudioBrowserAdapter.MediaItemViewHolder" />
+            type="com.wenjoyai.tubeplayer.gui.audio.AudioBrowserAdapter.MediaItemViewHolder" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -30,7 +30,7 @@
         android:onClick="@{holder::onClick}"
         android:onLongClick="@{holder::onLongClick}" >
 
-        <!-- Image loading is handled by com.wenjoyai.videoplayer.wenjoyai.videoplayer.gui.helpers.AsyncImageLoader.loadPicture() -->
+        <!-- Image loading is handled by com.wenjoyai.tubeplayer.wenjoyai.videoplayer.gui.helpers.AsyncImageLoader.loadPicture() -->
         <ImageView
             android:id="@+id/media_cover"
             android:layout_width="@dimen/audio_browser_item_size"

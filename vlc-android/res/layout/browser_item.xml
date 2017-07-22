@@ -8,7 +8,7 @@
         <import type="org.videolan.medialibrary.media.MediaLibraryItem"/>
         <variable
             name="holder"
-            type="com.wenjoyai.videoplayer.gui.browser.BaseBrowserAdapter.ViewHolder"/>
+            type="com.wenjoyai.tubeplayer.gui.browser.BaseBrowserAdapter.ViewHolder"/>
         <variable
             name="item"
             type="MediaLibraryItem"/>
@@ -52,7 +52,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:visibility="@{item.getItemType() == MediaLibraryItem.TYPE_STORAGE ? View.VISIBLE : View.GONE, default=gone}" />
 
-        <!-- Image downloading is handled by com.wenjoyai.videoplayer.wenjoyai.videoplayer.gui.helpers.AsyncImageLoader.downloadIcon() -->
+        <!-- Image downloading is handled by com.wenjoyai.tubeplayer.wenjoyai.videoplayer.gui.helpers.AsyncImageLoader.downloadIcon() -->
         <TextView
             android:id="@+id/dvi_icon"
             android:layout_width="50dp"

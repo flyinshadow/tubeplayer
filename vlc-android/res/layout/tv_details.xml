@@ -1,5 +1,5 @@
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    android:name="com.wenjoyai.videoplayer.gui.tv.MediaItemDetailsFragment"
+    android:name="com.wenjoyai.tubeplayer.gui.tv.MediaItemDetailsFragment"
     android:id="@+id/details_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"

@@ -11,10 +11,10 @@
             type="org.videolan.medialibrary.media.MediaLibraryItem"/>
         <variable
             name="holder"
-            type="com.wenjoyai.videoplayer.gui.SearchResultAdapter.ViewHolder" />
+            type="com.wenjoyai.tubeplayer.gui.SearchResultAdapter.ViewHolder" />
         <variable
             name="handler"
-            type="com.wenjoyai.videoplayer.gui.SearchActivity.ClickHandler" />
+            type="com.wenjoyai.tubeplayer.gui.SearchActivity.ClickHandler" />
     </data>
 
     <RelativeLayout

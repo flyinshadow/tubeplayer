@@ -5,10 +5,10 @@
         <import type="android.view.View"/>
         <variable
             name="holder"
-            type="com.wenjoyai.videoplayer.gui.browser.ExtensionAdapter.ViewHolder"/>
+            type="com.wenjoyai.tubeplayer.gui.browser.ExtensionAdapter.ViewHolder"/>
         <variable
             name="item"
-            type="com.wenjoyai.videoplayer.extensions.api.VLCExtensionItem"/>
+            type="com.wenjoyai.tubeplayer.extensions.api.VLCExtensionItem"/>
         <variable
             name="image"
             type="android.graphics.drawable.BitmapDrawable"/>

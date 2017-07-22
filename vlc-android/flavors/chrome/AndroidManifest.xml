@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.wenjoyai.videoplayer" >
+    package="com.wenjoyai.tubeplayer" >
 
     <uses-sdk
         android:minSdkVersion="19" />
 
     <application
-        android:name="com.wenjoyai.videoplayer.VLCApplication" >
+        android:name="com.wenjoyai.tubeplayer.VLCApplication" >
         <activity
-            android:name="com.wenjoyai.videoplayer.StartActivity"
+            android:name="com.wenjoyai.tubeplayer.StartActivity"
             tools:node="replace">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

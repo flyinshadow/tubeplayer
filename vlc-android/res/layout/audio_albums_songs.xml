@@ -7,7 +7,7 @@
 
     <include layout="@layout/tab_layout" />
 
-    <com.wenjoyai.videoplayer.gui.view.SwipeRefreshLayout
+    <com.wenjoyai.tubeplayer.gui.view.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,8 +20,8 @@
             <include layout="@layout/audio_recyclerview" />
             <include layout="@layout/audio_recyclerview" />
         </android.support.v4.view.ViewPager>
-    </com.wenjoyai.videoplayer.gui.view.SwipeRefreshLayout>
-    <com.wenjoyai.videoplayer.gui.view.FastScroller
+    </com.wenjoyai.tubeplayer.gui.view.SwipeRefreshLayout>
+    <com.wenjoyai.tubeplayer.gui.view.FastScroller
         android:id="@+id/songs_fast_scroller"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

@@ -23,7 +23,7 @@
         android:layout_below="@+id/header"
         android:layout_centerInParent="true"
         android:layout_margin="@dimen/default_margin"
-        android:drawableBottom="@drawable/tube_icon"
+        android:drawableBottom="@drawable/icon"
         android:drawablePadding="@dimen/default_margin"
         android:gravity="center"
         android:maxWidth="600dp"
@@ -31,7 +31,7 @@
         android:textSize="20sp"
         android:visibility="gone" />
 
-    <com.wenjoyai.videoplayer.gui.view.SwipeRefreshLayout
+    <com.wenjoyai.tubeplayer.gui.view.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,8 +47,8 @@
             <include layout="@layout/audio_recyclerview" />
             <include layout="@layout/audio_recyclerview" />
         </android.support.v4.view.ViewPager>
-    </com.wenjoyai.videoplayer.gui.view.SwipeRefreshLayout>
-    <com.wenjoyai.videoplayer.gui.view.FastScroller
+    </com.wenjoyai.tubeplayer.gui.view.SwipeRefreshLayout>
+    <com.wenjoyai.tubeplayer.gui.view.FastScroller
         android:id="@+id/songs_fast_scroller"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

@@ -4,10 +4,10 @@
     <data>
         <import type="android.view.View"/>
         <import type="android.text.TextUtils"/>
-        <import type="com.wenjoyai.videoplayer.util.Strings"/>
+        <import type="com.wenjoyai.tubeplayer.util.Strings"/>
         <variable
             name="holder"
-            type="com.wenjoyai.videoplayer.gui.audio.PlaylistAdapter.ViewHolder"/>
+            type="com.wenjoyai.tubeplayer.gui.audio.PlaylistAdapter.ViewHolder"/>
         <variable
             name="media"
             type="org.videolan.medialibrary.media.MediaWrapper"/>

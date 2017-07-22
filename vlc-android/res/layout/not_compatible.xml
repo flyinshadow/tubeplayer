@@ -16,7 +16,7 @@
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/info"
             android:scaleType="centerInside"
-            android:src="@drawable/tube_icon" />
+            android:src="@drawable/icon" />
 
         <TextView
             android:id="@+id/message"

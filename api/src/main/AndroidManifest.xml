@@ -22,14 +22,14 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wenjoyai.videoplayer.plugin.api">
+    package="com.wenjoyai.tubeplayer.plugin.api">
 
     <uses-sdk android:minSdkVersion="9" />
 
     <application android:allowBackup="true" android:label="@string/app_name"
         android:supportsRtl="true">
 
-      <activity android:name="com.wenjoyai.videoplayer.extensions.api.WarningActivity"
+      <activity android:name="com.wenjoyai.tubeplayer.extensions.api.WarningActivity"
         android:theme="@style/TransparentTheme" />
     </application>
 

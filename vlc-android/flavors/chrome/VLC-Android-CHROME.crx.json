@@ -4,7 +4,7 @@
     "short_name": "VLC",
     "name": "VLC for Chrome OS",
     "orientation": "landscape",
-    "packageName": "com.wenjoyai.videoplayer",
+    "packageName": "com.wenjoyai.tubeplayer",
     "resize": "reconfigure",
     "needsClipboard": true
 }

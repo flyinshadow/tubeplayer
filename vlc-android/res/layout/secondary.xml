@@ -36,7 +36,7 @@
             android:tint="@color/grey50"
             vlc:layout_anchor="@+id/fragment_placeholder"
             vlc:layout_anchorGravity="bottom|end"
-            vlc:layout_behavior="com.wenjoyai.videoplayer.gui.helpers.FloatingActionButtonBehavior"
+            vlc:layout_behavior="com.wenjoyai.tubeplayer.gui.helpers.FloatingActionButtonBehavior"
             android:visibility="invisible"
             android:layout_margin="16dp"/>
     </android.support.design.widget.CoordinatorLayout>

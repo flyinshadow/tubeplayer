@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.wenjoyai.videoplayer"
+    package="com.wenjoyai.tubeplayer"
     android:installLocation="auto">
 
     <uses-sdk
@@ -45,13 +45,13 @@
         android:required="false" />
 
     <application
-        android:name="com.wenjoyai.videoplayer.VLCApplication"
+        android:name="com.wenjoyai.tubeplayer.VLCApplication"
         android:hardwareAccelerated="true"
         android:allowBackup="true"
         android:largeHeap="true"
-        android:icon="@drawable/tube_icon"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:logo="@drawable/tube_icon"
+        android:logo="@drawable/icon"
         android:theme="@style/Theme.VLC.Transparent"
         android:supportsRtl="true"
         tools:targetAPI="lollipop">
@@ -69,7 +69,7 @@
             android:name="android.max_aspect"
             android:value="2.1" />
         <activity
-            android:name=".StartActivity">
+            android:name="com.wenjoyai.tubeplayer.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -421,8 +421,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".gui.MainActivity"
-            android:icon="@drawable/tube_icon"
+            android:name="com.wenjoyai.tubeplayer.gui.MainActivity"
+            android:icon="@drawable/icon"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan"
@@ -432,31 +432,31 @@
 
         </activity>
         <activity
-            android:name=".gui.SecondaryActivity"
+            android:name="com.wenjoyai.tubeplayer.gui.SecondaryActivity"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/Theme.VLC"/>
         <activity
-            android:name=".gui.PlaylistActivity"
+            android:name="com.wenjoyai.tubeplayer.gui.PlaylistActivity"
             android:theme="@style/Theme.VLC"/>
         <activity
-            android:name=".gui.InfoActivity"
+            android:name="com.wenjoyai.tubeplayer.gui.InfoActivity"
             android:theme="@style/Theme.VLC"/>
         <activity
-            android:name=".gui.SearchActivity"
+            android:name="com.wenjoyai.tubeplayer.gui.SearchActivity"
             android:theme="@style/Theme.VLC"/>
         <activity
-            android:name=".gui.browser.FilePickerActivity"
+            android:name="com.wenjoyai.tubeplayer.gui.browser.FilePickerActivity"
             android:theme="@style/Theme.VLC.PickerDialog"/>
-        <activity android:name=".gui.CompatErrorActivity" />
-        <activity android:name=".gui.preferences.PreferencesActivity"
+        <activity android:name="com.wenjoyai.tubeplayer.gui.CompatErrorActivity" />
+        <activity android:name="com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity"
             android:theme="@style/Theme.VLC" />
 
-        <activity android:name=".gui.DebugLogActivity"
+        <activity android:name="com.wenjoyai.tubeplayer.gui.DebugLogActivity"
                   android:launchMode="singleTop" />
-        <service android:name=".DebugLogService"
+        <service android:name="com.wenjoyai.tubeplayer.DebugLogService"
                  android:process=":logger" />
         <activity
-            android:name=".gui.video.VideoPlayerActivity"
+            android:name="com.wenjoyai.tubeplayer.gui.video.VideoPlayerActivity"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
@@ -465,19 +465,19 @@
             android:theme="@style/Theme.VLC.Player" />
 
         <activity
-            android:name=".gui.DialogActivity"
+            android:name="com.wenjoyai.tubeplayer.gui.DialogActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/VLCTransparentTheme" />
 
-        <service android:name=".extensions.ExtensionManagerService" />
-        <service android:name=".PlaybackService" >
+        <service android:name="com.wenjoyai.tubeplayer.extensions.ExtensionManagerService" />
+        <service android:name="com.wenjoyai.tubeplayer.PlaybackService" >
              <intent-filter>
                 <action android:name="android.media.browse.MediaBrowserService" />
              </intent-filter>
         </service>
-        <service android:name=".MediaParsingService" />
+        <service android:name="com.wenjoyai.tubeplayer.MediaParsingService" />
         <receiver
-            android:name=".widget.VLCAppWidgetProviderWhite"
+            android:name="com.wenjoyai.tubeplayer.widget.VLCAppWidgetProviderWhite"
             android:exported="false"
             android:label="@string/widget_name_w" >
             <intent-filter>
@@ -493,7 +493,7 @@
                 android:resource="@xml/widget_provider_w" />
         </receiver>
         <receiver
-            android:name=".widget.VLCAppWidgetProviderBlack"
+            android:name="com.wenjoyai.tubeplayer.widget.VLCAppWidgetProviderBlack"
             android:exported="false"
             android:label="@string/widget_name_b" >
             <intent-filter>
@@ -508,7 +508,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_provider_b" />
         </receiver>
-        <receiver android:name=".RemoteControlClientReceiver"
+        <receiver android:name="com.wenjoyai.tubeplayer.RemoteControlClientReceiver"
             android:exported="true"
             android:process=":main">
             <intent-filter>
@@ -518,7 +518,7 @@
         </receiver>
 
         <activity
-            android:name=".gui.video.benchmark.BenchActivity"
+            android:name="com.wenjoyai.tubeplayer.gui.video.benchmark.BenchActivity"
             android:screenOrientation="landscape"
             android:exported="true"
             android:launchMode="singleInstance"
@@ -526,50 +526,50 @@
 
         <!-- TV components -->
         <activity
-            android:name="com.wenjoyai.videoplayer.gui.tv.MainTvActivity"
+            android:name="com.wenjoyai.tubeplayer.gui.tv.MainTvActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.VLC.TV" />
         <activity
-            android:name="com.wenjoyai.videoplayer.gui.tv.DetailsActivity"
+            android:name="com.wenjoyai.tubeplayer.gui.tv.DetailsActivity"
             android:exported="true"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.Leanback.Details" />
         <activity
-            android:name=".gui.tv.browser.VerticalGridActivity"
+            android:name="com.wenjoyai.tubeplayer.gui.tv.browser.VerticalGridActivity"
             android:exported="true"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.VLC.TV"  />
         <activity
-            android:name="com.wenjoyai.videoplayer.gui.tv.SearchActivity"
+            android:name="com.wenjoyai.tubeplayer.gui.tv.SearchActivity"
             android:exported="true"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.VLC.TV"  />
         <activity
-            android:name="com.wenjoyai.videoplayer.gui.tv.audioplayer.AudioPlayerActivity"
+            android:name="com.wenjoyai.tubeplayer.gui.tv.audioplayer.AudioPlayerActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:allowTaskReparenting="true"
             android:theme="@style/Theme.VLC.TV"  />
-        <activity android:name=".gui.tv.preferences.PreferencesActivity"
+        <activity android:name="com.wenjoyai.tubeplayer.gui.tv.preferences.PreferencesActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.VLC.Leanback.Preferences" />
-        <activity android:name=".gui.tv.AboutActivity"
+        <activity android:name="com.wenjoyai.tubeplayer.gui.tv.AboutActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.VLC.TV"  />
-        <activity android:name=".gui.tv.LicenceActivity"
+        <activity android:name="com.wenjoyai.tubeplayer.gui.tv.LicenceActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.VLC.TV"  />
 
         <service
-            android:name=".RecommendationsService"
+            android:name="com.wenjoyai.tubeplayer.RecommendationsService"
             android:exported="false" >
         </service>
 
         <receiver
-            android:name=".BootupReceiver"
+            android:name="com.wenjoyai.tubeplayer.BootupReceiver"
             android:enabled="true"
             android:exported="true" >
           <intent-filter>
