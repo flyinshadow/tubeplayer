@@ -25,26 +25,35 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.ImageView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.wenjoyai.tubeplayer.R;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class CoverMediaSwitcher extends AudioMediaSwitcher {
+
+    private final int mPadding = getContext().getResources().getDimensionPixelSize(R.dimen.audio_player_cover_margin);
+    private final int mBorderWidth = getContext().getResources().getDimensionPixelSize(R.dimen.audio_player_cover_border);
+    private final int mBorderColor = getContext().getResources().getColor(R.color.black);
+    private final Animation mRotate = AnimationUtils.loadAnimation(getContext(), R.anim.anim_rotate);
 
     public CoverMediaSwitcher(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     protected void addMediaView(LayoutInflater inflater, String title, String artist, Bitmap cover) {
+        CircleImageView imageView = new CircleImageView(getContext());
         if (cover == null) {
             cover = BitmapFactory.decodeResource(getResources(), R.drawable.ic_no_cover);
-            setClipToPadding(true);
         } else {
-            setClipToPadding(false);
+            imageView.setPadding(mPadding, mPadding, mPadding, mPadding);
+            imageView.setBorderWidth(mBorderWidth);
+            imageView.setBorderColor(mBorderColor);
         }
-        ImageView imageView = new ImageView(getContext());
         imageView.setImageBitmap(cover);
-        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        imageView.setAnimation(mRotate);
         addView(imageView);
     }
 }

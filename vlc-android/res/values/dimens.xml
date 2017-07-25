@@ -72,4 +72,7 @@
     <dimen name="audio_player_cover_margin">30dp</dimen>
     <dimen name="audio_player_elevation">16dp</dimen>
     <dimen name="progress_layout_height">24dp</dimen>
+
+    <dimen name="audio_player_cover_border">2dp</dimen>
+
 </resources>

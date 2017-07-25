@@ -48,6 +48,9 @@ public abstract class AudioMediaSwitcher extends FlingViewGroup {
         final String artMrl = service.getCoverArt();
         final String prevArtMrl = service.getPrevCoverArt();
         final String nextArtMrl = service.getNextCoverArt();
+
+//        Log.d(TAG, "updateMedia artMrl = " + artMrl + ", prevArtMrl = " + prevArtMrl + ", nextArtMrl = " + nextArtMrl);
+
         VLCApplication.runBackground(new Runnable() {
             @Override
             public void run() {
@@ -57,6 +60,8 @@ public abstract class AudioMediaSwitcher extends FlingViewGroup {
                 VLCApplication.runOnMainThread(new Runnable() {
                     @Override
                     public void run() {
+
+                        clearAllAnimations();
                         removeAllViews();
 
                         hasPrevious = false;
@@ -91,6 +96,12 @@ public abstract class AudioMediaSwitcher extends FlingViewGroup {
                 });
             }
         });
+    }
+
+    private void clearAllAnimations() {
+        for (int i = 0; i < getChildCount(); i++) {
+            getChildAt(i).clearAnimation();
+        }
     }
 
     protected abstract void addMediaView(LayoutInflater inflater, String title, String artist, Bitmap cover);
