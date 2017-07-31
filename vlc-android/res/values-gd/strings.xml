@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main TubePlayer Interface -->
+    <!-- Main AiPlayer Interface -->
     <string name="ok">Ceart ma-thà</string>
     <string name="cancel">Sguir dheth</string>
     <string name="other">Eile</string>
@@ -120,8 +120,8 @@
     <string name="open_mrl">Fosgail MRL</string>
     <string name="open_mrl_dialog_title">Fosgail sruth lìonraidh</string>
     <string name="open_mrl_dialog_msg">Cuir a-steach MRL an lìonraidh: m.e. http://, mms:// no rtsp://</string>
-    <string name="error_not_compatible">Duilich, chan eil an tionndadh seo de TubePlayer airson Android™ a\' cur taic ris an uidheam agad aig an àm seo.\n\nSeo teachdaireachd na mearachd (thoir luaidh air seo ma bhios tu ri dì-bhugadh):\n</string>
-    <string name="error_problem">Duilich, bha duilgheadas againn a\' tòiseachadh \'s b\' fheudar dhuinn TubePlayer dùnadh</string>
+    <string name="error_not_compatible">Duilich, chan eil an tionndadh seo de AiPlayer airson Android™ a\' cur taic ris an uidheam agad aig an àm seo.\n\nSeo teachdaireachd na mearachd (thoir luaidh air seo ma bhios tu ri dì-bhugadh):\n</string>
+    <string name="error_problem">Duilich, bha duilgheadas againn a\' tòiseachadh \'s b\' fheudar dhuinn AiPlayer dùnadh</string>
     <string name="encountered_error_title">Mearachd \'ga chluich</string>
     <string name="invalid_location">Cha ghabh an t-ionad %1$s a chluich.</string>
     <string name="search">Lorg</string>
@@ -142,13 +142,13 @@
     <string name="previous_next_song">An ath-òran/an t-òran roimhe</string>
     <string name="hold_to_stop">Cum gus stad a chur air</string>
     <!-- About -->
-    <string name="app_name_full">TubePlayer airson Android™</string>
+    <string name="app_name_full">AiPlayer airson Android™</string>
     <string name="licence">Ceadachas</string>
     <string name="revision">Lèirmheas</string>
     <string name="about">Mu dheidhinn</string>
-    <string name="about_text">Tha TubePlayer airson Android™ \'na phort de chluicheadair mheadhanan TubePlayer, cluicheadaire le còd fosgailte air a bheil fèill mhòr. Cluichidh an tionndadh Android™ a\' mhòrchuid dhe na faidhlichean is sruthan lìonraidh.</string>
-    <string name="compiled_by">Chaidh an tionndadh seo de TubePlayer a thrusadh le:</string>
-    <string name="vlc_authors">Ùghdaran TubePlayer</string>
+    <string name="about_text">Tha AiPlayer airson Android™ \'na phort de chluicheadair mheadhanan AiPlayer, cluicheadaire le còd fosgailte air a bheil fèill mhòr. Cluichidh an tionndadh Android™ a\' mhòrchuid dhe na faidhlichean is sruthan lìonraidh.</string>
+    <string name="compiled_by">Chaidh an tionndadh seo de AiPlayer a thrusadh le:</string>
+    <string name="vlc_authors">Ùghdaran AiPlayer</string>
     <!-- Preferences -->
     <string name="preferences">Roghainnean</string>
     <string name="general_prefs_category">Coitcheann</string>
@@ -198,13 +198,13 @@
     <string name="enable_time_stretching_audio_summary">Dèan an fhuaim nas luaithe no nas slaodaiche gun a\' phids atharrachadh (feumaidh seo uidheam luath).</string>
     <string name="advanced_prefs_category">Adhartach</string>
     <string name="aout">Às-chur fuaime</string>
-    <string name="aout_summary">Atharraich mar a chuireas TubePlayer a-mach fuaime.</string>
+    <string name="aout_summary">Atharraich mar a chuireas AiPlayer a-mach fuaime.</string>
     <string name="clear_media_db">Falamhaich stòr-dàta nam meadhanan</string>
     <string name="clear_history">Falamhaich eachdraidh nan lorg</string>
     <string name="media_db_cleared">Chaidh stòr-dàta nam meadhanan fhalamhadh</string>
     <string name="set_locale">Suidhich an sgeama ionadail</string>
     <string name="set_locale_detail">Fàg seo bàn gus ath-shuidheachadh</string>
-    <string name="set_locale_popup">Fàg an-seo is ath-thòisich TubePlayer gus na h-atharraichean a chur an sàs.</string>
+    <string name="set_locale_popup">Fàg an-seo is ath-thòisich AiPlayer gus na h-atharraichean a chur an sàs.</string>
     <string name="network_caching">Luach tasgadan an lìonraidh</string>
     <string name="network_caching_summary">Àm bufaradh a\' mheadhain lìonraidh (ann am ms). Chan obraich seo le dì-chòdachadh bathair-chruaidh. Fàg bàn seo gus ath-shuidheachadh.</string>
     <string name="developer_prefs_category">Luchd-leasachaidh</string>
@@ -220,9 +220,9 @@
     <string name="dump_logcat">Dumpaich loga logcat</string>
     <string name="dump_logcat_success">Chaidh logcat a dhumpadh ann an %1$s!</string>
     <string name="dump_logcat_failure">Dh\'fhàillig dumpadh logcat.</string>
-    <string name="serious_crash">Gu mì-fhortanach, thachar droch-mhearachd is b\' fheudar dha TubePlayer dùnadh.</string>
-    <string name="help_us_send_log">Nach cuidich thu leinn a\' leasachadh TubePlayer? Cuir thugainn loga an tuislidh a leanas:</string>
-    <string name="restart_vlc">Ath-thòisich TubePlayer</string>
+    <string name="serious_crash">Gu mì-fhortanach, thachar droch-mhearachd is b\' fheudar dha AiPlayer dùnadh.</string>
+    <string name="help_us_send_log">Nach cuidich thu leinn a\' leasachadh AiPlayer? Cuir thugainn loga an tuislidh a leanas:</string>
+    <string name="restart_vlc">Ath-thòisich AiPlayer</string>
     <string name="send_log">Cuir an loga</string>
     <string name="sending_log">A\' cur an loga...</string>
     <!--Accessibility-->

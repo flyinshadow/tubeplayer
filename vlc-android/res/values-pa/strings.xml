@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main TubePlayer Interface -->
+    <!-- Main AiPlayer Interface -->
     <string name="ok">ਠੀਕ ਹੈ</string>
     <string name="cancel">ਰੱਦ ਕਰੋ</string>
     <string name="other">ਹੋਰ</string>
@@ -28,7 +28,7 @@
     <string name="confirm_delete">ਕੀ ਫਾਇਲ \'%1$s\' ਹਟਾਉਣੀ ਹੈ?</string>
     <string name="pause">ਵਿਰਾਮ</string>
     <string name="not_show_again">ਇਹ ਸੁਨੇਹੇ ਫੇਰ ਨਾ ਵੇਖਾਓ</string>
-    <string name="info_title">TubePlayer</string>
+    <string name="info_title">AiPlayer</string>
     <string name="unknown_artist">ਅਣਜਾਣ ਕਲਾਕਾਰ</string>
     <string name="unknown_album">ਅਣਜਾਣ ਐਲਬਮ</string>
     <string name="unknown_genre">ਅਣਜਾਣ ਧੁਨ</string>
@@ -117,10 +117,10 @@
     <string name="open_mrl">MRL ਖੋਲ੍ਹੋ</string>
     <string name="open_mrl_dialog_title">ਨੈਟਵਰਕ ਸਟਰੀਮ ਖੋਲ੍ਹੋ</string>
     <string name="open_mrl_dialog_msg">ਨੈਟਵਰਕ MRL ਦਿਓ: ਜਿਵੇਂ http://, mms:// ਜਾਂ rtsp://</string>
-    <string name="error_not_compatible">ਅਫਸੋਸ, ਤੁਹਾਡਾ ਯੰਤਰ ਐਂਡਰਾਇਡ (Android™) ਲਈ TubePlayer ਦੇ ਇਸ ਵਰਜ਼ਨ ਵਲੋਂ ਸਹਾਇਕ ਨਹੀਂ ਹੈ।</string>
-    <string name="error_problem">ਅਫਸੋਸ ਐਂਡਰਾਇਡ ਲਈ TubePlayer ਨੂੰ ਲੋਡ ਕਰਨ ਵਿੱਚ ਸਮੱਸਿਆ ਸੀ ਅਤੇ ਬੰਦ ਹੋ ਗਿਆ।</string>
+    <string name="error_not_compatible">ਅਫਸੋਸ, ਤੁਹਾਡਾ ਯੰਤਰ ਐਂਡਰਾਇਡ (Android™) ਲਈ AiPlayer ਦੇ ਇਸ ਵਰਜ਼ਨ ਵਲੋਂ ਸਹਾਇਕ ਨਹੀਂ ਹੈ।</string>
+    <string name="error_problem">ਅਫਸੋਸ ਐਂਡਰਾਇਡ ਲਈ AiPlayer ਨੂੰ ਲੋਡ ਕਰਨ ਵਿੱਚ ਸਮੱਸਿਆ ਸੀ ਅਤੇ ਬੰਦ ਹੋ ਗਿਆ।</string>
     <string name="encountered_error_title">ਪਲੇਅਬੈਕ ਗਲਤੀ</string>
-    <string name="encountered_error_message">TubePlayer ਨੂੰ ਇਸ ਮੀਡਿਆ ਨਾਲ ਸਮੱਸਿਆ ਆਈ ਹੈ।\nਕਿਰਪਾ ਕਰਕੇ ਮੀਡਿਆ ਲਾਇਬਰੇਰੀ ਨੂੰ ਤਾਜ਼ਾ ਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
+    <string name="encountered_error_message">AiPlayer ਨੂੰ ਇਸ ਮੀਡਿਆ ਨਾਲ ਸਮੱਸਿਆ ਆਈ ਹੈ।\nਕਿਰਪਾ ਕਰਕੇ ਮੀਡਿਆ ਲਾਇਬਰੇਰੀ ਨੂੰ ਤਾਜ਼ਾ ਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
     <string name="invalid_location">ਟਿਕਾਣਾ %1$s ਚਲਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।</string>
     <string name="search">ਖੋਜ </string>
     <string name="search_history">ਖੋਜ ਅਤੀਤ</string>
@@ -138,11 +138,11 @@
     <string name="show_playlist">ਪਲੇਅਲਿਸਟ ਵੇਖੋ</string>
     <string name="hold_to_stop">ਰੋਕਣ ਲਈ ਹੋਲਡ ਕਰੋ</string>
     <!-- About -->
-    <string name="app_name_full">Android™ ਲਈ TubePlayer</string>
+    <string name="app_name_full">Android™ ਲਈ AiPlayer</string>
     <string name="licence">ਲਾਈਸੈਂਸ</string>
     <string name="revision">ਰੀਵਿਜ਼ਨ</string>
     <string name="about">ਇਸ ਬਾਰੇ</string>
-    <string name="vlc_authors">TubePlayer ਲੇਖਕ।</string>
+    <string name="vlc_authors">AiPlayer ਲੇਖਕ।</string>
     <!-- Preferences -->
     <string name="preferences">ਮੇਰੀ ਪਸੰਦ</string>
     <string name="general_prefs_category">ਆਮ</string>
@@ -177,7 +177,7 @@
     <string name="media_db_cleared">ਮੀਡਿਆ ਡਾਟਾਬੇਸ ਸਾਫ਼ ਕੀਤਾ!</string>
     <string name="set_locale">ਲੋਕੇਲ ਦਿਓ</string>
     <string name="set_locale_detail">ਮੁੜ-ਸੈਟ ਕਰਨ ਲਈ ਖਾਲੀ ਛੱਡੋ</string>
-    <string name="set_locale_popup">ਤਬਦੀਲੀਆਂ ਲਾਗੂ ਕਰਨ ਲਈ TubePlayer ਨੂੰ ਬੰਦ ਕਰੋ ਅਤੇ ਫੇਰ ਚਾਲੂ ਕਰੋ</string>
+    <string name="set_locale_popup">ਤਬਦੀਲੀਆਂ ਲਾਗੂ ਕਰਨ ਲਈ AiPlayer ਨੂੰ ਬੰਦ ਕਰੋ ਅਤੇ ਫੇਰ ਚਾਲੂ ਕਰੋ</string>
     <string name="network_caching">ਨੈਟਵਰਕ ਕੈਸ਼ਿੰਗ ਮੁੱਲ</string>
     <string name="developer_prefs_category">ਡਿਵੈਲਪਰ</string>
     <string name="enable_verbose_mode">ਵੇਰਵਾ</string>
@@ -188,7 +188,7 @@
     <string name="copy_to_clipboard">ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕਰੋ</string>
     <string name="copied_to_clipboard">ਲਾਗ ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕੀਤਾ</string>
     <string name="quit">ਬਾਹਰ ਜਾਉ ਅਤੇ ਐਪਲੀਕੇਸ਼ਨ ਨੂੰ ਮੁੜ-ਚਾਲੂ ਕਰੋ</string>
-    <string name="restart_vlc">TubePlayer ਮੁੜ-ਚਾਲੂ ਕਰੋ</string>
+    <string name="restart_vlc">AiPlayer ਮੁੜ-ਚਾਲੂ ਕਰੋ</string>
     <string name="send_log">ਲਾਗ ਭੇਜੋ</string>
     <!--Accessibility-->
     <!--Widget-->

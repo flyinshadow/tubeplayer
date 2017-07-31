@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main TubePlayer Interface -->
+    <!-- Main AiPlayer Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Annullér</string>
     <string name="other">Andet</string>
@@ -39,7 +39,7 @@
     <string name="ringtone_error">Der opstod en fejl under indstilling af ringetone.</string>
     <string name="pause">Pause</string>
     <string name="not_show_again">Vis ikke denne meddelelse igen.</string>
-    <string name="info_title">TubePlayer</string>
+    <string name="info_title">AiPlayer</string>
     <string name="unknown_artist">Ukendt kunstner</string>
     <string name="unknown_album">Ukendt album</string>
     <string name="unknown_genre">Ukendt genre</string>
@@ -161,11 +161,11 @@
     <string name="open_mrl">Stream</string>
     <string name="open_mrl_dialog_title">Åbn netværksstrøm</string>
     <string name="open_mrl_dialog_msg">Angiv netværks-MRL: f.eks. http://, mms:// eller rtsp://</string>
-    <string name="error_not_compatible">Beklager, din enhed understøttes i øjeblikket ikke af denne version af TubePlayer for Android™.</string>
-    <string name="error_problem">Beklager, TubePlayer for Android havde problemer med indlæsningen og måtte lukke.</string>
+    <string name="error_not_compatible">Beklager, din enhed understøttes i øjeblikket ikke af denne version af AiPlayer for Android™.</string>
+    <string name="error_problem">Beklager, AiPlayer for Android havde problemer med indlæsningen og måtte lukke.</string>
     <string name="error_message_is">Fejlbeskeden er (nævn venligst denne ved fejlsøgning):\n</string>
     <string name="encountered_error_title">Afspilningsfejl</string>
-    <string name="encountered_error_message">TubePlayer stødte på en fejl med dette medie.\nForsøg venligst at genopfriske mediebiblioteket.</string>
+    <string name="encountered_error_message">AiPlayer stødte på en fejl med dette medie.\nForsøg venligst at genopfriske mediebiblioteket.</string>
     <string name="invalid_location">Placeringen %1$s kan ikke afspilles.</string>
     <string name="search">Søg</string>
     <string name="search_history">Søg historik</string>
@@ -192,13 +192,13 @@
     <string name="show_playlist">Vis spilleliste</string>
     <string name="hold_to_stop">Hold nede for at stoppe</string>
     <!-- About -->
-    <string name="app_name_full">TubePlayer for Android</string>
+    <string name="app_name_full">AiPlayer for Android</string>
     <string name="licence">Licens</string>
     <string name="revision">Revision</string>
     <string name="about">Om</string>
-    <string name="about_text">TubePlayer for Android™ er en portering af medieafspilleren TubePlayer, den populære open source-medieafspiller. Android™-udgaven kan læse de fleste filer og netværksstrømme.</string>
-    <string name="compiled_by">Denne version af TubePlayer er kompileret af:</string>
-    <string name="vlc_authors">TubePlayer-forfattere.</string>
+    <string name="about_text">AiPlayer for Android™ er en portering af medieafspilleren AiPlayer, den populære open source-medieafspiller. Android™-udgaven kan læse de fleste filer og netværksstrømme.</string>
+    <string name="compiled_by">Denne version af AiPlayer er kompileret af:</string>
+    <string name="vlc_authors">AiPlayer-forfattere.</string>
     <!-- Preferences -->
     <string name="preferences">Indstillinger</string>
     <string name="general_prefs_category">Generelt</string>
@@ -297,7 +297,7 @@
     <string name="enable_steal_remote_control">Udeluk hovedtelefon fjernbetjening</string>
     <string name="enable_steal_remote_control_summary">Undgå konflikter ved at stjæle fjernbetjeningen fra andre programmer. Dette forhindrer opringning ved dobbeltklik på HTC-telefoner.</string>
     <string name="aout">Lyd-output</string>
-    <string name="aout_summary">Udskift den metode som TubePlayer anvender til at udsende lyd med.</string>
+    <string name="aout_summary">Udskift den metode som AiPlayer anvender til at udsende lyd med.</string>
     <string name="controls_prefs_category">Kontroller</string>
     <string name="performance_prefs_category">Ydelse</string>
     <string name="chroma_format">Gennemtving kroma</string>
@@ -319,12 +319,12 @@
     <string name="auto_rescan">Skan igen auto.</string>
     <string name="auto_rescan_summary">Automatisk skanning af enhed efter nye eller slettede medier ved opstart af program</string>
     <string name="clear_media_db">Ryd medie-database</string>
-    <string name="clear_media_db_summary">Tilgå Android TubePlayer info for at rydde data</string>
+    <string name="clear_media_db_summary">Tilgå Android AiPlayer info for at rydde data</string>
     <string name="clear_history">Ryd søgehistorik</string>
     <string name="media_db_cleared">Medie-database er ryddet!</string>
     <string name="set_locale">Angiv sprog</string>
     <string name="set_locale_detail">Lad stå tom for at nulstille</string>
-    <string name="set_locale_popup">Afslut og genstart TubePlayer, så ændringerne kan træde i kraft.</string>
+    <string name="set_locale_popup">Afslut og genstart AiPlayer, så ændringerne kan træde i kraft.</string>
     <string name="network_caching">Mellemlagringsværdi for netværk</string>
     <string name="network_caching_summary">Den tidsmængde for netværksmediet som mellemlagres (i ms). Fungerer ikke sammen med afkodning via hardware. Lad den stå tom for at nulstille.</string>
     <string name="resume_playback_title">Genoptag afspilning efter et opkald</string>
@@ -338,16 +338,16 @@
     <string name="start_logging">Start logregistrering</string>
     <string name="stop_logging">Stop logregistrering</string>
     <string name="clear_log">Ryd log</string>
-    <string name="log_service_title">Optagelse af TubePlayer-logge</string>
+    <string name="log_service_title">Optagelse af AiPlayer-logge</string>
     <string name="log_service_text">Åbn log-konsol</string>
     <string name="copy_to_clipboard">Kopiér til udklipsholder</string>
     <string name="copied_to_clipboard">Kopierede log til udklipsholder.</string>
     <string name="dump_logcat">Logdump af logcat</string>
     <string name="dump_logcat_success">Logcat blev dumpet til %1$s!</string>
     <string name="dump_logcat_failure">Kunne ikke dumpe logcat.</string>
-    <string name="serious_crash">Der opstod desværre en alvorlig fejl, og TubePlayer måtte lukkes ned.</string>
-    <string name="help_us_send_log">Hjælp os med at forbedre TubePlayer ved at sende følgende log for nedbrud:</string>
-    <string name="restart_vlc">Genstart TubePlayer</string>
+    <string name="serious_crash">Der opstod desværre en alvorlig fejl, og AiPlayer måtte lukkes ned.</string>
+    <string name="help_us_send_log">Hjælp os med at forbedre AiPlayer ved at sende følgende log for nedbrud:</string>
+    <string name="restart_vlc">Genstart AiPlayer</string>
     <string name="send_log">Send loggen</string>
     <string name="sending_log">Sender loggen...</string>
     <string name="drawer_open">Åbn navigationsskuffen</string>
@@ -391,18 +391,18 @@
     <string name="no_subs_found">Ingen undertekster i denne mappe</string>
     <string name="music_now_playing">Afspiller nu</string>
     <!--Widget-->
-    <string name="widget_name_w">TubePlayer hvid widget</string>
-    <string name="widget_name_b">TubePlayer sort widget</string>
-    <string name="allow_storage_access_title">Tillad at TubePlayer tilgår video- og lydfiler</string>
-    <string name="allow_storage_access_description">TubePlayer kræver at du giver rettigheder til at tilgå mediefilerne på denne enhed.</string>
-    <string name="allow_settings_access_ringtone_title">Tillad at TubePlayer indstiller ringetonen</string>
-    <string name="allow_settings_access_ringtone_description">TubePlayer har brug for at du giver denne tilladelse for at indstille denne sang som din ringetone.</string>
-    <string name="allow_settings_access_brightness_title">Tillad at TubePlayer ændre lysstyrketilstand</string>
-    <string name="allow_settings_access_brightness_description">TubePlayer har brug for at du giver denne tilladelse for at ændre din lysstyrketilstand.</string>
-    <string name="allow_draw_overlays_title">Tillad TubePlayer-afspiller-pop op over andre apps</string>
-    <string name="allow_sdraw_overlays_description">TubePlayer har brug for at du giver denne tilladelse for at vise din video i en pop op over andre programmer.</string>
+    <string name="widget_name_w">AiPlayer hvid widget</string>
+    <string name="widget_name_b">AiPlayer sort widget</string>
+    <string name="allow_storage_access_title">Tillad at AiPlayer tilgår video- og lydfiler</string>
+    <string name="allow_storage_access_description">AiPlayer kræver at du giver rettigheder til at tilgå mediefilerne på denne enhed.</string>
+    <string name="allow_settings_access_ringtone_title">Tillad at AiPlayer indstiller ringetonen</string>
+    <string name="allow_settings_access_ringtone_description">AiPlayer har brug for at du giver denne tilladelse for at indstille denne sang som din ringetone.</string>
+    <string name="allow_settings_access_brightness_title">Tillad at AiPlayer ændre lysstyrketilstand</string>
+    <string name="allow_settings_access_brightness_description">AiPlayer har brug for at du giver denne tilladelse for at ændre din lysstyrketilstand.</string>
+    <string name="allow_draw_overlays_title">Tillad AiPlayer-afspiller-pop op over andre apps</string>
+    <string name="allow_sdraw_overlays_description">AiPlayer har brug for at du giver denne tilladelse for at vise din video i en pop op over andre programmer.</string>
     <string name="permission_ask_again">Tildel rettighed</string>
-    <string name="exit_app">Luk TubePlayer</string>
+    <string name="exit_app">Luk AiPlayer</string>
     <!--fast scroller-->
     <string name="fastscroller_track">Hurtig ruller-spor</string>
     <string name="fastscroller_handle">Hurtig ruller-håndtag</string>
@@ -452,7 +452,7 @@
     <string name="length">Varighed</string>
     <string name="tv_settings_hint">Tryk længe på OK-knappen for at vælge/fravælge mapper</string>
     <string name="ml_external_storage_title">Nyt eksternt lager registreret</string>
-    <string name="ml_external_storage_msg">Vil du have at TubePlayer skal tilføje enheden %1$s til dit mediebibliotek?</string>
+    <string name="ml_external_storage_msg">Vil du have at AiPlayer skal tilføje enheden %1$s til dit mediebibliotek?</string>
     <string name="last_added_media">sidst tilføjet</string>
     <string name="no">Nej</string>
     <string name="loading_medialibrary">Indlæser mediebibliotek...</string>

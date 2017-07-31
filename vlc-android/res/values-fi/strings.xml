@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main TubePlayer Interface -->
+    <!-- Main AiPlayer Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Peruuta</string>
     <string name="other">Muu</string>
@@ -38,7 +38,7 @@
     <string name="ringtone_error">Virhe asetettaessa soittoääntä.</string>
     <string name="pause">Tauota</string>
     <string name="not_show_again">Älä näytä tätä viestiä uudelleen.</string>
-    <string name="info_title">TubePlayer</string>
+    <string name="info_title">AiPlayer</string>
     <string name="unknown_artist">Tuntematon esittäjä</string>
     <string name="unknown_album">Tuntematon albumi</string>
     <string name="unknown_genre">Tuntematon genre</string>
@@ -156,11 +156,11 @@
     <string name="open_mrl">Avaa MRL</string>
     <string name="open_mrl_dialog_title">Avaa stream verkosta</string>
     <string name="open_mrl_dialog_msg">Syötä verkon MRL: esim. http://, mms:// or rtsp://</string>
-    <string name="error_not_compatible">Pahoittelemme, mutta laitteesi ei ole tämän TubePlayer Android™:lle-version tukema.</string>
-    <string name="error_problem">Pahoittelemme, TubePlayer for Android kohtasi ongelman ladatessa ja joutui lopettamaan.</string>
+    <string name="error_not_compatible">Pahoittelemme, mutta laitteesi ei ole tämän AiPlayer Android™:lle-version tukema.</string>
+    <string name="error_problem">Pahoittelemme, AiPlayer for Android kohtasi ongelman ladatessa ja joutui lopettamaan.</string>
     <string name="error_message_is">Virheviesti on seuraava (mainitsethan tämän debugatessasi):\n</string>
     <string name="encountered_error_title">Toistovirhe</string>
-    <string name="encountered_error_message">TubePlayer kohtasi virheen tämän median kanssa.\nKokeilethan mediakirjastosi päivittämistä.</string>
+    <string name="encountered_error_message">AiPlayer kohtasi virheen tämän median kanssa.\nKokeilethan mediakirjastosi päivittämistä.</string>
     <string name="invalid_location">Kohdetta %1$s ei voida toistaa.</string>
     <string name="search">Etsi</string>
     <string name="search_history">Hakuhistoria</string>
@@ -185,13 +185,13 @@
     <string name="show_playlist">Näytä soittolista</string>
     <string name="hold_to_stop">Pidä pysäyttääksesi</string>
     <!-- About -->
-    <string name="app_name_full">TubePlayer Android™:lle</string>
+    <string name="app_name_full">AiPlayer Android™:lle</string>
     <string name="licence">Lisenssi</string>
     <string name="revision">Uudistus</string>
     <string name="about">Tietoja</string>
-    <string name="about_text">TubePlayer Android™:lle on käännös TubePlayer-mediatoistimesta, joka on tunnettu avoimen lähdekoodin mediasoitin. Android™-versio pystyy toistamaan suurimman osan tiedostoista ja streameista.</string>
-    <string name="compiled_by">Tämän TubePlayer-version on koonnut:</string>
-    <string name="vlc_authors">TubePlayer:n tekijät.</string>
+    <string name="about_text">AiPlayer Android™:lle on käännös AiPlayer-mediatoistimesta, joka on tunnettu avoimen lähdekoodin mediasoitin. Android™-versio pystyy toistamaan suurimman osan tiedostoista ja streameista.</string>
+    <string name="compiled_by">Tämän AiPlayer-version on koonnut:</string>
+    <string name="vlc_authors">AiPlayer:n tekijät.</string>
     <!-- Preferences -->
     <string name="preferences">Asetukset</string>
     <string name="general_prefs_category">Yleiset</string>
@@ -267,7 +267,7 @@
     <string name="enable_steal_remote_control">Hieno kuulokkeiden etähallinta</string>
     <string name="enable_steal_remote_control_summary">Vältä konflikteja kaappaamalla etähallintakyky muilta ohjelmilta. Tämä estää soittamisen tuplanapautuksella HTC:n puhelimissa.</string>
     <string name="aout">Ääniulostulo</string>
-    <string name="aout_summary">Vaihda menetelmää, jota TubePlayer käyttää äänen ulosantiin.</string>
+    <string name="aout_summary">Vaihda menetelmää, jota AiPlayer käyttää äänen ulosantiin.</string>
     <string name="performance_prefs_category">Suorituskyky</string>
     <string name="chroma_format">Pakota videon chroma</string>
     <string name="chroma_format_summary">RGB 32-bit: oletus chroma\nRGB 16-bit: parempi suorituskyky mutta heikompi laatu\nYUV: paras suorituskyky muttei toimi kaikilla laitteilla. Vain Android 2.3 ja myöhemmät versiot.</string>
@@ -290,7 +290,7 @@
     <string name="media_db_cleared">Mediatietokanta tyhjennetty!</string>
     <string name="set_locale">Aseta kieli</string>
     <string name="set_locale_detail">Jätä tyhjäksi nollataksesi</string>
-    <string name="set_locale_popup">Lopeta ja käynnistä uudelleen TubePlayer muutosten käyttöönottamiseksi.</string>
+    <string name="set_locale_popup">Lopeta ja käynnistä uudelleen AiPlayer muutosten käyttöönottamiseksi.</string>
     <string name="network_caching">Verkkovälimuistin arvo</string>
     <string name="network_caching_summary">Aika millisekunneissa (ms) jota käytetään verkon puskurointiin. Ei toimi rautapurkamisen kanssa. Jätä tyhjäksi nollataksesi.</string>
     <string name="quit">Lopeta ja käynnistä ohjelma uudelleen</string>
@@ -301,16 +301,16 @@
     <string name="start_logging">Aloita lokiin kirjaus</string>
     <string name="stop_logging">Pysäytä lokiin kirjaus</string>
     <string name="clear_log">Tyhjennä loki</string>
-    <string name="log_service_title">TubePlayer:n lokiintallennus</string>
+    <string name="log_service_title">AiPlayer:n lokiintallennus</string>
     <string name="log_service_text">Avaa lokitiedosto konsolissa</string>
     <string name="copy_to_clipboard">Kopioi leikepöydälle</string>
     <string name="copied_to_clipboard">Loki kopioitu leikepöydälle.</string>
     <string name="dump_logcat">Vedos logcat:n kautta</string>
     <string name="dump_logcat_success">Logcat:n vedos luotiin onnistuneesti kohteeseen %1$s!</string>
     <string name="dump_logcat_failure">Logcat:n vedoksen luonti epäonnistui.</string>
-    <string name="serious_crash">Valitettavasti TubePlayer kohtasi vakavan virheen ja se suljettiin.</string>
-    <string name="help_us_send_log">Auta meitä parantamaan TubePlayer-mediasoitinta lähettämällä seuraava kaatumisloki:</string>
-    <string name="restart_vlc">Käynnistä TubePlayer uudelleen</string>
+    <string name="serious_crash">Valitettavasti AiPlayer kohtasi vakavan virheen ja se suljettiin.</string>
+    <string name="help_us_send_log">Auta meitä parantamaan AiPlayer-mediasoitinta lähettämällä seuraava kaatumisloki:</string>
+    <string name="restart_vlc">Käynnistä AiPlayer uudelleen</string>
     <string name="send_log">Lähetä loki</string>
     <string name="sending_log">Lähetetään lokitiedostoa...</string>
     <string name="drawer_open">Avaa navigointilaatikko</string>
@@ -350,16 +350,16 @@
     <string name="no_subs_found">Tässä hakemistossa ei ole tekstityksiä</string>
     <string name="music_now_playing">Nyt toistetaan</string>
     <!--Widget-->
-    <string name="widget_name_w">TubePlayer vaalea pienoisohjelma</string>
-    <string name="widget_name_b">TubePlayer tumma pienoisohjelma</string>
-    <string name="allow_storage_access_title">Salli TubePlayer:lle pääsy video- ja äänitiedostoihin</string>
-    <string name="allow_storage_access_description">Sinun tarvitsee myöntää oikeudet TubePlayer:lle siirtyä tämän laitteen mediatiedostoihin.</string>
-    <string name="allow_settings_access_ringtone_title">Salli TubePlayer:n asettaa soittoääni</string>
-    <string name="allow_settings_access_ringtone_description">Sinun tarvitsee myöntää TubePlayer:lle oikeudet asettaa tämä kappale soittoääneksi.</string>
-    <string name="allow_settings_access_brightness_title">Salli TubePlayer:n muuttaa kirkkaustilaa</string>
-    <string name="allow_settings_access_brightness_description">Sinun tarvitsee myöntää TubePlayer:lle oikeudet vaihtaa kirkkaustilaa.</string>
+    <string name="widget_name_w">AiPlayer vaalea pienoisohjelma</string>
+    <string name="widget_name_b">AiPlayer tumma pienoisohjelma</string>
+    <string name="allow_storage_access_title">Salli AiPlayer:lle pääsy video- ja äänitiedostoihin</string>
+    <string name="allow_storage_access_description">Sinun tarvitsee myöntää oikeudet AiPlayer:lle siirtyä tämän laitteen mediatiedostoihin.</string>
+    <string name="allow_settings_access_ringtone_title">Salli AiPlayer:n asettaa soittoääni</string>
+    <string name="allow_settings_access_ringtone_description">Sinun tarvitsee myöntää AiPlayer:lle oikeudet asettaa tämä kappale soittoääneksi.</string>
+    <string name="allow_settings_access_brightness_title">Salli AiPlayer:n muuttaa kirkkaustilaa</string>
+    <string name="allow_settings_access_brightness_description">Sinun tarvitsee myöntää AiPlayer:lle oikeudet vaihtaa kirkkaustilaa.</string>
     <string name="permission_ask_again">Myönnä oikeudet</string>
-    <string name="exit_app">Sulje TubePlayer</string>
+    <string name="exit_app">Sulje AiPlayer</string>
     <!--fast scroller-->
     <!--Plugins-->
     <string name="plugins">Liitännäiset</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main TubePlayer Interface -->
+    <!-- Main AiPlayer Interface -->
     <string name="ok">D\'acord</string>
     <string name="cancel">Cancel·la</string>
     <string name="other">Altre</string>
@@ -30,7 +30,7 @@
     <string name="ringtone_error">S\'ha produït un error en establir el to de trucada.</string>
     <string name="pause">Pausa</string>
     <string name="not_show_again">No mostris més aquest missatge.</string>
-    <string name="info_title">TubePlayer</string>
+    <string name="info_title">AiPlayer</string>
     <string name="unknown_artist">Artista desconegut</string>
     <string name="unknown_album">Àlbum desconegut</string>
     <string name="unknown_genre">Gènere desconegut</string>
@@ -115,8 +115,8 @@
     <string name="open_mrl">Obre MRL</string>
     <string name="open_mrl_dialog_title">Obre un flux de xarxa</string>
     <string name="open_mrl_dialog_msg">Introduïu la xarxa MRL: p.e. http://, mms:// or rtsp://</string>
-    <string name="error_not_compatible">El vostre dispositiu no és compatible amb aquesta versió del TubePlayer per a l\'Android™.</string>
-    <string name="error_problem">S\'ha produït un error en carregar el TubePlayer i s\'ha tancat.</string>
+    <string name="error_not_compatible">El vostre dispositiu no és compatible amb aquesta versió del AiPlayer per a l\'Android™.</string>
+    <string name="error_problem">S\'ha produït un error en carregar el AiPlayer i s\'ha tancat.</string>
     <string name="encountered_error_title">Error de reproducció</string>
     <string name="invalid_location">No es pot reproduir la ruta %1$s.</string>
     <string name="search">Cerca</string>
@@ -128,13 +128,13 @@
     <string name="previous_next_song">Cançó anterior/següent</string>
     <string name="show_playlist">Mostra la llista de reproducció</string>
     <!-- About -->
-    <string name="app_name_full">TubePlayer per a l\'Android™</string>
+    <string name="app_name_full">AiPlayer per a l\'Android™</string>
     <string name="licence">Llicència</string>
     <string name="revision">Revisió</string>
     <string name="about">Quant a</string>
-    <string name="about_text">TubePlayer per a l\'Android™ és una versió portada del reproductor multimèdia TubePlayer. La versió per l\'Android™ permet llegir la gran majoria de fitxers i fluxos de xarxa.</string>
-    <string name="compiled_by">Aquesta versió del TubePlayer s\'ha compilat per:</string>
-    <string name="vlc_authors">Autors del TubePlayer.</string>
+    <string name="about_text">AiPlayer per a l\'Android™ és una versió portada del reproductor multimèdia AiPlayer. La versió per l\'Android™ permet llegir la gran majoria de fitxers i fluxos de xarxa.</string>
+    <string name="compiled_by">Aquesta versió del AiPlayer s\'ha compilat per:</string>
+    <string name="vlc_authors">Autors del AiPlayer.</string>
     <!-- Preferences -->
     <string name="preferences">Preferències</string>
     <string name="general_prefs_category">General</string>
@@ -188,13 +188,13 @@
     <string name="enable_time_stretching_audio_summary">Incrementa o redueix la velocitat de l\'àudio sense canviar el to (requereix un dispositiu més ràpid)</string>
     <string name="advanced_prefs_category">Avançat</string>
     <string name="aout">Sortida d\'àudio</string>
-    <string name="aout_summary">Canvia el mètode que TubePlayer utilitza per a la sortida d\'àudio</string>
+    <string name="aout_summary">Canvia el mètode que AiPlayer utilitza per a la sortida d\'àudio</string>
     <string name="clear_media_db">Neteja la base de dades multimèdia</string>
     <string name="clear_history">Neteja l\'historial de cerca</string>
     <string name="media_db_cleared">S\'ha netejat la base de dades multimèdia</string>
     <string name="set_locale">Estableix la configuració local</string>
     <string name="set_locale_detail">Deixeu-ho en blanc per reiniciar-ho</string>
-    <string name="set_locale_popup">Tanqueu i reinicieu el TubePlayer per a que els canvis tinguin efecte.</string>
+    <string name="set_locale_popup">Tanqueu i reinicieu el AiPlayer per a que els canvis tinguin efecte.</string>
     <string name="network_caching">Valor de memòria cau de la xarxa</string>
     <string name="network_caching_summary">La quantitat de temps que s\'emmagetzemarà l\'element multimèdia en xarxa (en ms). No funciona amb decodificació per maquinari. Deixeu-ho en blanc per reiniciar.</string>
     <string name="developer_prefs_category">Desenvolupador</string>
@@ -210,8 +210,8 @@
     <string name="dump_logcat">Aboca el registre logcat</string>
     <string name="dump_logcat_success">S\'ha abocat el registre logcat a %1$s!</string>
     <string name="dump_logcat_failure">No s\'ha pogut bolcar el logcat.</string>
-    <string name="help_us_send_log">Ajudan\'s a millorar TubePlayer enviant-nos el següent fitxer de registre de fallades:</string>
-    <string name="restart_vlc">Reinicia el TubePlayer</string>
+    <string name="help_us_send_log">Ajudan\'s a millorar AiPlayer enviant-nos el següent fitxer de registre de fallades:</string>
+    <string name="restart_vlc">Reinicia el AiPlayer</string>
     <string name="send_log">Envia el fitxer de registre</string>
     <string name="sending_log">Enviat el fitxer de registre...</string>
     <!--Accessibility-->

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main TubePlayer Interface -->
+    <!-- Main AiPlayer Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Batal</string>
     <string name="other">Lainnya</string>
@@ -37,7 +37,7 @@
     <string name="ringtone_error">Terjadi galat ketika menyetel nada dering.</string>
     <string name="pause">Jeda</string>
     <string name="not_show_again">Jangan tampilkan pesan ini lagi.</string>
-    <string name="info_title">TubePlayer</string>
+    <string name="info_title">AiPlayer</string>
     <string name="unknown_artist">Artis Tidak Dikenal</string>
     <string name="unknown_album">Album Tidak Dikenal</string>
     <string name="unknown_genre">Jenis Musik Tidak Dikenal</string>
@@ -131,11 +131,11 @@
     <string name="open_mrl">Strim</string>
     <string name="open_mrl_dialog_title">Buka strim jaringan</string>
     <string name="open_mrl_dialog_msg">Masukkan alamat jaringan: contoh. http://, mms://, atau rtsp://</string>
-    <string name="error_not_compatible">Maaf, perangkat anda belum didukung oleh TubePlayer untuk Android™ versi ini.</string>
-    <string name="error_problem">Maaf, TubePlayer untuk Android memiliki masalah dalam memuat dan harus ditutup.</string>
+    <string name="error_not_compatible">Maaf, perangkat anda belum didukung oleh AiPlayer untuk Android™ versi ini.</string>
+    <string name="error_problem">Maaf, AiPlayer untuk Android memiliki masalah dalam memuat dan harus ditutup.</string>
     <string name="error_message_is">Pesan galat adalah (mohon sebut ini ketika pengawakutuan):\n</string>
     <string name="encountered_error_title">Pemutar galat</string>
-    <string name="encountered_error_message">TubePlayer mengalami galat dengan media ini.\nMohon coba segarkan pustaka media.</string>
+    <string name="encountered_error_message">AiPlayer mengalami galat dengan media ini.\nMohon coba segarkan pustaka media.</string>
     <string name="invalid_location">Lokasi %1$s tidak bisa diputar.</string>
     <string name="search">Cari</string>
     <string name="search_history">Cari riwayat</string>
@@ -157,13 +157,13 @@
     <string name="show_playlist">Tampilkan daftar putar</string>
     <string name="hold_to_stop">Tahan untuk berhenti</string>
     <!-- About -->
-    <string name="app_name_full">TubePlayer untuk Android</string>
+    <string name="app_name_full">AiPlayer untuk Android</string>
     <string name="licence">Lisensi</string>
     <string name="revision">Revisi</string>
     <string name="about">Tentang</string>
-    <string name="about_text">TubePlayer untuk Android™ merupakan turunan dari TubePlayer media player, pemutar media sumber terbuka yang populer. Versi Android™ dapat membaca hampir semua berkas dan strim jaringan.</string>
-    <string name="compiled_by">Versi TubePlayer ini dikompilasi oleh:</string>
-    <string name="vlc_authors">Pengembang TubePlayer.</string>
+    <string name="about_text">AiPlayer untuk Android™ merupakan turunan dari AiPlayer media player, pemutar media sumber terbuka yang populer. Versi Android™ dapat membaca hampir semua berkas dan strim jaringan.</string>
+    <string name="compiled_by">Versi AiPlayer ini dikompilasi oleh:</string>
+    <string name="vlc_authors">Pengembang AiPlayer.</string>
     <!-- Preferences -->
     <string name="preferences">Pengaturan</string>
     <string name="general_prefs_category">Umum</string>
@@ -211,7 +211,7 @@
     <string name="enable_steal_remote_control">Pengendali jarak jauh headset ekslusif</string>
     <string name="enable_steal_remote_control_summary">Hindari konflik dengan menggunakan pengendali jarak jauh dari aplikasi lain. Hal ini mencegah proses panggil ketika klik ganda pada telepon HTC.</string>
     <string name="aout">Keluaran audio</string>
-    <string name="aout_summary">Ubah metode yang digunakan TubePlayer untuk keluaran audio.</string>
+    <string name="aout_summary">Ubah metode yang digunakan AiPlayer untuk keluaran audio.</string>
     <string name="performance_prefs_category">Kinerja</string>
     <string name="chroma_format">Paksa kroma video</string>
     <string name="chroma_format_summary">RGB 32-bit: kroma bawaan\nRGB 16-bit: kinerja lebih baik tapi kualitas lebih rendah\nYUV: kinerja terbaik tetapi tidak berlaku untuk semua perangkat. Hanya Android 2.3 dan yang lebih tinggi.</string>
@@ -233,7 +233,7 @@
     <string name="media_db_cleared">Basis data media dibersihkan!</string>
     <string name="set_locale">Pilih bahasa</string>
     <string name="set_locale_detail">Kosongkan untuk mengeset ulang</string>
-    <string name="set_locale_popup">Keluar dan nyalakan ulang TubePlayer agar perubahan terdampak.</string>
+    <string name="set_locale_popup">Keluar dan nyalakan ulang AiPlayer agar perubahan terdampak.</string>
     <string name="network_caching">Nilai tembolok jaringan</string>
     <string name="network_caching_summary">Lama durasi untuk menyangga media jaringan (dalam ms). Tidak berlaku untuk dekoding perangkat keras. Kosongkan untuk mengeset ulang.</string>
     <string name="quit">Keluar dan mulai ulang aplikasi</string>
@@ -244,16 +244,16 @@
     <string name="start_logging">Mulai mencatat log</string>
     <string name="stop_logging">Hentikan mencatat log</string>
     <string name="clear_log">Bersihkan log</string>
-    <string name="log_service_title">Perekaman log TubePlayer</string>
+    <string name="log_service_title">Perekaman log AiPlayer</string>
     <string name="log_service_text">Buka konsol log</string>
     <string name="copy_to_clipboard">Salin ke papan klip</string>
     <string name="copied_to_clipboard">Salin catatan log ke papan klip.</string>
     <string name="dump_logcat">Buang catatan log logcat</string>
     <string name="dump_logcat_success">Logcat sukses dibuang ke %1$s!</string>
     <string name="dump_logcat_failure">Gagal membuang logcat.</string>
-    <string name="serious_crash">Sayang sekali, galat serius telah terjadi dan TubePlayer harus ditutup.</string>
-    <string name="help_us_send_log">Bantu kami meningkatkan TubePlayer dengan mengirimkan catatan log galat berikut:</string>
-    <string name="restart_vlc">Nyalakan ulang TubePlayer</string>
+    <string name="serious_crash">Sayang sekali, galat serius telah terjadi dan AiPlayer harus ditutup.</string>
+    <string name="help_us_send_log">Bantu kami meningkatkan AiPlayer dengan mengirimkan catatan log galat berikut:</string>
+    <string name="restart_vlc">Nyalakan ulang AiPlayer</string>
     <string name="send_log">Kirim catatan log</string>
     <string name="sending_log">Mengirim catatan log...</string>
     <string name="drawer_open">Buka laci navigasi</string>
@@ -287,8 +287,8 @@
     <string name="no_subs_found">Tidak ada subtitel di dalam direktori ini</string>
     <string name="music_now_playing">Sekarang Diputar</string>
     <!--Widget-->
-    <string name="widget_name_w">TubePlayer Widget Putih</string>
-    <string name="widget_name_b">TubePlayer Widget Gelap</string>
+    <string name="widget_name_w">AiPlayer Widget Putih</string>
+    <string name="widget_name_b">AiPlayer Widget Gelap</string>
     <!--fast scroller-->
     <!--Plugins-->
 </resources>

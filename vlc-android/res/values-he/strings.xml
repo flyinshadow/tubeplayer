@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main TubePlayer Interface -->
+    <!-- Main AiPlayer Interface -->
     <string name="ok">אישור</string>
     <string name="cancel">ביטול</string>
     <string name="other">אחר</string>
@@ -38,7 +38,7 @@
     <string name="ringtone_error">אירעה שגיאה בעת הגדרת הצלצול.</string>
     <string name="pause">השהיה</string>
     <string name="not_show_again">אין להציג הודעה זו שוב.</string>
-    <string name="info_title">TubePlayer</string>
+    <string name="info_title">AiPlayer</string>
     <string name="unknown_artist">אמן בלתי ידוע</string>
     <string name="unknown_album">אלבום בלתי ידוע</string>
     <string name="unknown_genre">סגנון בלתי ידוע</string>
@@ -159,11 +159,11 @@
     <string name="open_mrl">פתיחת כתובת מדיה</string>
     <string name="open_mrl_dialog_title">פתיחת תזרים רשת</string>
     <string name="open_mrl_dialog_msg">נא להזין קישור למדיה מוזרמת: לדוגמהhttp://, mms:// או rtsp://</string>
-    <string name="error_not_compatible">ההתקן שלך אינו נתמך על ידי גרסה זו של TubePlayer ל־Android™, עמך הסליחה.</string>
-    <string name="error_problem">TubePlayer לאנדרויד נתקבל בשגיאה והיה עליו להיסגר, עמך הסליחה.</string>
+    <string name="error_not_compatible">ההתקן שלך אינו נתמך על ידי גרסה זו של AiPlayer ל־Android™, עמך הסליחה.</string>
+    <string name="error_problem">AiPlayer לאנדרויד נתקבל בשגיאה והיה עליו להיסגר, עמך הסליחה.</string>
     <string name="error_message_is">הודעת השגיאה היא (נא לציין בעת ניפוי שגיאות):\n</string>
     <string name="encountered_error_title">שגיאת נגינה</string>
-    <string name="encountered_error_message">תכנת TubePlayer גילתה שגיאה עם המדיה הזאת.\nנא לנסות לרענן את ספריית המדיה.</string>
+    <string name="encountered_error_message">תכנת AiPlayer גילתה שגיאה עם המדיה הזאת.\nנא לנסות לרענן את ספריית המדיה.</string>
     <string name="invalid_location">לא ניתן לנגן את המיקום %1$s.</string>
     <string name="search">חיפוש</string>
     <string name="search_history">היסטוריית החיפוש</string>
@@ -190,13 +190,13 @@
     <string name="show_playlist">הצגת רשימת נגינה</string>
     <string name="hold_to_stop">יש להחזיק כדי לעצור</string>
     <!-- About -->
-    <string name="app_name_full">TubePlayer ל־Android™</string>
+    <string name="app_name_full">AiPlayer ל־Android™</string>
     <string name="licence">רישיון</string>
     <string name="revision">מהדורה</string>
     <string name="about">על אודות</string>
-    <string name="about_text">TubePlayer ל־Android™ הנו הסבה של נגן המדיה TubePlayer הפופולרי בקוד פתוח. גרסת ה־Android™ יכולה לקרוא את רוב הקבצים וסוגי תזרימי הרשת</string>
-    <string name="compiled_by">גרסה זו של TubePlayer הודרה על ידי:</string>
-    <string name="vlc_authors">יוצרי TubePlayer.</string>
+    <string name="about_text">AiPlayer ל־Android™ הנו הסבה של נגן המדיה AiPlayer הפופולרי בקוד פתוח. גרסת ה־Android™ יכולה לקרוא את רוב הקבצים וסוגי תזרימי הרשת</string>
+    <string name="compiled_by">גרסה זו של AiPlayer הודרה על ידי:</string>
+    <string name="vlc_authors">יוצרי AiPlayer.</string>
     <!-- Preferences -->
     <string name="preferences">העדפות</string>
     <string name="general_prefs_category">כללי</string>
@@ -283,7 +283,7 @@
     <string name="enable_steal_remote_control">שלט רחוק ייעודי לאוזניות</string>
     <string name="enable_steal_remote_control_summary">המנעות מהתנגשות של גניבת השלט הרחוק מיישומים אחרים. אפשרות זו מונעת חיוג עקב לחיצה כפולה בטלפונים של HTC.</string>
     <string name="aout">פלט שמע</string>
-    <string name="aout_summary">שינוי השיטה בה נעשה שימוש ב־TubePlayer לפלט שמע.</string>
+    <string name="aout_summary">שינוי השיטה בה נעשה שימוש ב־AiPlayer לפלט שמע.</string>
     <string name="controls_prefs_category">פקדים</string>
     <string name="performance_prefs_category">ביצועים</string>
     <string name="chroma_format">אילוץ כרומה בווידאו</string>
@@ -309,7 +309,7 @@
     <string name="media_db_cleared">מסד נתוני המדיה פונה!</string>
     <string name="set_locale">הגדרת המיקום והשפה</string>
     <string name="set_locale_detail">להשאיר ריק כדי לאפס</string>
-    <string name="set_locale_popup">יש לצאת ולהפעיל מחדש את TubePlayer כדי שהשינויים יכנסו לתוקף.</string>
+    <string name="set_locale_popup">יש לצאת ולהפעיל מחדש את AiPlayer כדי שהשינויים יכנסו לתוקף.</string>
     <string name="network_caching">ערך האגירה מהרשת</string>
     <string name="network_caching_summary">משך הזמן שלוקח לאגור את המדיה מהרשת (במילישניות). לא עובד עם קידוד חומרה. יש להשאיר ריק כדי לאפס.</string>
     <string name="quit">יציאה מהיישום והפעלה מחדש</string>
@@ -320,16 +320,16 @@
     <string name="start_logging">הפעלת הרישום ליומן</string>
     <string name="stop_logging">הפסקת הרישום ליומן</string>
     <string name="clear_log">מחיקת היומן</string>
-    <string name="log_service_title">רישום ביומנים של TubePlayer</string>
+    <string name="log_service_title">רישום ביומנים של AiPlayer</string>
     <string name="log_service_text">פתיחת יומן הרישום</string>
     <string name="copy_to_clipboard">העתקה ללוח הגזירים</string>
     <string name="copied_to_clipboard">היומן הועתק ללוח הגזירים.</string>
     <string name="dump_logcat">שמירת רישום logcat</string>
     <string name="dump_logcat_success">ה־Logcat נשמר בהצלחה אל %1$s!</string>
     <string name="dump_logcat_failure">שמירת ה־logcat נכשלה.</string>
-    <string name="serious_crash">אתרע מזלך והתרחשה תקלה איומה, לפיכך נכפה על TubePlayer להיסגר.</string>
-    <string name="help_us_send_log">ניתן לסייע לנו לשפר את TubePlayer ע״י שליחת דוח הקריסה הבא:</string>
-    <string name="restart_vlc">הפעלת TubePlayer מחדש</string>
+    <string name="serious_crash">אתרע מזלך והתרחשה תקלה איומה, לפיכך נכפה על AiPlayer להיסגר.</string>
+    <string name="help_us_send_log">ניתן לסייע לנו לשפר את AiPlayer ע״י שליחת דוח הקריסה הבא:</string>
+    <string name="restart_vlc">הפעלת AiPlayer מחדש</string>
     <string name="send_log">שליחת הדוח</string>
     <string name="sending_log">הדוח נשלח…</string>
     <string name="drawer_open">פתיחת מגירת הניווט</string>
@@ -372,18 +372,18 @@
     <string name="no_subs_found">אין כתוביות בתיקייה זו</string>
     <string name="music_now_playing">מתנגן כעת</string>
     <!--Widget-->
-    <string name="widget_name_w">וידג׳ט לבן ל־TubePlayer</string>
-    <string name="widget_name_b">וידג׳ט כהה ל־TubePlayer</string>
-    <string name="allow_storage_access_title">לאפשר ל־TubePlayer לגשת לקובצי וידאו ושמע</string>
-    <string name="allow_storage_access_description">ל־TubePlayer נדרשת גישה למדיה בהתקן זה.</string>
-    <string name="allow_settings_access_ringtone_title">לאפשר ל־TubePlayer להגדיר את צלצול המכשיר</string>
-    <string name="allow_settings_access_ringtone_description">ל־TubePlayer נדרשת הרשאה זו כדי להגדיר שיר זה בתור הצלצול שלך.</string>
-    <string name="allow_settings_access_brightness_title">לאפשר ל־TubePlayer לשנות את מצב הבהירות</string>
-    <string name="allow_settings_access_brightness_description">ל־TubePlayer נדרשת הרשאה זו כדי לשנות את מצב הבהירות שלך.</string>
-    <string name="allow_draw_overlays_title">לאפשר לנגן של TubePlayer לקפוץ מעבר ליישומונים אחרים</string>
-    <string name="allow_sdraw_overlays_description">ל־TubePlayer נדרשת ההרשאה הזו כדי להציג את הווידאו שלך בחלונית קופצת מעל ליישומונים אחרים.</string>
+    <string name="widget_name_w">וידג׳ט לבן ל־AiPlayer</string>
+    <string name="widget_name_b">וידג׳ט כהה ל־AiPlayer</string>
+    <string name="allow_storage_access_title">לאפשר ל־AiPlayer לגשת לקובצי וידאו ושמע</string>
+    <string name="allow_storage_access_description">ל־AiPlayer נדרשת גישה למדיה בהתקן זה.</string>
+    <string name="allow_settings_access_ringtone_title">לאפשר ל־AiPlayer להגדיר את צלצול המכשיר</string>
+    <string name="allow_settings_access_ringtone_description">ל־AiPlayer נדרשת הרשאה זו כדי להגדיר שיר זה בתור הצלצול שלך.</string>
+    <string name="allow_settings_access_brightness_title">לאפשר ל־AiPlayer לשנות את מצב הבהירות</string>
+    <string name="allow_settings_access_brightness_description">ל־AiPlayer נדרשת הרשאה זו כדי לשנות את מצב הבהירות שלך.</string>
+    <string name="allow_draw_overlays_title">לאפשר לנגן של AiPlayer לקפוץ מעבר ליישומונים אחרים</string>
+    <string name="allow_sdraw_overlays_description">ל־AiPlayer נדרשת ההרשאה הזו כדי להציג את הווידאו שלך בחלונית קופצת מעל ליישומונים אחרים.</string>
     <string name="permission_ask_again">הענקת הרשאות</string>
-    <string name="exit_app">סגירת TubePlayer</string>
+    <string name="exit_app">סגירת AiPlayer</string>
     <!--fast scroller-->
     <!--Plugins-->
     <string name="plugins">תוספים</string>
