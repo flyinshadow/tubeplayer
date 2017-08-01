@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main TubePlayer Interface -->
+    <!-- Main AiPlayer Interface -->
     <string name="ok">ٹھیک ہے</string>
     <string name="cancel">منسوخ کریں</string>
     <string name="other">ديگر</string>
@@ -146,7 +146,7 @@
     <string name="enable_time_stretching_audio_summary">آڈيو کى رفتار کو پچ تبدیل کيے بغیر تيز اور آہستہ کريں ( اس کيليے ایک تيز ڈیوائس چاہيے)</string>
     <string name="advanced_prefs_category">ماہرانہ انداز</string>
     <string name="aout">آڈیو آؤٹ پٹ</string>
-    <string name="aout_summary">TubePlayer کی ٓڈيو کے آواز دینے کے طریقے کو تبدیل کریں</string>
+    <string name="aout_summary">AiPlayer کی ٓڈيو کے آواز دینے کے طریقے کو تبدیل کریں</string>
     <string name="clear_media_db">میڈیا ڈیٹا بیس کو خالى کريں</string>
     <string name="clear_history">تلاش کرنے کا ریکارڈ ختم کريں</string>
     <string name="media_db_cleared">ميڈيا ڈیٹابيس خالى کر ديا گيا ہے!</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main TubePlayer Interface -->
+    <!-- Main AiPlayer Interface -->
     <string name="ok">យល់ព្រម</string>
     <string name="cancel">បោះបង់</string>
     <string name="other">ផ្សេងៗ</string>
@@ -102,8 +102,8 @@
     <string name="open_mrl">បើក MRL</string>
     <string name="open_mrl_dialog_title">បើក​ស្ទ្រីម​បណ្ដាញ</string>
     <string name="open_mrl_dialog_msg">បញ្ចូល MRL បណ្ដាញ៖ ឧ. http://, mms:// ឬ rtsp://</string>
-    <string name="error_not_compatible">សូម​ទោស ​ឧបករណ៍​របស់​អ្នក​​បច្ចុប្បន្ន​មិន​បាន​គាំទ្រ​ដោយ​កំណែ TubePlayer សម្រាប់ Android™ នេះ​ទេ។\n</string>
-    <string name="error_problem">សូម​ទោស TubePlayer សម្រាប់ Android មាន​បញ្ហា​ក្នុង​កា​រ​ផ្ទុក និង​ពិបាក​បិទ​ណាស់។</string>
+    <string name="error_not_compatible">សូម​ទោស ​ឧបករណ៍​របស់​អ្នក​​បច្ចុប្បន្ន​មិន​បាន​គាំទ្រ​ដោយ​កំណែ AiPlayer សម្រាប់ Android™ នេះ​ទេ។\n</string>
+    <string name="error_problem">សូម​ទោស AiPlayer សម្រាប់ Android មាន​បញ្ហា​ក្នុង​កា​រ​ផ្ទុក និង​ពិបាក​បិទ​ណាស់។</string>
     <string name="encountered_error_title">កំហុស​ក្នុង​ការ​ចាក់​ឡើងវិញ</string>
     <string name="invalid_location">មិន​អាច​បង្ហាញ​ទីតាំង​ %1$s បាន​ទេ។</string>
     <string name="search">ស្វែងរក</string>
@@ -117,13 +117,13 @@
     <string name="options">ជម្រើស</string>
     <string name="lock">ចាក់សោ</string>
     <!-- About -->
-    <string name="app_name_full">TubePlayer សម្រាប់ Android™</string>
+    <string name="app_name_full">AiPlayer សម្រាប់ Android™</string>
     <string name="licence">អាជ្ញាប័ណ្ណ</string>
     <string name="revision">កំណែ</string>
     <string name="about">អំពី</string>
-    <string name="about_text">TubePlayer សម្រាប់ Android™ គឺ​ជា​កម្មវិធី​ចាក់​មេឌៀ TubePlayer ដែល​ជា​កម្មវិធី​មេឌៀ​កូដ​ចំ​ហ​ដ៏​មាន​ប្រជាប្រិយ ។ Android™ អាច​អាន​ឯកសារ និង​​ស្ទ្រីម​បណ្ដាញ​​ភាគ​ច្រើន ។</string>
-    <string name="compiled_by">TubePlayer កំណែ​នេះ​ត្រូវ​បាន​ចងក្រង​ដោយ ៖</string>
-    <string name="vlc_authors">អ្នក​និពន្ធ TubePlayer</string>
+    <string name="about_text">AiPlayer សម្រាប់ Android™ គឺ​ជា​កម្មវិធី​ចាក់​មេឌៀ AiPlayer ដែល​ជា​កម្មវិធី​មេឌៀ​កូដ​ចំ​ហ​ដ៏​មាន​ប្រជាប្រិយ ។ Android™ អាច​អាន​ឯកសារ និង​​ស្ទ្រីម​បណ្ដាញ​​ភាគ​ច្រើន ។</string>
+    <string name="compiled_by">AiPlayer កំណែ​នេះ​ត្រូវ​បាន​ចងក្រង​ដោយ ៖</string>
+    <string name="vlc_authors">អ្នក​និពន្ធ AiPlayer</string>
     <!-- Preferences -->
     <string name="preferences">ចំណូល​ចិត្ត</string>
     <string name="general_prefs_category">ទូទៅ</string>
@@ -172,13 +172,13 @@
     <string name="enable_time_stretching_audio_summary">បង្កើន​ល្បឿន ឬ​បន្ថយ​​ល្បឿន​​អូឌីយ៉ូ​ដោយ​​មិន​ផ្លាស់ប្ដូរ​​សូរស័ព្ទ (ទាមទារ​ឧបករណ៍​ដែល​លឿន)</string>
     <string name="advanced_prefs_category">កម្រិត​ខ្ពស់</string>
     <string name="aout">លទ្ធផល​អូឌីយ៉ូ</string>
-    <string name="aout_summary">ប្ដូរ​វិធីសាស្ត្រ​ដែល​ TubePlayer ប្រើ​ដើម្បី​​បង្ហាញ​លទ្ធផល​អូឌីយ៉ូ។</string>
+    <string name="aout_summary">ប្ដូរ​វិធីសាស្ត្រ​ដែល​ AiPlayer ប្រើ​ដើម្បី​​បង្ហាញ​លទ្ធផល​អូឌីយ៉ូ។</string>
     <string name="clear_media_db">សម្អាត​មូលដ្ឋាន​ទិន្នន័យ​មេឌៀ</string>
     <string name="clear_history">សម្អាត​ប្រវត្តិ​ស្វែងរក</string>
     <string name="media_db_cleared">បាន​សម្អាត​មូលដ្ឋាន​ទិន្នន័យ!</string>
     <string name="set_locale">កំណត់​មូលដ្ឋាន (locale)</string>
     <string name="set_locale_detail">ទុក​ទំនេរ ដើម្បី​កំណត់​ឡើងវិញ</string>
-    <string name="set_locale_popup">ចេញ រួច​ចាប់ផ្ដើម TubePlayer ឡើងវិញ ដើម្បីឲ្យ​ការ​ផ្លាស់ប្ដូរ​មាន​ប្រសិទ្ធ​ភាព។​</string>
+    <string name="set_locale_popup">ចេញ រួច​ចាប់ផ្ដើម AiPlayer ឡើងវិញ ដើម្បីឲ្យ​ការ​ផ្លាស់ប្ដូរ​មាន​ប្រសិទ្ធ​ភាព។​</string>
     <string name="network_caching">តម្លៃ​ឃ្លាំង​សម្ងាត់​បណ្ដាញ</string>
     <string name="network_caching_summary">ចំនួន​ពេលវេលា​ដើម្បី​ទប់​មេឌៀ​បណ្ដាញ (គិតជា​មិ.វិ.)។ មិន​ដំណើរការ​ជាមួយ​ការ​ដោះ​លេខ​កូដ​ទេ។ ទុក​ឲ្យ​វា​ទទេ​ដើម្បី​កំណត់​ឡើង​វិញ។</string>
     <string name="developer_prefs_category">អ្នក​អភិវឌ្ឍន៍</string>
@@ -194,7 +194,7 @@
     <string name="dump_logcat">បោះបង់​កំណត់ហេតុ logcat</string>
     <string name="dump_logcat_success">បាន​បោះបង់​កំណត់ហេតុ Logcat ទៅកាន់ %1$s ដោយ​ជោគជ័យ!</string>
     <string name="dump_logcat_failure">បាន​បរាជ័យ​ក្នុង​ការ​បោះបង់ logcat ។</string>
-    <string name="restart_vlc">ចាប់​ផ្ដើម TubePlayer ឡើងវិញ</string>
+    <string name="restart_vlc">ចាប់​ផ្ដើម AiPlayer ឡើងវិញ</string>
     <string name="send_log">ផ្ញើចូល</string>
     <string name="sending_log">កំពុង​ផ្ញើចូល...</string>
     <!--Accessibility-->

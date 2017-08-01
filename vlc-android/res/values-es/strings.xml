@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main TubePlayer Interface -->
+    <!-- Main AiPlayer Interface -->
     <string name="ok">Aceptar</string>
     <string name="cancel">Cancelar</string>
     <string name="other">Otro</string>
@@ -38,7 +38,7 @@
     <string name="ringtone_error">Ha ocurrido un error al establecer el tono de llamada.</string>
     <string name="pause">Pausar</string>
     <string name="not_show_again">No mostrar este mensaje de nuevo.</string>
-    <string name="info_title">TubePlayer</string>
+    <string name="info_title">AiPlayer</string>
     <string name="unknown_artist">Artista desconocido</string>
     <string name="unknown_album">Álbum desconocido</string>
     <string name="unknown_genre">Género desconocido</string>
@@ -158,11 +158,11 @@
     <string name="open_mrl">Flujo</string>
     <string name="open_mrl_dialog_title">Abrir volcado de red</string>
     <string name="open_mrl_dialog_msg">Ingrese dirección de red: p.e. http://, mms:// o rtsp://</string>
-    <string name="error_not_compatible">Su dispositivo no está soportado actualmente por esta versión de TubePlayer para Android™.</string>
-    <string name="error_problem">TubePlayer para Android ha tenido un problema al cargarse y se ha cerrado.</string>
+    <string name="error_not_compatible">Su dispositivo no está soportado actualmente por esta versión de AiPlayer para Android™.</string>
+    <string name="error_problem">AiPlayer para Android ha tenido un problema al cargarse y se ha cerrado.</string>
     <string name="error_message_is">El mensaje de error es (mencione esto al depurar):\n\n</string>
     <string name="encountered_error_title">Error de reproducción</string>
-    <string name="encountered_error_message">TubePlayer ha encontrado un error con este medio.\nIntente refrescar la librería de medios.</string>
+    <string name="encountered_error_message">AiPlayer ha encontrado un error con este medio.\nIntente refrescar la librería de medios.</string>
     <string name="invalid_location">La localización %1$s no puede reproducirse.</string>
     <string name="search">Buscar</string>
     <string name="search_history">Historial de búsqueda</string>
@@ -189,13 +189,13 @@
     <string name="show_playlist">Mostrar lista de reproducción</string>
     <string name="hold_to_stop">Mantener para parar</string>
     <!-- About -->
-    <string name="app_name_full">TubePlayer para Android</string>
+    <string name="app_name_full">AiPlayer para Android</string>
     <string name="licence">Licencia</string>
     <string name="revision">Revisión</string>
     <string name="about">Acerca de</string>
-    <string name="about_text">TubePlayer para Android™ es una reescritura del Reproductor multimedia TubePlayer, el popular reproductor multimedia de código abierto. La versión de Android™ puede leer la mayoría de archivos y flujos de red.</string>
-    <string name="compiled_by">Esta versión de TubePlayer está compilada por:</string>
-    <string name="vlc_authors">Autores de TubePlayer.</string>
+    <string name="about_text">AiPlayer para Android™ es una reescritura del Reproductor multimedia AiPlayer, el popular reproductor multimedia de código abierto. La versión de Android™ puede leer la mayoría de archivos y flujos de red.</string>
+    <string name="compiled_by">Esta versión de AiPlayer está compilada por:</string>
+    <string name="vlc_authors">Autores de AiPlayer.</string>
     <!-- Preferences -->
     <string name="preferences">Preferencias</string>
     <string name="general_prefs_category">General</string>
@@ -282,7 +282,7 @@
     <string name="enable_steal_remote_control">Control remoto de auriculares exclusivo</string>
     <string name="enable_steal_remote_control_summary">Evitar conflictos robando el control remoto de otras aplicaciones. Esto previene llamar al hacer doble clic en teléfonos HTC.</string>
     <string name="aout">Salida de audio</string>
-    <string name="aout_summary">Cambiar el método que usa TubePlayer para la salida de audio.</string>
+    <string name="aout_summary">Cambiar el método que usa AiPlayer para la salida de audio.</string>
     <string name="controls_prefs_category">Controles</string>
     <string name="performance_prefs_category">Rendimiento</string>
     <string name="chroma_format">Forzar croma</string>
@@ -308,7 +308,7 @@
     <string name="media_db_cleared">¡Base de datos de medios limpiada!</string>
     <string name="set_locale">Establecer idioma</string>
     <string name="set_locale_detail">Dejar en blanco para reinicializar</string>
-    <string name="set_locale_popup">Salir y reiniciar TubePlayer para que los cambios tomen efecto.</string>
+    <string name="set_locale_popup">Salir y reiniciar AiPlayer para que los cambios tomen efecto.</string>
     <string name="network_caching">Valor de cache de red</string>
     <string name="network_caching_summary">La cantidad de tiempo a almacenar en memoria intermedia (en ms). No funciona con hardware de decodificación. Dejar en blanco para reinicializar.</string>
     <string name="quit">Salir y reiniciar aplicación</string>
@@ -319,16 +319,16 @@
     <string name="start_logging">Iniciar registro</string>
     <string name="stop_logging">Detener registro</string>
     <string name="clear_log">Limpiar registro</string>
-    <string name="log_service_title">Grabación de trazas de TubePlayer</string>
+    <string name="log_service_title">Grabación de trazas de AiPlayer</string>
     <string name="log_service_text">Abrir la consola de trazas</string>
     <string name="copy_to_clipboard">Copiar al portapapeles</string>
     <string name="copied_to_clipboard">Registro copiado al portapapeles.</string>
     <string name="dump_logcat">Volcar trazas logcat</string>
     <string name="dump_logcat_success">Logcat volcado correctamente a %1$s</string>
     <string name="dump_logcat_failure">Fallo al volcar logcat.</string>
-    <string name="serious_crash">Desafortunadamente, ha ocurrido un error serio y TubePlayer ha tenido que cerrarse.</string>
-    <string name="help_us_send_log">Ayúdanos a mejorar TubePlayer enviándonos las siguientes trazas de fallo:</string>
-    <string name="restart_vlc">Reiniciar TubePlayer</string>
+    <string name="serious_crash">Desafortunadamente, ha ocurrido un error serio y AiPlayer ha tenido que cerrarse.</string>
+    <string name="help_us_send_log">Ayúdanos a mejorar AiPlayer enviándonos las siguientes trazas de fallo:</string>
+    <string name="restart_vlc">Reiniciar AiPlayer</string>
     <string name="send_log">Enviar las trazas</string>
     <string name="sending_log">Enviando las trazas...</string>
     <string name="drawer_open">Abrir navegación «drawer»</string>
@@ -371,18 +371,18 @@
     <string name="no_subs_found">No hay subtítulos en esta carpeta</string>
     <string name="music_now_playing">Reproduciendo ahora</string>
     <!--Widget-->
-    <string name="widget_name_w">Control blanco TubePlayer</string>
-    <string name="widget_name_b">Control oscuro TubePlayer</string>
-    <string name="allow_storage_access_title">Permitir a TubePlayer acceder a los archivos de vídeo y audio.</string>
-    <string name="allow_storage_access_description">TubePlayer necesita que conceda este permiso para acceder a los archivos multimedia en este dispositivo.</string>
-    <string name="allow_settings_access_ringtone_title">Permitir a TubePlayer establecer el tono de llamada</string>
-    <string name="allow_settings_access_ringtone_description">TubePlayer necesita que proporciones este permiso para establecer esta canción como tu tono de llamada.</string>
-    <string name="allow_settings_access_brightness_title">Permitir a TubePlayer cambiar el modo de brillo</string>
-    <string name="allow_settings_access_brightness_description">TubePlayer necesita que proporciones este permiso para cambiar el modo de brillo.</string>
-    <string name="allow_draw_overlays_title">Permitir al reproductor TubePlayer estar por encima de otras apps</string>
-    <string name="allow_sdraw_overlays_description">TubePlayer necesita que proporciones este permiso para mostrar tu vídeo en una ventana emergente sobre otras aplicaciones.</string>
+    <string name="widget_name_w">Control blanco AiPlayer</string>
+    <string name="widget_name_b">Control oscuro AiPlayer</string>
+    <string name="allow_storage_access_title">Permitir a AiPlayer acceder a los archivos de vídeo y audio.</string>
+    <string name="allow_storage_access_description">AiPlayer necesita que conceda este permiso para acceder a los archivos multimedia en este dispositivo.</string>
+    <string name="allow_settings_access_ringtone_title">Permitir a AiPlayer establecer el tono de llamada</string>
+    <string name="allow_settings_access_ringtone_description">AiPlayer necesita que proporciones este permiso para establecer esta canción como tu tono de llamada.</string>
+    <string name="allow_settings_access_brightness_title">Permitir a AiPlayer cambiar el modo de brillo</string>
+    <string name="allow_settings_access_brightness_description">AiPlayer necesita que proporciones este permiso para cambiar el modo de brillo.</string>
+    <string name="allow_draw_overlays_title">Permitir al reproductor AiPlayer estar por encima de otras apps</string>
+    <string name="allow_sdraw_overlays_description">AiPlayer necesita que proporciones este permiso para mostrar tu vídeo en una ventana emergente sobre otras aplicaciones.</string>
     <string name="permission_ask_again">Conceder permiso</string>
-    <string name="exit_app">Cerrar TubePlayer</string>
+    <string name="exit_app">Cerrar AiPlayer</string>
     <!--fast scroller-->
     <string name="fastscroller_track">Seguimiento FastScroller</string>
     <string name="fastscroller_handle">Manejador FastScroller</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main TubePlayer Interface -->
+    <!-- Main AiPlayer Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Cancelar</string>
     <string name="other">Outro</string>
@@ -39,7 +39,7 @@
     <string name="ringtone_error">Ocorreu um erro ao definir o toque.</string>
     <string name="pause">Pausar</string>
     <string name="not_show_again">Não exibir esta mensagem novamente.</string>
-    <string name="info_title">TubePlayer</string>
+    <string name="info_title">AiPlayer</string>
     <string name="unknown_artist">Artista Desconhecido</string>
     <string name="unknown_album">Álbum Desconhecido</string>
     <string name="unknown_genre">Gênero Desconhecido</string>
@@ -160,11 +160,11 @@
     <string name="open_mrl">Abrir MRL</string>
     <string name="open_mrl_dialog_title">Abrir fluxo de rede</string>
     <string name="open_mrl_dialog_msg">Digite o MRL: Ex.: http://, mms:// ou rtsp://</string>
-    <string name="error_not_compatible">Desculpe, não há suporte do TubePlayer para Android™ para o seu dispositivo.</string>
-    <string name="error_problem">Desculpe, ocorreu um problema durante a carga e o TubePlayer para Android™ foi fechado.</string>
+    <string name="error_not_compatible">Desculpe, não há suporte do AiPlayer para Android™ para o seu dispositivo.</string>
+    <string name="error_problem">Desculpe, ocorreu um problema durante a carga e o AiPlayer para Android™ foi fechado.</string>
     <string name="error_message_is">A mensagem de erro é (por favor, mencione-a quando estiver depurando):\n</string>
     <string name="encountered_error_title">Erro de reprodução</string>
-    <string name="encountered_error_message">O TubePlayer encontrou um erro nesta mídia.\nPor favor, tente atualizar a biblioteca de mídias.</string>
+    <string name="encountered_error_message">O AiPlayer encontrou um erro nesta mídia.\nPor favor, tente atualizar a biblioteca de mídias.</string>
     <string name="invalid_location">Não é possível reproduzir na área %1$s.</string>
     <string name="search">Pesquisar</string>
     <string name="search_history">Histórico de pesquisas</string>
@@ -191,13 +191,13 @@
     <string name="show_playlist">Exibir a lista de reprodução</string>
     <string name="hold_to_stop">Segure para parar</string>
     <!-- About -->
-    <string name="app_name_full">TubePlayer para Android™</string>
+    <string name="app_name_full">AiPlayer para Android™</string>
     <string name="licence">Licença</string>
     <string name="revision">Revisão</string>
     <string name="about">Sobre</string>
-    <string name="about_text">O TubePlayer para Android™ é uma versão do Reprodutor de Mídias TubePlayer, o popular reprodutor de mídias livre. A versão Android™ lê a maioria dos arquivos e fluxos de rede.</string>
-    <string name="compiled_by">Esta versão do TubePlayer foi compilada por:</string>
-    <string name="vlc_authors">Autores do TubePlayer.</string>
+    <string name="about_text">O AiPlayer para Android™ é uma versão do Reprodutor de Mídias AiPlayer, o popular reprodutor de mídias livre. A versão Android™ lê a maioria dos arquivos e fluxos de rede.</string>
+    <string name="compiled_by">Esta versão do AiPlayer foi compilada por:</string>
+    <string name="vlc_authors">Autores do AiPlayer.</string>
     <!-- Preferences -->
     <string name="preferences">Preferências</string>
     <string name="general_prefs_category">Geral</string>
@@ -280,7 +280,7 @@
     <string name="enable_steal_remote_control">Controle remoto exclusivo para o fone</string>
     <string name="enable_steal_remote_control_summary">Evite conflitos tomando o acesso ao controle remoto. Isso evita a discagem por duplo-toque dos telefones HTC.</string>
     <string name="aout">Saída de áudio</string>
-    <string name="aout_summary">Alterar o método que o TubePlayer usa para reproduzir áudio.</string>
+    <string name="aout_summary">Alterar o método que o AiPlayer usa para reproduzir áudio.</string>
     <string name="controls_prefs_category">Controles</string>
     <string name="performance_prefs_category">Desempenho</string>
     <string name="chroma_format">Impor um formato cromático</string>
@@ -304,7 +304,7 @@
     <string name="media_db_cleared">Banco de mídias limpo!</string>
     <string name="set_locale">Definir local</string>
     <string name="set_locale_detail">Deixe em branco para redefinir</string>
-    <string name="set_locale_popup">Fecha e reinicia o TubePlayer para que as alterações tenham efeito.</string>
+    <string name="set_locale_popup">Fecha e reinicia o AiPlayer para que as alterações tenham efeito.</string>
     <string name="network_caching">Valor de memória para rede</string>
     <string name="network_caching_summary">A quantidade de tempo para armazenar em memória (em ms). Não funciona com decodificação por hardware. Deixe vazio para restaurar a configuração.</string>
     <string name="resume_playback_title">Retomar a reprodução após uma chamada</string>
@@ -316,16 +316,16 @@
     <string name="start_logging">Iniciar o registro</string>
     <string name="stop_logging">Parar o registro</string>
     <string name="clear_log">Limpar o registro</string>
-    <string name="log_service_title">Gravação de registros do TubePlayer</string>
+    <string name="log_service_title">Gravação de registros do AiPlayer</string>
     <string name="log_service_text">Abrir a console de registros</string>
     <string name="copy_to_clipboard">Copiar para a área de transferência</string>
     <string name="copied_to_clipboard">Registro copiado para a área de transferência</string>
     <string name="dump_logcat">Despejar os registros do logcat</string>
     <string name="dump_logcat_success">O logcat despejou os registros com sucesso em %1$s!</string>
     <string name="dump_logcat_failure">Falha ao despejar os registros do logcat.</string>
-    <string name="serious_crash">Infelizmente ocorreu um erro severo e o TubePlayer precisou ser fechado.</string>
-    <string name="help_us_send_log">Ajude-nos a melhorar o TubePlayer enviando o seguinte registro de problemas:</string>
-    <string name="restart_vlc">Reiniciar o TubePlayer</string>
+    <string name="serious_crash">Infelizmente ocorreu um erro severo e o AiPlayer precisou ser fechado.</string>
+    <string name="help_us_send_log">Ajude-nos a melhorar o AiPlayer enviando o seguinte registro de problemas:</string>
+    <string name="restart_vlc">Reiniciar o AiPlayer</string>
     <string name="send_log">Enviar o registro</string>
     <string name="sending_log">Enviando o registro...</string>
     <string name="drawer_open">Abrir o compositor de navegação</string>
@@ -365,18 +365,18 @@
     <string name="no_subs_found">Nenhuma legenda nesta pasta</string>
     <string name="music_now_playing">Reproduzindo</string>
     <!--Widget-->
-    <string name="widget_name_w">Dispositivo TubePlayer Branco</string>
-    <string name="widget_name_b">Dispositivo TubePlayer Preto</string>
-    <string name="allow_storage_access_title">Permitir que o TubePlayer acesse arquivos de áudio e vídeo</string>
-    <string name="allow_storage_access_description">O TubePlayer precisa que você conceda esta permissão para acessar os arquivos de mídia deste dispositivo.</string>
-    <string name="allow_settings_access_ringtone_title">Permitir que o TubePlayer defina o toque</string>
-    <string name="allow_settings_access_ringtone_description">O TubePlayer precisa que você conceda esta permissão para definir esta música como toque.</string>
-    <string name="allow_settings_access_brightness_title">Permitir que o TubePlayer defina o brilho</string>
-    <string name="allow_settings_access_brightness_description">O TubePlayer precisa que você conceda esta permissão para definir o brilho</string>
-    <string name="allow_draw_overlays_title">Permitir que o TubePlayer se sobreponha a outros aplicativos</string>
-    <string name="allow_sdraw_overlays_description">O TubePlayer precisa de sua permissão para exibir seu vídeo em uma janela sobre outros aplicativos.</string>
+    <string name="widget_name_w">Dispositivo AiPlayer Branco</string>
+    <string name="widget_name_b">Dispositivo AiPlayer Preto</string>
+    <string name="allow_storage_access_title">Permitir que o AiPlayer acesse arquivos de áudio e vídeo</string>
+    <string name="allow_storage_access_description">O AiPlayer precisa que você conceda esta permissão para acessar os arquivos de mídia deste dispositivo.</string>
+    <string name="allow_settings_access_ringtone_title">Permitir que o AiPlayer defina o toque</string>
+    <string name="allow_settings_access_ringtone_description">O AiPlayer precisa que você conceda esta permissão para definir esta música como toque.</string>
+    <string name="allow_settings_access_brightness_title">Permitir que o AiPlayer defina o brilho</string>
+    <string name="allow_settings_access_brightness_description">O AiPlayer precisa que você conceda esta permissão para definir o brilho</string>
+    <string name="allow_draw_overlays_title">Permitir que o AiPlayer se sobreponha a outros aplicativos</string>
+    <string name="allow_sdraw_overlays_description">O AiPlayer precisa de sua permissão para exibir seu vídeo em uma janela sobre outros aplicativos.</string>
     <string name="permission_ask_again">Conceder permissão</string>
-    <string name="exit_app">Fechar o TubePlayer</string>
+    <string name="exit_app">Fechar o AiPlayer</string>
     <!--fast scroller-->
     <!--Plugins-->
     <string name="plugins">Complementos</string>
@@ -421,7 +421,7 @@
     <string name="length">Duração</string>
     <string name="tv_settings_hint">Pressione prolongadamente o botão OK para marcar/desmarcar pastas</string>
     <string name="ml_external_storage_title">Um armazenamento externo foi detectado</string>
-    <string name="ml_external_storage_msg">Deseja que o TubePlayer adicione o dispositivo %1$s à sua biblioteca de mídias?</string>
+    <string name="ml_external_storage_msg">Deseja que o AiPlayer adicione o dispositivo %1$s à sua biblioteca de mídias?</string>
     <string name="last_added_media">último adicionado</string>
     <string name="no">Não</string>
 </resources>

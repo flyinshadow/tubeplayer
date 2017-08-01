@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main TubePlayer Interface -->
+    <!-- Main AiPlayer Interface -->
     <string name="ok">Ok</string>
     <string name="cancel">Annuler</string>
     <string name="other">Autre</string>
@@ -38,7 +38,7 @@
     <string name="ringtone_error">Impossible de définir une nouvelle sonnerie, une erreur est survenue.</string>
     <string name="pause">Pause</string>
     <string name="not_show_again">Ne plus afficher ce message.</string>
-    <string name="info_title">TubePlayer</string>
+    <string name="info_title">AiPlayer</string>
     <string name="unknown_artist">Artiste inconnu</string>
     <string name="unknown_album">Album inconnu</string>
     <string name="unknown_genre">Genre inconnu</string>
@@ -159,8 +159,8 @@
     <string name="open_mrl">Ouvrir MRL</string>
     <string name="open_mrl_dialog_title">Ouvrir un flux réseau</string>
     <string name="open_mrl_dialog_msg">Entrez une addresse réseau : p. ex. http://, mms:// ou rtsp://</string>
-    <string name="error_not_compatible">Désolé, mais votre appareil n\'est pas supporté pour l\'instant par cette version de TubePlayer pour Android™.</string>
-    <string name="error_problem">Désolé, TubePlayer pour Android a rencontré un problème et a dû s\'arrêter.</string>
+    <string name="error_not_compatible">Désolé, mais votre appareil n\'est pas supporté pour l\'instant par cette version de AiPlayer pour Android™.</string>
+    <string name="error_problem">Désolé, AiPlayer pour Android a rencontré un problème et a dû s\'arrêter.</string>
     <string name="error_message_is">Le message d\'erreur est (à indiquer en mode debug) :\n</string>
     <string name="encountered_error_title">Erreur de lecture</string>
     <string name="encountered_error_message">Une erreur est survenue à la lecture de ce média.\nVous devriez peut-être rafraîchir votre bibliothèque multimédia.</string>
@@ -190,13 +190,13 @@
     <string name="show_playlist">Afficher la liste de lecture</string>
     <string name="hold_to_stop">Maintenir pour arrêter</string>
     <!-- About -->
-    <string name="app_name_full">TubePlayer pour Android™</string>
+    <string name="app_name_full">AiPlayer pour Android™</string>
     <string name="licence">Licence</string>
     <string name="revision">Révision</string>
     <string name="about">À propos</string>
-    <string name="about_text">TubePlayer pour Android™ est un portage de TubePlayer media player, le célèbre lecteur multimedia open source. La version Android™ peut lire la plupart des fichiers et flux réseaux.</string>
-    <string name="compiled_by">Cette version de TubePlayer est compilée par :</string>
-    <string name="vlc_authors">Auteurs de TubePlayer.</string>
+    <string name="about_text">AiPlayer pour Android™ est un portage de AiPlayer media player, le célèbre lecteur multimedia open source. La version Android™ peut lire la plupart des fichiers et flux réseaux.</string>
+    <string name="compiled_by">Cette version de AiPlayer est compilée par :</string>
+    <string name="vlc_authors">Auteurs de AiPlayer.</string>
     <!-- Preferences -->
     <string name="preferences">Préférences</string>
     <string name="general_prefs_category">Général</string>
@@ -309,12 +309,12 @@
     <string name="auto_rescan">Rescanner automatiquement</string>
     <string name="auto_rescan_summary">Scanner automatiquement au démarrage de l\'application les médias ajoutés ou supprimés sur l\'appareil</string>
     <string name="clear_media_db">Réinitialiser votre bibliothèque multimédia</string>
-    <string name="clear_media_db_summary">Accédez aux informations d\'Android TubePlayer pour effacer les données</string>
+    <string name="clear_media_db_summary">Accédez aux informations d\'Android AiPlayer pour effacer les données</string>
     <string name="clear_history">Supprimer l\'historique de vos recherches</string>
     <string name="media_db_cleared">Bibliothèque multimédia réinitialisée !</string>
     <string name="set_locale">Définir la langue</string>
     <string name="set_locale_detail">Laisser vide pour réinitialiser</string>
-    <string name="set_locale_popup">Quitter et redémarrer TubePlayer pour que les changements soient appliqués.</string>
+    <string name="set_locale_popup">Quitter et redémarrer AiPlayer pour que les changements soient appliqués.</string>
     <string name="network_caching">Taille du cache réseau</string>
     <string name="network_caching_summary">Durée en ms pour le tampon réseau. Ne fonctionne pas avec le décodage matériel. Laissez vide pour ré-initialiser.</string>
     <string name="resume_playback_title">Reprendre la lecture après un appel</string>
@@ -328,16 +328,16 @@
     <string name="start_logging">Démarrer l\'enregistrement</string>
     <string name="stop_logging">Arrêter l\'enregistrement</string>
     <string name="clear_log">Vider le journal</string>
-    <string name="log_service_title">Enregistrement des journaux de TubePlayer</string>
+    <string name="log_service_title">Enregistrement des journaux de AiPlayer</string>
     <string name="log_service_text">Ouvrir la console du journal</string>
     <string name="copy_to_clipboard">Copier vers le presse papier</string>
     <string name="copied_to_clipboard">Journal copié vers le presse papier.</string>
     <string name="dump_logcat">Enregistrer journal logcat</string>
     <string name="dump_logcat_success">Logcat enregistré avec succès dans le fichier : %1$s !</string>
     <string name="dump_logcat_failure">Erreur lors de l\'enregistrement du logcat.</string>
-    <string name="serious_crash">Malheureusement, une importante erreur est intervenue et TubePlayer a dû se fermer.</string>
-    <string name="help_us_send_log">Aidez-nous à améliorer TubePlayer en renvoyant le rapport de crash suivant :</string>
-    <string name="restart_vlc">Redémarrer TubePlayer</string>
+    <string name="serious_crash">Malheureusement, une importante erreur est intervenue et AiPlayer a dû se fermer.</string>
+    <string name="help_us_send_log">Aidez-nous à améliorer AiPlayer en renvoyant le rapport de crash suivant :</string>
+    <string name="restart_vlc">Redémarrer AiPlayer</string>
     <string name="send_log">Envoyer le rapport</string>
     <string name="sending_log">Envoi du rapport...</string>
     <string name="drawer_open">Ouvrir le volet de navigation</string>
@@ -381,18 +381,18 @@
     <string name="no_subs_found">Pas de sous-titre dans ce répertoire</string>
     <string name="music_now_playing">Lecture en cours</string>
     <!--Widget-->
-    <string name="widget_name_w">Widget TubePlayer blanc</string>
-    <string name="widget_name_b">Widget TubePlayer noir</string>
-    <string name="allow_storage_access_title">Permettre l\'accès aux fichiers vidéos et audios à TubePlayer</string>
-    <string name="allow_storage_access_description">TubePlayer a besoin de votre permission pour accéder aux fichiers multimédias de cet appareil.</string>
-    <string name="allow_settings_access_ringtone_title">Autoriser TubePlayer à changer la sonnerie du téléphone</string>
-    <string name="allow_settings_access_ringtone_description">TubePlayer a besoin de votre autorisation pour pouvoir régler la sonnerie du téléphone</string>
-    <string name="allow_settings_access_brightness_title">Autoriser TubePlayer à modifier la luminosité de l\'écran</string>
-    <string name="allow_settings_access_brightness_description">TubePlayer a besoin de votre autorisation pour pouvoir modifier la luminosité de l\'écran</string>
-    <string name="allow_draw_overlays_title">Autoriser la popup TubePlayer à s\'afficher par dessus les autres applications</string>
-    <string name="allow_sdraw_overlays_description">TubePlayer a besoin de votre autorisation pour afficher les vidéos dans une popup par dessus les autres applications</string>
+    <string name="widget_name_w">Widget AiPlayer blanc</string>
+    <string name="widget_name_b">Widget AiPlayer noir</string>
+    <string name="allow_storage_access_title">Permettre l\'accès aux fichiers vidéos et audios à AiPlayer</string>
+    <string name="allow_storage_access_description">AiPlayer a besoin de votre permission pour accéder aux fichiers multimédias de cet appareil.</string>
+    <string name="allow_settings_access_ringtone_title">Autoriser AiPlayer à changer la sonnerie du téléphone</string>
+    <string name="allow_settings_access_ringtone_description">AiPlayer a besoin de votre autorisation pour pouvoir régler la sonnerie du téléphone</string>
+    <string name="allow_settings_access_brightness_title">Autoriser AiPlayer à modifier la luminosité de l\'écran</string>
+    <string name="allow_settings_access_brightness_description">AiPlayer a besoin de votre autorisation pour pouvoir modifier la luminosité de l\'écran</string>
+    <string name="allow_draw_overlays_title">Autoriser la popup AiPlayer à s\'afficher par dessus les autres applications</string>
+    <string name="allow_sdraw_overlays_description">AiPlayer a besoin de votre autorisation pour afficher les vidéos dans une popup par dessus les autres applications</string>
     <string name="permission_ask_again">Donner l\'autorisation</string>
-    <string name="exit_app">Fermer TubePlayer</string>
+    <string name="exit_app">Fermer AiPlayer</string>
     <!--fast scroller-->
     <string name="fastscroller_track">indicateur de défilement rapide</string>
     <string name="fastscroller_handle">Curseur du défilement rapide</string>
@@ -441,5 +441,5 @@
     <string name="length">Longueur</string>
     <string name="tv_settings_hint">Appui prolongé sur OK pour cocher/décocher</string>
     <string name="ml_external_storage_title">Nouveau stockage externe détecté</string>
-    <string name="ml_external_storage_msg">Souhaitez-vous que TubePlayer ajoute le périphérique %1$s à votre bibliothèque de media ?</string>
+    <string name="ml_external_storage_msg">Souhaitez-vous que AiPlayer ajoute le périphérique %1$s à votre bibliothèque de media ?</string>
 </resources>
