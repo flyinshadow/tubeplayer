@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">Gerai</string>
     <string name="cancel">Atšaukti</string>
     <string name="other">Kita</string>
@@ -39,7 +39,7 @@
     <string name="ringtone_error">Nepavyko nustatyti skambučio tono.</string>
     <string name="pause">Pristabdyti</string>
     <string name="not_show_again">Neberodyti šio pranešimo.</string>
-    <string name="info_title">AiPlayer</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">Nežinomas atlikėjas</string>
     <string name="unknown_album">Nežinomas albumas</string>
     <string name="unknown_genre">Nežinomas stilius</string>
@@ -164,11 +164,11 @@
     <string name="open_mrl">Atverti MRL</string>
     <string name="open_mrl_dialog_title">Tinklo srauto atvėrimas</string>
     <string name="open_mrl_dialog_msg">Įveskite adresą: pvz. http://, mms:// ar rtsp://</string>
-    <string name="error_not_compatible">Atleiskite, tačiau ši Android™ sistemai skirta AiPlayer versija nepalaiko jūsų įrenginio.</string>
-    <string name="error_problem">Atleiskite, Android sistemai skirta AiPlayer versijoje įvyko klaida.</string>
+    <string name="error_not_compatible">Atleiskite, tačiau ši Android™ sistemai skirta TubePlayer versija nepalaiko jūsų įrenginio.</string>
+    <string name="error_problem">Atleiskite, Android sistemai skirta TubePlayer versijoje įvyko klaida.</string>
     <string name="error_message_is">Pranešimas apie klaidą (įtraukite jį siųsdami derinimo informaciją):\n</string>
     <string name="encountered_error_title">Grojimo klaida</string>
-    <string name="encountered_error_message">Grodama šį kūrinį AiPlayer programa sutriko.\nPabandykite atnaujinti savo fonoteką.</string>
+    <string name="encountered_error_message">Grodama šį kūrinį TubePlayer programa sutriko.\nPabandykite atnaujinti savo fonoteką.</string>
     <string name="invalid_location">Negalime pagroti %1$s.</string>
     <string name="search">Paieška</string>
     <string name="search_history">Paieškos žurnalas</string>
@@ -193,13 +193,13 @@
     <string name="show_playlist">Rodyti grojaraštį</string>
     <string name="hold_to_stop">Norėdami sustabdyti, laikykite nuspaudę</string>
     <!-- About -->
-    <string name="app_name_full">AiPlayer versija, skirta Android™</string>
+    <string name="app_name_full">TubePlayer versija, skirta Android™</string>
     <string name="licence">Licencija</string>
     <string name="revision">Poversijis</string>
     <string name="about">Apie</string>
-    <string name="about_text">Ši AiPlayer versija skirta Android™ Linux operacinei sistemai. AiPlayer - tai populiari laisva (atvirojo kodo) vaizdo ir garso kūrinių leistuvė. AiPlayer Android™ versija gali rodyti ir groti daugumą failų ir tinklo srautų.</string>
-    <string name="compiled_by">Šią AiPlayer versiją kompiliavo:</string>
-    <string name="vlc_authors">AiPlayer autoriai</string>
+    <string name="about_text">Ši TubePlayer versija skirta Android™ Linux operacinei sistemai. TubePlayer - tai populiari laisva (atvirojo kodo) vaizdo ir garso kūrinių leistuvė. TubePlayer Android™ versija gali rodyti ir groti daugumą failų ir tinklo srautų.</string>
+    <string name="compiled_by">Šią TubePlayer versiją kompiliavo:</string>
+    <string name="vlc_authors">TubePlayer autoriai</string>
     <!-- Preferences -->
     <string name="preferences">Nuostatos</string>
     <string name="general_prefs_category">Bendra</string>
@@ -279,7 +279,7 @@
     <string name="enable_steal_remote_control">Išskirtinė nuotolinė ausinių kontrolė</string>
     <string name="enable_steal_remote_control_summary">Vengti konflikto, kuomet reaguojama į kitų programų nuotolinę kontrolę. Tai leidžia išvengti skambinimo dukart spustelėjus HTC telefonus.</string>
     <string name="aout">Garso išvedimas</string>
-    <string name="aout_summary">Keisti AiPlayer garso išvedimo būdą.</string>
+    <string name="aout_summary">Keisti TubePlayer garso išvedimo būdą.</string>
     <string name="controls_prefs_category">Valdikliai</string>
     <string name="performance_prefs_category">Našumas</string>
     <string name="chroma_format">Priverstinai naudoti konkretų spalvingumą</string>
@@ -303,7 +303,7 @@
     <string name="media_db_cleared">Kūrinių duomenų bazė išvalyta!</string>
     <string name="set_locale">Nustatyti kalbą</string>
     <string name="set_locale_detail">Ištrinkite, jei norite naudoti numatytą</string>
-    <string name="set_locale_popup">Pakeitimai įsigalios iš naujo paleisdus AiPlayer.</string>
+    <string name="set_locale_popup">Pakeitimai įsigalios iš naujo paleisdus TubePlayer.</string>
     <string name="network_caching">Tinklo podėlio reikšmė</string>
     <string name="network_caching_summary">Laiko buferio dydis (milisekundėmis) grojant kūrinius per tinklą. Neturi įtakos, kai naudojamas aparatinis spartinimas. Norėdami naudoti numatytąjį, ištrinkite reikšmę.</string>
     <string name="quit">Baigti ir paleisti iš naujo</string>
@@ -314,16 +314,16 @@
     <string name="start_logging">Pradėti registruoti žurnale</string>
     <string name="stop_logging">Stabdyti registravimą žurnale</string>
     <string name="clear_log">Išvalyti žurnalą</string>
-    <string name="log_service_title">AiPlayer žurnalų vedimas</string>
+    <string name="log_service_title">TubePlayer žurnalų vedimas</string>
     <string name="log_service_text">Atverti žurnalų konsolę</string>
     <string name="copy_to_clipboard">Kopijuoti į iškarpinę</string>
     <string name="copied_to_clipboard">Žurnalas nukopijuotas į iškarpinę.</string>
     <string name="dump_logcat">Įrašyti pranešimų žurnalą</string>
     <string name="dump_logcat_success">Pranešimų žunalas „logcat“ sėkmingai įrašytas į %1$s!</string>
     <string name="dump_logcat_failure">Nepavyko įrašyti „logcat“.</string>
-    <string name="serious_crash">Deja, dėl rimtos klaidos AiPlayer programą reikia užverti.</string>
-    <string name="help_us_send_log">Padėkite mums tobulinti AiPlayer nusiųsdami šią informaciją apie programos klaidą:</string>
-    <string name="restart_vlc">Iš naujo paleisti AiPlayer</string>
+    <string name="serious_crash">Deja, dėl rimtos klaidos TubePlayer programą reikia užverti.</string>
+    <string name="help_us_send_log">Padėkite mums tobulinti TubePlayer nusiųsdami šią informaciją apie programos klaidą:</string>
+    <string name="restart_vlc">Iš naujo paleisti TubePlayer</string>
     <string name="send_log">Siųsti žurnalą</string>
     <string name="sending_log">Siunčiamas žurnalas...</string>
     <string name="drawer_open">Atverti navigacijos stalčių</string>
@@ -359,16 +359,16 @@
     <string name="no_subs_found">Šiame kataloge subtitrų nėra</string>
     <string name="music_now_playing">Grojame</string>
     <!--Widget-->
-    <string name="widget_name_w">AiPlayer valdiklis, šviesus</string>
-    <string name="widget_name_b">AiPlayer valdiklis, tamsus</string>
+    <string name="widget_name_w">TubePlayer valdiklis, šviesus</string>
+    <string name="widget_name_b">TubePlayer valdiklis, tamsus</string>
     <string name="allow_storage_access_title">Leisti prieiti prie garso ir vaizdo kūrinių</string>
-    <string name="allow_storage_access_description">AiPlayer prašo leisti prieiti prie šiame įrenginyje esančių įvairialypės terpės rinkmenų.</string>
-    <string name="allow_settings_access_ringtone_title">Leisti AiPlayer nustatyti skambučio melodiją</string>
-    <string name="allow_settings_access_ringtone_description">AiPlayer reikia, kad jūs suteiktumėte šią teisę, kad galėtų nustatyti šią dainą kaip jūsų skambučio melodiją.</string>
-    <string name="allow_settings_access_brightness_title">Leisti AiPlayer keisti ryškumo režimą</string>
-    <string name="allow_settings_access_brightness_description">AiPlayer reikia, kad jūs suteiktumėte šią teisę, kad galėtų nustatyti jūsų ryškumo režimą.</string>
+    <string name="allow_storage_access_description">TubePlayer prašo leisti prieiti prie šiame įrenginyje esančių įvairialypės terpės rinkmenų.</string>
+    <string name="allow_settings_access_ringtone_title">Leisti TubePlayer nustatyti skambučio melodiją</string>
+    <string name="allow_settings_access_ringtone_description">TubePlayer reikia, kad jūs suteiktumėte šią teisę, kad galėtų nustatyti šią dainą kaip jūsų skambučio melodiją.</string>
+    <string name="allow_settings_access_brightness_title">Leisti TubePlayer keisti ryškumo režimą</string>
+    <string name="allow_settings_access_brightness_description">TubePlayer reikia, kad jūs suteiktumėte šią teisę, kad galėtų nustatyti jūsų ryškumo režimą.</string>
     <string name="permission_ask_again">Leisti</string>
-    <string name="exit_app">Užverti AiPlayer</string>
+    <string name="exit_app">Užverti TubePlayer</string>
     <!--fast scroller-->
     <!--Plugins-->
     <string name="plugins">Papildiniai</string>

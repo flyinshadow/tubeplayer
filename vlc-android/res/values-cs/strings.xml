@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Zrušit</string>
     <string name="other">Jiné</string>
@@ -40,7 +40,7 @@
     <string name="ringtone_error">Nastala chyba při nastavování vyzváněcí melodie.</string>
     <string name="pause">Pozastavit</string>
     <string name="not_show_again">Tuto zprávu již nezobrazovat.</string>
-    <string name="info_title">AiPlayer</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">Neznámý umělec</string>
     <string name="unknown_album">Neznámé album</string>
     <string name="unknown_genre">Neznámý žánr</string>
@@ -168,11 +168,11 @@
     <string name="open_mrl">Otevřít MRL</string>
     <string name="open_mrl_dialog_title">Otevřít síťový proud</string>
     <string name="open_mrl_dialog_msg">Zadejte síťovou MRL: např. http://, mms://, nebo rtsp://</string>
-    <string name="error_not_compatible">Bohužel Vaše zařízení není v současné době podporované touto verzí AiPlayer pro Android™.</string>
-    <string name="error_problem">Lituji, ale AiPlayer pro Android mělo problém s načtením a muselo se ukončit.</string>
+    <string name="error_not_compatible">Bohužel Vaše zařízení není v současné době podporované touto verzí TubePlayer pro Android™.</string>
+    <string name="error_problem">Lituji, ale TubePlayer pro Android mělo problém s načtením a muselo se ukončit.</string>
     <string name="error_message_is">Chybová zpráva je (prosím oznamte při ladění):\n\n</string>
     <string name="encountered_error_title">Chyba přehrávání</string>
-    <string name="encountered_error_message">AiPlayer s tímto médiem narazilo na chybu.\nZkuste prosím obnovit knihovnu médií.</string>
+    <string name="encountered_error_message">TubePlayer s tímto médiem narazilo na chybu.\nZkuste prosím obnovit knihovnu médií.</string>
     <string name="invalid_location">Nelze přehrát umístění %1$s</string>
     <string name="search">Hledat</string>
     <string name="search_history">Historie hledání</string>
@@ -199,13 +199,13 @@
     <string name="show_playlist">Zobrazit seznam skladeb</string>
     <string name="hold_to_stop">Podržte pro zastavení</string>
     <!-- About -->
-    <string name="app_name_full">AiPlayer pro Android™</string>
+    <string name="app_name_full">TubePlayer pro Android™</string>
     <string name="licence">Licence</string>
     <string name="revision">Revize</string>
     <string name="about">O programu</string>
-    <string name="about_text">AiPlayer pro Android™ je port populárního přehrávače AiPlayer s otevřeným kódem. Android™ verze umí přehrát většinu souborů a síťových proudů.</string>
-    <string name="compiled_by">Tato verze přehrávače AiPlayer byla zkompilována:\n</string>
-    <string name="vlc_authors">Autoři AiPlayer.</string>
+    <string name="about_text">TubePlayer pro Android™ je port populárního přehrávače TubePlayer s otevřeným kódem. Android™ verze umí přehrát většinu souborů a síťových proudů.</string>
+    <string name="compiled_by">Tato verze přehrávače TubePlayer byla zkompilována:\n</string>
+    <string name="vlc_authors">Autoři TubePlayer.</string>
     <!-- Preferences -->
     <string name="preferences">Nastavení</string>
     <string name="general_prefs_category">Obecné</string>
@@ -296,7 +296,7 @@
     <string name="enable_steal_remote_control">Výhradní ovládání hlasitosti sluchátek</string>
     <string name="enable_steal_remote_control_summary">Obchází konflikt ukradením vzdálené kontroly od ostatních aplikací. Zabraňuje vytáčení při dvojitém stisku na telefonech HTC.</string>
     <string name="aout">Zvukový výstup</string>
-    <string name="aout_summary">Změnit metodu pro výstup zvuku používanou AiPlayer.</string>
+    <string name="aout_summary">Změnit metodu pro výstup zvuku používanou TubePlayer.</string>
     <string name="controls_prefs_category">Ovládání</string>
     <string name="performance_prefs_category">Výkon</string>
     <string name="chroma_format">Vynutit chroma videa</string>
@@ -318,12 +318,12 @@
     <string name="auto_rescan">Automaticky prohledávat</string>
     <string name="auto_rescan_summary">Automaticky prohledat zařízení pro nové nebo smazané soubory při spuštění aplikace</string>
     <string name="clear_media_db">Vyčistit databázi médií</string>
-    <string name="clear_media_db_summary">Otevřete Android AiPlayer info pro smazání dat</string>
+    <string name="clear_media_db_summary">Otevřete Android TubePlayer info pro smazání dat</string>
     <string name="clear_history">Vymazat historii hledání</string>
     <string name="media_db_cleared">Databáze médií vyčištěna</string>
     <string name="set_locale">Nastavit jazyk</string>
     <string name="set_locale_detail">Ponechte prázdné pro výchozí</string>
-    <string name="set_locale_popup">Ukončete a restartujte AiPlayer pro projevení změn</string>
+    <string name="set_locale_popup">Ukončete a restartujte TubePlayer pro projevení změn</string>
     <string name="network_caching">Velikost vyrovnávací paměti síťě</string>
     <string name="network_caching_summary">Velikost zásobníku pro síťová média (v ms). Nefunguje s hardwarovým dekódováním. Ponechte prázdné pro výchozí hodnotu.</string>
     <string name="resume_playback_title">Obnovit přehrávání po hovoru</string>
@@ -337,16 +337,16 @@
     <string name="start_logging">Zahájit záznam</string>
     <string name="stop_logging">Zastavit záznam</string>
     <string name="clear_log">Vyčistit záznam</string>
-    <string name="log_service_title">Nahrávání záznamů AiPlayer</string>
+    <string name="log_service_title">Nahrávání záznamů TubePlayer</string>
     <string name="log_service_text">Otevřít konzoli záznamů</string>
     <string name="copy_to_clipboard">Kopírovat do schránky</string>
     <string name="copied_to_clipboard">Záznam zkopírován do schránky.</string>
     <string name="dump_logcat">Vypsat záznam logcat</string>
     <string name="dump_logcat_success">Záznam logcat úspěšně vypsán do %1$s!</string>
     <string name="dump_logcat_failure">Vypsání záznamu logcat selhalo.</string>
-    <string name="serious_crash">Bohužel nastala závažná chyba a přehrávač AiPlayer se musel ukončit.</string>
-    <string name="help_us_send_log">Pomozte nám vylepšit přehrávač AiPlayer zasláním následujícího záznamu o pádu aplikace:</string>
-    <string name="restart_vlc">Restartovat AiPlayer</string>
+    <string name="serious_crash">Bohužel nastala závažná chyba a přehrávač TubePlayer se musel ukončit.</string>
+    <string name="help_us_send_log">Pomozte nám vylepšit přehrávač TubePlayer zasláním následujícího záznamu o pádu aplikace:</string>
+    <string name="restart_vlc">Restartovat TubePlayer</string>
     <string name="send_log">Zaslat záznam</string>
     <string name="sending_log">Zasílám záznam...</string>
     <string name="drawer_open">Otevřít navigační šuplík</string>
@@ -390,18 +390,18 @@
     <string name="no_subs_found">V adresáři nejsou žádné titulky</string>
     <string name="music_now_playing">Nyní přehrávám</string>
     <!--Widget-->
-    <string name="widget_name_w">Bílý widget AiPlayer</string>
-    <string name="widget_name_b">Tmavý widget AiPlayer</string>
-    <string name="allow_storage_access_title">Povolit AiPlayer přistupovat k videím a zvukovým souborům.</string>
-    <string name="allow_storage_access_description">AiPlayer potřebuje, abyste mu udělil/a oprávnění přistupovat k multimediálním souborům na tomto zařízení.</string>
-    <string name="allow_settings_access_ringtone_title">Umožnit AiPlayer nastavit vyzváněcí melodii</string>
-    <string name="allow_settings_access_ringtone_description">AiPlayer potřebuje, abyste mu udělil/a oprávnění nastavit tuto skladbu jako vyzváněcí melodii.</string>
-    <string name="allow_settings_access_brightness_title">Povolit AiPlayer změnit jas</string>
-    <string name="allow_settings_access_brightness_description">AiPlayer potřebuje, abyste mu udělil/a oprávnění upravovat jas</string>
-    <string name="allow_draw_overlays_title">Povolit AiPlayer vyskočit nad ostatní aplikace</string>
-    <string name="allow_sdraw_overlays_description">AiPlayer potřebuje, abyste mu udělil/a oprávnění vyskočit nad ostatní aplikace</string>
+    <string name="widget_name_w">Bílý widget TubePlayer</string>
+    <string name="widget_name_b">Tmavý widget TubePlayer</string>
+    <string name="allow_storage_access_title">Povolit TubePlayer přistupovat k videím a zvukovým souborům.</string>
+    <string name="allow_storage_access_description">TubePlayer potřebuje, abyste mu udělil/a oprávnění přistupovat k multimediálním souborům na tomto zařízení.</string>
+    <string name="allow_settings_access_ringtone_title">Umožnit TubePlayer nastavit vyzváněcí melodii</string>
+    <string name="allow_settings_access_ringtone_description">TubePlayer potřebuje, abyste mu udělil/a oprávnění nastavit tuto skladbu jako vyzváněcí melodii.</string>
+    <string name="allow_settings_access_brightness_title">Povolit TubePlayer změnit jas</string>
+    <string name="allow_settings_access_brightness_description">TubePlayer potřebuje, abyste mu udělil/a oprávnění upravovat jas</string>
+    <string name="allow_draw_overlays_title">Povolit TubePlayer vyskočit nad ostatní aplikace</string>
+    <string name="allow_sdraw_overlays_description">TubePlayer potřebuje, abyste mu udělil/a oprávnění vyskočit nad ostatní aplikace</string>
     <string name="permission_ask_again">Udělit oprávnění</string>
-    <string name="exit_app">Zavřít AiPlayer</string>
+    <string name="exit_app">Zavřít TubePlayer</string>
     <!--fast scroller-->
     <!--Plugins-->
     <string name="plugins">Zásuvné moduly</string>
@@ -447,7 +447,7 @@
     <string name="length">Délka</string>
     <string name="tv_settings_hint">Podržte tlačítko OK pro zatrhnutí složek</string>
     <string name="ml_external_storage_title">Detekováno nové externí úložiště</string>
-    <string name="ml_external_storage_msg">Chcete, aby AiPlayer přidalo médium %1$s do vaší knihovny médií?</string>
+    <string name="ml_external_storage_msg">Chcete, aby TubePlayer přidalo médium %1$s do vaší knihovny médií?</string>
     <string name="last_added_media">poslední přidané</string>
     <string name="no">Ne</string>
 </resources>

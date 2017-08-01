@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">Tamam</string>
     <string name="cancel">İptal</string>
     <string name="other">Diğer</string>
@@ -39,7 +39,7 @@
     <string name="ringtone_error">Zil sesi olarak atanırken bir hata oluştu.</string>
     <string name="pause">Duraklat</string>
     <string name="not_show_again">Bu iletiyi bir daha gösterme</string>
-    <string name="info_title">AiPlayer</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">Bilinmeyen Sanatçı</string>
     <string name="unknown_album">Bilinmeyen Albüm</string>
     <string name="unknown_genre">Bilinmeyen Tür</string>
@@ -161,11 +161,11 @@
     <string name="open_mrl">Akış</string>
     <string name="open_mrl_dialog_title">Ağ akışı aç</string>
     <string name="open_mrl_dialog_msg">Ağ akışının adresini yazın: örneğin http://, mms:// or rtsp://</string>
-    <string name="error_not_compatible">Malesef, bu Android™ için AiPlayer sürümü aygıtınızı desteklemiyor.</string>
-    <string name="error_problem">Malesef, Android için AiPlayer yüklenirken bir sorun çıktı ve kapatılması gerekti.</string>
+    <string name="error_not_compatible">Malesef, bu Android™ için TubePlayer sürümü aygıtınızı desteklemiyor.</string>
+    <string name="error_problem">Malesef, Android için TubePlayer yüklenirken bir sorun çıktı ve kapatılması gerekti.</string>
     <string name="error_message_is">Hata iletisi (hata ayıklarken bu iletiyi aktarın):\n</string>
     <string name="encountered_error_title">Oynatım hatası</string>
-    <string name="encountered_error_message">AiPlayer bu ortamı kullanırken bir sorun çıktı.\nLütfen ortam kitaplığını yenilemeyi deneyin.</string>
+    <string name="encountered_error_message">TubePlayer bu ortamı kullanırken bir sorun çıktı.\nLütfen ortam kitaplığını yenilemeyi deneyin.</string>
     <string name="invalid_location">%1$s konumu oynatılamadı.</string>
     <string name="search">Arama</string>
     <string name="search_history">Arama geçmişi</string>
@@ -192,13 +192,13 @@
     <string name="show_playlist">Oynatma Listesi Görüntülensin</string>
     <string name="hold_to_stop">Basılı tutarak durdurun</string>
     <!-- About -->
-    <string name="app_name_full">Android™ için AiPlayer</string>
+    <string name="app_name_full">Android™ için TubePlayer</string>
     <string name="licence">Lisans</string>
     <string name="revision">Değişiklik</string>
     <string name="about">Hakkında</string>
-    <string name="about_text">Android™ için AiPlayer, çok kullanılan açık kaynaklı AiPlayer ortam oynatıcının bir parçasıdır. Android™ sürümü çoğu dosya ve ağ akışlarını okuyabilir.</string>
-    <string name="compiled_by">Bu AiPlayer sürümü şu kişiler tarafından geliştirilmiştir:</string>
-    <string name="vlc_authors">AiPlayer Geliştiricileri.</string>
+    <string name="about_text">Android™ için TubePlayer, çok kullanılan açık kaynaklı TubePlayer ortam oynatıcının bir parçasıdır. Android™ sürümü çoğu dosya ve ağ akışlarını okuyabilir.</string>
+    <string name="compiled_by">Bu TubePlayer sürümü şu kişiler tarafından geliştirilmiştir:</string>
+    <string name="vlc_authors">TubePlayer Geliştiricileri.</string>
     <!-- Preferences -->
     <string name="preferences">Ayarlar</string>
     <string name="general_prefs_category">Genel</string>
@@ -297,7 +297,7 @@
     <string name="enable_steal_remote_control">Özel kulaklık kumandası</string>
     <string name="enable_steal_remote_control_summary">Uzaktan kumandanın başka uygulamalar tarafından kullanılması önlenir. Böylece HTC telefonlardaki çift tıklandığında arama özelliği engellenir.</string>
     <string name="aout">Ses çıkışı</string>
-    <string name="aout_summary">AiPlayer tarafından kullanılan ses üretme yöntemini değiştirir.</string>
+    <string name="aout_summary">TubePlayer tarafından kullanılan ses üretme yöntemini değiştirir.</string>
     <string name="controls_prefs_category">Denetimler</string>
     <string name="performance_prefs_category">Başarım</string>
     <string name="chroma_format">Dayatılacak renk doygunluğu</string>
@@ -319,12 +319,12 @@
     <string name="auto_rescan">Otomatik yeniden tarama</string>
     <string name="auto_rescan_summary">Uygulama başlangıcında aygıtı yeni ya da silinmiş ortamlar için tarar</string>
     <string name="clear_media_db">Ortam veritabanını temizle</string>
-    <string name="clear_media_db_summary">Verileri temizlemek için Android AiPlayer bilgilerine bakın</string>
+    <string name="clear_media_db_summary">Verileri temizlemek için Android TubePlayer bilgilerine bakın</string>
     <string name="clear_history">Arama geçmişini temizle</string>
     <string name="media_db_cleared">Ortam veritabanı temizlendi!</string>
     <string name="set_locale">Yerel ayar</string>
     <string name="set_locale_detail">Sıfırlamak için boş bırakın</string>
-    <string name="set_locale_popup">Değişikliklerin geçerli olması için AiPlayer yazılımını kapatıp yeniden açın.</string>
+    <string name="set_locale_popup">Değişikliklerin geçerli olması için TubePlayer yazılımını kapatıp yeniden açın.</string>
     <string name="network_caching">Ağ ön bellekleme değeri</string>
     <string name="network_caching_summary">Milisaniye cinsinden, ağ ortamının ön belleğe alınacağı süre. Donanımsal kod çözme ile birlikte çalışmaz. Sıfırlamak için boş bırakın.</string>
     <string name="resume_playback_title">Çağrı sonrası oynatım sürdürülsün</string>
@@ -338,16 +338,16 @@
     <string name="start_logging">Günlüğe kaydedilsin</string>
     <string name="stop_logging">Günlüğe kaydedilmesin</string>
     <string name="clear_log">Günlük temizlensin</string>
-    <string name="log_service_title">AiPlayer kayıt günlükleri</string>
+    <string name="log_service_title">TubePlayer kayıt günlükleri</string>
     <string name="log_service_text">Günlük panelini açın</string>
     <string name="copy_to_clipboard">Panoya kopyalayın</string>
     <string name="copied_to_clipboard">Günlük panoya kopyalandı.</string>
     <string name="dump_logcat">Logcat günlüğünü kaydedin</string>
     <string name="dump_logcat_success">Logcat %1$s dosyasına kaydedildi!</string>
     <string name="dump_logcat_failure">Logcat kaydedilemedi.</string>
-    <string name="serious_crash">Malesef önemli bir hata oluştuğundan AiPlayer uygulaması kapatılacak.</string>
-    <string name="help_us_send_log">Bu çökme kaydını göndererek AiPlayer uygulamasının geliştirilmesine yardımcı olun:</string>
-    <string name="restart_vlc">AiPlayer uygulamasını yeniden başlatın</string>
+    <string name="serious_crash">Malesef önemli bir hata oluştuğundan TubePlayer uygulaması kapatılacak.</string>
+    <string name="help_us_send_log">Bu çökme kaydını göndererek TubePlayer uygulamasının geliştirilmesine yardımcı olun:</string>
+    <string name="restart_vlc">TubePlayer uygulamasını yeniden başlatın</string>
     <string name="send_log">Günlüğü gönder</string>
     <string name="sending_log">Günlük gönderiliyor...</string>
     <string name="drawer_open">Gezinti çekmecesini aç</string>
@@ -391,16 +391,16 @@
     <string name="no_subs_found">Bu klasörde altyazı yok</string>
     <string name="music_now_playing">Şimdi Oynatılan</string>
     <!--Widget-->
-    <string name="widget_name_w">Beyaz AiPlayer Gereci</string>
-    <string name="widget_name_b">Koyu AiPlayer Gereci</string>
-    <string name="allow_storage_access_title">AiPlayer görüntü ve ses dosyalarına erişebilsin</string>
-    <string name="allow_storage_access_description">AiPlayer bu aygıttaki ortam dosyalarına erişmek için bu izne gereksinim duyar.</string>
-    <string name="allow_settings_access_ringtone_title">AiPlayer zil sesini ayarlayabilsin</string>
-    <string name="allow_settings_access_ringtone_description">AiPlayer geçerli şarkıyı zil sesiniz olarak ayarlamak için bu izne gereksinim duyar.</string>
-    <string name="allow_settings_access_brightness_title">AiPlayer parlaklık kipini ayarlayabilsin</string>
-    <string name="allow_settings_access_brightness_description">AiPlayer parlaklık kipinizi ayarlamak için bu izne gereksinim duyar.</string>
-    <string name="allow_draw_overlays_title">AiPlayer oynatıcı diğer yazılımların üzerine açılabilsin</string>
-    <string name="allow_sdraw_overlays_description">AiPlayer oynatıcı penceresini diğer uygulamaların üzerine açmak için bu izne gereksinim duyar.</string>
+    <string name="widget_name_w">Beyaz TubePlayer Gereci</string>
+    <string name="widget_name_b">Koyu TubePlayer Gereci</string>
+    <string name="allow_storage_access_title">TubePlayer görüntü ve ses dosyalarına erişebilsin</string>
+    <string name="allow_storage_access_description">TubePlayer bu aygıttaki ortam dosyalarına erişmek için bu izne gereksinim duyar.</string>
+    <string name="allow_settings_access_ringtone_title">TubePlayer zil sesini ayarlayabilsin</string>
+    <string name="allow_settings_access_ringtone_description">TubePlayer geçerli şarkıyı zil sesiniz olarak ayarlamak için bu izne gereksinim duyar.</string>
+    <string name="allow_settings_access_brightness_title">TubePlayer parlaklık kipini ayarlayabilsin</string>
+    <string name="allow_settings_access_brightness_description">TubePlayer parlaklık kipinizi ayarlamak için bu izne gereksinim duyar.</string>
+    <string name="allow_draw_overlays_title">TubePlayer oynatıcı diğer yazılımların üzerine açılabilsin</string>
+    <string name="allow_sdraw_overlays_description">TubePlayer oynatıcı penceresini diğer uygulamaların üzerine açmak için bu izne gereksinim duyar.</string>
     <string name="permission_ask_again">İzin ver</string>
     <string name="exit_app">Kapat</string>
     <!--fast scroller-->

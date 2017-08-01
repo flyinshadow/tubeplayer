@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">OK</string>
     <string name="cancel">キャンセル</string>
     <string name="other">その他</string>
@@ -38,7 +38,7 @@
     <string name="ringtone_error">着信音の設定中にエラーが発生しました。</string>
     <string name="pause">一時停止</string>
     <string name="not_show_again">このメッセージを今後表示しない。</string>
-    <string name="info_title">AiPlayer</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">未知のアーティスト</string>
     <string name="unknown_album">未知のアルバム</string>
     <string name="unknown_genre">未知のジャンル</string>
@@ -155,7 +155,7 @@
     <string name="open_mrl_dialog_title">ネットワークストリームを開く</string>
     <string name="open_mrl_dialog_msg">ネットワークMRLを入力: 例 http://, mms:// または rtsp://</string>
     <string name="error_not_compatible">申し訳ありませんが、あなたのデバイスはこのバージョンのAndroid™用VLCではサポートされていません。\n\nエラーメッセージ(デバッグの際にはこちらをお伝えください):\n</string>
-    <string name="error_problem">AiPlayer for Androidはローディングで問題が発生したため、クローズします。</string>
+    <string name="error_problem">TubePlayer for Androidはローディングで問題が発生したため、クローズします。</string>
     <string name="error_message_is">エラーメッセージ (デバッグ時はこのメッセージをお知らせください):\n</string>
     <string name="encountered_error_title">再生エラー</string>
     <string name="encountered_error_message">このメディアでエラーを検出しました。\nメディアライブラリをリフレッシュしてみてください。</string>
@@ -185,11 +185,11 @@
     <string name="show_playlist">プレイリストの表示</string>
     <string name="hold_to_stop">停止を保持</string>
     <!-- About -->
-    <string name="app_name_full">AiPlayer for Android™</string>
+    <string name="app_name_full">TubePlayer for Android™</string>
     <string name="licence">ライセンス</string>
     <string name="revision">リビジョン</string>
     <string name="about">VLCについて</string>
-    <string name="about_text">AiPlayer for Android™ はポピュラーなオープンソースのメディアプレイヤーであるVLCメディアプレイヤーの移植版です。Android™ 版は多くのファイルとネットワークストリームを読み込むことが可能です。</string>
+    <string name="about_text">TubePlayer for Android™ はポピュラーなオープンソースのメディアプレイヤーであるVLCメディアプレイヤーの移植版です。Android™ 版は多くのファイルとネットワークストリームを読み込むことが可能です。</string>
     <string name="compiled_by">このバージョンのVLCのコンパイラ:</string>
     <string name="vlc_authors">VLCの著作者</string>
     <!-- Preferences -->

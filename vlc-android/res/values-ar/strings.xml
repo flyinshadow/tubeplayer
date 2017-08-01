@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">موافق</string>
     <string name="cancel">إلغاء</string>
     <string name="other">آخر</string>
@@ -42,7 +42,7 @@
     <string name="ringtone_error">حدث خطأ أثناء ضبطها للرّنين.</string>
     <string name="pause">ألبِث</string>
     <string name="not_show_again">لا تُظهر هذه الرّسالة مجددًا.</string>
-    <string name="info_title">AiPlayer</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">مؤدّ غير معروف</string>
     <string name="unknown_album">مجموعة غير معروفة</string>
     <string name="unknown_genre">أسلوب غير معروف</string>
@@ -185,11 +185,11 @@
     <string name="open_mrl">افتح MRL</string>
     <string name="open_mrl_dialog_title">افتح بثًا شبكيًا</string>
     <string name="open_mrl_dialog_msg">أدخل MRL شبكي: مثل http://، mms:// أو rtsp://</string>
-    <string name="error_not_compatible">عذرًا، جهازك غير مدعوم حاليًا بهذه الإصدارة من AiPlayer للأندرويد™.</string>
+    <string name="error_not_compatible">عذرًا، جهازك غير مدعوم حاليًا بهذه الإصدارة من TubePlayer للأندرويد™.</string>
     <string name="error_problem">عذرًا، حدثت مشكلة أثناء تحميل للأندرويد و يجب إغلاقه.</string>
     <string name="error_message_is">رسالة الخطأ هي (يُرجى ذكر هذا عند التنقيح) :\n</string>
     <string name="encountered_error_title">خطأ تشغيلي</string>
-    <string name="encountered_error_message">صادف AiPlayer خطأ عند قراءة هذا الوسيط.\nيُرجى إعادة إنعاش مكتبة الوسائط.</string>
+    <string name="encountered_error_message">صادف TubePlayer خطأ عند قراءة هذا الوسيط.\nيُرجى إعادة إنعاش مكتبة الوسائط.</string>
     <string name="invalid_location">لا يمكن قراءة الموقع %1$s .</string>
     <string name="search">ابحث</string>
     <string name="search_history">تأريخ البحث</string>
@@ -215,13 +215,13 @@
     <string name="show_playlist">أظهِر قائمة التشغيل</string>
     <string name="hold_to_stop">أبقِ للتوقيف</string>
     <!-- About -->
-    <string name="app_name_full">AiPlayer للأندرويد™</string>
+    <string name="app_name_full">TubePlayer للأندرويد™</string>
     <string name="licence">الرّخصة</string>
     <string name="revision">التّنقيح</string>
     <string name="about">حول</string>
-    <string name="about_text">AiPlayer للأندرويد™ هو فرعٌ من مشغّل الوسائط AiPlayer، مشغّل الوسائط مفتوح المصدر الشّهير. يُمكن للإصدارة الخاصة بأندرويد™ قراءة الكثير من صيغ الملفات و البث الشّبكي.</string>
-    <string name="compiled_by">هذه الإصدارة من AiPlayer مبنية بواسطة:</string>
-    <string name="vlc_authors">مؤلّفو AiPlayer.</string>
+    <string name="about_text">TubePlayer للأندرويد™ هو فرعٌ من مشغّل الوسائط TubePlayer، مشغّل الوسائط مفتوح المصدر الشّهير. يُمكن للإصدارة الخاصة بأندرويد™ قراءة الكثير من صيغ الملفات و البث الشّبكي.</string>
+    <string name="compiled_by">هذه الإصدارة من TubePlayer مبنية بواسطة:</string>
+    <string name="vlc_authors">مؤلّفو TubePlayer.</string>
     <!-- Preferences -->
     <string name="preferences">التّفضيلات</string>
     <string name="general_prefs_category">عام</string>
@@ -296,7 +296,7 @@
     <string name="enable_steal_remote_control">حصر التّحكم بمجموعة الرّأس عن بُعد</string>
     <string name="enable_steal_remote_control_summary">تجنّب التّعارضات التي قد تحدث عند التّحكم عن بُعد بتطبيقاتٍ أُخرى. يمنع هذا الطلب بالنّقر المزدوج المتوفر في هواتف HTC.</string>
     <string name="aout">الإخراج الصّوتي</string>
-    <string name="aout_summary">غير طريقة إخراج AiPlayer الصّوتي.</string>
+    <string name="aout_summary">غير طريقة إخراج TubePlayer الصّوتي.</string>
     <string name="controls_prefs_category">التحكمات</string>
     <string name="performance_prefs_category">الأداء</string>
     <string name="chroma_format">قوّ الصّفاء المرئي</string>
@@ -320,7 +320,7 @@
     <string name="media_db_cleared">تم مسح قاعدة بيانات الوسائط!</string>
     <string name="set_locale">اضبط المحلّية</string>
     <string name="set_locale_detail">اتركه فارغًا لإعادة ضبطه</string>
-    <string name="set_locale_popup">اخرج وأعد تشغيل AiPlayer لكي تُفعَّل التغييرات.</string>
+    <string name="set_locale_popup">اخرج وأعد تشغيل TubePlayer لكي تُفعَّل التغييرات.</string>
     <string name="network_caching">قيمة مخبئيات الشّبكة</string>
     <string name="network_caching_summary">الوقت اللازم لدفق الوسيط الشّبكي (بالميللي ثانية). لا تستعمله مع فك التّرميز العتادي. اتركه فارغًا لإعادة ضبطه.</string>
     <string name="resume_playback_title">استأنف التشغيل بعد انتهاء مكالمة</string>
@@ -339,9 +339,9 @@
     <string name="dump_logcat">طرْح سِجِل logcat</string>
     <string name="dump_logcat_success">طُرح Logcat بنجاح في %1$s !</string>
     <string name="dump_logcat_failure">فشل طرْح logcat.</string>
-    <string name="serious_crash">مع الأسف، حدث خطأ جسيم ويجب على AiPlayer أن يُغلَق.</string>
-    <string name="help_us_send_log">ساعدنا في تحسين AiPlayer عبر إرسال تقرير الخطأ هذا :</string>
-    <string name="restart_vlc">أعد تشغيل AiPlayer</string>
+    <string name="serious_crash">مع الأسف، حدث خطأ جسيم ويجب على TubePlayer أن يُغلَق.</string>
+    <string name="help_us_send_log">ساعدنا في تحسين TubePlayer عبر إرسال تقرير الخطأ هذا :</string>
+    <string name="restart_vlc">أعد تشغيل TubePlayer</string>
     <string name="send_log">أرسل السجل</string>
     <string name="sending_log">يجري إرسال التقرير...</string>
     <string name="drawer_open">افتح ساحب التصفح</string>
@@ -379,14 +379,14 @@
     <string name="no_subs_found">لا يوجد ملفات الترجمة في هذا المجلد</string>
     <string name="music_now_playing">يشتغل الآن</string>
     <!--Widget-->
-    <string name="widget_name_w">تطبيق مصغر AiPlayer أبيض</string>
-    <string name="widget_name_b">تطبيق مصغر AiPlayer اسود</string>
-    <string name="allow_storage_access_title">السماح ل AiPlayer بالدخول إلى الملفات السمعية و الفيديو</string>
-    <string name="allow_storage_access_description">AiPlayer يحتاج إلى الحصول على تصريح للدخول إلى ملفات الوسائط هذه في هذا الجهاز</string>
-    <string name="allow_settings_access_ringtone_title">اسمح لـ AiPlayer بتعديل نغمة الهاتف</string>
-    <string name="allow_settings_access_ringtone_description">يطلب منك AiPlayer التصريح للسماح له لاستخدام هذه الأغنية كنغمة للهاتف.</string>
+    <string name="widget_name_w">تطبيق مصغر TubePlayer أبيض</string>
+    <string name="widget_name_b">تطبيق مصغر TubePlayer اسود</string>
+    <string name="allow_storage_access_title">السماح ل TubePlayer بالدخول إلى الملفات السمعية و الفيديو</string>
+    <string name="allow_storage_access_description">TubePlayer يحتاج إلى الحصول على تصريح للدخول إلى ملفات الوسائط هذه في هذا الجهاز</string>
+    <string name="allow_settings_access_ringtone_title">اسمح لـ TubePlayer بتعديل نغمة الهاتف</string>
+    <string name="allow_settings_access_ringtone_description">يطلب منك TubePlayer التصريح للسماح له لاستخدام هذه الأغنية كنغمة للهاتف.</string>
     <string name="permission_ask_again">الحصول على تصريح</string>
-    <string name="exit_app">أغلق AiPlayer</string>
+    <string name="exit_app">أغلق TubePlayer</string>
     <!--fast scroller-->
     <!--Plugins-->
     <string name="plugins">الإضافات</string>

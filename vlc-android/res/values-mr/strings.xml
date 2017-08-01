@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">ओके</string>
     <string name="cancel">रद्द</string>
     <string name="other">इतर</string>
@@ -38,7 +38,7 @@
     <string name="ringtone_error">रिंगटोन सेट करताना एक त्रुटी आली.</string>
     <string name="pause">विराम</string>
     <string name="not_show_again">हा संदेश पुन्हा दाखवू नये.</string>
-    <string name="info_title">AiPlayer</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">अनामिक कलाकार</string>
     <string name="unknown_album">अनामिक अल्बम</string>
     <string name="unknown_genre">अनामिक जॉनर</string>
@@ -140,11 +140,11 @@
     <string name="open_mrl">स्ट्रीम</string>
     <string name="open_mrl_dialog_title">नेटवर्क स्ट्रीम उघडा</string>
     <string name="open_mrl_dialog_msg">नेटवर्क पत्ता प्रविष्ट करा: उदा. http://, mms:// किंवा rtsp://</string>
-    <string name="error_not_compatible">माफ करा , तुमचे उपकरण AiPlayer च्या Android™ च्या या आवृत्तीसोबत कार्यरत होवू शकत नाही.</string>
-    <string name="error_problem">क्षमस्व, AiPlayer लोड करतेवेळी काही समस्या होती त्यामुळे तो बंद करावा लागला.</string>
+    <string name="error_not_compatible">माफ करा , तुमचे उपकरण TubePlayer च्या Android™ च्या या आवृत्तीसोबत कार्यरत होवू शकत नाही.</string>
+    <string name="error_problem">क्षमस्व, TubePlayer लोड करतेवेळी काही समस्या होती त्यामुळे तो बंद करावा लागला.</string>
     <string name="error_message_is">त्रुटी संदेश असा आहे (कृपया डीबग करतेवेळी याचा उल्लेख करा):\n</string>
     <string name="encountered_error_title">प्लेबॅक मध्ये त्रुटी</string>
-    <string name="encountered_error_message">या मीडिया बरोबर AiPlayer ला एक त्रुटी आली आहे.\nकृपया मीडिया लायब्ररी ताजी करून पुन्हा प्रयत्न करा.</string>
+    <string name="encountered_error_message">या मीडिया बरोबर TubePlayer ला एक त्रुटी आली आहे.\nकृपया मीडिया लायब्ररी ताजी करून पुन्हा प्रयत्न करा.</string>
     <string name="invalid_location">%1$s हे स्थान प्ले केले जाऊ शकत नाही.</string>
     <string name="search">शोधा</string>
     <string name="search_history">शोध इतिहास</string>
@@ -166,13 +166,13 @@
     <string name="show_playlist">प्लेलिस्ट दाखवा</string>
     <string name="hold_to_stop">थांबवण्यासाठी दाबून ठेवा</string>
     <!-- About -->
-    <string name="app_name_full">Android साठी AiPlayer</string>
+    <string name="app_name_full">Android साठी TubePlayer</string>
     <string name="licence">परवाना</string>
     <string name="revision">पुनरावृत्ती</string>
-    <string name="about">AiPlayer विषयी</string>
-    <string name="about_text">Android™ साठी AiPlayer ही AiPlayer मीडिया प्लेयर या लोकप्रिय आणि खुल्या-स्त्रोत मीडिया प्लेयरची आवृत्ती आहे. ही Android™ आवृत्ती जवळपास सर्व फाईल्स आणि नेटवर्क स्ट्रीम उघडू शकते .</string>
-    <string name="compiled_by"> ही AiPlayer आवृत्ती यांनी संकलित केली:</string>
-    <string name="vlc_authors">AiPlayer लेखक.</string>
+    <string name="about">TubePlayer विषयी</string>
+    <string name="about_text">Android™ साठी TubePlayer ही TubePlayer मीडिया प्लेयर या लोकप्रिय आणि खुल्या-स्त्रोत मीडिया प्लेयरची आवृत्ती आहे. ही Android™ आवृत्ती जवळपास सर्व फाईल्स आणि नेटवर्क स्ट्रीम उघडू शकते .</string>
+    <string name="compiled_by"> ही TubePlayer आवृत्ती यांनी संकलित केली:</string>
+    <string name="vlc_authors">TubePlayer लेखक.</string>
     <!-- Preferences -->
     <string name="preferences">सेटिंग</string>
     <string name="general_prefs_category">सामान्य</string>
@@ -224,7 +224,7 @@
     <string name="enable_steal_remote_control">विशिष्ट हेडसेट दूरस्थ नियंत्रण</string>
     <string name="enable_steal_remote_control_summary">अन्य अनुप्रयोगांकडून दूरस्थ नियंत्रण चोरून परस्परविरोध टाळा. हे HTC फोन वरील डायलिंग ऑन डबल क्लिक प्रतिबंधित करते.</string>
     <string name="aout">ध्वनी आउटपुट</string>
-    <string name="aout_summary">ध्वनी आउटपुटसाठी AiPlayer जी पद्धत वापरते ती बदला.</string>
+    <string name="aout_summary">ध्वनी आउटपुटसाठी TubePlayer जी पद्धत वापरते ती बदला.</string>
     <string name="performance_prefs_category">कार्यप्रदर्शन</string>
     <string name="chroma_format">चित्रफीत क्रोमा सक्ती करा</string>
     <string name="chroma_format_summary">RGB 32-bit: डीफॉल्ट क्रोमा\nRGB 16-bit: उत्तम कार्यप्रदर्शन पण कमी गुणवत्ता\nYUV: सर्वोत्तम कार्यप्रदर्शन पण सर्व साधनांवर काम करत नाही. फक्त Android 2.3 आणि नंतरचे.</string>
@@ -246,7 +246,7 @@
     <string name="media_db_cleared">मीडिया डेटाबेस नष्ट केला!</string>
     <string name="set_locale">स्थानिकता सेट करा</string>
     <string name="set_locale_detail">रिसेट करण्यासाठी रिकामे सोडा</string>
-    <string name="set_locale_popup">बदल लागू करण्यासाठी AiPlayer बंद करून पुन्हा चालू करा.</string>
+    <string name="set_locale_popup">बदल लागू करण्यासाठी TubePlayer बंद करून पुन्हा चालू करा.</string>
     <string name="network_caching">नेटवर्क कॅशिंग मूल्य</string>
     <string name="network_caching_summary">नेटवर्क मीडिया बफर करण्यासाठी लागणारा वेळ (ms मध्ये). हार्डवेअर डिकोडिंग सोबत काम करत नाही. पूर्ववत करण्यासाठी रिक्त सोडा.</string>
     <string name="quit">बाहेर पडून अनुप्रयोग पुन्हा चालू करा</string>
@@ -257,16 +257,16 @@
     <string name="start_logging">लॉगिंग चालू करा</string>
     <string name="stop_logging">लॉगिंग थांबवा</string>
     <string name="clear_log">लॉग पुसा</string>
-    <string name="log_service_title">AiPlayer रेकॉर्डिंग लॉग करते</string>
+    <string name="log_service_title">TubePlayer रेकॉर्डिंग लॉग करते</string>
     <string name="log_service_text">लॉग कन्सोल उघडा</string>
     <string name="copy_to_clipboard">क्लिपबोर्ड मध्ये कॉपी करा</string>
     <string name="copied_to_clipboard">लॉग क्लिपबोर्ड मध्ये कॉपी केला.</string>
     <string name="dump_logcat">लॉगकॅट लाॅग डंप करा</string>
     <string name="dump_logcat_success"> लॉगकॅट %1$s मध्ये यशस्वीरित्या डंप केले!</string>
     <string name="dump_logcat_failure">लॉगकॅट डंप करण्यात अपयश.</string>
-    <string name="serious_crash">दुर्दैवाने, एक गंभीर त्रुटी आली आणि AiPlayer बंद करावे लागले.</string>
-    <string name="help_us_send_log">खालील क्रॅश लॉग पाठवून AiPlayer सुधारण्यात आम्हाला मदत करा:</string>
-    <string name="restart_vlc">AiPlayer पुन्हा सुरू करा</string>
+    <string name="serious_crash">दुर्दैवाने, एक गंभीर त्रुटी आली आणि TubePlayer बंद करावे लागले.</string>
+    <string name="help_us_send_log">खालील क्रॅश लॉग पाठवून TubePlayer सुधारण्यात आम्हाला मदत करा:</string>
+    <string name="restart_vlc">TubePlayer पुन्हा सुरू करा</string>
     <string name="send_log">लॉग पाठवा</string>
     <string name="sending_log">लॉग पाठवत आहे…</string>
     <string name="drawer_open">नेव्हिगेशन ड्रॉवर उघडा</string>
@@ -300,12 +300,12 @@
     <string name="no_subs_found">उपशीर्षक उप्लब्ध नाही</string>
     <string name="music_now_playing">आता प्ले होत आहे</string>
     <!--Widget-->
-    <string name="widget_name_w">AiPlayer चॆ पांढरॆ विजेट/widget</string>
-    <string name="widget_name_b">AiPlayer चॆ गडद विजेट/widget</string>
-    <string name="allow_storage_access_title">विडीयो आणि ऑडियो मिळवण्याची  AiPlayer ला  अनुमती द्या</string>
-    <string name="allow_storage_access_description">तुमची विडीयो आणि ऑडियो मिळवण्यासाठी AiPlayer ला तुमची अनुमती हवी आहे.</string>
+    <string name="widget_name_w">TubePlayer चॆ पांढरॆ विजेट/widget</string>
+    <string name="widget_name_b">TubePlayer चॆ गडद विजेट/widget</string>
+    <string name="allow_storage_access_title">विडीयो आणि ऑडियो मिळवण्याची  TubePlayer ला  अनुमती द्या</string>
+    <string name="allow_storage_access_description">तुमची विडीयो आणि ऑडियो मिळवण्यासाठी TubePlayer ला तुमची अनुमती हवी आहे.</string>
     <string name="permission_ask_again">परवानगी द्या</string>
-    <string name="exit_app">AiPlayer बंद करा</string>
+    <string name="exit_app">TubePlayer बंद करा</string>
     <!--fast scroller-->
     <!--Plugins-->
 </resources>

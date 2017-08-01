@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">Ados</string>
     <string name="cancel">Utzi</string>
     <string name="other">Bestelakoa</string>
@@ -116,12 +116,12 @@
     <string name="search_history">Bilatu historia</string>
     <!--Tips-->
     <!-- About -->
-    <string name="app_name_full">Android™-erako AiPlayer</string>
+    <string name="app_name_full">Android™-erako TubePlayer</string>
     <string name="licence">Lizentzia</string>
     <string name="revision">Berrikuspena</string>
     <string name="about">Honi buruz</string>
-    <string name="about_text">AiPlayer kode irekiko multimedia-erreproduzitzaile ezagunaren moldaketa da Android™-erako AiPlayer. Android™ bertsioak fitxategi eta sareko transmisio-jarraitu gehienak irakur ditzake.</string>
-    <string name="compiled_by">AiPlayer bertsio hau honek konpilatu du:</string>
+    <string name="about_text">TubePlayer kode irekiko multimedia-erreproduzitzaile ezagunaren moldaketa da Android™-erako TubePlayer. Android™ bertsioak fitxategi eta sareko transmisio-jarraitu gehienak irakur ditzake.</string>
+    <string name="compiled_by">TubePlayer bertsio hau honek konpilatu du:</string>
     <string name="vlc_authors">VLCren egileak.</string>
     <!-- Preferences -->
     <string name="preferences">Hobespenak</string>
@@ -172,7 +172,7 @@
     <string name="media_db_cleared">Multimedia datu-basea garbituta!</string>
     <string name="set_locale">Ezarri hizkuntza</string>
     <string name="set_locale_detail">Utzi zuriz berrezartzeko</string>
-    <string name="set_locale_popup">Irten eta berrabiarazi AiPlayer aldaketek eragina izan dezaten.</string>
+    <string name="set_locale_popup">Irten eta berrabiarazi TubePlayer aldaketek eragina izan dezaten.</string>
     <string name="network_caching">Sareko cache balioa</string>
     <string name="network_caching_summary">Sareko media indagetzeko behar den denbora (ms unitateetan). Ez du funtzionatzen dekodetze hardwarearekin. Utzi zuriz berrabiarazteko.</string>
     <string name="developer_prefs_category">Garatzailea</string>

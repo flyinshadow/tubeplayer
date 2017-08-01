@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">Iawn</string>
     <string name="cancel">Diddymu</string>
     <string name="other">Arall</string>
@@ -40,7 +40,7 @@
     <string name="ringtone_error">Roedd gwall wrth osod y sain canu.</string>
     <string name="pause">Oedi</string>
     <string name="not_show_again">Peidio dangos y neges eto</string>
-    <string name="info_title">AiPlayer</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">Artist Anhysbys</string>
     <string name="unknown_album">Albwm Anhysbys</string>
     <string name="unknown_genre">Genre Anhysbys</string>
@@ -173,11 +173,11 @@
     <string name="open_mrl">Agor MRL</string>
     <string name="open_mrl_dialog_title">Agor ffrwd rhwydwaith</string>
     <string name="open_mrl_dialog_msg">Rhowch MRL y cyfrwng: e.e. http://, mms:// neu rtsp://</string>
-    <string name="error_not_compatible">Nid yw\'r fersiwn hon o AiPlayer ar gyfer Android™ yn gweithio ar eich dyfais chi ar hyn o\'r bryd.</string>
-    <string name="error_problem">Roedd problem wrth llwytho AiPlayer ar gyfer Android™ a buodd rhaid ei gau.</string>
+    <string name="error_not_compatible">Nid yw\'r fersiwn hon o TubePlayer ar gyfer Android™ yn gweithio ar eich dyfais chi ar hyn o\'r bryd.</string>
+    <string name="error_problem">Roedd problem wrth llwytho TubePlayer ar gyfer Android™ a buodd rhaid ei gau.</string>
     <string name="error_message_is">Y neges gwall yw (cofiwch grybwyll hwn wrth ddadfygio):\n</string>
     <string name="encountered_error_title">Gwall chwarae</string>
-    <string name="encountered_error_message">Cafodd AiPlayer wall gyda\'r cyfrwng hwn.\nCeisiwch ail-lwytho\'r llyfrgell cyfryngau.</string>
+    <string name="encountered_error_message">Cafodd TubePlayer wall gyda\'r cyfrwng hwn.\nCeisiwch ail-lwytho\'r llyfrgell cyfryngau.</string>
     <string name="invalid_location">Ni all chwarae\'r lleoliad %1$s.</string>
     <string name="search">Chwilio</string>
     <string name="search_history">Hanes chwilio</string>
@@ -204,13 +204,13 @@
     <string name="show_playlist">Dangos rhestr chwarae</string>
     <string name="hold_to_stop">Dal lawr i stopio</string>
     <!-- About -->
-    <string name="app_name_full">AiPlayer ar gyfer Android™</string>
+    <string name="app_name_full">TubePlayer ar gyfer Android™</string>
     <string name="licence">Trwydded</string>
     <string name="revision">Adolygiad</string>
     <string name="about">Ynghylch</string>
-    <string name="about_text">Mae AiPlayer ar gyfer Android™ yn borth o\'r chwaraeydd cyfryngau cod agored poblogaidd gan VideoLAN. Mae\'r fersiwn Android™ yn chwarae bron pob math o ffeil cyfryngau a ffrwd rhwydwaith.</string>
-    <string name="compiled_by">Cafodd y fersiwn hon o AiPlayer ei grynhoi gan:</string>
-    <string name="vlc_authors">Awduron AiPlayer.</string>
+    <string name="about_text">Mae TubePlayer ar gyfer Android™ yn borth o\'r chwaraeydd cyfryngau cod agored poblogaidd gan VideoLAN. Mae\'r fersiwn Android™ yn chwarae bron pob math o ffeil cyfryngau a ffrwd rhwydwaith.</string>
+    <string name="compiled_by">Cafodd y fersiwn hon o TubePlayer ei grynhoi gan:</string>
+    <string name="vlc_authors">Awduron TubePlayer.</string>
     <!-- Preferences -->
     <string name="preferences">Dewisiadau</string>
     <string name="general_prefs_category">Cyffredin</string>
@@ -301,7 +301,7 @@
     <string name="enable_steal_remote_control">Rheolaeth diwifr i\'r clustffonau yn unig</string>
     <string name="enable_steal_remote_control_summary">Osgoi gwrthdaro gan atal aplenni eraill rhag cael rheolaeth ddiwifr (Ar ffonau clic-dwbl HTC, mae hyn yn rhwystro deialu.)</string>
     <string name="aout">Allbwn sain</string>
-    <string name="aout_summary">Newid y dull mae AiPlayer yn ei ddefnyddio i allbynnu sain</string>
+    <string name="aout_summary">Newid y dull mae TubePlayer yn ei ddefnyddio i allbynnu sain</string>
     <string name="controls_prefs_category">Rheolaeth</string>
     <string name="performance_prefs_category">Perfformiad</string>
     <string name="chroma_format">Gorfodi lliw fideo</string>
@@ -323,12 +323,12 @@
     <string name="auto_rescan">Ail-sganio awtomatig</string>
     <string name="auto_rescan_summary">Sganio\'r ddyfais yn awtomatig am newid i ffeiliau cyfryngau wrth ddechrau\'r ap</string>
     <string name="clear_media_db">Clirio\'r gronfa ddata cyfryngau</string>
-    <string name="clear_media_db_summary">Mynd at wybodaeth Android AiPlayer i glirio\'r data</string>
+    <string name="clear_media_db_summary">Mynd at wybodaeth Android TubePlayer i glirio\'r data</string>
     <string name="clear_history">Clirio\'r hanes chwilio</string>
     <string name="media_db_cleared">Cliriwyd y gronfa ddata cyfryngau!</string>
     <string name="set_locale">Gosod rhanbarth</string>
     <string name="set_locale_detail">Gadael yn wag i\'w ailosod</string>
-    <string name="set_locale_popup">Caewch ac ailddechrau AiPlayer i gwblhau\'r newidiadau.</string>
+    <string name="set_locale_popup">Caewch ac ailddechrau TubePlayer i gwblhau\'r newidiadau.</string>
     <string name="network_caching">Gwerth cof dros dro</string>
     <string name="network_caching_summary">Y cyfnod o amser i fyffro cyfrwng rhwydwaith (mewn milieiliadau). Nid yw\'n gweithio wrth ddatgodio gan y caledwedd. Gadael yn wag i\'w ailosod.</string>
     <string name="resume_playback_title">Parhau i chwarae ar ôl galwad</string>
@@ -342,16 +342,16 @@
     <string name="start_logging">Dechrau logio</string>
     <string name="stop_logging">Stopio logio</string>
     <string name="clear_log">Clirio\'r log</string>
-    <string name="log_service_title">Cofnodi logiau AiPlayer</string>
+    <string name="log_service_title">Cofnodi logiau TubePlayer</string>
     <string name="log_service_text">Agor y consol logiau</string>
     <string name="copy_to_clipboard">Copïo i\'r clipfwrdd</string>
     <string name="copied_to_clipboard">Wedi\'i gopïo i\'r clipfwrdd.</string>
     <string name="dump_logcat">Dympio log logcat</string>
     <string name="dump_logcat_success">Dympiwyd logcat i %1$s!</string>
     <string name="dump_logcat_failure">Methwyd dympio logcat.</string>
-    <string name="serious_crash">Yn anffodus, bu gwall difrifol ac roedd rhaid cae AiPlayer.</string>
-    <string name="help_us_send_log">Helpwch ni wella AiPlayer gan anfon y log canlynol o\'r broblem:</string>
-    <string name="restart_vlc">Ail-ddechrau AiPlayer</string>
+    <string name="serious_crash">Yn anffodus, bu gwall difrifol ac roedd rhaid cae TubePlayer.</string>
+    <string name="help_us_send_log">Helpwch ni wella TubePlayer gan anfon y log canlynol o\'r broblem:</string>
+    <string name="restart_vlc">Ail-ddechrau TubePlayer</string>
     <string name="send_log">Anfon y log</string>
     <string name="sending_log">Yn anfon y log…</string>
     <string name="drawer_open">Agor blwch llywio</string>
@@ -395,18 +395,18 @@
     <string name="no_subs_found">Nid oes isdeitlau yn y cyfeiriadur hwn</string>
     <string name="music_now_playing">Yn Chwarae Nawr</string>
     <!--Widget-->
-    <string name="widget_name_w">Teclyn AiPlayer Gwyn</string>
-    <string name="widget_name_b">Teclyn AiPlayer Tywyll</string>
-    <string name="allow_storage_access_title">Caniatáu AiPlayer i gael at ffeiliau fideo a sain</string>
-    <string name="allow_storage_access_description">Mae eich caniatâd ar AiPlayer i gael at ffeiliau cyfryngau ar y ddyfais hon.</string>
-    <string name="allow_settings_access_ringtone_title">Caniatáu AiPlayer i osod sain canu galwadau ffôn</string>
-    <string name="allow_settings_access_ringtone_description">Mae AiPlayer angen ichi ganiatáu hyn er mwyn osod y trac hwn fel sain canu eich galwadau ffôn.</string>
-    <string name="allow_settings_access_brightness_title">Caniatáu AiPlayer i newid modd disgleirdeb</string>
-    <string name="allow_settings_access_brightness_description">Mae AiPlayer angen ichi ganiatáu hyn er mwyn newid modd disgleirdeb eich dyfais.</string>
-    <string name="allow_draw_overlays_title">Caniatáu AiPlayer mewn ffenestr llaim dros aplenni eraill</string>
-    <string name="allow_sdraw_overlays_description">Mae AiPlayer angen ichi ganiatáu hyn er mwyn dangos eich fideo mewn ffenestr dros ben aplenni eraill.</string>
+    <string name="widget_name_w">Teclyn TubePlayer Gwyn</string>
+    <string name="widget_name_b">Teclyn TubePlayer Tywyll</string>
+    <string name="allow_storage_access_title">Caniatáu TubePlayer i gael at ffeiliau fideo a sain</string>
+    <string name="allow_storage_access_description">Mae eich caniatâd ar TubePlayer i gael at ffeiliau cyfryngau ar y ddyfais hon.</string>
+    <string name="allow_settings_access_ringtone_title">Caniatáu TubePlayer i osod sain canu galwadau ffôn</string>
+    <string name="allow_settings_access_ringtone_description">Mae TubePlayer angen ichi ganiatáu hyn er mwyn osod y trac hwn fel sain canu eich galwadau ffôn.</string>
+    <string name="allow_settings_access_brightness_title">Caniatáu TubePlayer i newid modd disgleirdeb</string>
+    <string name="allow_settings_access_brightness_description">Mae TubePlayer angen ichi ganiatáu hyn er mwyn newid modd disgleirdeb eich dyfais.</string>
+    <string name="allow_draw_overlays_title">Caniatáu TubePlayer mewn ffenestr llaim dros aplenni eraill</string>
+    <string name="allow_sdraw_overlays_description">Mae TubePlayer angen ichi ganiatáu hyn er mwyn dangos eich fideo mewn ffenestr dros ben aplenni eraill.</string>
     <string name="permission_ask_again">Caniatáu</string>
-    <string name="exit_app">Cau AiPlayer</string>
+    <string name="exit_app">Cau TubePlayer</string>
     <!--fast scroller-->
     <string name="fastscroller_track">Tracio FastScroller</string>
     <string name="fastscroller_handle">Handlen FastScroller</string>
@@ -455,6 +455,6 @@
     <string name="length">Hyd</string>
     <string name="tv_settings_hint">Dalia\'r botwm \"Iawn\" i ddewis/dad-ddewis ffolderi</string>
     <string name="ml_external_storage_title">Wedi canfod storfa allanol newydd</string>
-    <string name="ml_external_storage_msg">Wyt ti am i AiPlayer ychwanegu\'r ddyfais %1$s i dy lyfrgell cyfryngau?</string>
+    <string name="ml_external_storage_msg">Wyt ti am i TubePlayer ychwanegu\'r ddyfais %1$s i dy lyfrgell cyfryngau?</string>
     <string name="last_added_media">ychwanegwyd diwethaf</string>
 </resources>

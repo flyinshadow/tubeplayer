@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">Гаразд</string>
     <string name="cancel">Скасувати</string>
     <string name="other">Інше</string>
@@ -40,7 +40,7 @@
     <string name="ringtone_error">Трапилася помилка під час установки мелодії.</string>
     <string name="pause">Пауза</string>
     <string name="not_show_again">„Не показувати це повідомлення знову“.</string>
-    <string name="info_title">AiPlayer</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">Невідомий виконавець</string>
     <string name="unknown_album">Невідомий альбом</string>
     <string name="unknown_genre">Невідомий жанр</string>
@@ -168,11 +168,11 @@
     <string name="open_mrl">Відкрити MRL</string>
     <string name="open_mrl_dialog_title">Відкрити мережевий потік</string>
     <string name="open_mrl_dialog_msg">Уведіть мережеву MRL-адресу, наприклад, http://, mms:// або rtsp://</string>
-    <string name="error_not_compatible">На жаль, ваш пристрій на даний час не підтримується цією версією AiPlayer для Android™.</string>
-    <string name="error_problem">На жаль, AiPlayer для Android мав проблему при завантаженні і він закрився.</string>
+    <string name="error_not_compatible">На жаль, ваш пристрій на даний час не підтримується цією версією TubePlayer для Android™.</string>
+    <string name="error_problem">На жаль, TubePlayer для Android мав проблему при завантаженні і він закрився.</string>
     <string name="error_message_is">Повідомлення про помилку (будь ласка, вкажіть його при налагодженні):\n\n</string>
     <string name="encountered_error_title">Помилка відтворення</string>
-    <string name="encountered_error_message">У AiPlayer сталася помилка з цим медіафайлом.\nБудь ласка, спробуйте оновити медіабібліотеку.</string>
+    <string name="encountered_error_message">У TubePlayer сталася помилка з цим медіафайлом.\nБудь ласка, спробуйте оновити медіабібліотеку.</string>
     <string name="invalid_location">Розташування %1$s не можливо відтворити.</string>
     <string name="search">Пошук</string>
     <string name="search_history">Історія пошуку</string>
@@ -199,13 +199,13 @@
     <string name="show_playlist">Показати список відтворення</string>
     <string name="hold_to_stop">Утримуйте для припинення</string>
     <!-- About -->
-    <string name="app_name_full">AiPlayer для Android™</string>
+    <string name="app_name_full">TubePlayer для Android™</string>
     <string name="licence">Ліцензія</string>
     <string name="revision">Збірка</string>
     <string name="about">Про програму</string>
-    <string name="about_text">AiPlayer для Android™ ­— це порт медіаплеєра AiPlayer, відомого плеєра з відкритим вихідним кодом. Версія для Android™ може відтворювати більшість файлів і мережевих потоків.</string>
-    <string name="compiled_by">Цю версію AiPlayer скомпільовано:</string>
-    <string name="vlc_authors">AiPlayer Автори.</string>
+    <string name="about_text">TubePlayer для Android™ ­— це порт медіаплеєра TubePlayer, відомого плеєра з відкритим вихідним кодом. Версія для Android™ може відтворювати більшість файлів і мережевих потоків.</string>
+    <string name="compiled_by">Цю версію TubePlayer скомпільовано:</string>
+    <string name="vlc_authors">TubePlayer Автори.</string>
     <!-- Preferences -->
     <string name="preferences">Параметри</string>
     <string name="general_prefs_category">Загальне</string>
@@ -304,7 +304,7 @@
     <string name="enable_steal_remote_control">Виняткове віддалене управління гарнітурою</string>
     <string name="enable_steal_remote_control_summary">Уникає конфліктів через перехоплення віддаленого управління іншими програмами. Це запобігає дзвінкам при подвійному натисканні на HTC телефонах.</string>
     <string name="aout">Вивід звуку</string>
-    <string name="aout_summary">Змінює метод, який AiPlayer використовує для виведення звуку.</string>
+    <string name="aout_summary">Змінює метод, який TubePlayer використовує для виведення звуку.</string>
     <string name="controls_prefs_category">Засоби управління</string>
     <string name="performance_prefs_category">Швидкодія</string>
     <string name="chroma_format">ПРИМУСОВА насиченість кольору</string>
@@ -326,12 +326,12 @@
     <string name="auto_rescan">Автоматично сканувати повторно</string>
     <string name="auto_rescan_summary">Автоматично перевіряти пристрій на наявність нових або вилучених носіїв під час запуску програми</string>
     <string name="clear_media_db">Очистити медіабазу</string>
-    <string name="clear_media_db_summary">Доступ до відомостей AiPlayer Android для очищення даних</string>
+    <string name="clear_media_db_summary">Доступ до відомостей TubePlayer Android для очищення даних</string>
     <string name="clear_history">Очистити історію пошуку</string>
     <string name="media_db_cleared">Медіабазу очищено!</string>
     <string name="set_locale">Установка локалі</string>
     <string name="set_locale_detail">Залишіть порожній рядок для типового значення</string>
-    <string name="set_locale_popup">Вийдіть і перезапустіть AiPlayer для набуття чинності змін.</string>
+    <string name="set_locale_popup">Вийдіть і перезапустіть TubePlayer для набуття чинності змін.</string>
     <string name="network_caching">Розмір мережевого кешування</string>
     <string name="network_caching_summary">Кількість часу для буферизації мережного медіа (у мс). Не працює з апаратним декодуванням. Залиште порожнім, аби очистити.</string>
     <string name="resume_playback_title">Відновити відтворення після дзвінка</string>
@@ -345,16 +345,16 @@
     <string name="start_logging">Почати запис у журнал</string>
     <string name="stop_logging">Зупинити запис у журнал</string>
     <string name="clear_log">Очистити журнал</string>
-    <string name="log_service_title">запис журналів AiPlayer</string>
+    <string name="log_service_title">запис журналів TubePlayer</string>
     <string name="log_service_text">Відкрити консоль журналу</string>
     <string name="copy_to_clipboard">Копіювати у буфер обміну</string>
     <string name="copied_to_clipboard">Скопійовано журнал у буфер обміну.</string>
     <string name="dump_logcat">Викинути журнал logcat</string>
     <string name="dump_logcat_success">Logcat успішно викинули до %1$s!</string>
     <string name="dump_logcat_failure">Не вдалося викинути logcat.</string>
-    <string name="serious_crash">Несподівано трапилася серйозна помилка, тому AiPlayer довелося закрити.</string>
-    <string name="help_us_send_log">Допомогти нам поліпшити AiPlayer, відправивши журнал аварії:</string>
-    <string name="restart_vlc">Перезапустити AiPlayer</string>
+    <string name="serious_crash">Несподівано трапилася серйозна помилка, тому TubePlayer довелося закрити.</string>
+    <string name="help_us_send_log">Допомогти нам поліпшити TubePlayer, відправивши журнал аварії:</string>
+    <string name="restart_vlc">Перезапустити TubePlayer</string>
     <string name="send_log">Надіслати журнал</string>
     <string name="sending_log">Відправка журналу...</string>
     <string name="drawer_open">Відкрити меню навігації</string>
@@ -398,18 +398,18 @@
     <string name="no_subs_found">Немає субтитрів у цьому каталозі</string>
     <string name="music_now_playing">Зараз відтворюється</string>
     <!--Widget-->
-    <string name="widget_name_w">Білий віджет AiPlayer</string>
-    <string name="widget_name_b">Темний віджет AiPlayer</string>
-    <string name="allow_storage_access_title">Надати AiPlayer доступ до відео та аудіофайлів</string>
+    <string name="widget_name_w">Білий віджет TubePlayer</string>
+    <string name="widget_name_b">Темний віджет TubePlayer</string>
+    <string name="allow_storage_access_title">Надати TubePlayer доступ до відео та аудіофайлів</string>
     <string name="allow_storage_access_description">VLV потрібно, щоби ви надали цей доступ для доступу до медіафайлів на відповідному пристрої.</string>
-    <string name="allow_settings_access_ringtone_title">Дозволити AiPlayer задавати мелодію дзвінків</string>
-    <string name="allow_settings_access_ringtone_description">AiPlayer потрібно, щоби ви надали цей дозвіл для установки цієї пісні як вашої мелодії.</string>
-    <string name="allow_settings_access_brightness_title">Дозволити AiPlayer змінювати режим яскравості</string>
-    <string name="allow_settings_access_brightness_description">AiPlayer потрібно, щоби ви надали цей дозвіл для зміни режиму яскравості.</string>
-    <string name="allow_draw_overlays_title">Дозволити AiPlayer спливати над іншими програмами</string>
-    <string name="allow_sdraw_overlays_description">AiPlayer потрібно, щоби ви надали цей дозвіл для відображення вашого відео у спливному вікні над іншими програмами.</string>
+    <string name="allow_settings_access_ringtone_title">Дозволити TubePlayer задавати мелодію дзвінків</string>
+    <string name="allow_settings_access_ringtone_description">TubePlayer потрібно, щоби ви надали цей дозвіл для установки цієї пісні як вашої мелодії.</string>
+    <string name="allow_settings_access_brightness_title">Дозволити TubePlayer змінювати режим яскравості</string>
+    <string name="allow_settings_access_brightness_description">TubePlayer потрібно, щоби ви надали цей дозвіл для зміни режиму яскравості.</string>
+    <string name="allow_draw_overlays_title">Дозволити TubePlayer спливати над іншими програмами</string>
+    <string name="allow_sdraw_overlays_description">TubePlayer потрібно, щоби ви надали цей дозвіл для відображення вашого відео у спливному вікні над іншими програмами.</string>
     <string name="permission_ask_again">Надати дозвіл</string>
-    <string name="exit_app">Закрити AiPlayer</string>
+    <string name="exit_app">Закрити TubePlayer</string>
     <!--fast scroller-->
     <string name="fastscroller_track">Доріжка FastScroller</string>
     <string name="fastscroller_handle">Держак FastScroller</string>
@@ -459,7 +459,7 @@
     <string name="length">Довжина</string>
     <string name="tv_settings_hint">Тривалий натиск на кнопку Гаразд для позначення/зняття позначень каталогів</string>
     <string name="ml_external_storage_title">Виявлено новий зовнішній носій</string>
-    <string name="ml_external_storage_msg">Хочете, щоби AiPlayer додала пристрій %1$s до вашої бібліотеки медіа?</string>
+    <string name="ml_external_storage_msg">Хочете, щоби TubePlayer додала пристрій %1$s до вашої бібліотеки медіа?</string>
     <string name="last_added_media">останнє додане</string>
     <string name="no">Ні</string>
     <string name="loading_medialibrary">Завантажується бібліотека медіа…</string>

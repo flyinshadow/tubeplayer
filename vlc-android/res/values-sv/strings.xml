@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Avbryt</string>
     <string name="other">Övrigt</string>
@@ -39,7 +39,7 @@
     <string name="ringtone_error">Ett fel inträffade när ringsignalen ändrades.</string>
     <string name="pause">Pausa</string>
     <string name="not_show_again">Visa inte detta meddelande igen.</string>
-    <string name="info_title">AiPlayer</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">Okänd artist</string>
     <string name="unknown_album">Okänt album</string>
     <string name="unknown_genre">Okänd genre</string>
@@ -161,11 +161,11 @@
     <string name="open_mrl">Strömma</string>
     <string name="open_mrl_dialog_title">Öppna nätverksström</string>
     <string name="open_mrl_dialog_msg">Ange nätverksadress: t.ex. http://, mms:// eller rtsp://</string>
-    <string name="error_not_compatible">Tyvärr, din enhet stödjer för tillfället inte denna version av AiPlayer för Android™.</string>
-    <string name="error_problem">Tyvärr stötte AiPlayer för Android på ett inläsningsproblem och blev tvungen att stängas ned.</string>
+    <string name="error_not_compatible">Tyvärr, din enhet stödjer för tillfället inte denna version av TubePlayer för Android™.</string>
+    <string name="error_problem">Tyvärr stötte TubePlayer för Android på ett inläsningsproblem och blev tvungen att stängas ned.</string>
     <string name="error_message_is">Felmeddelandet är (nämn detta när du felsöker):\n</string>
     <string name="encountered_error_title">Uppspelningsfel</string>
-    <string name="encountered_error_message">AiPlayer stötte på ett fel med denna mediafil.\nFörsök att uppdatera mediabiblioteket.</string>
+    <string name="encountered_error_message">TubePlayer stötte på ett fel med denna mediafil.\nFörsök att uppdatera mediabiblioteket.</string>
     <string name="invalid_location">Platsen %1$s kan inte spelas upp.</string>
     <string name="search">Sök</string>
     <string name="search_history">Sökhistorik</string>
@@ -192,13 +192,13 @@
     <string name="show_playlist">Visa spellista</string>
     <string name="hold_to_stop">Håll ned för att stoppa</string>
     <!-- About -->
-    <string name="app_name_full">AiPlayer för Android™</string>
+    <string name="app_name_full">TubePlayer för Android™</string>
     <string name="licence">Licens</string>
     <string name="revision">Version</string>
     <string name="about">Om</string>
-    <string name="about_text">AiPlayer för Android™ är en portering av AiPlayer media player, den populära mediaspelaren med öppen källkod. Android™-versionen kan läsa de flesta filerna och nätverksströmmarna.</string>
-    <string name="compiled_by">Denna version av AiPlayer är kompilerad av:</string>
-    <string name="vlc_authors">AiPlayer:s upphovsmän.</string>
+    <string name="about_text">TubePlayer för Android™ är en portering av TubePlayer media player, den populära mediaspelaren med öppen källkod. Android™-versionen kan läsa de flesta filerna och nätverksströmmarna.</string>
+    <string name="compiled_by">Denna version av TubePlayer är kompilerad av:</string>
+    <string name="vlc_authors">TubePlayer:s upphovsmän.</string>
     <!-- Preferences -->
     <string name="preferences">Inställningar</string>
     <string name="general_prefs_category">Allmänt</string>
@@ -297,7 +297,7 @@
     <string name="enable_steal_remote_control">Exklusiv fjärrstyrning med hörlurar</string>
     <string name="enable_steal_remote_control_summary">Undvik konflikter genom att stjäla fjärrstyrningen från andra appar. Detta förhindrar uppringning vid dubbelklickning på HTC-telefoner.</string>
     <string name="aout">Ljudutmatning</string>
-    <string name="aout_summary">Ändra metoden som AiPlayer använder för att mata ut ljud.</string>
+    <string name="aout_summary">Ändra metoden som TubePlayer använder för att mata ut ljud.</string>
     <string name="controls_prefs_category">Kontroller</string>
     <string name="performance_prefs_category">Prestanda</string>
     <string name="chroma_format">Tvinga videofärg</string>
@@ -324,7 +324,7 @@
     <string name="media_db_cleared">Mediadatabas rensad!</string>
     <string name="set_locale">Ange lokal</string>
     <string name="set_locale_detail">Lämna tomt för att återställa</string>
-    <string name="set_locale_popup">Avsluta och starta om AiPlayer för att ändringarna ska träda i kraft.</string>
+    <string name="set_locale_popup">Avsluta och starta om TubePlayer för att ändringarna ska träda i kraft.</string>
     <string name="network_caching">Cachevärde för nätverk</string>
     <string name="network_caching_summary">Tid att buffra media (i ms). Fungerar ej vid hårdvarukodning. Lämna blankt för att nollställa.</string>
     <string name="resume_playback_title">Återuppta uppspelning efter ett samtal</string>
@@ -338,16 +338,16 @@
     <string name="start_logging">Börja logga</string>
     <string name="stop_logging">Sluta logga</string>
     <string name="clear_log">Rensa loggen</string>
-    <string name="log_service_title">Spela in AiPlayer-loggar</string>
+    <string name="log_service_title">Spela in TubePlayer-loggar</string>
     <string name="log_service_text">Öppna loggkonsolen</string>
     <string name="copy_to_clipboard">Kopiera till urklipp</string>
     <string name="copied_to_clipboard">Kopierade loggen till urklipp.</string>
     <string name="dump_logcat">Töm logcat-loggen</string>
     <string name="dump_logcat_success">Logcat tömdes till %1$s!</string>
     <string name="dump_logcat_failure">Misslyckades att tömma logcat.</string>
-    <string name="serious_crash">Tyvärr uppstod ett allvarligt fel och AiPlayer blev tvungen att stängas ned.</string>
-    <string name="help_us_send_log">Hjälp oss att förbättra AiPlayer genom att skicka följande kraschlogg:</string>
-    <string name="restart_vlc">Starta om AiPlayer</string>
+    <string name="serious_crash">Tyvärr uppstod ett allvarligt fel och TubePlayer blev tvungen att stängas ned.</string>
+    <string name="help_us_send_log">Hjälp oss att förbättra TubePlayer genom att skicka följande kraschlogg:</string>
+    <string name="restart_vlc">Starta om TubePlayer</string>
     <string name="send_log">Skicka loggen</string>
     <string name="sending_log">Skickar loggen...</string>
     <string name="drawer_open">Öppna navigeringsmenyn</string>
@@ -391,18 +391,18 @@
     <string name="no_subs_found">Inga undertexter i denna katalog</string>
     <string name="music_now_playing">Spelas upp nu</string>
     <!--Widget-->
-    <string name="widget_name_w">AiPlayer - ljus widget</string>
-    <string name="widget_name_b">AiPlayer - mörk widget</string>
-    <string name="allow_storage_access_title">Tillåt AiPlayer att få åtkomst till video- och ljudfiler.</string>
-    <string name="allow_storage_access_description">Du måste bevilja detta tillstånd för att AiPlayer ska kunna komma åt mediafilerna på denna enhet.</string>
-    <string name="allow_settings_access_ringtone_title">Tillåt AiPlayer att ändra ringsignalen</string>
-    <string name="allow_settings_access_ringtone_description">Du måste bevilja detta tillstånd för att AiPlayer ska kunna använda denna låt som din ringsignal.</string>
-    <string name="allow_settings_access_brightness_title">Tillåt AiPlayer att ändra ljusstyrkans läge</string>
-    <string name="allow_settings_access_brightness_description">Du måste bevilja detta tillstånd för att AiPlayer ska kunna ändra ljusstyrkans läge.</string>
-    <string name="allow_draw_overlays_title">Tillåt AiPlayer att visa spelaren ovanpå andra appar</string>
-    <string name="allow_sdraw_overlays_description">Du måste bevilja detta tillstånd för att AiPlayer ska kunna visa din video i ett poppupp över andra applikationer.</string>
+    <string name="widget_name_w">TubePlayer - ljus widget</string>
+    <string name="widget_name_b">TubePlayer - mörk widget</string>
+    <string name="allow_storage_access_title">Tillåt TubePlayer att få åtkomst till video- och ljudfiler.</string>
+    <string name="allow_storage_access_description">Du måste bevilja detta tillstånd för att TubePlayer ska kunna komma åt mediafilerna på denna enhet.</string>
+    <string name="allow_settings_access_ringtone_title">Tillåt TubePlayer att ändra ringsignalen</string>
+    <string name="allow_settings_access_ringtone_description">Du måste bevilja detta tillstånd för att TubePlayer ska kunna använda denna låt som din ringsignal.</string>
+    <string name="allow_settings_access_brightness_title">Tillåt TubePlayer att ändra ljusstyrkans läge</string>
+    <string name="allow_settings_access_brightness_description">Du måste bevilja detta tillstånd för att TubePlayer ska kunna ändra ljusstyrkans läge.</string>
+    <string name="allow_draw_overlays_title">Tillåt TubePlayer att visa spelaren ovanpå andra appar</string>
+    <string name="allow_sdraw_overlays_description">Du måste bevilja detta tillstånd för att TubePlayer ska kunna visa din video i ett poppupp över andra applikationer.</string>
     <string name="permission_ask_again">Bevilja tillstånd</string>
-    <string name="exit_app">Avsluta AiPlayer</string>
+    <string name="exit_app">Avsluta TubePlayer</string>
     <!--fast scroller-->
     <string name="fastscroller_track">FastScroller-spår</string>
     <string name="fastscroller_handle">FastScroller-handtag</string>
@@ -452,7 +452,7 @@
     <string name="length">Längd</string>
     <string name="tv_settings_hint">Håll ned OK-knappen för att markera/avmarkera kataloger</string>
     <string name="ml_external_storage_title">Nytt externt lagringsutrymme upptäcktes</string>
-    <string name="ml_external_storage_msg">Vill du att AiPlayer lägger till enheten %1$s i ditt mediabibliotek?</string>
+    <string name="ml_external_storage_msg">Vill du att TubePlayer lägger till enheten %1$s i ditt mediabibliotek?</string>
     <string name="last_added_media">senast inlagt</string>
     <string name="no">Nej</string>
     <string name="loading_medialibrary">Läser in mediabiblioteket...</string>

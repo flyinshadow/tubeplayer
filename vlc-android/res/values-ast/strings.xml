@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main TubePlayer Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Encaboxar</string>
     <string name="other">Otro</string>
@@ -30,7 +30,7 @@
     <string name="ringtone_error">Hebo un fallu al afitar el tonu de llamada</string>
     <string name="pause">Posar</string>
     <string name="not_show_again">Nun amosar más esti mensaxe.</string>
-    <string name="info_title">AiPlayer</string>
+    <string name="info_title">TubePlayer</string>
     <string name="unknown_artist">Artista desconocíu</string>
     <string name="unknown_album">Álbum desconocíu</string>
     <string name="unknown_genre">Xéneru desconocíu</string>
@@ -121,8 +121,8 @@
     <string name="open_mrl">Abrir MRL</string>
     <string name="open_mrl_dialog_title">Abrir fluxu de rede</string>
     <string name="open_mrl_dialog_msg">Introduz rede MRL: ex. http://, mms:// or rtsp://</string>
-    <string name="error_not_compatible">Sentímoslo, el to preséu nun ta sofitáu anguaño por esta versión de AiPlayer p\'Android™.</string>
-    <string name="error_problem">Sentímoslo, AiPlayer p\'Android tuvo un fallu al cargar y zarróse.</string>
+    <string name="error_not_compatible">Sentímoslo, el to preséu nun ta sofitáu anguaño por esta versión de TubePlayer p\'Android™.</string>
+    <string name="error_problem">Sentímoslo, TubePlayer p\'Android tuvo un fallu al cargar y zarróse.</string>
     <string name="search">Guetar</string>
     <string name="search_history">Guetar nel historial</string>
     <string name="hardware_acceleration_error_title">Fallu n\'aceleración hardware</string>
@@ -142,13 +142,13 @@
     <string name="show_playlist">Amosar llista de reproducción</string>
     <string name="hold_to_stop">Caltener pa parar</string>
     <!-- About -->
-    <string name="app_name_full">AiPlayer p\'Android™</string>
+    <string name="app_name_full">TubePlayer p\'Android™</string>
     <string name="licence">Llicencia</string>
     <string name="revision">Revisión</string>
     <string name="about">Tocante a</string>
-    <string name="about_text">AiPlayer p\'Android™ ye una aplicación portada de AiPlayer media player, l\'afamáu reproductor multimedia de códigu abiertu. La versión p\'Android™ que pue lleer la mayoría de los ficheros y fluxos na rede.</string>
-    <string name="compiled_by">Esta versión de AiPlayer ta compilada por:</string>
-    <string name="vlc_authors">Autores de AiPlayer.</string>
+    <string name="about_text">TubePlayer p\'Android™ ye una aplicación portada de TubePlayer media player, l\'afamáu reproductor multimedia de códigu abiertu. La versión p\'Android™ que pue lleer la mayoría de los ficheros y fluxos na rede.</string>
+    <string name="compiled_by">Esta versión de TubePlayer ta compilada por:</string>
+    <string name="vlc_authors">Autores de TubePlayer.</string>
     <!-- Preferences -->
     <string name="preferences">Preferencies</string>
     <string name="general_prefs_category">Xeneral</string>
