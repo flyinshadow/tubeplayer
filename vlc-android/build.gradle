@@ -138,7 +138,7 @@ android {
 
         //Custom APK name
         variant.outputs.each { output ->
-            def outputName = "AiPlayer-"
+            def outputName = "HD-XPlayer-"
             if (variant.productFlavors.get(0).name != "vanilla")
                 outputName += variant.productFlavors.get(0).name.toUpperCase() + "-"
             outputName += variant.versionName + "-" + variant.productFlavors.get(1).name + ".apk"

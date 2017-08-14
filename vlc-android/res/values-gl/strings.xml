@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main HD XPlayer Interface -->
     <string name="ok">Aceptar</string>
     <string name="cancel">Cancelar</string>
     <string name="other">Outros</string>
@@ -36,7 +36,7 @@
     <string name="ringtone_error">Produciuse un erro ao definir o ton de chamada.</string>
     <string name="pause">Pausa</string>
     <string name="not_show_again">Non mostrar esta mensaxe de novo.</string>
-    <string name="info_title">AiPlayer</string>
+    <string name="info_title">HD XPlayer</string>
     <string name="unknown_artist">Artista descoñecido</string>
     <string name="unknown_album">Álbum descoñecido</string>
     <string name="unknown_genre">Xénero descoñecido</string>
@@ -131,11 +131,11 @@
     <string name="open_mrl">Abrir un MRL</string>
     <string name="open_mrl_dialog_title">Abrir un fluxo de rede</string>
     <string name="open_mrl_dialog_msg">Introduza un MRL de rede, por exemplo: http://, mms:// ou rtsp://</string>
-    <string name="error_not_compatible">Sentímolo, mais o seu dispositivo aínda non é compatíbel con esta versión do AiPlayer para Android™.</string>
-    <string name="error_problem">Desculpe. O AiPlayer para Android tivo un problema ao cargar e pechouse.</string>
+    <string name="error_not_compatible">Sentímolo, mais o seu dispositivo aínda non é compatíbel con esta versión do HD XPlayer para Android™.</string>
+    <string name="error_problem">Desculpe. O HD XPlayer para Android tivo un problema ao cargar e pechouse.</string>
     <string name="error_message_is">A mensaxe de erro é (mencione isto para a depuración):\n</string>
     <string name="encountered_error_title">Erro de reprodución</string>
-    <string name="encountered_error_message">O AiPlayer encontrou un erro con este medio.\nProbe a actualizar a biblioteca multimedia.</string>
+    <string name="encountered_error_message">O HD XPlayer encontrou un erro con este medio.\nProbe a actualizar a biblioteca multimedia.</string>
     <string name="invalid_location">Non é posíbel reproducir a localización %1$s.</string>
     <string name="search">Buscar</string>
     <string name="search_history">Historial de busca</string>
@@ -157,13 +157,13 @@
     <string name="show_playlist">Mostrar a lista de reprodución</string>
     <string name="hold_to_stop">Manter para deter</string>
     <!-- About -->
-    <string name="app_name_full">AiPlayer para Android™</string>
+    <string name="app_name_full">HD XPlayer para Android™</string>
     <string name="licence">Licenza</string>
     <string name="revision">Revisión</string>
     <string name="about">Sobre</string>
-    <string name="about_text">AiPlayer for Android™ é un aplicativo portado do AiPlayer media player, o popular reprodutor multimedia de código aberto. A versión para Android™ pode ler a maioría dos ficheiros e fluxos de rede.</string>
-    <string name="compiled_by">Esta versión do AiPlayer foi compilada por:</string>
-    <string name="vlc_authors">Autores/as do AiPlayer.</string>
+    <string name="about_text">HD XPlayer for Android™ é un aplicativo portado do HD XPlayer media player, o popular reprodutor multimedia de código aberto. A versión para Android™ pode ler a maioría dos ficheiros e fluxos de rede.</string>
+    <string name="compiled_by">Esta versión do HD XPlayer foi compilada por:</string>
+    <string name="vlc_authors">Autores/as do HD XPlayer.</string>
     <!-- Preferences -->
     <string name="preferences">Preferencias</string>
     <string name="general_prefs_category">Xeral</string>
@@ -219,7 +219,7 @@
     <string name="enable_time_stretching_audio_summary">Acelerar e diminuír a velocidade do audio sen mudar a súa altura (require un dispositivo rápido)</string>
     <string name="advanced_prefs_category">Avanzadas</string>
     <string name="aout">Saída de audio</string>
-    <string name="aout_summary">Mudar o método que usa o AiPlayer para a saída de audio.</string>
+    <string name="aout_summary">Mudar o método que usa o HD XPlayer para a saída de audio.</string>
     <string name="clear_media_db">Limpar a base de datos de medios</string>
     <string name="clear_history">Limpar o historial de busca</string>
     <string name="media_db_cleared">Limpouse a base de datos de medios!</string>
@@ -242,9 +242,9 @@
     <string name="dump_logcat">Descargar o rexistro de logcat</string>
     <string name="dump_logcat_success">Descargouse correctamente o rexistro de logcat en %1$s!</string>
     <string name="dump_logcat_failure">Produciuse un erro ao descargar o rexistro de logcat</string>
-    <string name="serious_crash">Produciuse un erro grave e houbo que pechar o AiPlayer.   </string>
-    <string name="help_us_send_log">Axúdenos a mellorar o AiPlayer enviando o seguinte informe de erro:</string>
-    <string name="restart_vlc">Reiniciar o AiPlayer</string>
+    <string name="serious_crash">Produciuse un erro grave e houbo que pechar o HD XPlayer.   </string>
+    <string name="help_us_send_log">Axúdenos a mellorar o HD XPlayer enviando o seguinte informe de erro:</string>
+    <string name="restart_vlc">Reiniciar o HD XPlayer</string>
     <string name="send_log">Enviar o informe</string>
     <string name="sending_log">Enviando o informe…</string>
     <string name="drawer_open">Abrir a gabeta de navegación</string>
@@ -270,6 +270,7 @@
     <string name="more_actions">Máis accións</string>
     <string name="move">Mover</string>
     <string name="music_now_playing">A reproducir</string>
+    <string name="rename">Cambiar nome</string>
     <!--Widget-->
     <!--PLugins-->
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main HD XPlayer Interface -->
     <string name="ok">ઓકે</string>
     <string name="cancel">રદ્દ કરો</string>
     <string name="other">બધું</string>
@@ -21,7 +21,7 @@
     <string name="pause">વિરામ</string>
     <string name="not_show_again">ફરીથી આ સંદેશ બતાવશો નહીં .</string>
     <string name="beta_warning">આ એક બીટા સંસ્કરણ છે ⏎ ⏎ આ સંસ્કરણ સ્થિર નથી ⏎! ⏎ ઉપયોગ કરશો નહિં જ્યાં સુધી તમે જાણો છો કે તમે શું કરી રહ્યા છો. ⏎ ⏎ તે તમારા બિલાડીનું બચ્ચું મારી નાંખવા માટે, તમારા ઘર નાશ કરી શકે છે અને મય સાક્ષાત્કાર શરૂ કરો. ⏎ તે તમારા પર વાપરો. પોતાના જોખમ ⏎. ⏎ ફન છે! :)</string>
-    <string name="info_title">AiPlayer બીટા</string>
+    <string name="info_title">HD XPlayer બીટા</string>
     <string name="unknown_artist">અજ્ઞાત આર્ટિસ્ટ</string>
     <string name="unknown_album">અજ્ઞાત આલ્બમ</string>
     <string name="unknown_genre">અજ્ઞાત શૈલી</string>
@@ -77,18 +77,18 @@
     <string name="open_mrl">MRL ખોલો </string>
     <string name="open_mrl_dialog_title">નેટવર્ક સ્ટ્રીમ ખોલો</string>
     <string name="open_mrl_dialog_msg">નેટવર્ક MRL દાખલ કરો: દા.ત. http://, MMS :/ / અથવા rtsp :/ /</string>
-    <string name="error_not_compatible">માફ કરશો,હાલમાં તમારા ઉપકરણ માટે  Android ™  AiPlayer ની આ આવૃત્તિ ઉપલબ્ધ નથી.</string>
+    <string name="error_not_compatible">માફ કરશો,હાલમાં તમારા ઉપકરણ માટે  Android ™  HD XPlayer ની આ આવૃત્તિ ઉપલબ્ધ નથી.</string>
     <string name="error_problem">માફ કરશો, Android માટે વીએલસી લોડ થવામાં સમસ્યા છે બંધ કરવું પડશે.</string>
     <string name="error_message_is"> ભૂલ સંદેશ (કૃપા કરીને આ ઉલ્લેખ છે જ્યારે ડિબગીંગ હોય)છે:⏎ </string>
     <!--Tips-->
     <!-- About -->
-    <string name="app_name_full">  Android™ માટે AiPlayer</string>
+    <string name="app_name_full">  Android™ માટે HD XPlayer</string>
     <string name="licence">લાઇસન્સ</string>
     <string name="revision">પુનરાવર્તન</string>
     <string name="about">લગભગ</string>
-    <string name="about_text">Android ™ માટે AiPlayer મીડિયા પ્લેયર, લોકપ્રિય ઓપન સોર્સ મીડિયા પ્લેયર એક બંદર છે. ફક્ત Android ™ આવૃત્તિ મોટા ભાગના ફાઈલો અને નેટવર્ક સ્ટ્રીમ્સ વાંચી શકે છે.</string>
+    <string name="about_text">Android ™ માટે HD XPlayer મીડિયા પ્લેયર, લોકપ્રિય ઓપન સોર્સ મીડિયા પ્લેયર એક બંદર છે. ફક્ત Android ™ આવૃત્તિ મોટા ભાગના ફાઈલો અને નેટવર્ક સ્ટ્રીમ્સ વાંચી શકે છે.</string>
     <string name="compiled_by">વીએલસીનુ સંસ્કરણ આના દ્વારા સંકલિત છે:</string>
-    <string name="vlc_authors">AiPlayer લેખકો.</string>
+    <string name="vlc_authors">HD XPlayer લેખકો.</string>
     <!-- Preferences -->
     <string name="preferences">પસંદગીઓ</string>
     <string name="automatic">સ્વ્નીયાન્ત્ર્ણ</string>
@@ -104,4 +104,5 @@
     <string name="set_locale_detail">પુનઃસુયોજિત કરવા માટે ખાલી છોડી દો</string>
     <string name="enable_verbose_mode">શબ્લબહુલ</string>
     <string name="enable_verbose_mode_summary">આ વર્બોઝીટી (logcat) વધારો</string>
+    <string name="rename">નામ બદલો</string>
 </resources>

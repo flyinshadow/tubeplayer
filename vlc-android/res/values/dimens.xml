@@ -75,4 +75,6 @@
 
     <dimen name="audio_player_cover_border">2dp</dimen>
 
+    <dimen name="widget_image_size">50dp</dimen>
+
 </resources>

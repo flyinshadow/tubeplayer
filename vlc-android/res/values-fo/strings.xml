@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main HD XPlayer Interface -->
     <string name="ok">Í lagi</string>
     <string name="cancel">Angra</string>
     <string name="other">Annað</string>
@@ -38,7 +38,7 @@
     <string name="ringtone_error">Ein villa stóðst av at seta ringitónan.</string>
     <string name="pause">Steðga</string>
     <string name="not_show_again">Vís ikki hesi boð aftur.</string>
-    <string name="info_title">AiPlayer</string>
+    <string name="info_title">HD XPlayer</string>
     <string name="unknown_artist">Ókent listafólk</string>
     <string name="unknown_album">Ókend útgáva</string>
     <string name="unknown_genre">Ókend sjangra</string>
@@ -137,11 +137,11 @@
     <string name="open_mrl">Lat upp MRL</string>
     <string name="open_mrl_dialog_title">Lat stroyminet upp</string>
     <string name="open_mrl_dialog_msg">Skriva MRL inn fyri net: t.e. http://, mms:// or rtsp://</string>
-    <string name="error_not_compatible">Orsaka, eindin hjá tær kann, sum nú er, ikki brúkast við hesi AiPlayer-útgávu til Android™.</string>
-    <string name="error_problem">Orsaka, AiPlayer til Android hevði trupulleikar við innlesingini og mátti latast aftur.</string>
+    <string name="error_not_compatible">Orsaka, eindin hjá tær kann, sum nú er, ikki brúkast við hesi HD XPlayer-útgávu til Android™.</string>
+    <string name="error_problem">Orsaka, HD XPlayer til Android hevði trupulleikar við innlesingini og mátti latast aftur.</string>
     <string name="error_message_is">Villumeldingin er (vinaliga greið frá hesum, tá ið rættast skal upp á trupulleikan):\n</string>
     <string name="encountered_error_title">Avspælingarvilla</string>
-    <string name="encountered_error_message">Ein villa er íkomin, tá ið AiPlayer skuldi spæla henda miðil.\nRoyn og endurbyrja miðlasavnið.</string>
+    <string name="encountered_error_message">Ein villa er íkomin, tá ið HD XPlayer skuldi spæla henda miðil.\nRoyn og endurbyrja miðlasavnið.</string>
     <string name="invalid_location">Keldan %1$s kann ikki spælast.</string>
     <string name="search">Leita</string>
     <string name="search_history">Undanfarnar leitingar</string>
@@ -162,13 +162,13 @@
     <string name="show_playlist">Vís spælilista</string>
     <string name="hold_to_stop">Halt fry at stegða</string>
     <!-- About -->
-    <string name="app_name_full">AiPlayer til Android™</string>
+    <string name="app_name_full">HD XPlayer til Android™</string>
     <string name="licence">Rættindi</string>
     <string name="revision">Endurskoðan</string>
     <string name="about">Um</string>
-    <string name="about_text">AiPlayer til Android™ er eitt portur hjá AiPlayer margmiðlaspælaranum, tí víða gitta open-source spælaranum. Android™ útgávan klárar at lesa flestu fílur og kann stroyma flestu keldur.</string>
-    <string name="compiled_by">Henda útgáva av AiPlayer verður umsett av:</string>
-    <string name="vlc_authors">AiPlayer-høvundum</string>
+    <string name="about_text">HD XPlayer til Android™ er eitt portur hjá HD XPlayer margmiðlaspælaranum, tí víða gitta open-source spælaranum. Android™ útgávan klárar at lesa flestu fílur og kann stroyma flestu keldur.</string>
+    <string name="compiled_by">Henda útgáva av HD XPlayer verður umsett av:</string>
+    <string name="vlc_authors">HD XPlayer-høvundum</string>
     <!-- Preferences -->
     <string name="preferences">Stillingar</string>
     <string name="general_prefs_category">Yvirskipað</string>
@@ -223,13 +223,13 @@
     <string name="enable_time_stretching_audio_summary">Set ljóðferðina upp ella niður uttan at broyta tónahæddina (krevur eina skjóta eind).</string>
     <string name="advanced_prefs_category">Víðkað</string>
     <string name="aout">Ljóðúttak</string>
-    <string name="aout_summary">Skift hvussu AiPlayer brúkar ljóðúttak.</string>
+    <string name="aout_summary">Skift hvussu HD XPlayer brúkar ljóðúttak.</string>
     <string name="clear_media_db">Rudda miðladátabasu</string>
     <string name="clear_history">Rudda undanfarnu leitingar</string>
     <string name="media_db_cleared">Miðladátabasa ruddað!</string>
     <string name="set_locale">Set heimastað</string>
     <string name="set_locale_detail">Lat standa tómt fyri at nullstilla</string>
-    <string name="set_locale_popup">Sløkk og tendra AiPlayer av nýggjum fyri at broytingarnar skulu fara í nýstlu.</string>
+    <string name="set_locale_popup">Sløkk og tendra HD XPlayer av nýggjum fyri at broytingarnar skulu fara í nýstlu.</string>
     <string name="network_caching">netsavnavirði</string>
     <string name="network_caching_summary">So nógva tíð tekur tað at undanlesa netmiðilin (í ms). Virkar ikki við tólbúnaðavkoting. Lat standa tómt fyri at nullstilla.</string>
     <string name="developer_prefs_category">Framleiðari</string>
@@ -245,9 +245,9 @@
     <string name="dump_logcat">Ráavrita logcat-loggin</string>
     <string name="dump_logcat_success">Logcat er ráavritað í øllum góðum til %1$s!</string>
     <string name="dump_logcat_failure">Miseydnaðist at ráavrita logcat.</string>
-    <string name="serious_crash">Tíverri stóðst ein álvarsamur feilur og AiPlayer noyddist at lata aftur.</string>
-    <string name="help_us_send_log">Hjálp til at betra um AiPlayer við at senda krassjloggin niðanfyri:</string>
-    <string name="restart_vlc">Tendra AiPlayer av nýggjum</string>
+    <string name="serious_crash">Tíverri stóðst ein álvarsamur feilur og HD XPlayer noyddist at lata aftur.</string>
+    <string name="help_us_send_log">Hjálp til at betra um HD XPlayer við at senda krassjloggin niðanfyri:</string>
+    <string name="restart_vlc">Tendra HD XPlayer av nýggjum</string>
     <string name="send_log">Send loggin</string>
     <string name="sending_log">Sendir loggin...</string>
     <string name="drawer_open">Lat navigatiónsskuffuna upp</string>
@@ -280,6 +280,7 @@
     <string name="music_now_playing">Nú spælur</string>
     <!--Widget-->
     <string name="permission_ask_again">Gev heimild</string>
-    <string name="exit_app">Sløkk AiPlayer</string>
+    <string name="exit_app">Sløkk HD XPlayer</string>
+    <string name="rename">Nýnevna</string>
     <!--PLugins-->
 </resources>

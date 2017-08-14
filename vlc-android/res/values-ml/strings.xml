@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main HD XPlayer Interface -->
     <string name="ok">ഓക്കെ</string>
     <string name="cancel">ഉപേക്ഷിക്കുക</string>
     <string name="other">മറ്റുള്ളവ</string>
@@ -97,15 +97,15 @@
     <string name="open_mrl">MRL തുറക്കുക</string>
     <string name="open_mrl_dialog_title">ശൃംഖല സ്രോതസ്സ്‌ തുറക്കുക</string>
     <string name="open_mrl_dialog_msg">ശൃംഖലയുടെ MRL രേഖപ്പെടുത്തുക: ഉദാ. http://, mms:// അല്ലെങ്കില്‍ rtsp://</string>
-    <string name="error_not_compatible">ക്ഷമിക്കുക, ആന്‍ഡ്രോയിഡ്™ ഇല്‍ ഉള്ള AiPlayer ഇപ്പോള്‍ നിങ്ങളുടെ ഉപകരണത്തെ അനുകൂലിക്കുന്നില്ല. </string>
+    <string name="error_not_compatible">ക്ഷമിക്കുക, ആന്‍ഡ്രോയിഡ്™ ഇല്‍ ഉള്ള HD XPlayer ഇപ്പോള്‍ നിങ്ങളുടെ ഉപകരണത്തെ അനുകൂലിക്കുന്നില്ല. </string>
     <!--Tips-->
     <!-- About -->
-    <string name="app_name_full">ആൻഡ്രോയഡിന്™ വേണ്ടിയ AiPlayer</string>
+    <string name="app_name_full">ആൻഡ്രോയഡിന്™ വേണ്ടിയ HD XPlayer</string>
     <string name="licence">ലൈസന്‍സ്‌</string>
     <string name="revision">പരിഷ്‌കരണം</string>
     <string name="about">കുറിച്ച്‌</string>
-    <string name="compiled_by">AiPlayer യുടെ ഈ പതിപ്പ്‌ സമാഹരിച്ചിരിക്കുന്നത്:</string>
-    <string name="vlc_authors">AiPlayer രചയിതാക്കള്‍</string>
+    <string name="compiled_by">HD XPlayer യുടെ ഈ പതിപ്പ്‌ സമാഹരിച്ചിരിക്കുന്നത്:</string>
+    <string name="vlc_authors">HD XPlayer രചയിതാക്കള്‍</string>
     <!-- Preferences -->
     <string name="preferences">അഭിരുചികള്‍</string>
     <string name="screen_orientation"> വീഡിയോ സ്ക്റീൻ ഓറിയൻറ്റേഷൻ</string>
@@ -123,7 +123,8 @@
     <string name="media_db_cleared">മീഡിയ വിവരശേഖരം തുടച്ചുമാറ്റിയിരിക്കുന്നു!</string>
     <string name="set_locale">സങ്കേതസ്ഥാനം നിയമിക്കുക</string>
     <string name="set_locale_detail">പുനഃക്രമീകരിക്കുന്നതിന് ഒഴിച്ച് ഇടുക</string>
-    <string name="set_locale_popup">മാറ്റങ്ങള്‍ പ്രാവര്‍ത്തികമാക്കുവാന്‍ AiPlayer നിറുത്തിയിട്ടു വീണ്ടും തുടങ്ങുക.</string>
+    <string name="set_locale_popup">മാറ്റങ്ങള്‍ പ്രാവര്‍ത്തികമാക്കുവാന്‍ HD XPlayer നിറുത്തിയിട്ടു വീണ്ടും തുടങ്ങുക.</string>
     <string name="enable_verbose_mode">വാചാലമായി</string>
     <string name="quit">ആപ്പ്ളിക്കേഷന്‍ നിറുത്തിയിട്ടു വീണ്ടും തുടങ്ങുക</string>
+    <string name="rename">പേരുമാറ്റുക</string>
 </resources>

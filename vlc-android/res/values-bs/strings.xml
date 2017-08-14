@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main HD XPlayer Interface -->
     <string name="ok">Uredu</string>
     <string name="cancel">Otkaži</string>
     <string name="other">Drugi</string>
@@ -39,7 +39,7 @@
     <string name="ringtone_error">Dogodila se greška tokom postavljanja zvona.</string>
     <string name="pause">Pauziraj</string>
     <string name="not_show_again">Ne prikazuj ovu poruku ponovo.</string>
-    <string name="info_title">AiPlayer</string>
+    <string name="info_title">HD XPlayer</string>
     <string name="unknown_artist">Nepoznat Izvođač</string>
     <string name="unknown_album">Nepoznat Album</string>
     <string name="unknown_genre">Nepoznat Žanr</string>
@@ -147,11 +147,11 @@
     <string name="open_mrl">Otvori MRL</string>
     <string name="open_mrl_dialog_title">Otvori mrežno strujanje</string>
     <string name="open_mrl_dialog_msg">Unesi mrežnu adresu: npr. http://, mms:// ili rtsp://</string>
-    <string name="error_not_compatible">Izvinite, vaš uređaj trenutno nije podržan od ove verzije AiPlayer-a za Android™.</string>
-    <string name="error_problem">Izvinite, AiPlayer za Android je imao problem s učitavanjem i morao se zatvoriti.</string>
+    <string name="error_not_compatible">Izvinite, vaš uređaj trenutno nije podržan od ove verzije HD XPlayer-a za Android™.</string>
+    <string name="error_problem">Izvinite, HD XPlayer za Android je imao problem s učitavanjem i morao se zatvoriti.</string>
     <string name="error_message_is">Poruka s greškom je (molimo napomenite ovo tokom otkrivanja grešaka):\n</string>
     <string name="encountered_error_title">Greška reproduciranja</string>
-    <string name="encountered_error_message">AiPlayer je naišao na grešku sa ovim medijem.\nMolimo pokušajte osvježiti medijsku biblioteku.</string>
+    <string name="encountered_error_message">HD XPlayer je naišao na grešku sa ovim medijem.\nMolimo pokušajte osvježiti medijsku biblioteku.</string>
     <string name="invalid_location">Lokacija %1$s se ne može producirati.</string>
     <string name="search">Pretraga</string>
     <string name="search_history">Historija pretraživanja</string>
@@ -173,13 +173,13 @@
     <string name="show_playlist">Prikaži listu izvođenja</string>
     <string name="hold_to_stop">Drži za zaustavljanje</string>
     <!-- About -->
-    <string name="app_name_full">AiPlayer za Android™</string>
+    <string name="app_name_full">HD XPlayer za Android™</string>
     <string name="licence">Licenca</string>
     <string name="revision">Revizija</string>
     <string name="about">O nama</string>
-    <string name="about_text">AiPlayer za Android™ je port AiPlayer medijskog izvođača, popularnog medijskog izvođača otvorenog koda. Android™ verzija može čitati većinu datoteka i mrežnih strujanja.</string>
-    <string name="compiled_by">Ova verzija AiPlayer-a je kompajlirana od strane:</string>
-    <string name="vlc_authors">AiPlayer Autori.</string>
+    <string name="about_text">HD XPlayer za Android™ je port HD XPlayer medijskog izvođača, popularnog medijskog izvođača otvorenog koda. Android™ verzija može čitati većinu datoteka i mrežnih strujanja.</string>
+    <string name="compiled_by">Ova verzija HD XPlayer-a je kompajlirana od strane:</string>
+    <string name="vlc_authors">HD XPlayer Autori.</string>
     <!-- Preferences -->
     <string name="preferences">Postavke</string>
     <string name="general_prefs_category">Opće</string>
@@ -231,7 +231,7 @@
     <string name="enable_steal_remote_control">Ekskluzivno daljinsko upravljanje za slušalice</string>
     <string name="enable_steal_remote_control_summary">Izbjegavaj konflikt preuzimanja daljinskog upravljanja od drugih aplikacija. Ovo sprječava pozivanje na dupli klik kod HTC telefona.</string>
     <string name="aout">Izlaz zvuka</string>
-    <string name="aout_summary">Izmijeni način na koji AiPlayer koristi izlazni zvuk.</string>
+    <string name="aout_summary">Izmijeni način na koji HD XPlayer koristi izlazni zvuk.</string>
     <string name="performance_prefs_category">Performansa</string>
     <string name="chroma_format">Forsiraj video krom</string>
     <string name="chroma_format_summary">RGB 32-bit: zadani krom\nRGB 16-bit: bolja performansa ali slabiji kvalitet\nYUV: najbolja performansa ali ne radi na svim uređajima. Android 2.3 i novije.</string>
@@ -253,7 +253,7 @@
     <string name="media_db_cleared">Medijska baza podataka očišćena!</string>
     <string name="set_locale">Podesi mjesto</string>
     <string name="set_locale_detail">Ostavi prazno za resetovanje</string>
-    <string name="set_locale_popup">Zatvori i restartuj AiPlayer kako bi djelovale promjene.</string>
+    <string name="set_locale_popup">Zatvori i restartuj HD XPlayer kako bi djelovale promjene.</string>
     <string name="network_caching">Veličina predmemoriranja mreže</string>
     <string name="network_caching_summary">Količina vremena za amortizovanje mrežnog medija (u ms). Ne radi sa hardverskim dekodiranjem. Ostavite prazno za resetovanje.</string>
     <string name="quit">Zatvori i ponovo pokreni aplikaciju</string>
@@ -264,16 +264,16 @@
     <string name="start_logging">Pokreni zapisivanje</string>
     <string name="stop_logging">Zaustavi zapisivanje</string>
     <string name="clear_log">Očisti zapisnik</string>
-    <string name="log_service_title">AiPlayer snimanje zapisnika</string>
+    <string name="log_service_title">HD XPlayer snimanje zapisnika</string>
     <string name="log_service_text">Otvori konzolu zapisnika</string>
     <string name="copy_to_clipboard">Kopiraj u međuspremnik</string>
     <string name="copied_to_clipboard">Zapisnik kopiran u međuspremnik.</string>
     <string name="dump_logcat">Izbaci logcat zapis</string>
     <string name="dump_logcat_success">Logcat uspješno izbačen u %1$s!</string>
     <string name="dump_logcat_failure">Nije uspjelo izbacivanje logcat-a.</string>
-    <string name="serious_crash">Nažalost, dogodila se ozbiljna greška i AiPlayer se morao zatvoriti.</string>
-    <string name="help_us_send_log">Pomozi nam poboljšati AiPlayer slanjem sljedećeg izvještaja padanja programa:</string>
-    <string name="restart_vlc">Ponovo Pokreni AiPlayer</string>
+    <string name="serious_crash">Nažalost, dogodila se ozbiljna greška i HD XPlayer se morao zatvoriti.</string>
+    <string name="help_us_send_log">Pomozi nam poboljšati HD XPlayer slanjem sljedećeg izvještaja padanja programa:</string>
+    <string name="restart_vlc">Ponovo Pokreni HD XPlayer</string>
     <string name="send_log">Pošalji izvještaj</string>
     <string name="sending_log">Šaljem izvještaj...</string>
     <string name="drawer_open">Otvori navigacijsku ladicu</string>
@@ -307,12 +307,13 @@
     <string name="no_subs_found">Nema titlova u ovom direktoriju</string>
     <string name="music_now_playing">Trenutno Producira</string>
     <!--Widget-->
-    <string name="widget_name_w">AiPlayer Bijeli Widget</string>
-    <string name="widget_name_b">AiPlayer Tamni Widget</string>
-    <string name="allow_storage_access_title">Dozvoli da AiPlayer pristupi video i audio datotekama</string>
-    <string name="allow_storage_access_description">AiPlayer zahtjeva da odobrite pristup medijskim datotekama na ovom uređaju.</string>
+    <string name="widget_name_w">HD XPlayer Bijeli Widget</string>
+    <string name="widget_name_b">HD XPlayer Tamni Widget</string>
+    <string name="allow_storage_access_title">Dozvoli da HD XPlayer pristupi video i audio datotekama</string>
+    <string name="allow_storage_access_description">HD XPlayer zahtjeva da odobrite pristup medijskim datotekama na ovom uređaju.</string>
     <string name="permission_ask_again">Odobri pristup</string>
-    <string name="exit_app">Zatvori AiPlayer</string>
+    <string name="exit_app">Zatvori HD XPlayer</string>
+    <string name="rename">Preimenovati</string>
     <!--fast scroller-->
     <!--Plugins-->
 </resources>

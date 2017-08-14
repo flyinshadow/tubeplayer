@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main HD XPlayer Interface -->
     <string name="ok">சரி</string>
     <string name="cancel">இரத்து</string>
     <string name="other">பிற</string>
@@ -153,8 +153,8 @@
     <string name="open_mrl">MRLஐ திற</string>
     <string name="open_mrl_dialog_title">பிணைய ஓடத்தைத் திற</string>
     <string name="open_mrl_dialog_msg">பிணைய MRLஐ உள்ளிடு: எ.கா. http://, mms:// or rtsp://</string>
-    <string name="error_not_compatible">மன்னிக்கவும், ஆண்ட்ராய்டு™ AiPlayer பதிப்பு உங்கள் சாதனத்தை ஆதரிக்கவில்லை.</string>
-    <string name="error_problem">மன்னிக்கவும், ஆண்ட்ராய்டிற்கான AiPlayer ஐ ஏற்றுவதில் பிரச்சனை எனவே மூடவும.</string>
+    <string name="error_not_compatible">மன்னிக்கவும், ஆண்ட்ராய்டு™ HD XPlayer பதிப்பு உங்கள் சாதனத்தை ஆதரிக்கவில்லை.</string>
+    <string name="error_problem">மன்னிக்கவும், ஆண்ட்ராய்டிற்கான HD XPlayer ஐ ஏற்றுவதில் பிரச்சனை எனவே மூடவும.</string>
     <string name="error_message_is">பிரிச்சனைக்கான விவரம் (வழுநீக்கத்தின் போது இதைக் குறிப்பிடவும்):\n</string>
     <string name="encountered_error_title">இயக்க பிழை</string>
     <string name="encountered_error_message">இவ்வூடகத்தில் விஎல்சி பிழைக் கண்டுள்ளது.\nஊடகத் தொகுப்பைப் புதுப்பித்து முயற்சிக்கவும்.</string>
@@ -182,13 +182,13 @@
     <string name="show_playlist">பட்டியலைக் காண்பி</string>
     <string name="hold_to_stop">நிறுத்த அழுத்திப் பிடி</string>
     <!-- About -->
-    <string name="app_name_full">ஆண்ட்ராய்டு(Android™) AiPlayer</string>
+    <string name="app_name_full">ஆண்ட்ராய்டு(Android™) HD XPlayer</string>
     <string name="licence">உரிமம்</string>
     <string name="revision">மறுபதிப்பு</string>
     <string name="about">பற்றி</string>
-    <string name="about_text">ஆண்ட்ராய்டு(Android™) AiPlayer என்பது ஒரு சிறந்த கட்டற்ற AiPlayer ஊடக இயக்கி மென்பொருளின் இடுவை(Porting) ஆகும். ஆண்ட்ராய்டு(Android™) பதிப்பானது அனைத்து கோப்புகளையும் பிணைய ஓடங்களையும்(Network Streams) படிக்கக் கூடியது.</string>
+    <string name="about_text">ஆண்ட்ராய்டு(Android™) HD XPlayer என்பது ஒரு சிறந்த கட்டற்ற HD XPlayer ஊடக இயக்கி மென்பொருளின் இடுவை(Porting) ஆகும். ஆண்ட்ராய்டு(Android™) பதிப்பானது அனைத்து கோப்புகளையும் பிணைய ஓடங்களையும்(Network Streams) படிக்கக் கூடியது.</string>
     <string name="compiled_by">VLCயின் இப்பதிப்பை உருவாக்கியவர்கள்:</string>
-    <string name="vlc_authors">AiPlayer ஆசிரியர்கள்.</string>
+    <string name="vlc_authors">HD XPlayer ஆசிரியர்கள்.</string>
     <!-- Preferences -->
     <string name="preferences">முன்னுரிமைகள்</string>
     <string name="general_prefs_category">பொது</string>
@@ -258,7 +258,7 @@
     <string name="enable_steal_remote_control">பிரத்தியேக தலைப்பொறி தொலைநிலை கட்டுப்பாடு</string>
     <string name="enable_steal_remote_control_summary">தொலைநிலை கட்டுப்பாட்டை பிற பயன்பாடுகள் திருடுவதை தடுப்பதன் மூலம் மோதல்களை தவிர்க்கலாம். இது HTC பேசிகளில் இரட்டை சொடுக்கல் மூலம் எண்கள் அழைத்தலை தடுக்க முடியும்.</string>
     <string name="aout">ஒலி வெளியீடு</string>
-    <string name="aout_summary">ஒலியை வெளியிட AiPlayer பயன்படுத்தும் முறையை மாற்று.</string>
+    <string name="aout_summary">ஒலியை வெளியிட HD XPlayer பயன்படுத்தும் முறையை மாற்று.</string>
     <string name="controls_prefs_category">அமைப்புகள்</string>
     <string name="performance_prefs_category">செயல்திறன்</string>
     <string name="chroma_format">காணொளி கிரோமாவிற்கு கட்டாயப்படுத்து</string>
@@ -282,7 +282,7 @@
     <string name="media_db_cleared">ஊடக தரவுத்தளம் துடைக்கப்பட்டது!</string>
     <string name="set_locale">மொழியை அமை</string>
     <string name="set_locale_detail">மீட்டமைக்க வெற்றாக விடு</string>
-    <string name="set_locale_popup">மாற்றங்களைப் பார்க்க AiPlayer இலிருந்து வெளியேறி மீள்துவக்கவும்.</string>
+    <string name="set_locale_popup">மாற்றங்களைப் பார்க்க HD XPlayer இலிருந்து வெளியேறி மீள்துவக்கவும்.</string>
     <string name="network_caching">பிணைய பற்றுதல்(Caching) மதிப்பு</string>
     <string name="network_caching_summary">பிணைய ஊடகத்தை பப்பர்(buffer) செய்ய ஆகும் நேரம்(மில்லிவிநாடியில்).வன்பொருள் குறிவிலக்கத்தில் வேலைச் செய்யாது. மீட்டமைக்க வெற்றாக விடு.</string>
     <string name="quit">பயன்பாட்டை மூடியப்பின் திறக்கவும்</string>
@@ -300,9 +300,9 @@
     <string name="dump_logcat">logcat பதிவை எடு</string>
     <string name="dump_logcat_success">%1$s விற்கு logcat பதிவு வெற்றிகரமாக எடுக்கப்பட்டது! </string>
     <string name="dump_logcat_failure">logcat எடுக்க முடிவில்லை.</string>
-    <string name="serious_crash">எதிர்பாரவிதமாக, ஒரு முக்கிய பிழை நேர்ந்ததால் AiPlayer மூடவும்.</string>
-    <string name="help_us_send_log">AiPlayer மேம்படுத்த பின்வரும் சிதைவு அறிக்கைப் பதிவை எங்களுக்கு அனுப்பவும்:</string>
-    <string name="restart_vlc">AiPlayer மீள்துவக்கு</string>
+    <string name="serious_crash">எதிர்பாரவிதமாக, ஒரு முக்கிய பிழை நேர்ந்ததால் HD XPlayer மூடவும்.</string>
+    <string name="help_us_send_log">HD XPlayer மேம்படுத்த பின்வரும் சிதைவு அறிக்கைப் பதிவை எங்களுக்கு அனுப்பவும்:</string>
+    <string name="restart_vlc">HD XPlayer மீள்துவக்கு</string>
     <string name="send_log">பதிவை அனுப்பு</string>
     <string name="sending_log">பதிவை அனுப்புகிறது…</string>
     <string name="drawer_open">வழிச்செலுத்தல் இழுப்பறையைத் திற</string>
@@ -337,7 +337,7 @@
     <string name="no_subs_found">இந்த அடைவில் வசன வரிகள் இல்லை </string>
     <string name="music_now_playing">தற்சமயம் இயக்கப்படுவது</string>
     <!--Widget-->
-    <string name="exit_app">AiPlayer-ஐ நிறுத்து</string>
+    <string name="exit_app">HD XPlayer-ஐ நிறுத்து</string>
     <!--fast scroller-->
     <!--Plugins-->
     <string name="download_on_device">பதிவிறக்கு</string>
@@ -347,4 +347,5 @@
     <string name="downloading_subtitles">வசன வரிகள் தறவிறக்கப்படுகிறது</string>
     <string name="subtitles_download_title">வசன வரிகள் பதிவிறக்கம்</string>
     <string name="connecting">இணக்கப்படுகிறது...</string>
+    <string name="rename">மறுபெயரிடு</string>
 </resources>

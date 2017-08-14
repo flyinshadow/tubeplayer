@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main HD XPlayer Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Bekor qilish</string>
     <string name="other">Boshqa</string>
@@ -35,7 +35,7 @@
     <string name="ringtone_error">Ringtonni o‘rnatishda xatolik yuz berdi.</string>
     <string name="pause">Pauza</string>
     <string name="not_show_again">Ushbu xabar boshqa ko‘rsatilmasin.</string>
-    <string name="info_title">AiPlayer</string>
+    <string name="info_title">HD XPlayer</string>
     <string name="unknown_artist">Noma’lum ijrochi</string>
     <string name="unknown_album">Noma’lum albom</string>
     <string name="unknown_genre">Noma’lum janr</string>
@@ -121,11 +121,11 @@
     <string name="open_mrl">MRL’ni ochish</string>
     <string name="open_mrl_dialog_title">Tarmoq oqimni ijro etish</string>
     <string name="open_mrl_dialog_msg">MRL tarmoq manzili: m-n, http://, mms:// yoki rtsp://</string>
-    <string name="error_not_compatible">Kechirasiz, Android™ uchun AiPlayer dasturining ushbu versiyasi qurilmangizda ishlamaydi.</string>
-    <string name="error_problem">Kechirasiz, Android uchun AiPlayer dasturini yuklashda muammo yuz berdi, shuning uchun uni yopishga to‘g‘ri keldi.</string>
+    <string name="error_not_compatible">Kechirasiz, Android™ uchun HD XPlayer dasturining ushbu versiyasi qurilmangizda ishlamaydi.</string>
+    <string name="error_problem">Kechirasiz, Android uchun HD XPlayer dasturini yuklashda muammo yuz berdi, shuning uchun uni yopishga to‘g‘ri keldi.</string>
     <string name="error_message_is">Xatolik haqida xabar (nosozlikni tuzatish uchun kerak bo‘ladi):\n</string>
     <string name="encountered_error_title">Ijro etishda xato</string>
-    <string name="encountered_error_message">AiPlayer`da ushbu media bilan muammo boʻldi.\nMedia kutubxonasini yangilashga harakat qiling.</string>
+    <string name="encountered_error_message">HD XPlayer`da ushbu media bilan muammo boʻldi.\nMedia kutubxonasini yangilashga harakat qiling.</string>
     <string name="invalid_location">%1$s manzilidagi media faylni ijro etib bo‘lmaydi.</string>
     <string name="search">Izlash</string>
     <string name="search_history">Tarixdan izlash</string>
@@ -147,13 +147,13 @@
     <string name="show_playlist">Ijro ro‘yxatini ko‘rsatish</string>
     <string name="hold_to_stop">To‘xtatish uchun bosib turing</string>
     <!-- About -->
-    <string name="app_name_full">Android™ uchun AiPlayer</string>
+    <string name="app_name_full">Android™ uchun HD XPlayer</string>
     <string name="licence">Litsenziya</string>
     <string name="revision">Qayta ko‘rish</string>
     <string name="about">Dastur haqida</string>
-    <string name="about_text">Android™ uchun AiPlayer – AiPlayer media pleyerning (ochiq kodli mashhur pleyer) port qilingan versiyasi hisoblanadi. Uning Android™ versyasi ko‘plab fayl turlari va tarmoqli oqim rejimida uzatiladigan videolarni o‘qiy oladi.</string>
-    <string name="compiled_by">AiPlayer dasturining ushbu versiyasi ushbu inson tomonidan kompilatsiya qilingan:</string>
-    <string name="vlc_authors">AiPlayer dasturi mualliflari.</string>
+    <string name="about_text">Android™ uchun HD XPlayer – HD XPlayer media pleyerning (ochiq kodli mashhur pleyer) port qilingan versiyasi hisoblanadi. Uning Android™ versyasi ko‘plab fayl turlari va tarmoqli oqim rejimida uzatiladigan videolarni o‘qiy oladi.</string>
+    <string name="compiled_by">HD XPlayer dasturining ushbu versiyasi ushbu inson tomonidan kompilatsiya qilingan:</string>
+    <string name="vlc_authors">HD XPlayer dasturi mualliflari.</string>
     <!-- Preferences -->
     <string name="preferences">Sozlamalar</string>
     <string name="general_prefs_category">Umumiy</string>
@@ -210,13 +210,13 @@
     <string name="enable_time_stretching_audio_summary">Audioni bosqichlarni o‘zgartirmasdan tezlattirish va sekinlatish (tez ishlaydigan qurilma bo‘lishi kerak).</string>
     <string name="advanced_prefs_category">Qo‘shimcha</string>
     <string name="aout">Audio chiqarish</string>
-    <string name="aout_summary">AiPlayer foydalanadigan chiquvchi audio uslubini oʻzgartirish.</string>
+    <string name="aout_summary">HD XPlayer foydalanadigan chiquvchi audio uslubini oʻzgartirish.</string>
     <string name="clear_media_db">Media ma’lumotlar bazasini tozalash</string>
     <string name="clear_history">Qidiruv tarixini tozalash</string>
     <string name="media_db_cleared">Media ma’lumotlar bazasi tozalandi!</string>
     <string name="set_locale">Tilni moslash</string>
     <string name="set_locale_detail">Bo‘sh qator birlamchi qiymatni nazarda tutadi</string>
-    <string name="set_locale_popup">O‘zgarishlar kuchga kirishi uchun AiPlayer dasturidan chiqib, uni qaytadan ishga tushiring.</string>
+    <string name="set_locale_popup">O‘zgarishlar kuchga kirishi uchun HD XPlayer dasturidan chiqib, uni qaytadan ishga tushiring.</string>
     <string name="network_caching">Tarmoq keshi qiymati</string>
     <string name="network_caching_summary">Tarmoqdagi mediani buferga yuklash vaqti (ms da). Qurilmada koddan chiqarishda ishlamaydi. Tiklash uchun bo‘sh qoldiring.</string>
     <string name="developer_prefs_category">Dasturchi</string>
@@ -232,9 +232,9 @@
     <string name="dump_logcat">logcat jurnaliga yuklash</string>
     <string name="dump_logcat_success">Logcat muvaffaqiyatli tarzda %1$sga yuklandi.</string>
     <string name="dump_logcat_failure">Logcat yuklash amalga oshmadi.</string>
-    <string name="serious_crash">Kechirasiz, jiddiy xatolik yuz bergani sababli AiPlayer majburan yopiladi.</string>
-    <string name="help_us_send_log">Quyidagi ishdan chiqish holatlari jurnalini yuborish orqali AiPlayer dasturini takomillashtirishga yordam bering:</string>
-    <string name="restart_vlc">AiPlayer’ni qayta ishga tushirish</string>
+    <string name="serious_crash">Kechirasiz, jiddiy xatolik yuz bergani sababli HD XPlayer majburan yopiladi.</string>
+    <string name="help_us_send_log">Quyidagi ishdan chiqish holatlari jurnalini yuborish orqali HD XPlayer dasturini takomillashtirishga yordam bering:</string>
+    <string name="restart_vlc">HD XPlayer’ni qayta ishga tushirish</string>
     <string name="send_log">Jurnalni yuborish</string>
     <string name="sending_log">Jurnal yuborilmoqda</string>
     <string name="drawer_open">Navigatsiya tortmasini ochish</string>
@@ -243,6 +243,7 @@
     <string name="file_size">Fayli hajmi:</string>
     <string name="network_empty">Ushbu jild boʻsh.</string>
     <string name="search_hint">Media izlash</string>
+    <string name="rename">Nomni o\'zgartirish</string>
     <!--Accessibility-->
     <!--Widget-->
     <!--PLugins-->

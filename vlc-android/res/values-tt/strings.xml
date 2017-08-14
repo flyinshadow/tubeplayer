@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main AiPlayer Interface -->
+    <!-- Main HD XPlayer Interface -->
     <string name="ok">Ярар</string>
     <string name="cancel">Баш тарту</string>
     <string name="other">Башка</string>
@@ -38,7 +38,7 @@
     <string name="ringtone_error">Шалтырату көен үзгәрткәндә хата килеп чыкты.</string>
     <string name="pause">Пауза</string>
     <string name="not_show_again">Башка бу хәбәрне чыгармаска.</string>
-    <string name="info_title">AiPlayer</string>
+    <string name="info_title">HD XPlayer</string>
     <string name="unknown_artist">Билгесез башкаручы</string>
     <string name="unknown_album">Билгесез альбом</string>
     <string name="unknown_genre">Билгесез жанр</string>
@@ -154,8 +154,8 @@
     <string name="open_mrl">MRL ачарга…</string>
     <string name="open_mrl_dialog_title">Челтәр агымын ачарга</string>
     <string name="open_mrl_dialog_msg">Челтәр MRL адресы: http://, mms:// яки rtsp://</string>
-    <string name="error_not_compatible">Кызганыч, Android™ өчен бу AiPlayer версиясе сезнең җайланмагызда эшләми.</string>
-    <string name="error_problem">Кызганычка каршы, Android өчен AiPlayer йөкләнелә алмады һәм аны ябарга туры килде.</string>
+    <string name="error_not_compatible">Кызганыч, Android™ өчен бу HD XPlayer версиясе сезнең җайланмагызда эшләми.</string>
+    <string name="error_problem">Кызганычка каршы, Android өчен HD XPlayer йөкләнелә алмады һәм аны ябарга туры килде.</string>
     <string name="error_message_is">Хата турында хәбәр (ул безгә хатаны төзәтергә кирәгәчәк):\n\n</string>
     <string name="encountered_error_title">Уйнатуда хата</string>
     <string name="encountered_error_message">Бу медиа белән хата чыкты.\nМедиаханәне яңартып карагыз.</string>
@@ -185,13 +185,13 @@
     <string name="show_playlist">Уйнату битен күрсәтергә</string>
     <string name="hold_to_stop">Туктату өчен тотып торыгыз</string>
     <!-- About -->
-    <string name="app_name_full">Android өчен AiPlayer</string>
+    <string name="app_name_full">Android өчен HD XPlayer</string>
     <string name="licence">Лицензия</string>
     <string name="revision">Ревизия</string>
     <string name="about">Программа турында</string>
-    <string name="about_text">Android™ өчен AiPlayer — ачык чыганак кодлы популяр AiPlayer медиа уйнаткычы версиясе. Android™ өчен версия күпчелек файллар һәм челтәр агымнарын уйната ала.</string>
-    <string name="compiled_by">Бу AiPlayer версиясен җыйды:</string>
-    <string name="vlc_authors">AiPlayer ясаучылары.</string>
+    <string name="about_text">Android™ өчен HD XPlayer — ачык чыганак кодлы популяр HD XPlayer медиа уйнаткычы версиясе. Android™ өчен версия күпчелек файллар һәм челтәр агымнарын уйната ала.</string>
+    <string name="compiled_by">Бу HD XPlayer версиясен җыйды:</string>
+    <string name="vlc_authors">HD XPlayer ясаучылары.</string>
     <!-- Preferences -->
     <string name="preferences">Көйләүләр</string>
     <string name="general_prefs_category">Гомуми</string>
@@ -282,7 +282,7 @@
     <string name="enable_steal_remote_control">Гарнитура ярдәмендә читтән идарә</string>
     <string name="enable_steal_remote_control_summary">Башка кушымталарның читтән идарәсен чикләп, конфликтларны кисәтә. Бу HTC җайланмаларында ике чиртү белән номер җыюны кисәтә.</string>
     <string name="aout">Тавыш чыгару</string>
-    <string name="aout_summary">AiPlayer тавыш чыгару рәвешен сайлагыз</string>
+    <string name="aout_summary">HD XPlayer тавыш чыгару рәвешен сайлагыз</string>
     <string name="controls_prefs_category">Идарә итү</string>
     <string name="performance_prefs_category">Җитештерүчәнлек</string>
     <string name="chroma_format">Мәҗбүри видео форматы</string>
@@ -304,12 +304,12 @@
     <string name="auto_rescan">Автоматик сканерлау</string>
     <string name="auto_rescan_summary">Җайланманы яңа яки бетерелгән медиафайлларга автоматик рәвештә тикшерергә</string>
     <string name="clear_media_db">Мета-мәгълүмат базасын чистартырга</string>
-    <string name="clear_media_db_summary">Android AiPlayer базасыннан мәгълүматларны бетерергә</string>
+    <string name="clear_media_db_summary">Android HD XPlayer базасыннан мәгълүматларны бетерергә</string>
     <string name="clear_history">Эзләү тарихын чистартырга</string>
     <string name="media_db_cleared">Мета-мәгълүмат базасы чистартылды.</string>
     <string name="set_locale">Тел мохите</string>
     <string name="set_locale_detail">Буш юл — гадәти мәгънә</string>
-    <string name="set_locale_popup">Үзгәрешләр кабул ителсен өчен, AiPlayer уйаткычын яңабаштан җибәрегез.</string>
+    <string name="set_locale_popup">Үзгәрешләр кабул ителсен өчен, HD XPlayer уйаткычын яңабаштан җибәрегез.</string>
     <string name="network_caching">Челтәр мәгълүматы кэшы күләме</string>
     <string name="network_caching_summary">Челтәр агымнарын буферлау вакыты (мс). Аппаратлы декодлауда кулланылмый. Ташлату өчен мәгънәне чистартыгыз.</string>
     <string name="resume_playback_title">Шалтыратудан соң уйнатуны дәвам итәргә</string>
@@ -323,16 +323,16 @@
     <string name="start_logging">Журнал тота башларга</string>
     <string name="stop_logging">Журналны тотуны туктатырга</string>
     <string name="clear_log">Журналны чистартырга</string>
-    <string name="log_service_title">AiPlayer журналын алып бару</string>
+    <string name="log_service_title">HD XPlayer журналын алып бару</string>
     <string name="log_service_text">Журнал консолен ачарга</string>
     <string name="copy_to_clipboard">Алмашу буферына күчерергә</string>
     <string name="copied_to_clipboard">Журнал алмашу буферына күчерелде.</string>
     <string name="dump_logcat">Logcat журналын бушатырга</string>
     <string name="dump_logcat_success">Logcat журналы монда  %1$s уңышлы бушатылды!</string>
     <string name="dump_logcat_failure">Logcat журналын бушатып булмады.</string>
-    <string name="serious_crash">Кызганычка каршы, җитди хата килеп чыкты һәм  AiPlayer ябылды.</string>
-    <string name="help_us_send_log">AiPlayer уйнаткычын яхшырту өчен безгә хаталар журналын җибәрегез:</string>
-    <string name="restart_vlc">AiPlayer уйнаткычын яңабаштан җибәрергә</string>
+    <string name="serious_crash">Кызганычка каршы, җитди хата килеп чыкты һәм  HD XPlayer ябылды.</string>
+    <string name="help_us_send_log">HD XPlayer уйнаткычын яхшырту өчен безгә хаталар журналын җибәрегез:</string>
+    <string name="restart_vlc">HD XPlayer уйнаткычын яңабаштан җибәрергә</string>
     <string name="send_log">Журналны җибәрергә</string>
     <string name="sending_log">Журналны җибәрү...</string>
     <string name="drawer_open">Навигция тартмасын ачарга</string>
@@ -376,18 +376,18 @@
     <string name="no_subs_found">Бу папкада субтитрлар юк</string>
     <string name="music_now_playing">Хәзер уйный</string>
     <!--Widget-->
-    <string name="widget_name_w">AiPlayer якты күренештә</string>
-    <string name="widget_name_b">AiPlayer караңгы күренештә</string>
-    <string name="allow_storage_access_title">AiPlayer-га аудио һәм видеофайлларга керү мөмкинлеген бирергә</string>
-    <string name="allow_storage_access_description">Бу рөхсәт AiPlayer уйнаткычына җайланмагыздагы медиафайлларга мөрәҗәгать итә алу өчен кирәк.</string>
-    <string name="allow_settings_access_ringtone_title">AiPlayer-га шалтырату көен билгеләргә рөхсәт итәргә</string>
-    <string name="allow_settings_access_ringtone_description">Бу рөхсәт AiPlayer уйнаткычына хәзерге тавыш файлын шалтырату көе буларак урнаштыра алу өчен кирәк.</string>
-    <string name="allow_settings_access_brightness_title">AiPlayer-га яктылык режимын үзгәртергә рөхсәт итәргә</string>
-    <string name="allow_settings_access_brightness_description">Бу рөхсәт AiPlayer уйнаткычына яктылык режимын үзгәртә алу өчен кирәк.</string>
-    <string name="allow_draw_overlays_title">AiPlayer-га башка кушымталар өстеннән күрсәтелергә рөхсәт итәргә</string>
-    <string name="allow_sdraw_overlays_description">Бу рөхсәт AiPlayer уйнаткычына видеоны башка кушымталар өстеннән күрсәтә алу өчен кирәк.</string>
+    <string name="widget_name_w">HD XPlayer якты күренештә</string>
+    <string name="widget_name_b">HD XPlayer караңгы күренештә</string>
+    <string name="allow_storage_access_title">HD XPlayer-га аудио һәм видеофайлларга керү мөмкинлеген бирергә</string>
+    <string name="allow_storage_access_description">Бу рөхсәт HD XPlayer уйнаткычына җайланмагыздагы медиафайлларга мөрәҗәгать итә алу өчен кирәк.</string>
+    <string name="allow_settings_access_ringtone_title">HD XPlayer-га шалтырату көен билгеләргә рөхсәт итәргә</string>
+    <string name="allow_settings_access_ringtone_description">Бу рөхсәт HD XPlayer уйнаткычына хәзерге тавыш файлын шалтырату көе буларак урнаштыра алу өчен кирәк.</string>
+    <string name="allow_settings_access_brightness_title">HD XPlayer-га яктылык режимын үзгәртергә рөхсәт итәргә</string>
+    <string name="allow_settings_access_brightness_description">Бу рөхсәт HD XPlayer уйнаткычына яктылык режимын үзгәртә алу өчен кирәк.</string>
+    <string name="allow_draw_overlays_title">HD XPlayer-га башка кушымталар өстеннән күрсәтелергә рөхсәт итәргә</string>
+    <string name="allow_sdraw_overlays_description">Бу рөхсәт HD XPlayer уйнаткычына видеоны башка кушымталар өстеннән күрсәтә алу өчен кирәк.</string>
     <string name="permission_ask_again">Рөхсәт итәргә</string>
-    <string name="exit_app">AiPlayer-ны ябарга</string>
+    <string name="exit_app">HD XPlayer-ны ябарга</string>
     <!--fast scroller-->
     <string name="fastscroller_track">Язманы тиз әйләндерү</string>
     <string name="fastscroller_handle">Тиз әйләндерү</string>
@@ -437,7 +437,8 @@
     <string name="length">Озынлык</string>
     <string name="tv_settings_hint">Папкаларны билгеләү/билгесен алу өчен, озак итеп «Ярар» төймәсенә басыгыз</string>
     <string name="ml_external_storage_title">Яңа тышкы хәтер табылды</string>
-    <string name="ml_external_storage_msg">AiPlayer  %1$s җайланмасын медиаханәгезгә өстәсенме?</string>
+    <string name="ml_external_storage_msg">HD XPlayer  %1$s җайланмасын медиаханәгезгә өстәсенме?</string>
     <string name="last_added_media">соңгы өстәү</string>
     <string name="no">Юк</string>
+    <string name="rename">исеме бирелә</string>
 </resources>

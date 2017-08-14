@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-    <!--Main AiPlayer Interface-->
+    <!--Main HD XPlayer Interface-->
     <string name="filebrowser_title">ప్రదర్శించుటకు మాధ్యమాన్ని ఎంచుకోండి</string>
     <string name="sortby">క్రమబద్ధీకరణ...</string>
     <string name="sortby_name">పేరు</string>
@@ -100,4 +100,5 @@
     <string name="enable_verbose_mode">వెర్బోస్</string>
     <string name="enable_verbose_mode_summary">వెర్బోసిటీని పెంచు (logcat)</string>
     <string name="aout">ఆడియో అవుట్‌పుట్</string>
+    <string name="rename">పేరుమార్చు</string>
 </resources>
