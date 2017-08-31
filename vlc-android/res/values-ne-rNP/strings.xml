@@ -136,7 +136,7 @@
     <string name="hardware_acceleration_disabled">अक्षम गरिएको छ </string>
     <string name="automatic">स्वचालित</string>
     <string name="screen_orientation_landscape">परिदृश्य</string>
-    <string name="enable_black_theme">कालो थीम सक्षम गर्नुहोस्</string>
+    <string name="enable_night_theme">कालो थीम सक्षम गर्नुहोस्</string>
     <string name="extra_prefs_category">अतिरिक्त सेटिङहरू</string>
     <string name="interface_prefs_screen">इन्टरफेस</string>
     <string name="interface_other_category">इन्टरफेस-अन्य</string>

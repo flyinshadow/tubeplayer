@@ -95,6 +95,8 @@ import com.wenjoyai.tubeplayer.util.VLCInstance;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity.RESULT_RESTART;
+
 public class MainActivity extends AudioPlayerContainerActivity implements FilterQueryProvider, NavigationView.OnNavigationItemSelectedListener, ExtensionManagerService.ExtensionManagerActivity, SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener {
     public final static String TAG = "VLC/MainActivity";
 
@@ -126,6 +128,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private ServiceConnection mExtensionServiceConnection;
     private ExtensionManagerService mExtensionManagerService;
     private static final int PLUGIN_NAVIGATION_GROUP = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -519,6 +522,16 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         mSearchView.setQueryHint(getString(R.string.search_list_hint));
         mSearchView.setOnQueryTextListener(this);
         MenuItemCompat.setOnActionExpandListener(searchItem, this);
+
+        MenuItem viewModeItem = menu.findItem(R.id.ml_menu_view_mode);
+        int currentViewMode = mSettings.getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE, VideoListAdapter.VIEW_MODE_DEFAULT);
+        if (currentViewMode == VideoListAdapter.VIEW_MODE_LIST) {
+            viewModeItem.setIcon(R.drawable.ic_view_list);
+        } else if (currentViewMode == VideoListAdapter.VIEW_MODE_GRID) {
+            viewModeItem.setIcon(R.drawable.ic_view_grid);
+        } else {
+            viewModeItem.setIcon(R.drawable.ic_view_bigpic);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -577,6 +590,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         boolean showLast = current instanceof AudioBrowserFragment || current instanceof VideoGridFragment;
         menu.findItem(R.id.ml_menu_last_playlist).setVisible(showLast);
         menu.findItem(R.id.ml_menu_filter).setVisible(current instanceof Filterable && ((Filterable)current).enableSearchOption());
+        menu.findItem(R.id.ml_menu_view_mode).setVisible(current instanceof VideoGridFragment);
         return true;
     }
 
@@ -642,6 +656,13 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                     break;
                 ((NetworkBrowserFragment)current).toggleFavorite();
                 item.setIcon(R.drawable.ic_menu_bookmark_w);
+                break;
+            case R.id.ml_menu_view_mode:
+                if (current == null)
+                    break;
+                ((VideoGridFragment)current).toggleViewMode(item);
+                mSettings.edit().putInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
+                        ((VideoGridFragment)current).getCurrentViewMode()).apply();
                 break;
         }
         mDrawerLayout.closeDrawer(mNavigationView);
@@ -816,14 +837,23 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
             String tag = getTag(id);
             switch (id){
-//                case R.id.nav_about:
-//                    showSecondaryFragment(SecondaryActivity.ABOUT);
-//                    break;
+                case R.id.nav_about:
+                    showSecondaryFragment(SecondaryActivity.ABOUT);
+                    break;
+                case R.id.nav_theme:
+                    new ThemeFragment().show(getSupportFragmentManager(), "theme");
+                    break;
+                case R.id.nav_night_mode:
+                    toggleNightMode();
+                    break;
                 case R.id.nav_settings:
                     startActivityForResult(new Intent(this, PreferencesActivity.class), ACTIVITY_RESULT_PREFERENCES);
                     break;
                 case R.id.nav_mrl:
                     new MRLPanelFragment().show(getSupportFragmentManager(), "fragment_mrl");
+                    break;
+                case R.id.nav_share_app:
+                    shareApp();
                     break;
                 case R.id.nav_directories:
                     if (TextUtils.equals(BuildConfig.FLAVOR_target, "chrome")) {
@@ -865,8 +895,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
     private String getTag(int id){
         switch (id){
-//            case R.id.nav_about:
-//                return ID_ABOUT;
+            case R.id.nav_about:
+                return ID_ABOUT;
             case R.id.nav_settings:
                 return ID_PREFERENCES;
             case R.id.nav_audio:
@@ -879,6 +909,12 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 return ID_MRL;
             case R.id.nav_network:
                 return ID_NETWORK;
+            case R.id.nav_theme:
+                return ID_THEME;
+            case R.id.nav_night_mode:
+                return ID_NIGHT_MODE;
+            case R.id.nav_share_app:
+                return ID_SHARE;
             default:
                 return ID_VIDEO;
         }
@@ -888,4 +924,25 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         if (v.getId() == R.id.searchButton)
             openSearchActivity();
     }
+
+    private void toggleNightMode() {
+        boolean enabled = mSettings.getBoolean(PreferencesActivity.KEY_ENABLE_NIGHT_THEME, false);
+        mSettings.edit().putBoolean(PreferencesActivity.KEY_ENABLE_NIGHT_THEME, !enabled).apply();
+        setResult(RESULT_RESTART);
+        finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void shareApp() {
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TEXT,
+                VLCApplication.getAppResources().getString(R.string.share_app_text));
+        shareIntent.setType("text/plain");
+
+        // 设置分享列表的标题，并且每次都显示分享列表
+        startActivity(Intent.createChooser(shareIntent, "Share To"));
+    }
+
 }

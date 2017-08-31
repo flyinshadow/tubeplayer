@@ -218,8 +218,8 @@
     <string name="screen_orientation_landscape">ランドスケープ</string>
     <string name="screen_orientation_reverse_portrait">反転ポートレート</string>
     <string name="screen_orientation_reverse_landscape">反転ランドスケープ</string>
-    <string name="enable_black_theme">ブラックテーマの有効化</string>
-    <string name="enable_black_theme_summary">低照度の環境での快適性を向上するためにインターフェースの色を変更します。</string>
+    <string name="enable_night_theme">ブラックテーマの有効化</string>
+    <string name="enable_night_theme_summary">低照度の環境での快適性を向上するためにインターフェースの色を変更します。</string>
     <string name="subtitle_text_encoding">字幕テキストのエンコード</string>
     <string name="daynight_title">昼夜モード</string>
     <string name="daynight_summary">時間によって自動的に夜間モードに切り替える</string>
@@ -450,4 +450,7 @@
     <string name="no">No</string>
     <string name="loading_medialibrary">メディアライブラリーを読み込んでいます...</string>
     <string name="rename">名前を変更する</string>
+    <string name="theme">テーマ</string>
+    <string name="night_mode">夜モード</string>
+    <string name="share_app">分かち合う</string>
 </resources>

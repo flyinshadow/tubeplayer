@@ -226,8 +226,8 @@
     <string name="screen_orientation_landscape">Gulsčias</string>
     <string name="screen_orientation_reverse_portrait">Stačias, apverstas</string>
     <string name="screen_orientation_reverse_landscape">Gulsčias, apverstas</string>
-    <string name="enable_black_theme">Naudoti tamsų apipavidalinimą</string>
-    <string name="enable_black_theme_summary">Pakeisti sąsajos spalvas taip, kad jos geriau derėtų mažo apšvietimo aplinkoje.</string>
+    <string name="enable_night_theme">Naudoti tamsų apipavidalinimą</string>
+    <string name="enable_night_theme_summary">Pakeisti sąsajos spalvas taip, kad jos geriau derėtų mažo apšvietimo aplinkoje.</string>
     <string name="subtitle_text_encoding">Subtitrų koduotė</string>
     <string name="daynight_summary">Automatiškai įjungti nakties režimą atitinkamu laiku</string>
     <string name="extra_prefs_category">Papildomos nuostatos</string>
@@ -403,4 +403,7 @@
     <string name="clear_playback_history">Valyti grojimo istoriją</string>
     <string name="various_artists">Įvairūs atlikėjai</string>
     <string name="rename">Pervadinti</string>
+    <string name="theme">Tema</string>
+    <string name="night_mode">Naktinis režimas</string>
+    <string name="share_app">Dalis</string>
 </resources>

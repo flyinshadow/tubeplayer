@@ -61,7 +61,6 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.NotificationCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
@@ -77,6 +76,7 @@ import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
 import org.videolan.medialibrary.media.SearchAggregate;
 import com.wenjoyai.tubeplayer.gui.AudioPlayerContainerActivity;
+import com.wenjoyai.tubeplayer.gui.ThemeFragment;
 import com.wenjoyai.tubeplayer.gui.helpers.AudioUtil;
 import com.wenjoyai.tubeplayer.gui.helpers.BitmapUtil;
 import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
@@ -89,6 +89,7 @@ import com.wenjoyai.tubeplayer.media.MediaUtils;
 import com.wenjoyai.tubeplayer.media.MediaWrapperList;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.FileUtils;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.Permissions;
 import com.wenjoyai.tubeplayer.util.Strings;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
@@ -231,7 +232,6 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
     @Override
     public void onCreate() {
         super.onCreate();
-
         hideNotification();
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
         mMediaPlayer = newMediaPlayer();
@@ -368,13 +368,13 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
                  */
                 switch (focusChange) {
                     case AudioManager.AUDIOFOCUS_LOSS:
-                        Log.i(TAG, "AUDIOFOCUS_LOSS");
+                        LogUtil.i(TAG, "AUDIOFOCUS_LOSS");
                         // Pause playback
                         changeAudioFocus(false);
                         pause();
                         break;
                     case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                        Log.i(TAG, "AUDIOFOCUS_LOSS_TRANSIENT");
+                        LogUtil.i(TAG, "AUDIOFOCUS_LOSS_TRANSIENT");
                         // Pause playback
                         mLossTransient = true;
                         wasPlaying = isPlaying();
@@ -382,7 +382,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
                             pause();
                         break;
                     case AudioManager.AUDIOFOCUS_GAIN:
-                        Log.i(TAG, "AUDIOFOCUS_GAIN: ");
+                        LogUtil.i(TAG, "AUDIOFOCUS_GAIN: ");
                         // Resume playback
                         if (mLossTransient) {
                             if (wasPlaying && mSettings.getBoolean("resume_playback", true))
@@ -425,7 +425,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
             String action = intent.getAction();
             int state = intent.getIntExtra("state", 0);
             if( mMediaPlayer == null ) {
-                Log.w(TAG, "Intent received, but VLC is not loaded, skipping.");
+                LogUtil.w(TAG, "Intent received, but VLC is not loaded, skipping.");
                 return;
             }
 
@@ -483,12 +483,12 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
              */
             else if (mDetectHeadset) {
                 if (action.equalsIgnoreCase(AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
-                    Log.i(TAG, "Becoming noisy");
+                    LogUtil.i(TAG, "Becoming noisy");
                     wasPlaying = isPlaying();
                     if (wasPlaying && hasCurrentMedia())
                         pause();
                 } else if (action.equalsIgnoreCase(Intent.ACTION_HEADSET_PLUG) && state != 0) {
-                    Log.i(TAG, "Headset Inserted.");
+                    LogUtil.i(TAG, "Headset Inserted.");
                     if (wasPlaying && hasCurrentMedia() && mSettings.getBoolean("enable_play_on_headset_insertion", false))
                         play();
                 }
@@ -515,10 +515,10 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
                     /* Update Meta if file is already parsed */
                     if (mParsed && updateCurrentMeta(event.getMetaId()))
                         executeUpdate();
-                    Log.i(TAG, "Media.Event.MetaChanged: " + event.getMetaId());
+                    LogUtil.i(TAG, "Media.Event.MetaChanged: " + event.getMetaId());
                     break;
                 case Media.Event.ParsedChanged:
-                    Log.i(TAG, "Media.Event.ParsedChanged");
+                    LogUtil.i(TAG, "Media.Event.ParsedChanged");
                     updateCurrentMeta(-1);
                     mParsed = true;
                     break;
@@ -573,7 +573,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
                         seek(mSavedTime);
                     mSavedTime = 0L;
 
-                    Log.i(TAG, "MediaPlayer.Event.Playing");
+                    LogUtil.i(TAG, "MediaPlayer.Event.Playing");
                     executeUpdate();
                     publishState();
                     executeUpdateProgress();
@@ -592,7 +592,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
                         mMedialibrary.addToHistory(getCurrentMediaLocation(), getCurrentMediaWrapper().getTitle());
                     break;
                 case MediaPlayer.Event.Paused:
-                    Log.i(TAG, "MediaPlayer.Event.Paused");
+                    LogUtil.i(TAG, "MediaPlayer.Event.Paused");
                     executeUpdate();
                     publishState();
                     executeUpdateProgress();
@@ -602,7 +602,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
                         mWakeLock.release();
                     break;
                 case MediaPlayer.Event.Stopped:
-                    Log.i(TAG, "MediaPlayer.Event.Stopped");
+                    LogUtil.i(TAG, "MediaPlayer.Event.Stopped");
                     saveMediaMeta();
                     executeUpdate();
                     publishState();
@@ -653,7 +653,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
                     mSeekable = event.getSeekable();
                     break;
                 case MediaPlayer.Event.MediaChanged:
-                    Log.d(TAG, "onEvent: MediaChanged");
+                    LogUtil.d(TAG, "onEvent: MediaChanged");
             }
             synchronized (mCallbacks) {
                 for (Callback callback : mCallbacks)
@@ -705,7 +705,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
 
         @Override
         public void onItemAdded(int index, String mrl) {
-            Log.i(TAG, "CustomMediaListItemAdded");
+            LogUtil.i(TAG, "CustomMediaListItemAdded");
             if(mCurrentIndex >= index && !mExpanding.get())
                 mCurrentIndex++;
 
@@ -715,7 +715,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
 
         @Override
         public void onItemRemoved(int index, String mrl) {
-            Log.i(TAG, "CustomMediaListItemDeleted");
+            LogUtil.i(TAG, "CustomMediaListItemDeleted : index=" + index + ", mrl=" + mrl);
             if (mCurrentIndex == index && !mExpanding.get()) {
                 // The current item has been deleted
                 mCurrentIndex--;
@@ -736,7 +736,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
 
         @Override
         public void onItemMoved(int indexBefore, int indexAfter, String mrl) {
-            Log.i(TAG, "CustomMediaListItemMoved");
+            LogUtil.i(TAG, "CustomMediaListItemMoved");
             if (mCurrentIndex == indexBefore) {
                 mCurrentIndex = indexAfter;
                 if (indexAfter > indexBefore)
@@ -926,7 +926,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
             }
         } catch (IllegalArgumentException e){
             // On somme crappy firmwares, shit can happen
-            Log.e(TAG, "Failed to display notification", e);
+            LogUtil.e(TAG, "Failed to display notification", e);
         }
     }
 
@@ -1382,7 +1382,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
         if (size == 0 || mCurrentIndex < 0 || mCurrentIndex >= size) {
             if (mCurrentIndex < 0)
                 saveCurrentMedia();
-            Log.w(TAG, "Warning: invalid next index, aborted !");
+            LogUtil.w(TAG, "Warning: invalid next index, aborted !");
             //Close video player if started
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(VideoPlayerActivity.EXIT_PLAYER));
             stop();
@@ -1403,7 +1403,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
             if (mPrevious.size() > 0)
                 mPrevious.pop();
             if (size == 0 || mPrevIndex < 0 || mCurrentIndex >= size) {
-                Log.w(TAG, "Warning: invalid previous index, aborted !");
+                LogUtil.w(TAG, "Warning: invalid previous index, aborted !");
                 stop();
                 return;
             }
@@ -1522,6 +1522,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
             @Override
             public void run() {
                 final boolean audio = type == TYPE_AUDIO;
+                LogUtil.d(TAG, "loadLastPlaylist runBackground entering, audio:" + audio);
                 String[] locations;
                 synchronized (PlaybackService.this) {
                     String currentMedia = mSettings.getString(audio ? "current_song" : "current_media", "");
@@ -1529,8 +1530,10 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
                         return;
                     locations = mSettings.getString(audio ? "audio_list" : "media_list", "").split(" ");
                 }
-                if (locations.length == 0)
+                if (locations.length == 0) {
+                    LogUtil.d(TAG, "loadLastPlaylist runBackground locations.length:" + locations.length);
                     return;
+                }
 
                 final List<MediaWrapper> playList = new ArrayList<>(locations.length);
                 for (String location : locations) {
@@ -1541,9 +1544,11 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
                     playList.add(mw);
                 }
                 // load playlist
-                VLCApplication.runOnMainThread(new Runnable() {
+                VLCApplication.runOnMainThreadDelay(new Runnable() {
                     @Override
                     public void run() {
+                        LogUtil.d(TAG, "loadLastPlaylist runOnMainThread entering");
+
                         final int position;
                         synchronized (PlaybackService.this) {
                             mShuffling = mSettings.getBoolean(audio ? "audio_shuffling" : "media_shuffling", false);
@@ -1561,7 +1566,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
                                 setRate(rate, false);
                         }
                     }
-                });
+                }, 100);
             }
         });
     }
@@ -1813,11 +1818,11 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
             MediaWrapper mediaWrapper = mMedialibrary.getMedia(location);
             if (mediaWrapper == null) {
                 if (!validateLocation(location)) {
-                    Log.w(TAG, "Invalid location " + location);
+                    LogUtil.w(TAG, "Invalid location " + location);
                     showToast(getResources().getString(R.string.invalid_location, location), Toast.LENGTH_SHORT);
                     continue;
                 }
-                Log.v(TAG, "Creating on-the-fly Media object for " + location);
+                LogUtil.v(TAG, "Creating on-the-fly Media object for " + location);
                 mediaWrapper = new MediaWrapper(Uri.parse(location));
             }
             mediaList.add(mediaWrapper);
@@ -1846,7 +1851,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
 
     @MainThread
     public void load(List<MediaWrapper> mediaList, int position) {
-        Log.v(TAG, "Loading position " + ((Integer) position).toString() + " in " + mediaList.toString());
+        LogUtil.v(TAG, "Loading position " + ((Integer) position).toString() + " in " + mediaList.toString());
 
         if (hasCurrentMedia())
             savePosition();
@@ -1862,13 +1867,13 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
         }
 
         if (mMediaList.size() == 0) {
-            Log.w(TAG, "Warning: empty media list, nothing to play !");
+            LogUtil.w(TAG, "Warning: empty media list, nothing to play !");
             return;
         }
         if (isValidIndex(position)) {
             mCurrentIndex = position;
         } else {
-            Log.w(TAG, "Warning: positon " + position + " out of bounds");
+            LogUtil.w(TAG, "Warning: positon " + position + " out of bounds");
             mCurrentIndex = 0;
         }
 
@@ -1914,13 +1919,13 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
      */
     public void playIndex(int index, int flags) {
         if (mMediaList.size() == 0) {
-            Log.w(TAG, "Warning: empty media list, nothing to play !");
+            LogUtil.w(TAG, "Warning: empty media list, nothing to play !");
             return;
         }
         if (isValidIndex(index)) {
             mCurrentIndex = index;
         } else {
-            Log.w(TAG, "Warning: index " + index + " out of bounds");
+            LogUtil.w(TAG, "Warning: index " + index + " out of bounds");
             mCurrentIndex = 0;
         }
 
@@ -1978,7 +1983,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
         mMediaPlayer.setMedia(media);
         media.release();
 
-        if (mw .getType() != MediaWrapper.TYPE_VIDEO || isVideoPlaying || mw.hasFlag(MediaWrapper.MEDIA_FORCE_AUDIO)) {
+        if (mw.getType() != MediaWrapper.TYPE_VIDEO || isVideoPlaying || mw.hasFlag(MediaWrapper.MEDIA_FORCE_AUDIO)) {
             mMediaPlayer.setEqualizer(VLCOptions.getEqualizer(this));
             mMediaPlayer.setVideoTitleDisplay(MediaPlayer.Position.Disable, 0);
             changeAudioFocus(true);
@@ -2050,7 +2055,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
         if(media == null || !mMediaPlayer.isPlaying())
             return;
         // Show an URI without interrupting/losing the current stream
-        Log.v(TAG, "Showing index " + index + " with playing URI " + media.getUri());
+        LogUtil.v(TAG, "Showing index " + index + " with playing URI " + media.getUri());
         mCurrentIndex = index;
 
         notifyTrackChanged();

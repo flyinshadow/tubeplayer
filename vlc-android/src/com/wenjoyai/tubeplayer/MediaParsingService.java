@@ -245,6 +245,9 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
                         if (shouldInit) {
                             for (String folder : Medialibrary.getBlackList())
                                 mMedialibrary.banFolder(AndroidDevices.EXTERNAL_PUBLIC_DIRECTORY + folder);
+                            for (File folder : Medialibrary.getDefaultFolders()) {
+                                mMedialibrary.discover(folder.getAbsolutePath());
+                            }
                             mMedialibrary.discover(AndroidDevices.EXTERNAL_PUBLIC_DIRECTORY);
                         } else if (upgrade)
                             mMedialibrary.forceParserRetry();

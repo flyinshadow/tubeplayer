@@ -6,15 +6,15 @@
 
     <android.support.v7.preference.SwitchPreferenceCompat
         android:defaultValue="false"
-        android:key="enable_black_theme"
-        android:summary="@string/enable_black_theme_summary"
-        android:title="@string/enable_black_theme"
+        android:key="enable_night_theme"
+        android:summary="@string/enable_night_theme_summary"
+        android:title="@string/enable_night_theme"
         android:disableDependentsState="true" />
 
     <android.support.v7.preference.SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="daynight"
-        android:dependency="enable_black_theme"
+        android:dependency="enable_night_theme"
         android:summary="@string/daynight_summary"
         android:title="@string/daynight_title" />
 

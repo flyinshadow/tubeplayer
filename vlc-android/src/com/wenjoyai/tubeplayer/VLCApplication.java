@@ -194,6 +194,10 @@ public class VLCApplication extends Application {
         instance.mHandler.post(runnable);
     }
 
+    public static void runOnMainThreadDelay(Runnable runnable, long delay) {
+        instance.mHandler.postDelayed(runnable, delay);
+    }
+
     public static boolean removeTask(Runnable runnable) {
         return instance.mThreadPool.remove(runnable);
     }

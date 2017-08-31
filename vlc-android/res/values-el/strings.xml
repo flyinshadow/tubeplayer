@@ -225,8 +225,8 @@
     <string name="screen_orientation_landscape">Τοπίο</string>
     <string name="screen_orientation_reverse_portrait">Αντίστροφο πορτραίτο</string>
     <string name="screen_orientation_reverse_landscape">Αντίστροφο τοπίο</string>
-    <string name="enable_black_theme">Ενεργοποίηση του μαύρου θέματος</string>
-    <string name="enable_black_theme_summary">Αλλάξτε τα χρώματα διεπαφής για μεγαλύτερη άνεση σε περιβάλλοντα χαμηλού φωτισμού.</string>
+    <string name="enable_night_theme">Ενεργοποίηση του μαύρου θέματος</string>
+    <string name="enable_night_theme_summary">Αλλάξτε τα χρώματα διεπαφής για μεγαλύτερη άνεση σε περιβάλλοντα χαμηλού φωτισμού.</string>
     <string name="subtitle_text_encoding">Κωδικοποίηση κειμένου υποτίτλων</string>
     <string name="daynight_title">Λειτουργία DayNight</string>
     <string name="daynight_summary">Αυτόματη αλλαγή σε λειτουργία νύχτας στον κατάλληλο χρόνο</string>
@@ -457,4 +457,7 @@
     <string name="no">Όχι</string>
     <string name="loading_medialibrary">Φόρτωση βιβλιοθήκης μέσων</string>
     <string name="rename">Μετονομάζω</string>
+    <string name="theme">Θέμα</string>
+    <string name="night_mode">Νυχτερινή λειτουργία</string>
+    <string name="share_app">Μετοχή</string>
 </resources>

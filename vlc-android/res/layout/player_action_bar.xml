@@ -4,18 +4,32 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_alignParentTop="true"
-    android:background="@color/transparent"
+    android:background="@drawable/rounded_corners"
     android:paddingLeft="5dp"
     android:paddingRight="5dp" >
+
+    <ImageView
+        android:id="@+id/player_goback"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_gravity="start"
+        android:src="@drawable/goback"
+        android:scaleType="center"
+        android:focusable="true"/>
 
     <TextView
         android:id="@+id/player_overlay_title"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="8"
+        android:layout_gravity="start"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="15sp" />
+        android:textSize="16sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        />
 
     <TextView
         android:id="@+id/player_overlay_battery"
@@ -37,13 +51,27 @@
 
     <ImageView
         android:id="@+id/playlist_toggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:layout_gravity="center_vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_gravity="end"
+        android:layout_marginRight="@dimen/half_default_margin"
         android:src="@drawable/ic_playlist_circle"
+        android:scaleType="center"
         android:focusable="true"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        />
+
+    <ImageView
+        android:id="@+id/popup_toggle"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_gravity="end"
+        android:src="@drawable/ic_popup_dim"
+        android:scaleType="center"
+        android:focusable="true"
+        />
 
     <ImageView
         android:id="@+id/player_overlay_navmenu"

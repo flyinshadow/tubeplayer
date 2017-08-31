@@ -199,8 +199,8 @@
     <string name="screen_orientation_landscape">आडवे</string>
     <string name="screen_orientation_reverse_portrait">उलट उभे</string>
     <string name="screen_orientation_reverse_landscape">उलट आडवे</string>
-    <string name="enable_black_theme">काळी थीम सक्षम करा</string>
-    <string name="enable_black_theme_summary">कमी प्रकाश वातावरणात चांगल्या सुविधेसाठी इंटरफेसचे रंग बदला.</string>
+    <string name="enable_night_theme">काळी थीम सक्षम करा</string>
+    <string name="enable_night_theme_summary">कमी प्रकाश वातावरणात चांगल्या सुविधेसाठी इंटरफेसचे रंग बदला.</string>
     <string name="subtitle_text_encoding">उपशीर्षक मजकूर एनकोडिंग</string>
     <string name="extra_prefs_category">अतिरिक्त सेटिंग्ज</string>
     <string name="interface_prefs_screen">इंटरफेस</string>

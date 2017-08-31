@@ -225,8 +225,8 @@
     <string name="screen_orientation_landscape">Orizzontale</string>
     <string name="screen_orientation_reverse_portrait">Vericale inverso</string>
     <string name="screen_orientation_reverse_landscape">Orizzontale inverso</string>
-    <string name="enable_black_theme">Abilita il tema scuro</string>
-    <string name="enable_black_theme_summary">Cambia i colori dell\'interfaccia per un migliore utilizzo in ambienti a bassa luminosità.</string>
+    <string name="enable_night_theme">Abilita il tema scuro</string>
+    <string name="enable_night_theme_summary">Cambia i colori dell\'interfaccia per un migliore utilizzo in ambienti a bassa luminosità.</string>
     <string name="subtitle_text_encoding">Codifica testo dei sottotitoli</string>
     <string name="daynight_title">Modalità GiornoNotte</string>
     <string name="daynight_summary">Passa automaticamente alla modalità notturna all\'ora appropriata</string>
@@ -449,4 +449,6 @@
     <string name="no">No</string>
     <string name="loading_medialibrary">Caricamento raccolta multimediale...</string>
     <string name="rename">Rinominare</string>
+    <string name="night_mode">Modalità notte</string>
+    <string name="share_app">Condividi</string>
 </resources>

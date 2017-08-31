@@ -191,8 +191,8 @@
     <string name="screen_orientation_landscape">Альбомная</string>
     <string name="screen_orientation_reverse_portrait">Кніжная наадварот</string>
     <string name="screen_orientation_reverse_landscape">Альбомная наадварот</string>
-    <string name="enable_black_theme">Актывізаваць чорную тэму</string>
-    <string name="enable_black_theme_summary">Змяніць колеры інтэрфейсу для большай выгоды ва ўмовах слабога асвятлення.</string>
+    <string name="enable_night_theme">Актывізаваць чорную тэму</string>
+    <string name="enable_night_theme_summary">Змяніць колеры інтэрфейсу для большай выгоды ва ўмовах слабога асвятлення.</string>
     <string name="subtitle_text_encoding">Кадзіроўка субтытраў</string>
     <string name="extra_prefs_category">Іншыя настаўленні</string>
     <string name="interface_prefs_screen">Інтэрфейс</string>

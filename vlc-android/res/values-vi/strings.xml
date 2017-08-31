@@ -163,5 +163,8 @@
     <string name="copy_to_clipboard">Lưu vào bộ nhớ ảo</string>
     <string name="copied_to_clipboard">Đã sao chép Nhật Ký vào bộ nhớ ảo.</string>
     <string name="rename">Đổi tên</string>
+    <string name="theme">Chủ đề</string>
+    <string name="night_mode">Chế độ ban đêm</string>
+    <string name="share_app">Chia sẻ</string>
     <!--Accessibility-->
 </resources>

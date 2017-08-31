@@ -77,6 +77,9 @@
 
     <attr name="marginTopContent" format="dimension" />
 
-    <attr name="themeColor" format="reference|color" />
+    <attr name="theme_color" format="reference|color" />
+    <attr name="theme_color_light" format="reference|color" />
+    <attr name="theme_color_dark" format="reference|color" />
+    <attr name="theme_color_accent" format="reference|color" />
 
 </resources>

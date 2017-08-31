@@ -218,8 +218,8 @@
     <string name="screen_orientation_landscape">横向</string>
     <string name="screen_orientation_reverse_portrait">纵向翻转</string>
     <string name="screen_orientation_reverse_landscape">横向翻转</string>
-    <string name="enable_black_theme">启用关灯模式</string>
-    <string name="enable_black_theme_summary">更改界面颜色以在较暗环境获取更舒适的感受。</string>
+    <string name="enable_night_theme">启用夜间模式</string>
+    <string name="enable_night_theme_summary">更改界面颜色以在较暗环境获取更舒适的感受。</string>
     <string name="subtitle_text_encoding">字幕文本编码</string>
     <string name="daynight_title">自动切换夜间模式</string>
     <string name="daynight_summary">在合适的时间自动切换到夜间模式</string>
@@ -450,4 +450,8 @@
     <string name="no">否</string>
     <string name="loading_medialibrary">正在加载媒体库...</string>
     <string name="rename">重命名</string>
+    <string name="theme">主题</string>
+    <string name="night_mode">夜间模式</string>
+    <string name="share_app">分享</string>
+    <string name="file_name">文件名</string>
 </resources>

@@ -2,6 +2,7 @@
 <com.wenjoyai.tubeplayer.gui.view.PopupLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/video_pip_width"
     android:layout_height="@dimen/video_pip_heigth"
+    android:background="@color/black"
     android:keepScreenOn="true">
 
     <SurfaceView
@@ -36,5 +37,24 @@
         android:scaleType="center"
         android:src="@drawable/ic_popup_pause"
         android:visibility="gone" />
+
+    <SeekBar
+        android:id="@+id/popup_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:maxHeight="2dp"
+        android:minHeight="2dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
+        android:padding="0dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:layout_alignParentBottom="true"
+        android:progressDrawable="@drawable/po_seekbar"
+        android:visibility="gone"
+        />
 
 </com.wenjoyai.tubeplayer.gui.view.PopupLayout>

@@ -58,6 +58,7 @@ import org.videolan.medialibrary.media.MediaWrapper;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.gui.dialogs.SavePlaylistDialog;
+import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -195,7 +196,7 @@ public class UiTools {
 
     public static boolean isBlackThemeEnabled() {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
-        return pref.getBoolean("enable_black_theme", false);
+        return pref.getBoolean(PreferencesActivity.KEY_ENABLE_NIGHT_THEME, false);
     }
 
     public static void fillAboutView(View v) {

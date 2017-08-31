@@ -194,8 +194,8 @@
     <string name="screen_orientation_landscape">Panoramë</string>
     <string name="screen_orientation_reverse_portrait">Pasqyro portretin</string>
     <string name="screen_orientation_reverse_landscape">Pasqyro peisazhin</string>
-    <string name="enable_black_theme">Aktivizo teme e errët</string>
-    <string name="enable_black_theme_summary">Ndërro ngjyrat e pamjes për një komoditet ne vende me dritë të ulët.</string>
+    <string name="enable_night_theme">Aktivizo teme e errët</string>
+    <string name="enable_night_theme_summary">Ndërro ngjyrat e pamjes për një komoditet ne vende me dritë të ulët.</string>
     <string name="subtitle_text_encoding">Dekodimi i titrave</string>
     <string name="extra_prefs_category">Konfigurime shtesë</string>
     <string name="interface_prefs_screen">Ndërfaqja</string>

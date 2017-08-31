@@ -50,6 +50,8 @@ android {
     dataBinding {
         enabled = true
     }
+
+    publishNonDefault true
 }
 
 task generateSources (type: Jar) {

@@ -198,8 +198,8 @@
     <string name="screen_orientation_landscape">gdil agama</string>
     <string name="screen_orientation_reverse_portrait">Agdil ubdid yettin</string>
     <string name="screen_orientation_reverse_landscape">Agdil agama yettin</string>
-    <string name="enable_black_theme">Activer le thème sombre</string>
-    <string name="enable_black_theme_summary">Beddel initen n ugrudem iwakken ad tt-tgerrez tmuɣli deg yimukan ideg txuṣ tafat.</string>
+    <string name="enable_night_theme">Activer le thème sombre</string>
+    <string name="enable_night_theme_summary">Beddel initen n ugrudem iwakken ad tt-tgerrez tmuɣli deg yimukan ideg txuṣ tafat.</string>
     <string name="subtitle_text_encoding">Encodage du texte des sous-titres</string>
     <string name="extra_prefs_category">Iɣewwaren n zzyada</string>
     <string name="interface_prefs_screen">Agrudem</string>

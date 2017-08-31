@@ -216,8 +216,8 @@
     <string name="screen_orientation_landscape">منظره</string>
     <string name="screen_orientation_reverse_portrait">پرتره معکوس</string>
     <string name="screen_orientation_reverse_landscape">منظره معکوس</string>
-    <string name="enable_black_theme">فعال کردن پوسته مشکی</string>
-    <string name="enable_black_theme_summary">تغییر رنگ‌های رابط برای کار کردن راحت در محیط‌های کم نور.</string>
+    <string name="enable_night_theme">فعال کردن پوسته مشکی</string>
+    <string name="enable_night_theme_summary">تغییر رنگ‌های رابط برای کار کردن راحت در محیط‌های کم نور.</string>
     <string name="subtitle_text_encoding">کد گذاری متن زیرنویس</string>
     <string name="daynight_title">حالت شب</string>
     <string name="daynight_summary">به صورت خودکار در زمان مناسب به حالت شب تعویض شود</string>
@@ -418,4 +418,7 @@
     <string name="ml_discovering">یافتن</string>
     <string name="length">طول</string>
     <string name="rename">تغییر نام دهید</string>
+    <string name="theme">تم</string>
+    <string name="night_mode">حالت شب</string>
+    <string name="share_app">سهم</string>
 </resources>

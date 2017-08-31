@@ -142,8 +142,8 @@
     <string name="screen_orientation_landscape">භූදර්ශනය</string>
     <string name="screen_orientation_reverse_portrait">ප්‍රතිවර්ත පිළිරුව</string>
     <string name="screen_orientation_reverse_landscape">ප්‍රතිවර්ත භූදර්ශනය</string>
-    <string name="enable_black_theme">කළු තේමාව සක්‍රිය කරන්න</string>
-    <string name="enable_black_theme_summary">අව ආලෝක තත්ත්වයන් හිදී දර්ශනය පහසුවීමට වීමට අතුරුමුහුණතෙහි වර්ණ වෙනස් කරන්න.</string>
+    <string name="enable_night_theme">කළු තේමාව සක්‍රිය කරන්න</string>
+    <string name="enable_night_theme_summary">අව ආලෝක තත්ත්වයන් හිදී දර්ශනය පහසුවීමට වීමට අතුරුමුහුණතෙහි වර්ණ වෙනස් කරන්න.</string>
     <string name="subtitle_text_encoding">උපසිරැසි පෙළ කේතීකරණය</string>
     <string name="extra_prefs_category">අමතර සැකසුම්</string>
     <string name="interface_prefs_screen">අතුරුමුහුණත</string>

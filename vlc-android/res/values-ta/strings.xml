@@ -215,8 +215,8 @@
     <string name="screen_orientation_landscape">இயற்கைநிலக்காட்சி</string>
     <string name="screen_orientation_reverse_portrait">தலைகீழ் உருவப்படம்</string>
     <string name="screen_orientation_reverse_landscape">தலைகீழ் இயற்கைநிலக்காட்சி</string>
-    <string name="enable_black_theme">கருப்பு தீமை செயல்படுத்து</string>
-    <string name="enable_black_theme_summary">குறைந்த வெளிச்ச சூழலில் வசதிக்கு தகுந்தவாறு இடைமுக நிறத்தை மாற்றவும்.</string>
+    <string name="enable_night_theme">கருப்பு தீமை செயல்படுத்து</string>
+    <string name="enable_night_theme_summary">குறைந்த வெளிச்ச சூழலில் வசதிக்கு தகுந்தவாறு இடைமுக நிறத்தை மாற்றவும்.</string>
     <string name="subtitle_text_encoding">துணைத்தலைப்பு உரை குறியாக்கம்</string>
     <string name="daynight_title">பகல் இரவு முறை</string>
     <string name="extra_prefs_category">கூடுதல் அமைவுகள்</string>

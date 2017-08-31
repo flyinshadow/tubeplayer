@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:vlc="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="media"
+            type="org.videolan.medialibrary.media.MediaWrapper" />
+
+        <variable
+            name="time"
+            type="String" />
+
+        <variable
+            name="bgColor"
+            type="int" />
+
+        <variable
+            name="max"
+            type="int" />
+
+        <variable
+            name="progress"
+            type="int" />
+
+        <variable
+            name="resolution"
+            type="String" />
+
+        <variable
+            name="cover"
+            type="android.graphics.drawable.BitmapDrawable" />
+
+        <variable
+            name="scaleType"
+            type="android.widget.ImageView.ScaleType" />
+
+        <variable
+            name="holder"
+            type="com.wenjoyai.tubeplayer.gui.video.VideoListAdapter.ViewHolder" />
+        
+        <variable
+            name="selected"
+            type="boolean" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin"
+        vlc:cardCornerRadius="2dp"
+        vlc:cardElevation="4dp"
+        vlc:cardPreventCornerOverlap="false"
+        vlc:useCompatPadding="true"
+        >
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{holder::onClick}"
+            android:onLongClick="@{holder::onLongClick}"
+            android:longClickable="true"
+            >
+            <!-- Image loading is handled by com.wenjoyai.tubeplayer.wenjoyai.videoplayer.gui.helpers.AsyncImageLoader.loadPicture() -->
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/ml_item_overlay_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                vlc:layout_constraintDimensionRatio="H,16:10"
+                vlc:layout_constraintStart_toStartOf="parent"
+                vlc:layout_constraintEnd_toEndOf="parent"
+                >
+                <ImageView
+                    android:id="@+id/ml_item_thumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    vlc:media="@{media}"
+                    android:scaleType="@{scaleType}"
+                    android:src="@{cover}"
+                    android:background="@color/black"
+                    />
+                <ImageView
+                    android:id="@+id/ml_item_check"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_action_mode_select_1610"
+                    android:visibility="@{selected ? View.VISIBLE : View.GONE}"
+                    />
+            </android.support.constraint.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/ml_item_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                vlc:layout_constraintStart_toStartOf="parent"
+                vlc:layout_constraintTop_toBottomOf="@+id/ml_item_overlay_layout"
+                vlc:layout_constraintEnd_toStartOf="@+id/item_more"
+                vlc:layout_constraintBottom_toTopOf="@+id/ml_item_progress"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center_vertical"
+                android:maxLines="2"
+                android:layout_marginTop="@dimen/info_default_margin"
+                android:layout_marginBottom="@dimen/info_default_margin"
+                android:layout_marginLeft="@dimen/info_default_margin"
+                android:layout_marginRight="@dimen/info_default_margin"
+                android:text="@{media.title}"
+                android:textColor="?attr/list_title"
+                android:textSize="@dimen/grid_card_title_text_size"
+                tools:targetApi="jelly_bean" />
+
+            <ImageView
+                android:id="@+id/item_more"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                vlc:layout_constraintTop_toTopOf="@+id/ml_item_title"
+                vlc:layout_constraintEnd_toEndOf="parent"
+                vlc:layout_constraintBottom_toBottomOf="@+id/ml_item_title"
+                android:clickable="true"
+                android:contentDescription="@string/more_actions"
+                android:onClick="@{holder::onMoreClick}"
+                android:scaleType="center"
+                android:src="@drawable/ic_more" />
+
+            <TextView
+                android:id="@+id/ml_item_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                vlc:layout_constraintEnd_toEndOf="@+id/ml_item_overlay_layout"
+                vlc:layout_constraintBottom_toBottomOf="@+id/ml_item_overlay_layout"
+                android:fontFamily="sans-serif-light"
+                android:gravity="end"
+                android:paddingLeft="@dimen/half_default_margin"
+                android:paddingRight="@dimen/half_default_margin"
+                android:maxLines="1"
+                android:text="@{time}"
+                android:layout_alignWithParentIfMissing="true"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:background="@color/greytransparent"
+                tools:targetApi="jelly_bean" />
+
+            <!--<TextView-->
+            <!--android:id="@+id/ml_item_resolution"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--vlc:layout_constraintBottom_toTopOf="@+id/ml_item_progress"-->
+            <!--vlc:layout_constraintStart_toEndOf="@+id/ml_item_time"-->
+            <!--vlc:layout_constraintEnd_toEndOf="parent"-->
+            <!--android:paddingRight="@dimen/half_default_margin"-->
+            <!--android:paddingEnd="@dimen/half_default_margin"-->
+            <!--android:layout_alignWithParentIfMissing="true"-->
+            <!--android:fontFamily="sans-serif-light"-->
+            <!--android:gravity="end"-->
+            <!--android:text="@{resolution}"-->
+            <!--android:textColor="?attr/list_subtitle"-->
+            <!--android:textSize="14sp"-->
+            <!--tools:targetApi="jelly_bean" />-->
+
+            <ProgressBar
+                android:id="@+id/ml_item_progress"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                vlc:layout_constraintTop_toBottomOf="@+id/ml_item_title"
+                vlc:layout_constraintStart_toStartOf="@+id/ml_item_title"
+                vlc:layout_constraintBottom_toBottomOf="parent"
+                vlc:layout_constraintEnd_toStartOf="@+id/item_more"
+                android:layout_marginTop="@dimen/info_default_margin"
+                android:layout_marginBottom="@dimen/info_default_margin"
+                android:indeterminate="false"
+                android:max="@{max}"
+                android:maxHeight="@dimen/progress_bar_height"
+                android:minHeight="@dimen/progress_bar_height"
+                android:progress="@{progress}"
+                android:progressDrawable="?attr/gridview_progressbar"
+                android:visibility="@{max == 0 ? View.GONE : View.VISIBLE}" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+
+</layout>

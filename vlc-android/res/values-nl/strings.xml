@@ -225,8 +225,8 @@
     <string name="screen_orientation_landscape">Liggend</string>
     <string name="screen_orientation_reverse_portrait">Omgekeerd staand</string>
     <string name="screen_orientation_reverse_landscape">Omgekeerd liggend</string>
-    <string name="enable_black_theme">Zwart thema inschakelen</string>
-    <string name="enable_black_theme_summary">De interface-kleuren wijzigen voor een beter comfort in omgevingen met weinig licht.</string>
+    <string name="enable_night_theme">Zwart thema inschakelen</string>
+    <string name="enable_night_theme_summary">De interface-kleuren wijzigen voor een beter comfort in omgevingen met weinig licht.</string>
     <string name="subtitle_text_encoding">Ondertitel-tekstcodering</string>
     <string name="daynight_title">Dag-/nachtmodus</string>
     <string name="daynight_summary">Automatisch naar nachtmodus wisselen op geschikt tijdstip</string>
@@ -457,4 +457,7 @@
     <string name="no">Nee</string>
     <string name="loading_medialibrary">Mediabibliotheek laden...</string>
     <string name="rename">andere naam geven</string>
+    <string name="theme">Thema</string>
+    <string name="night_mode">Nachtmodus</string>
+    <string name="share_app">Delen</string>
 </resources>

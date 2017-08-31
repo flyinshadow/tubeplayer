@@ -31,6 +31,10 @@ import android.view.MenuItem;
 
 import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
+import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.gui.ThemeFragment;
+
+import java.util.Calendar;
 
 @SuppressWarnings("deprecation")
 public class PreferencesActivity extends AppCompatActivity implements PlaybackService.Client.Callback {
@@ -50,6 +54,12 @@ public class PreferencesActivity extends AppCompatActivity implements PlaybackSe
     public final static String LOGIN_STORE = "store_login";
     public static final String KEY_AUDIO_PLAYBACK_RATE = "playback_rate";
     public static final String KEY_AUDIO_PLAYBACK_SPEED_PERSIST = "playback_speed";
+
+    public static final String KEY_ENABLE_NIGHT_THEME = "enable_night_theme";
+    public static final String KEY_AUTO_DAY_NIGHT_MODE = "daynight";
+    public static final String KEY_CURRENT_THEME_INDEX = "current_theme_index";
+    public static final String KEY_CURRENT_VIEW_MODE = "current_view_mode";
+
     public final static int RESULT_RESCAN = RESULT_FIRST_USER + 1;
     public final static int RESULT_RESTART = RESULT_FIRST_USER + 2;
     public final static int RESULT_RESTART_APP = RESULT_FIRST_USER + 3;
@@ -103,9 +113,15 @@ public class PreferencesActivity extends AppCompatActivity implements PlaybackSe
 
     private void applyTheme() {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean enableBlackTheme = pref.getBoolean("enable_black_theme", false);
-        if (enableBlackTheme) {
-            setTheme(R.style.Theme_VLC_Black);
+        boolean enableBlackTheme = pref.getBoolean(PreferencesActivity.KEY_ENABLE_NIGHT_THEME, false);
+        int themeIndex = pref.getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, 0);
+        boolean autoDayNight = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getBoolean("daynight", false);
+        int hourOfDay = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        boolean night = (hourOfDay <= 6) || (hourOfDay >= 18);
+        if (enableBlackTheme || (autoDayNight && night)) {
+            setTheme(ThemeFragment.sThemeNightStyles[themeIndex]);
+        } else {
+            setTheme(ThemeFragment.sThemeStyles[themeIndex]);
         }
     }
 

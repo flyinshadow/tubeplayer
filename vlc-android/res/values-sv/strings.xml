@@ -225,8 +225,8 @@
     <string name="screen_orientation_landscape">Landskap</string>
     <string name="screen_orientation_reverse_portrait">Omvänt porträtt</string>
     <string name="screen_orientation_reverse_landscape">Omvänt landskap</string>
-    <string name="enable_black_theme">Aktivera mörkt tema</string>
-    <string name="enable_black_theme_summary">Ändra gränssnittets färger för bättre bekvämlighet i svagt upplysta miljöer.</string>
+    <string name="enable_night_theme">Aktivera mörkt tema</string>
+    <string name="enable_night_theme_summary">Ändra gränssnittets färger för bättre bekvämlighet i svagt upplysta miljöer.</string>
     <string name="subtitle_text_encoding">Textkodning för undertexter</string>
     <string name="daynight_title">Dag-/nattläge</string>
     <string name="daynight_summary">Byt automatiskt till nattläge vid lämplig tid</string>
@@ -457,4 +457,7 @@
     <string name="no">Nej</string>
     <string name="loading_medialibrary">Läser in mediabiblioteket...</string>
     <string name="rename">Döpa om</string>
+    <string name="theme">Tema</string>
+    <string name="night_mode">Nattläge</string>
+    <string name="share_app">Andel</string>
 </resources>

@@ -154,8 +154,8 @@
     <string name="screen_orientation_landscape">Horitzontal</string>
     <string name="screen_orientation_reverse_portrait">Vertical invers</string>
     <string name="screen_orientation_reverse_landscape">Horitzontal invers</string>
-    <string name="enable_black_theme">Activa el tema fosc</string>
-    <string name="enable_black_theme_summary">Canvia els colors de la interfície per a un millor confort en llocs amb poca llum.</string>
+    <string name="enable_night_theme">Activa el tema fosc</string>
+    <string name="enable_night_theme_summary">Canvia els colors de la interfície per a un millor confort en llocs amb poca llum.</string>
     <string name="subtitle_text_encoding">Codificació del text del subtítol</string>
     <string name="extra_prefs_category">Paràmetres extres</string>
     <string name="interface_prefs_screen">Interfície</string>
@@ -215,6 +215,9 @@
     <string name="send_log">Envia el fitxer de registre</string>
     <string name="sending_log">Enviat el fitxer de registre...</string>
     <string name="rename">Canviar el nom</string>
+    <string name="theme">Tema</string>
+    <string name="night_mode">Mode de nit</string>
+    <string name="share_app">Compartir</string>
     <!--Accessibility-->
     <!--Widget-->
 </resources>

@@ -225,8 +225,8 @@
     <string name="screen_orientation_landscape">Lárétt</string>
     <string name="screen_orientation_reverse_portrait">Speglað lóðrétt</string>
     <string name="screen_orientation_reverse_landscape">Speglað lárétt</string>
-    <string name="enable_black_theme">Virkja svart þema</string>
-    <string name="enable_black_theme_summary">Skipta yfir í liti á viðmóti sem eru þægilegri í umhverfi með lítilli birtu.</string>
+    <string name="enable_night_theme">Virkja svart þema</string>
+    <string name="enable_night_theme_summary">Skipta yfir í liti á viðmóti sem eru þægilegri í umhverfi með lítilli birtu.</string>
     <string name="subtitle_text_encoding">Kóðun skjátexta</string>
     <string name="daynight_title">DagsNætur-hamur</string>
     <string name="daynight_summary">Skipta sjálfvirkt í næturham á viðeigandi tíma</string>

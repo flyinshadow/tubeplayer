@@ -218,8 +218,8 @@
     <string name="screen_orientation_landscape">Maisemakuva</string>
     <string name="screen_orientation_reverse_portrait">Käännetty muotokuva</string>
     <string name="screen_orientation_reverse_landscape">Käännetty maisemakuva</string>
-    <string name="enable_black_theme">Ota käyttöön musta teema</string>
-    <string name="enable_black_theme_summary">Vaihda käyttöliittymän värejä entistä mukavamman käytön takaamiseksi pimeissä ympäristöissä.</string>
+    <string name="enable_night_theme">Ota käyttöön musta teema</string>
+    <string name="enable_night_theme_summary">Vaihda käyttöliittymän värejä entistä mukavamman käytön takaamiseksi pimeissä ympäristöissä.</string>
     <string name="subtitle_text_encoding">Tekstityksen merkistökoodaus</string>
     <string name="extra_prefs_category">Lisäasetukset</string>
     <string name="interface_prefs_screen">Käyttöliittymä</string>
@@ -385,4 +385,6 @@
     <string name="subtitles_download_title">Tekstitysten lataus</string>
     <string name="connecting">Yhdistetään...</string>
     <string name="rename">Nimeä uudelleen</string>
+    <string name="night_mode">Yökuvaus</string>
+    <string name="share_app">Osuus</string>
 </resources>

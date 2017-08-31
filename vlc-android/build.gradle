@@ -177,7 +177,8 @@ task generateSources (type: Jar) {
 
 dependencies {
     compile project(':libvlc')
-    compile project(':medialibrary')
+    releaseCompile project(path: ':medialibrary', configuration: 'release')
+    debugCompile project(path: ':medialibrary', configuration: 'debug')
     compile project(':api')
     compile project(':axmlrpc')
     compile 'de.hdodenhof:circleimageview:2.1.0'
@@ -189,6 +190,8 @@ dependencies {
     compile 'com.android.support:leanback-v17:'+rootProject.ext.appCompatVersion
     compile 'com.android.support:preference-leanback-v17:'+rootProject.ext.appCompatVersion
     compile 'com.android.support.constraint:constraint-layout:'+rootProject.ext.constraintLayoutVersion
+//    compile 'com.android.support:gridlayout-v7:'+rootProject.ext.appCompatVersion
+    compile 'com.android.support:cardview-v7:'+rootProject.ext.appCompatVersion
     testCompile 'junit:junit:4.12'
 }
 

@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatDelegate;
 
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
+
+import java.util.Calendar;
 
 
 public class BaseActivity extends AppCompatActivity {
@@ -29,9 +32,16 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private void applyTheme() {
-        boolean enableBlackTheme = mSettings.getBoolean("enable_black_theme", false);
-        if (VLCApplication.showTvUi() || enableBlackTheme) {
-            setTheme(R.style.Theme_VLC_Black);
+        boolean enableBlackTheme = mSettings.getBoolean(PreferencesActivity.KEY_ENABLE_NIGHT_THEME, false);
+        int themeIndex = PreferenceManager.getDefaultSharedPreferences(
+                VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, 0);
+        boolean autoDayNight = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getBoolean("daynight", false);
+        int hourOfDay = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        boolean night = (hourOfDay <= 6) || (hourOfDay >= 18);
+        if (VLCApplication.showTvUi() || enableBlackTheme || (autoDayNight && night)) {
+            setTheme(ThemeFragment.sThemeNightStyles[themeIndex]);
+        } else {
+            setTheme(ThemeFragment.sThemeStyles[themeIndex]);
         }
     }
 }

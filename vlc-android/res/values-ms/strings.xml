@@ -218,8 +218,8 @@
     <string name="screen_orientation_landscape">Landskap</string>
     <string name="screen_orientation_reverse_portrait">Potret balikan</string>
     <string name="screen_orientation_reverse_landscape">Landskap balikan</string>
-    <string name="enable_black_theme">Benarkan tema hitam</string>
-    <string name="enable_black_theme_summary">Ubah warna antaramuka untuk kelihatan lebih baik dalam persekitaran kurang cahaya.</string>
+    <string name="enable_night_theme">Benarkan tema hitam</string>
+    <string name="enable_night_theme_summary">Ubah warna antaramuka untuk kelihatan lebih baik dalam persekitaran kurang cahaya.</string>
     <string name="subtitle_text_encoding">Pengekodan teks sarikata</string>
     <string name="daynight_title">Mod SiangMalam</string>
     <string name="daynight_summary">Automatik tukar mod malam pada waktu berkaitan</string>
@@ -442,4 +442,7 @@
     <string name="no">Tidak</string>
     <string name="loading_medialibrary">Memuat Pustaka Media...</string>
     <string name="rename">Namakan semula</string>
+    <string name="theme">Tema</string>
+    <string name="night_mode">Mod malam</string>
+    <string name="share_app">Saham</string>
 </resources>

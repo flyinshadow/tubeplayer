@@ -189,8 +189,8 @@
     <string name="screen_orientation_landscape">Loddrætt</string>
     <string name="screen_orientation_reverse_portrait">Øvut steyrrætt</string>
     <string name="screen_orientation_reverse_landscape">Øvut loddrætt</string>
-    <string name="enable_black_theme">Gilda svarta temað</string>
-    <string name="enable_black_theme_summary">Broyt litirnar á takførisflatanum, so tað er hugaligari í veikum ljósi.</string>
+    <string name="enable_night_theme">Gilda svarta temað</string>
+    <string name="enable_night_theme_summary">Broyt litirnar á takførisflatanum, so tað er hugaligari í veikum ljósi.</string>
     <string name="subtitle_text_encoding">Kota undirtekstir inn</string>
     <string name="extra_prefs_category">Eyka stillingar</string>
     <string name="interface_prefs_screen">Takførisflati</string>

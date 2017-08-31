@@ -14,6 +14,13 @@
         android:visible="false"
         vlc:showAsAction="ifRoom" />
     <item
+        android:id="@+id/ml_menu_view_mode"
+        android:icon="@drawable/ic_view_bigpic"
+        android:title="@string/media_view_mode"
+        android:visible="false"
+        vlc:showAsAction="always"
+        />
+    <item
         android:id="@+id/ml_menu_filter"
         android:icon="@drawable/ic_menu_search_normal_w"
         vlc:actionViewClass="android.support.v7.widget.SearchView"

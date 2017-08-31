@@ -127,4 +127,5 @@
     <string name="enable_verbose_mode">വാചാലമായി</string>
     <string name="quit">ആപ്പ്ളിക്കേഷന്‍ നിറുത്തിയിട്ടു വീണ്ടും തുടങ്ങുക</string>
     <string name="rename">പേരുമാറ്റുക</string>
+    <string name="theme">തീം</string>
 </resources>

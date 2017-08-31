@@ -218,8 +218,8 @@
     <string name="screen_orientation_landscape">가로 방향</string>
     <string name="screen_orientation_reverse_portrait">역 세로 방향</string>
     <string name="screen_orientation_reverse_landscape">역 가로 방향</string>
-    <string name="enable_black_theme">검정 테마 사용하기</string>
-    <string name="enable_black_theme_summary">저광량 환경에서 더 편한 색상의 인터페이스로 전환합니다</string>
+    <string name="enable_night_theme">검정 테마 사용하기</string>
+    <string name="enable_night_theme_summary">저광량 환경에서 더 편한 색상의 인터페이스로 전환합니다</string>
     <string name="subtitle_text_encoding">자막 텍스트 인코딩</string>
     <string name="daynight_title">낮밤 모드</string>
     <string name="daynight_summary">적당한 시간에 밤 모드로 자동 전환합니다</string>
@@ -450,4 +450,7 @@
     <string name="no">아니오</string>
     <string name="loading_medialibrary">미디어 라이브러리 불러오는 중...</string>
     <string name="rename">이름 바꾸기</string>
+    <string name="theme">테마</string>
+    <string name="night_mode">야간 모드</string>
+    <string name="share_app">공유</string>
 </resources>

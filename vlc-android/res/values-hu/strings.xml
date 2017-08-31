@@ -223,8 +223,8 @@
     <string name="screen_orientation_landscape">Tájkép</string>
     <string name="screen_orientation_reverse_portrait">Fordított portré</string>
     <string name="screen_orientation_reverse_landscape">Fordított tájkép</string>
-    <string name="enable_black_theme">Sötét téma engedélyezése</string>
-    <string name="enable_black_theme_summary">A felület színeinek cseréje a nagyobb kényelem érdekében az alacsony fényű környezetekben.</string>
+    <string name="enable_night_theme">Sötét téma engedélyezése</string>
+    <string name="enable_night_theme_summary">A felület színeinek cseréje a nagyobb kényelem érdekében az alacsony fényű környezetekben.</string>
     <string name="subtitle_text_encoding">Felirat szövegkódolása</string>
     <string name="extra_prefs_category">Extra beállítások</string>
     <string name="interface_prefs_screen">Kezelőfelület</string>
@@ -370,4 +370,7 @@
     <string name="preferences_languages_download">Feliratok nyelvei</string>
     <string name="connecting">Csatlakozás...</string>
     <string name="rename">átnevezése</string>
+    <string name="theme">Téma</string>
+    <string name="night_mode">Éjszakai mód</string>
+    <string name="share_app">Részvény</string>
 </resources>

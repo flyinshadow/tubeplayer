@@ -206,8 +206,8 @@
     <string name="screen_orientation_landscape">Pejzaž</string>
     <string name="screen_orientation_reverse_portrait">Obrnuti potret</string>
     <string name="screen_orientation_reverse_landscape">Obrnuti pejzaž</string>
-    <string name="enable_black_theme">Omogući crnu temu</string>
-    <string name="enable_black_theme_summary">Izmijenite boje interfejsa za bolji ugođaj u okruženjima sa slabim svjetlom.</string>
+    <string name="enable_night_theme">Omogući crnu temu</string>
+    <string name="enable_night_theme_summary">Izmijenite boje interfejsa za bolji ugođaj u okruženjima sa slabim svjetlom.</string>
     <string name="subtitle_text_encoding">Kodiranje teksta podtitla</string>
     <string name="extra_prefs_category">Dodatne postavke</string>
     <string name="interface_prefs_screen">Interfejs</string>
@@ -314,6 +314,9 @@
     <string name="permission_ask_again">Odobri pristup</string>
     <string name="exit_app">Zatvori HD XPlayer</string>
     <string name="rename">Preimenovati</string>
+    <string name="theme">Tema</string>
+    <string name="night_mode">Noćni način rada</string>
+    <string name="share_app">Udio</string>
     <!--fast scroller-->
     <!--Plugins-->
 </resources>

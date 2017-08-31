@@ -143,8 +143,8 @@
     <string name="screen_orientation_landscape">ផ្ដេក</string>
     <string name="screen_orientation_reverse_portrait">ដាក់​បញ្ច្រាស​បញ្ឈរ</string>
     <string name="screen_orientation_reverse_landscape">ដាក់​បញ្ច្រាស​ផ្ដេក</string>
-    <string name="enable_black_theme">អនុញ្ញាត​រូបរាង​ពណ៌ខ្មៅ</string>
-    <string name="enable_black_theme_summary">ប្ដូរ​ពណ៌​ចំណុច​ប្រទាក់​ដើម្បីឲ្យ​ប្រសើរ​សម្រាប់​បរិស្ថាន​ពន្លឺ​ទាប។</string>
+    <string name="enable_night_theme">អនុញ្ញាត​រូបរាង​ពណ៌ខ្មៅ</string>
+    <string name="enable_night_theme_summary">ប្ដូរ​ពណ៌​ចំណុច​ប្រទាក់​ដើម្បីឲ្យ​ប្រសើរ​សម្រាប់​បរិស្ថាន​ពន្លឺ​ទាប។</string>
     <string name="subtitle_text_encoding">ការ​ដាក់​លេខ​កូដ​អត្ថបទ​ចំណង​ជើង​រង</string>
     <string name="extra_prefs_category">ការ​កំណត់​បន្ថែម</string>
     <string name="interface_prefs_screen">ចំណុច​ប្រទាក់</string>

@@ -44,6 +44,15 @@ public class Tools {
                 millisToString(media.getLength(), true));
     }
 
+    public static String getProgressString(MediaWrapper media) {
+        long lastTime = media.getTime();
+        if (lastTime == 0L)
+            return "";
+        return String.format("%s / %s",
+                millisToString(lastTime, false),
+                millisToString(media.getLength(), false));
+    }
+
     /**
      * Convert time to a string
      * @param millis e.g.time/length from file

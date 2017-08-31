@@ -170,8 +170,8 @@
     <string name="screen_orientation_landscape">Положено</string>
     <string name="screen_orientation_reverse_portrait">Обрнуто усправно</string>
     <string name="screen_orientation_reverse_landscape">Обрнуто положено</string>
-    <string name="enable_black_theme">Омогући тамну тему</string>
-    <string name="enable_black_theme_summary">Промените боју интерфејса ради лакшег сналажења у окружењима ниског осветљења.</string>
+    <string name="enable_night_theme">Омогући тамну тему</string>
+    <string name="enable_night_theme_summary">Промените боју интерфејса ради лакшег сналажења у окружењима ниског осветљења.</string>
     <string name="subtitle_text_encoding">Енкодирање текстуалних титлова</string>
     <string name="extra_prefs_category">Додатне поставке</string>
     <string name="interface_prefs_screen">Интерфејс</string>
@@ -233,6 +233,9 @@
     <string name="send_log">Пошаљи извештај</string>
     <string name="sending_log">Шаљем извештај…</string>
     <string name="rename">Преименуј</string>
+    <string name="theme">Теме</string>
+    <string name="night_mode">Ноћ режим</string>
+    <string name="share_app">Удео</string>
     <!--Accessibility-->
     <!--Widget-->
 </resources>

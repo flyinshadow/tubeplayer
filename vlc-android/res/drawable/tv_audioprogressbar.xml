@@ -21,7 +21,7 @@
         android:end="2dp">
         <clip>
             <shape>
-                <solid android:color="@color/tube_red500" />
+                <solid android:color="?attr/theme_color" />
             </shape>
         </clip>
     </item>

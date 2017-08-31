@@ -218,8 +218,8 @@
     <string name="screen_orientation_landscape">Китап</string>
     <string name="screen_orientation_reverse_portrait">Әйләнгән альбом</string>
     <string name="screen_orientation_reverse_landscape">Әйләнгән китап</string>
-    <string name="enable_black_theme">Караңгы күренешне кабызырга</string>
-    <string name="enable_black_theme_summary">Күренеш төсен түбән яктылыкта уңайрак булсын өчен үзгәртү.</string>
+    <string name="enable_night_theme">Караңгы күренешне кабызырга</string>
+    <string name="enable_night_theme_summary">Күренеш төсен түбән яктылыкта уңайрак булсын өчен үзгәртү.</string>
     <string name="subtitle_text_encoding">Субтитрлар тексты кодлануы</string>
     <string name="daynight_title">Көн/Төн режимы</string>
     <string name="daynight_summary">Кирәк вакытта автоматик рәвештә төнге режимга күчәргә</string>

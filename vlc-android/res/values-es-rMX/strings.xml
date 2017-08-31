@@ -225,8 +225,8 @@
     <string name="screen_orientation_landscape">Horizontal</string>
     <string name="screen_orientation_reverse_portrait">Invertir vertical</string>
     <string name="screen_orientation_reverse_landscape">Invertir horizontal</string>
-    <string name="enable_black_theme">Activar el tema negro</string>
-    <string name="enable_black_theme_summary">Cambia los colores de interfase para mejor comodidad en ambientes con poca iluminación .</string>
+    <string name="enable_night_theme">Activar el tema negro</string>
+    <string name="enable_night_theme_summary">Cambia los colores de interfase para mejor comodidad en ambientes con poca iluminación .</string>
     <string name="subtitle_text_encoding">Codificador textual de subtítulos</string>
     <string name="daynight_title">Modo Día-Noche</string>
     <string name="daynight_summary">Cambia automáticamente a modo noche según la hora</string>
@@ -449,4 +449,5 @@
     <string name="no">No</string>
     <string name="loading_medialibrary">Cargar biblioteca multi media...</string>
     <string name="rename">Rebautizar</string>
+    <string name="share_app">Compartir</string>
 </resources>

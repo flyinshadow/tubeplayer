@@ -205,6 +205,13 @@ public class FileUtils {
         return ret;
     }
 
+    public static boolean renameFile(String srcFilePath, String dstFilePath) {
+        File srcFile = new File(srcFilePath);
+        File dstFile = new File(dstFilePath);
+        boolean renamed = srcFile.renameTo(dstFile);
+        return renamed;
+    }
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static boolean deleteFile (String path){
         boolean deleted = false;

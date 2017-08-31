@@ -38,12 +38,14 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 
 import org.videolan.libvlc.IVLCVout;
 import org.videolan.libvlc.Media;
@@ -51,6 +53,7 @@ import org.videolan.libvlc.MediaPlayer;
 import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.gui.ThemeFragment;
 import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
 import com.wenjoyai.tubeplayer.gui.view.PopupLayout;
 
@@ -72,6 +75,7 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
     private ImageView mCloseButton;
     private ImageView mPlayPauseButton;
     private final boolean mAlwaysOn;
+    private SeekBar mSeekBar;
 
     public PopupManager(PlaybackService service) {
         mService = service;
@@ -92,8 +96,9 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
 
     public void showPopup() {
         mService.addCallback(this);
-        LayoutInflater li = (LayoutInflater) VLCApplication.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mRootView = (PopupLayout) li.inflate(R.layout.video_popup, null);
+        int themeIndex = android.preference.PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, 0);
+        mRootView = (PopupLayout) LayoutInflater.from(new ContextThemeWrapper(VLCApplication.getAppContext(), ThemeFragment.sThemeActionBarStyles[themeIndex])).inflate(R.layout.video_popup, null);
+//        mRootView.setVideoSize(mService.getCurrentMediaWrapper().getWidth(), mService.getCurrentMediaWrapper().getHeight());
         if (mAlwaysOn)
             mRootView.setKeepScreenOn(true);
         mPlayPauseButton = (ImageView) mRootView.findViewById(R.id.video_play_pause);
@@ -102,6 +107,9 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
         mPlayPauseButton.setOnClickListener(this);
         mCloseButton.setOnClickListener(this);
         mExpandButton.setOnClickListener(this);
+
+        mSeekBar = (SeekBar) mRootView.findViewById(R.id.popup_seekbar);
+        mSeekBar.setVisibility(View.GONE);
 
         GestureDetectorCompat gestureDetector = new GestureDetectorCompat(mService, this);
         gestureDetector.setOnDoubleTapListener(this);
@@ -184,40 +192,35 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
             return;
         }
 
+        Media.VideoTrack vtrack = mService.getCurrentVideoTrack();
+        if (vtrack != null) {
+            width = vtrack.width;
+            height = vtrack.height;
+        }
+
         if (width == 0 || height == 0) {
             mRootView.setViewSize(displayW, displayH);
             return;
         }
 
-        // compute the aspect ratio
-        double dw = displayW, dh = displayH;
-        double ar;
-        if (sarDen == sarNum) {
-            /* No indication about the density, assuming 1:1 */
-            ar = (double)visibleWidth / (double)visibleHeight;
-        } else {
-            /* Use the specified aspect ratio */
-            double vw = visibleWidth * (double)sarNum / sarDen;
-            ar = vw / visibleHeight;
-        }
-
-        // compute the display aspect ratio
-        double dar = dw / dh;
-        if (dar < ar)
-            dh = dw / ar;
-        else
-            dw = dh * ar;
-
-        width = (int) Math.floor(dw);
-        height = (int) Math.floor(dh);
-        mRootView.setViewSize(width, height);
+        displayH = displayW * height / width;
+        mRootView.setViewSize(displayW, displayH);
     }
 
     @Override
     public void update() {}
 
     @Override
-    public void updateProgress() {}
+    public void updateProgress() {
+        if (mSeekBar != null) {
+            long time = mService.getTime();
+            long length = mService.getLength();
+            Log.e(TAG, "updateProgress length=" + length + ", time=" + time);
+            mSeekBar.setVisibility(View.VISIBLE);
+            mSeekBar.setMax((int)length);
+            mSeekBar.setProgress((int) time);
+        }
+    }
 
     @Override
     public void onMediaEvent(Media.Event event) {}

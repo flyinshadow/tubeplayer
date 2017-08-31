@@ -20,6 +20,8 @@
 
 package com.wenjoyai.tubeplayer.gui;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -27,18 +29,22 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.wenjoyai.tubeplayer.R;
+import com.wenjoyai.tubeplayer.VLCApplication;
 
 public class AboutFragment extends Fragment {
     public final static String TAG = "VLC/AboutActivity";
 
-    public final static int MODE_ABOUT = 0;
-    public final static int MODE_LICENCE = 1;
-    public final static int MODE_TOTAL = 2; // Number of audio browser modes
+//    public final static int MODE_ABOUT = 0;
+//    public final static int MODE_LICENCE = 1;
+//    public final static int MODE_TOTAL = 2; // Number of audio browser modes
 
-    private ViewPager mViewPager;
-    private TabLayout mTabLayout;
+//    private ViewPager mViewPager;
+//    private TabLayout mTabLayout;
+
+    private TextView mVersion;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,6 +73,22 @@ public class AboutFragment extends Fragment {
 //        mTabLayout = (TabLayout) v.findViewById(R.id.sliding_tabs);
 //        mTabLayout.setupWithViewPager(mViewPager);
 
+        mVersion = (TextView) v.findViewById(R.id.version);
+
+        mVersion.setText(String.format(getString(R.string.about_version), getVersion()));
+
         return v;
+    }
+
+    private String getVersion() {
+        try {
+            PackageManager manager = VLCApplication.getAppContext().getPackageManager();
+            PackageInfo info = manager.getPackageInfo(VLCApplication.getAppContext().getPackageName(), 0);
+            String version = info.versionName;
+            return version;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 }

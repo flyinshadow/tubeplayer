@@ -223,8 +223,8 @@
     <string name="screen_orientation_landscape">Orizuntale</string>
     <string name="screen_orientation_reverse_portrait">Verticale invertitu</string>
     <string name="screen_orientation_reverse_landscape">Orizuntale invertitu</string>
-    <string name="enable_black_theme">Attivà u temu scuru</string>
-    <string name="enable_black_theme_summary">Cambia i culori di l\'interfaccia per un benestà in ambienti à bassa luminescenza.</string>
+    <string name="enable_night_theme">Attivà u temu scuru</string>
+    <string name="enable_night_theme_summary">Cambia i culori di l\'interfaccia per un benestà in ambienti à bassa luminescenza.</string>
     <string name="subtitle_text_encoding">Cudificazione di u testu di i sottutituli</string>
     <string name="daynight_title">Modu Ghjornu-Notte</string>
     <string name="daynight_summary">Cambia autumaticamente ver di u modu di notte à u mumentu cunvitu</string>
@@ -428,4 +428,5 @@
     <string name="clear_playback_history">Viutà a crunulogia di ripruduzzione</string>
     <string name="various_artists">Artisti Diversi</string>
     <string name="rename">Rinumaniscia</string>
+    <string name="night_mode"></string>
 </resources>

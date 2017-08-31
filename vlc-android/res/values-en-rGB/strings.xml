@@ -199,8 +199,8 @@
     <string name="screen_orientation_landscape">Landscape</string>
     <string name="screen_orientation_reverse_portrait">Reverse portrait</string>
     <string name="screen_orientation_reverse_landscape">Reverse landscape</string>
-    <string name="enable_black_theme">Enable the black theme</string>
-    <string name="enable_black_theme_summary">Change the interface colours for better comfort in low light environments.</string>
+    <string name="enable_night_theme">Enable the night theme</string>
+    <string name="enable_night_theme_summary">Change the interface colours for better comfort in low light environments.</string>
     <string name="subtitle_text_encoding">Subtitle text encoding</string>
     <string name="extra_prefs_category">Extra settings</string>
     <string name="interface_prefs_screen">Interface</string>
@@ -307,6 +307,9 @@
     <string name="permission_ask_again">Grant permission</string>
     <string name="exit_app">Close HD XPlayer</string>
     <string name="rename">Rename</string>
+    <string name="theme">Theme</string>
+    <string name="night_mode">Theme</string>
+    <string name="share_app">Share app</string>
     <!--fast scroller-->
     <!--Plugins-->
 </resources>

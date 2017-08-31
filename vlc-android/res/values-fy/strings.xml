@@ -223,8 +223,8 @@
     <string name="screen_orientation_landscape">Lizzend</string>
     <string name="screen_orientation_reverse_portrait">Omkeard steand</string>
     <string name="screen_orientation_reverse_landscape">Omkeard lizzend</string>
-    <string name="enable_black_theme">Swart tema ynskeakelje</string>
-    <string name="enable_black_theme_summary">De úterlik-kleuren wizigje foar in better komfort yn omjouwingen mei net in protte ljocht.</string>
+    <string name="enable_night_theme">Swart tema ynskeakelje</string>
+    <string name="enable_night_theme_summary">De úterlik-kleuren wizigje foar in better komfort yn omjouwingen mei net in protte ljocht.</string>
     <string name="subtitle_text_encoding">Undertitel-tekstkodearring</string>
     <string name="daynight_title">DeiNacht-modus</string>
     <string name="daynight_summary">Automatysk nei nachtmodus skeakelje op geskikte tiid</string>

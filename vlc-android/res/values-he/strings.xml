@@ -223,8 +223,8 @@
     <string name="screen_orientation_landscape">לאורך</string>
     <string name="screen_orientation_reverse_portrait">לרוחב הפוך</string>
     <string name="screen_orientation_reverse_landscape">לאורך הפוך</string>
-    <string name="enable_black_theme">הפעלת ערכת העיצוב השחורה</string>
-    <string name="enable_black_theme_summary">החלפת צבעי המנשק לנוחות מוגברת בסביבה עם מעט אור.</string>
+    <string name="enable_night_theme">הפעלת ערכת העיצוב השחורה</string>
+    <string name="enable_night_theme_summary">החלפת צבעי המנשק לנוחות מוגברת בסביבה עם מעט אור.</string>
     <string name="subtitle_text_encoding">קידוד טקסט הכתוביות</string>
     <string name="daynight_title">מצב יום לילה</string>
     <string name="daynight_summary">מעבר אוטומטי למצב לילה לפי השעה המתאימה</string>
@@ -418,4 +418,7 @@
     <string name="videos">סרטונים</string>
     <string name="clear_playback_history">מחיקת היסטוריית הנגינה</string>
     <string name="rename">שנה שם</string>
+    <string name="theme">ערכת נושא</string>
+    <string name="night_mode">מצב לילה</string>
+    <string name="share_app">שיתוף</string>
 </resources>

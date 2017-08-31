@@ -224,8 +224,8 @@
     <string name="screen_orientation_landscape">Paisagem</string>
     <string name="screen_orientation_reverse_portrait">Retrato Invertido</string>
     <string name="screen_orientation_reverse_landscape">Paisagem Invertida</string>
-    <string name="enable_black_theme">Habilitar o tema escuro</string>
-    <string name="enable_black_theme_summary">Altera as cores da interface para melhorar o conforto em ambientes de pouca iluminação.</string>
+    <string name="enable_night_theme">Habilitar o tema escuro</string>
+    <string name="enable_night_theme_summary">Altera as cores da interface para melhorar o conforto em ambientes de pouca iluminação.</string>
     <string name="subtitle_text_encoding">Codificação de texto de legenda</string>
     <string name="daynight_title">Modo Dia e Noite</string>
     <string name="daynight_summary">Alterna para o modo noturno no momento adequado</string>
@@ -425,4 +425,7 @@
     <string name="last_added_media">último adicionado</string>
     <string name="no">Não</string>
     <string name="rename">Renomear</string>
+    <string name="theme">Tema</string>
+    <string name="night_mode">Modo noturno</string>
+    <string name="share_app">Compartilhar</string>
 </resources>

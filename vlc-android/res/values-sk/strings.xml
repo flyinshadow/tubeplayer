@@ -232,8 +232,8 @@
     <string name="screen_orientation_landscape">Na šírku</string>
     <string name="screen_orientation_reverse_portrait">Na výšku, obrátene</string>
     <string name="screen_orientation_reverse_landscape">Na šírku, obrátene</string>
-    <string name="enable_black_theme">Zapnúť čiernu tému</string>
-    <string name="enable_black_theme_summary">Zmeniť farby rozhrania pre lepší komfort v prostredí so slabým osvetlením.</string>
+    <string name="enable_night_theme">Zapnúť čiernu tému</string>
+    <string name="enable_night_theme_summary">Zmeniť farby rozhrania pre lepší komfort v prostredí so slabým osvetlením.</string>
     <string name="subtitle_text_encoding">Kódovanie textu titulkov</string>
     <string name="daynight_title">Režim deň/noc</string>
     <string name="daynight_summary">Automaticky prepnúť na nočný režim vo vhodnom čase</string>
@@ -456,4 +456,7 @@
     <string name="no">Nie</string>
     <string name="loading_medialibrary">Načítavanie knižnice s médiami...</string>
     <string name="rename">premenovať</string>
+    <string name="theme">Motív</string>
+    <string name="night_mode">Nočný režim</string>
+    <string name="share_app">Podiel</string>
 </resources>

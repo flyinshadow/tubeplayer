@@ -225,8 +225,8 @@
     <string name="screen_orientation_landscape">Landskap</string>
     <string name="screen_orientation_reverse_portrait">Opp-ned portrett</string>
     <string name="screen_orientation_reverse_landscape">Opp-ned landskap</string>
-    <string name="enable_black_theme">Ifør svart drakt</string>
-    <string name="enable_black_theme_summary">Endre fargene til grensesnittet, for økt komfort i miljøer med lite lys.</string>
+    <string name="enable_night_theme">Ifør svart drakt</string>
+    <string name="enable_night_theme_summary">Endre fargene til grensesnittet, for økt komfort i miljøer med lite lys.</string>
     <string name="subtitle_text_encoding">Undertekstkoding</string>
     <string name="daynight_title">Dag/Natt-modus</string>
     <string name="daynight_summary">Bytt automatisk til nattmodus på et passende tidspunkt</string>
@@ -457,4 +457,7 @@
     <string name="no">Nei</string>
     <string name="loading_medialibrary">Laster inn mediebiblioteket...</string>
     <string name="rename">Gi nytt navn</string>
+    <string name="theme">Tema</string>
+    <string name="night_mode">Nattmodus</string>
+    <string name="share_app">Aksje</string>
 </resources>

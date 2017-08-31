@@ -18,7 +18,7 @@
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <solid android:color="@color/tube_red500transparent" />
+                <solid android:color="?attr/colorAccent" />
             </shape>
         </clip>
     </item>

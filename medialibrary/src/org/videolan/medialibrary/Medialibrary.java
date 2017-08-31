@@ -96,8 +96,10 @@ public class Medialibrary {
     }
 
     public void discover(@NonNull String path) {
-        if (mIsInitiated)
+        LogUtil.d(TAG, "mIsInitiated : " + mIsInitiated + ", discover path : " + path);
+        if (mIsInitiated) {
             nativeDiscover(Tools.encodeVLCMrl(path));
+        }
     }
 
     public void removeFolder(@NonNull String path) {

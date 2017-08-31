@@ -216,8 +216,8 @@
     <string name="screen_orientation_landscape">แนวนอน</string>
     <string name="screen_orientation_reverse_portrait">แนวตั้งหัวกลับ</string>
     <string name="screen_orientation_reverse_landscape">แนวนอน สลับหัวท้าย</string>
-    <string name="enable_black_theme">เปิดใช้ชุดตกแต่งโทนสีดำ</string>
-    <string name="enable_black_theme_summary">เปลีี่ยนสีพื้นของโปรแกรมให้เหมาะสมกับสถานที่ซึ่งมีแสงน้อย</string>
+    <string name="enable_night_theme">เปิดใช้ชุดตกแต่งโทนสีดำ</string>
+    <string name="enable_night_theme_summary">เปลีี่ยนสีพื้นของโปรแกรมให้เหมาะสมกับสถานที่ซึ่งมีแสงน้อย</string>
     <string name="subtitle_text_encoding">การลงรหัสข้อความบทบรรยาย</string>
     <string name="daynight_summary">สลับไปใช้โหมดกลางคืนโดยอัตโนมัติเมื่อถึงเวลาที่เหมาะสม</string>
     <string name="extra_prefs_category">ค่าตั้งพิเศษอื่นๆ</string>
@@ -334,4 +334,7 @@
     <string name="browse_folder">เรียกดูจากโฟลเดอร์</string>
     <string name="connecting">กำลังเชื่อมต่อ...</string>
     <string name="rename">ตั้งชื่อใหม่</string>
+    <string name="theme">ชุดรูปแบบ</string>
+    <string name="night_mode">โหมดกลางคืน</string>
+    <string name="share_app">ใช้ร่วมกัน</string>
 </resources>

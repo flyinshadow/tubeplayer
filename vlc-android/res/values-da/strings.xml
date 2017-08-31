@@ -225,8 +225,8 @@
     <string name="screen_orientation_landscape">Landskab</string>
     <string name="screen_orientation_reverse_portrait">Omvendt portræt</string>
     <string name="screen_orientation_reverse_landscape">Omvendt landskab</string>
-    <string name="enable_black_theme">Aktivér det sorte tema</string>
-    <string name="enable_black_theme_summary">Skift farverne på brugerfladen for bedre komfort i miljøer med svag belysning.</string>
+    <string name="enable_night_theme">Aktivér det sorte tema</string>
+    <string name="enable_night_theme_summary">Skift farverne på brugerfladen for bedre komfort i miljøer med svag belysning.</string>
     <string name="subtitle_text_encoding">Tekstkodning for undertekster</string>
     <string name="daynight_title">Dag-nat-tilstand</string>
     <string name="daynight_summary">Skift automatisk til nat-tilstand på passende tidspunkt</string>
@@ -457,4 +457,7 @@
     <string name="no">Nej</string>
     <string name="loading_medialibrary">Indlæser mediebibliotek...</string>
     <string name="rename">Omdøb</string>
+    <string name="theme">Tema</string>
+    <string name="night_mode">Night-indstilling</string>
+    <string name="share_app">Andel</string>
 </resources>

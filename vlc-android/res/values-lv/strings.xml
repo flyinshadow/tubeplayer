@@ -165,7 +165,7 @@
     <string name="screen_orientation_landscape">Ainava</string>
     <string name="screen_orientation_reverse_portrait">Atpakaļgaitas portrets</string>
     <string name="screen_orientation_reverse_landscape">Atgriezt ainavu</string>
-    <string name="enable_black_theme">Aktivizēt melno tēmu</string>
+    <string name="enable_night_theme">Aktivizēt melno tēmu</string>
     <string name="subtitle_text_encoding">Apakšvirsraksta teksta kodēšana</string>
     <string name="interface_prefs_screen">Interfeiss</string>
     <string name="interface_other_category">Interfeiss - Cits</string>
@@ -216,6 +216,9 @@
     <string name="dump_logcat_failure">Neizdevās izgāzt logcat.</string>
     <string name="restart_vlc">Pārstartēt HD XPlayer</string>
     <string name="rename">Pārdēvēt</string>
+    <string name="theme">Tēma</string>
+    <string name="night_mode">Nakts režīms</string>
+    <string name="share_app">Akciju</string>
     <!--Accessibility-->
     <!--Widget-->
 </resources>

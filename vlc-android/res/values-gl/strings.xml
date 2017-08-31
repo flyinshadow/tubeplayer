@@ -184,8 +184,8 @@
     <string name="screen_orientation_landscape">Horizontal</string>
     <string name="screen_orientation_reverse_portrait">Vertical invertida</string>
     <string name="screen_orientation_reverse_landscape">Horizontal invertida</string>
-    <string name="enable_black_theme">Activar o tema escuro</string>
-    <string name="enable_black_theme_summary">Muda as cores da interface para seren máis confortábeis en ambientes con pouca luz.</string>
+    <string name="enable_night_theme">Activar o tema escuro</string>
+    <string name="enable_night_theme_summary">Muda as cores da interface para seren máis confortábeis en ambientes con pouca luz.</string>
     <string name="subtitle_text_encoding">Codificación do texto dos subtítulos</string>
     <string name="extra_prefs_category">Configuracións extra</string>
     <string name="interface_prefs_screen">Interface</string>

@@ -174,8 +174,8 @@
     <string name="screen_orientation_landscape">Eniga</string>
     <string name="screen_orientation_reverse_portrait">Bo‘yiga teskari</string>
     <string name="screen_orientation_reverse_landscape">Eniga teskari</string>
-    <string name="enable_black_theme">Tungi rejimni yoqish</string>
-    <string name="enable_black_theme_summary">Yorug‘lik kam bo‘lgan muhitda yanada qulay bo‘lishi uchun interfeys ranglarini o‘zgartiring.</string>
+    <string name="enable_night_theme">Tungi rejimni yoqish</string>
+    <string name="enable_night_theme_summary">Yorug‘lik kam bo‘lgan muhitda yanada qulay bo‘lishi uchun interfeys ranglarini o‘zgartiring.</string>
     <string name="subtitle_text_encoding">Subtitr matnini kodlash</string>
     <string name="extra_prefs_category">Qo‘shimcha sozlamalar</string>
     <string name="interface_prefs_screen">Interfeys</string>

@@ -25,17 +25,22 @@ import android.content.SharedPreferences;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.media.Image;
 import android.preference.PreferenceManager;
 import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -74,6 +79,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     final static int UPDATE_THUMB = 1;
     final static int UPDATE_TIME = 2;
 
+    public final static int VIEW_MODE_BIGPIC = 2;
+    public final static int VIEW_MODE_LIST = 1;
+    public final static int VIEW_MODE_GRID = 0;
+    public final static int VIEW_MODE_MAX = 3;
+
+    public final static int VIEW_MODE_DEFAULT = VIEW_MODE_GRID;
+
     private boolean mListMode = false;
     private IEventsHandler mEventsHandler;
     private VideoComparator mVideoComparator = new VideoComparator();
@@ -84,9 +96,12 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     private int mSelectionCount = 0;
     private int mGridCardWidth = 0;
 
-    VideoListAdapter(IEventsHandler eventsHandler) {
+    private int mCurrentViewMode = VIEW_MODE_DEFAULT;
+
+    VideoListAdapter(IEventsHandler eventsHandler, int viewMode) {
         super();
         mEventsHandler = eventsHandler;
+        mCurrentViewMode = viewMode;
     }
 
     VideoComparator getComparator() {
@@ -96,13 +111,22 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflater.inflate(mListMode ? R.layout.video_list_card : R.layout.video_grid_card, parent, false);
-        if (!mListMode) {
-            GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) v.getLayoutParams();
-            params.width = mGridCardWidth;
-            params.height = params.width*10/16;
-            v.setLayoutParams(params);
+        int video_layout = R.layout.video_grid_card;
+        if (mCurrentViewMode == VIEW_MODE_GRID) {
+            video_layout = R.layout.video_grid_card;
+        } else if (mCurrentViewMode == VIEW_MODE_LIST) {
+            video_layout = R.layout.video_list_card;
+        } else if (mCurrentViewMode == VIEW_MODE_BIGPIC) {
+            video_layout = R.layout.video_bigpic_card;
         }
+        View v = inflater.inflate(video_layout, parent, false);
+//        if (!mListMode) {
+//            GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) v.getLayoutParams();
+//            params.width = mGridCardWidth;
+////            params.height = params.width;//*10/16;
+//            params.height = GridLayoutManager.LayoutParams.WRAP_CONTENT;
+//            v.setLayoutParams(params);
+//        }
         return new ViewHolder(v);
     }
 
@@ -115,8 +139,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         fillView(holder, media);
         holder.binding.setVariable(BR.media, media);
         boolean isSelected = media.hasStateFlags(MediaLibraryItem.FLAG_SELECTED);
-        holder.setOverlay(isSelected);
-        holder.binding.setVariable(BR.bgColor, ContextCompat.getColor(holder.itemView.getContext(), mListMode && isSelected ? R.color.orange200transparent : R.color.transparent));
+        holder.binding.setVariable(BR.selected, isSelected);
+//        holder.binding.setVariable(BR.bgColor, ContextCompat.getColor(holder.itemView.getContext(), mListMode && isSelected ? R.color.orange200transparent : R.color.transparent));
     }
 
     @Override
@@ -135,7 +159,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                         break;
                     case UPDATE_SELECTION:
                         boolean isSelected = media.hasStateFlags(MediaLibraryItem.FLAG_SELECTED);
-                        holder.setOverlay(isSelected);
+                        holder.binding.setVariable(BR.selected, isSelected);
                         holder.binding.setVariable(BR.bgColor, ContextCompat.getColor(holder.itemView.getContext(), mListMode && isSelected ? R.color.orange200transparent : R.color.transparent));
                         break;
                 }
@@ -166,6 +190,19 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         ArrayList<MediaWrapper> list = new ArrayList<>(peekLast());
         list.add(item);
         update(list, false);
+    }
+
+    @MainThread
+    public void updateVideo(MediaWrapper srcItem, MediaWrapper dstItem) {
+        ArrayList<MediaWrapper> refList = new ArrayList<>(peekLast());
+//        if (refList.remove(srcItem) && refList.add(dstItem)) {
+//            update(refList, false);
+//        }
+        int position = refList.indexOf(srcItem);
+        if (position != -1) {
+            refList.set(position, dstItem);
+        }
+        update(refList, false);
     }
 
     @MainThread
@@ -256,11 +293,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             if (media.getLength() > 0) {
                 long lastTime = media.getTime();
                 if (lastTime > 0) {
-                    text = Tools.getProgressText(media);
+//                    text = Tools.getProgressText(media);
+                    text = Tools.getProgressString(media);
                     max = (int) (media.getLength() / 1000);
                     progress = (int) (lastTime / 1000);
                 } else {
-                    text = Tools.millisToText(media.getLength());
+//                    text = Tools.millisToText(media.getLength());
+                    text = Tools.millisToString(media.getLength());
                 }
             }
             resolution = Tools.getResolution(media);
@@ -284,6 +323,15 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         return mListMode;
     }
 
+    public void toggleViewMode(int targetViewMode) {
+        mCurrentViewMode = targetViewMode;
+        notifyDataSetChanged();
+    }
+
+    public int getCurrentViewMode() {
+        return mCurrentViewMode;
+    }
+
     @Override
     public long getItemId(int position) {
         return 0L;
@@ -296,7 +344,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     @Override
     public int getItemViewType(int position) {
-        return super.getItemViewType(position);
+//        return super.getItemViewType(position);
+        return mCurrentViewMode;
     }
 
     int getListWithPosition(ArrayList<MediaWrapper>  list, int position) {
@@ -323,6 +372,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             super(itemView);
             binding = DataBindingUtil.bind(itemView);
             thumbView = (ImageView) itemView.findViewById(R.id.ml_item_thumbnail);
+
             binding.setVariable(BR.holder, this);
             binding.setVariable(BR.cover, AsyncImageLoader.DEFAULT_COVER_VIDEO_DRAWABLE);
             itemView.setOnFocusChangeListener(this);
@@ -342,9 +392,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             return mEventsHandler.onLongClick(v, position, mVideos.get(position));
         }
 
-        private void setOverlay(boolean selected) {
-            thumbView.setImageResource(selected ? R.drawable.ic_action_mode_select_1610 : mListMode ? 0 : R.drawable.black_gradient);
-        }
+//        private void setOverlay(boolean selected) {
+//            thumbView.setImageResource(selected ? R.drawable.ic_action_mode_select_1610 : mListMode ? 0 : R.drawable.black_gradient);
+//        }
 
         @Override
         public void onFocusChange(View v, boolean hasFocus) {

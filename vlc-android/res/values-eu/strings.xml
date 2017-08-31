@@ -142,8 +142,8 @@
     <string name="screen_orientation_landscape">Horizontala</string>
     <string name="screen_orientation_reverse_portrait">Alderantzizko bertikala</string>
     <string name="screen_orientation_reverse_landscape">Alderantzizko horizontala</string>
-    <string name="enable_black_theme">Gaitu itxura beltza</string>
-    <string name="enable_black_theme_summary">Aldatu interfazearen koloreak argi gutxiko inguruneetan erosotasun handiagoa izateko.</string>
+    <string name="enable_night_theme">Gaitu itxura beltza</string>
+    <string name="enable_night_theme_summary">Aldatu interfazearen koloreak argi gutxiko inguruneetan erosotasun handiagoa izateko.</string>
     <string name="subtitle_text_encoding">Azpitituluen testu-kodeketa</string>
     <string name="extra_prefs_category">Aparteko ezarpenak</string>
     <string name="enable_brightness_gesture">Gaitu distiraren keinua</string>

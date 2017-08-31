@@ -232,8 +232,8 @@
     <string name="screen_orientation_landscape">Альбомна</string>
     <string name="screen_orientation_reverse_portrait">Перевернута книжкова</string>
     <string name="screen_orientation_reverse_landscape">Перевернута альбомна</string>
-    <string name="enable_black_theme">Увімкнути чорну тему</string>
-    <string name="enable_black_theme_summary">Змінити кольори інтерфейсу для більшої зручності при поганому освітленні.</string>
+    <string name="enable_night_theme">Увімкнути чорну тему</string>
+    <string name="enable_night_theme_summary">Змінити кольори інтерфейсу для більшої зручності при поганому освітленні.</string>
     <string name="subtitle_text_encoding">Кодування тексту субтитрів</string>
     <string name="daynight_title">Режим день-ніч</string>
     <string name="daynight_summary">Автоматичне перемикання в нічний режим у відповідний час</string>
@@ -464,4 +464,7 @@
     <string name="no">Ні</string>
     <string name="loading_medialibrary">Завантажується бібліотека медіа…</string>
     <string name="rename">Перейменувати</string>
+    <string name="theme">Тема</string>
+    <string name="night_mode">Нічний режим</string>
+    <string name="share_app">Частка</string>
 </resources>

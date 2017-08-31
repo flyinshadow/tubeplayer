@@ -34,8 +34,8 @@
         android:layout_marginLeft="@dimen/time_margin_sides"
         android:gravity="left"
         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-        android:textColor="@color/tube_red500"
         android:textSize="16sp"/>
+    <!--android:textColor="?attr/theme_color"-->
 
     <TextView
         android:id="@+id/player_overlay_length"

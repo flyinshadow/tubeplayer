@@ -168,8 +168,8 @@
     <string name="screen_orientation_landscape">Dreach-tìre</string>
     <string name="screen_orientation_reverse_portrait">Portraid bun os cionn</string>
     <string name="screen_orientation_reverse_landscape">Dreach-tìre bun os cionn</string>
-    <string name="enable_black_theme">Cuir an t-ùrlar dubh an comas</string>
-    <string name="enable_black_theme_summary">Atharraich dathan na h-eadar-aghaidh airson \'s gum bi e nas cofhurtaile ann an droch-sholas.</string>
+    <string name="enable_night_theme">Cuir an t-ùrlar dubh an comas</string>
+    <string name="enable_night_theme_summary">Atharraich dathan na h-eadar-aghaidh airson \'s gum bi e nas cofhurtaile ann an droch-sholas.</string>
     <string name="subtitle_text_encoding">Còdachadh teacsa nam fo-thiotal</string>
     <string name="extra_prefs_category">Roghainnean a bharrachd</string>
     <string name="interface_prefs_screen">Eadar-aghaidh</string>

@@ -239,8 +239,8 @@
     <string name="screen_orientation_landscape">Ležeče</string>
     <string name="screen_orientation_reverse_portrait">Obratno pokončno</string>
     <string name="screen_orientation_reverse_landscape">Obratno ležeče</string>
-    <string name="enable_black_theme">Omogoči črno temo</string>
-    <string name="enable_black_theme_summary">Spremeni barve vmesnika za prijetnejše delo v slabše osvetljenih okoljih.</string>
+    <string name="enable_night_theme">Omogoči črno temo</string>
+    <string name="enable_night_theme_summary">Spremeni barve vmesnika za prijetnejše delo v slabše osvetljenih okoljih.</string>
     <string name="subtitle_text_encoding">Kodiranje besedila podnapisov</string>
     <string name="daynight_title">Dnevno/Nočni način</string>
     <string name="daynight_summary">Samodejno preklopi na nočni način ob ustreznem času</string>
@@ -467,4 +467,7 @@
     <string name="no">Ne</string>
     <string name="loading_medialibrary">Poteka nalaganje predstavne knjižnice ...</string>
     <string name="rename">Preimenuj</string>
+    <string name="theme">Tema</string>
+    <string name="night_mode">Nočni način</string>
+    <string name="share_app">Delež</string>
 </resources>

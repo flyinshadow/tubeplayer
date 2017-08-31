@@ -109,6 +109,8 @@ public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.
         mLayoutParams.width = width;
         mLayoutParams.height = height;
         mWindowManager.updateViewLayout(this, mLayoutParams);
+        mPopupWidth = width;
+        mPopupHeight = height;
         if (mVLCVout != null)
             mVLCVout.setWindowSize(mPopupWidth, mPopupHeight);
     }
@@ -119,6 +121,7 @@ public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.
 
         mPopupWidth = VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_width);
         mPopupHeight = VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_heigth);
+
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 mPopupWidth,
                 mPopupHeight,

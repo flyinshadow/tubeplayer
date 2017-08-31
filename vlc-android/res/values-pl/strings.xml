@@ -239,8 +239,8 @@
     <string name="screen_orientation_landscape">Pejzaż</string>
     <string name="screen_orientation_reverse_portrait">Odwrócony portret</string>
     <string name="screen_orientation_reverse_landscape">Odwrócony pejzaż</string>
-    <string name="enable_black_theme">Włącz czarny motyw</string>
-    <string name="enable_black_theme_summary">Zmień kolory interfejsu dla lepszego komfortu w trudnych warunkach oświetleniowych.</string>
+    <string name="enable_night_theme">Włącz czarny motyw</string>
+    <string name="enable_night_theme_summary">Zmień kolory interfejsu dla lepszego komfortu w trudnych warunkach oświetleniowych.</string>
     <string name="subtitle_text_encoding">Kodowanie tekstu napisów</string>
     <string name="daynight_title">Tryb dzień/noc</string>
     <string name="daynight_summary">W odpowiednim czasie automatycznie przełącz w tryb nocny</string>
@@ -471,4 +471,7 @@
     <string name="no">Nie</string>
     <string name="loading_medialibrary">Ładowanie biblioteki mediów...</string>
     <string name="rename">Przemianować</string>
+    <string name="theme">Tematu</string>
+    <string name="night_mode">Tryb nocny</string>
+    <string name="share_app">Udostępnij</string>
 </resources>

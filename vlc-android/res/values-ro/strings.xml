@@ -161,8 +161,8 @@
     <string name="screen_orientation_landscape">Peisaj</string>
     <string name="screen_orientation_reverse_portrait">Întoarcere portret</string>
     <string name="screen_orientation_reverse_landscape">Întoarcere peisaj</string>
-    <string name="enable_black_theme">Activaţi tematica neagră</string>
-    <string name="enable_black_theme_summary">Schimbaţi culorile interfeței pentru un confort mai bun în mediile slab iluminate.</string>
+    <string name="enable_night_theme">Activaţi tematica neagră</string>
+    <string name="enable_night_theme_summary">Schimbaţi culorile interfeței pentru un confort mai bun în mediile slab iluminate.</string>
     <string name="subtitle_text_encoding">Codificarea textului din subtitlu</string>
     <string name="extra_prefs_category">Extra Configurări</string>
     <string name="interface_prefs_screen">Interfață</string>
@@ -219,6 +219,9 @@
     <string name="send_log">Trimite jurnalul</string>
     <string name="sending_log">Se trimite jurnalul...</string>
     <string name="rename">Redenumiți</string>
+    <string name="theme">Tematica</string>
+    <string name="night_mode">Mod noapte</string>
+    <string name="share_app">Cota</string>
     <!--Accessibility-->
     <!--Widget-->
 </resources>

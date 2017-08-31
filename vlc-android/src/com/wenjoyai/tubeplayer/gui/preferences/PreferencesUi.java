@@ -72,7 +72,7 @@ public class PreferencesUi extends BasePreferenceFragment implements SharedPrefe
             case "tv_ui":
                 ((PreferencesActivity) getActivity()).setRestartApp();
                 return true;
-            case "enable_black_theme":
+            case "enable_night_theme":
                 ((PreferencesActivity) getActivity()).exitAndRescan();
                 return true;
             case "daynight":

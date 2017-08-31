@@ -190,8 +190,8 @@
     <string name="screen_orientation_landscape">Lanskap</string>
     <string name="screen_orientation_reverse_portrait">Potret jungkir</string>
     <string name="screen_orientation_reverse_landscape">Lanskap jungkir</string>
-    <string name="enable_black_theme">Aktifkan tema gelap</string>
-    <string name="enable_black_theme_summary">Ubah warna antarmuka untuk kenyamanan pada lingkungan rendah cahaya.</string>
+    <string name="enable_night_theme">Aktifkan tema gelap</string>
+    <string name="enable_night_theme_summary">Ubah warna antarmuka untuk kenyamanan pada lingkungan rendah cahaya.</string>
     <string name="subtitle_text_encoding">Pengkodean teks terjemahan</string>
     <string name="extra_prefs_category">Pengaturan ekstra</string>
     <string name="interface_prefs_screen">Antarmuka</string>
@@ -290,6 +290,9 @@
     <string name="widget_name_w">HD XPlayer Widget Putih</string>
     <string name="widget_name_b">HD XPlayer Widget Gelap</string>
     <string name="rename">Ganti nama</string>
+    <string name="theme">Tema</string>
+    <string name="night_mode">Modus malam</string>
+    <string name="share_app">Berbagi</string>
     <!--fast scroller-->
     <!--Plugins-->
 </resources>

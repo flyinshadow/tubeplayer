@@ -10,6 +10,10 @@
     </style>
 
     <style name="Theme.VLC.Apearance" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="theme_color">@color/theme_color_black</item>
+        <item name="theme_color_dark">@color/theme_color_black_dark</item>
+        <item name="theme_color_light">@color/theme_color_black_light</item>
+
         <item name="marginTopContent">50dp</item>
         <item name="toolbar_popup_style">@style/ThemeOverlay.AppCompat.Light</item>
 
@@ -18,20 +22,17 @@
         <item name="android:dropDownListViewStyle">@style/Theme.VLC.List</item>
         <item name="preferenceTheme">@style/VLCPreferenceTheme.Light</item>
 
-
-        <!--<item name="colorPrimary">@color/orange800</item>-->
-        <!--<item name="colorPrimaryDark">@color/orange700</item>-->
-        <!--<item name="colorAccent">@color/orange500</item>-->
-        <item name="colorPrimary">@color/tube_primary</item>s
-        <item name="colorPrimaryDark">@color/tube_primary_dark</item>
-        <item name="colorAccent">@color/tube_red900</item>
+        <item name="colorPrimary">@color/theme_color_black</item>
+        <item name="colorPrimaryDark">@color/theme_color_black_dark</item>
+        <item name="colorAccent">@color/theme_color_black_accent</item>
 
         <item name="windowActionModeOverlay">true</item>
-        <item name="actionModeBackground">@color/tube_red500</item>
+        <item name="actionModeBackground">@color/theme_color_black_light</item>
         <item name="item_footer">@color/grey300</item>
-        <item name="background_default">@color/grey50</item>
-        <item name="background_default_darker">@color/grey100</item>
-        <item name="background_actionbar">@color/tube_background_actionbar</item>
+        <item name="background_default">@color/grey100</item>
+        <item name="background_default_darker">@color/grey200</item>
+        <!--<item name="background_actionbar">@color/tube_background_actionbar</item>-->
+        <item name="background_actionbar">?attr/theme_color</item>
         <!--<item name="background_actionbar">@color/orange500</item>-->
         <item name="background_menu_divider">@color/grey400</item>
         <item name="background_menu">@color/grey200</item>
@@ -40,19 +41,19 @@
         <item name="background_header">@color/grey300</item>
         <item name="background_audio_tips">@color/grey50transparent</item>
         <item name="audio_player_background_tint">@color/whitetransparent</item>
-        <item name="audio_browser_separator">@color/tube_red500</item>
-        <item name="playlist_item_drag_shadow">@color/tube_red500</item>
-        <item name="audio_player_header_time">@color/tube_red500</item>
+        <item name="audio_browser_separator">?attr/theme_color</item>
+        <item name="playlist_item_drag_shadow">?attr/theme_color</item>
+        <item name="audio_player_header_time">?attr/theme_color</item>
         <item name="font_default">@color/grey900</item>
         <item name="font_light">@color/grey600</item>
-        <item name="font_actionbar">@color/tube_red200</item>
-        <item name="font_actionbar_selected">@color/grey50</item>
+        <item name="font_actionbar">@color/white87transparent</item>
+        <item name="font_actionbar_selected">@color/white</item>
         <item name="navigationview_item_color">@color/navigationview_color</item>
         <item name="list_menu">@color/grey600</item>
-        <item name="list_subtitle">@color/list_subtitle</item>
-        <item name="list_title_last">@color/list_title_last</item>
-        <item name="list_title">@color/list_title</item>
-        <item name="android:windowBackground">@color/grey200</item>
+        <item name="list_subtitle">@color/grey600</item>
+        <item name="list_title_last">?attr/colorAccent</item>
+        <item name="list_title">@color/grey900</item>
+        <item name="android:windowBackground">@color/grey100</item>
 
         <item name="ic_playlist">@drawable/ic_playlist</item>
         <item name="ic_playlist_on">@drawable/ic_playlist_on</item>
@@ -96,9 +97,9 @@
         <item name="background_default_darker">@color/grey100</item>
         <item name="font_default">@color/grey900</item>
         <item name="font_light">@color/grey600</item>
-        <item name="list_subtitle">@color/list_subtitle</item>
-        <item name="list_title">@color/list_title</item>
-        <item name="android:windowBackground">@color/grey200</item>
+        <item name="list_subtitle">@color/list_subtitle_item</item>
+        <item name="list_title">@color/list_title_item</item>
+        <item name="android:windowBackground">@color/grey100</item>
         <item name="android:textViewStyle">@style/TextView</item>
     </style>
 
@@ -111,6 +112,10 @@
     </style>
 
     <style name="Theme.VLC.Apearance.Black" parent="Theme.AppCompat.NoActionBar">
+        <item name="theme_color">@color/theme_color_black</item>
+        <item name="theme_color_dark">@color/theme_color_black_dark</item>
+        <item name="theme_color_light">@color/theme_color_black_light</item>
+
         <item name="marginTopContent">50dp</item>
         <item name="toolbar_popup_style">@style/ThemeOverlay.AppCompat.Dark</item>
 
@@ -122,8 +127,8 @@
         <!--<item name="colorPrimary">@color/orange800</item>-->
         <item name="colorPrimaryDark">@color/transparent</item>
         <!--<item name="colorAccent">@color/orange600</item>-->
-        <item name="colorPrimary">@color/tube_primary</item>
-        <item name="colorAccent">@color/tube_red900</item>
+        <item name="colorPrimary">@color/theme_color_black</item>
+        <item name="colorAccent">@color/theme_color_black_accent</item>
 
         <item name="item_footer">@color/grey700</item>
         <item name="windowActionModeOverlay">true</item>
@@ -138,9 +143,9 @@
         <item name="background_header">@color/grey900</item>
         <item name="background_audio_tips">@color/grey900transparent</item>
         <item name="audio_player_background_tint">@color/grey900transparent</item>
-        <item name="audio_browser_separator">@color/tube_red500</item>
-        <item name="playlist_item_drag_shadow">@color/tube_red500</item>
-        <item name="audio_player_header_time">@color/tube_red500</item>
+        <item name="audio_browser_separator">?attr/colorAccent</item>
+        <item name="playlist_item_drag_shadow">@color/grey200</item>
+        <item name="audio_player_header_time">@color/grey200</item>
         <item name="font_default">@color/grey50</item>
         <item name="font_light">@color/grey600</item>
         <item name="font_actionbar">@color/grey600</item>
@@ -148,7 +153,7 @@
         <item name="navigationview_item_color">@color/navigationview_color_dark</item>
         <item name="list_menu">@color/grey50</item>
         <item name="list_subtitle">@color/grey400</item>
-        <item name="list_title_last">@color/list_title_last</item>
+        <item name="list_title_last">?attr/colorAccent</item>
         <item name="list_title">@color/bt_list_title</item>
         <item name="android:windowBackground">@color/grey900</item>
 
@@ -241,10 +246,10 @@
         <item name="windowActionBarOverlay">true</item>
 
         <!--<item name="colorPrimary">@color/orange800</item>-->
-        <item name="colorPrimary">@color/tube_primary</item>
+        <item name="colorPrimary">@color/theme_color_black</item>
         <item name="colorPrimaryDark">@color/transparent</item>
         <!--<item name="colorAccent">@color/orange800</item>-->
-        <item name="colorAccent">@color/tube_red900</item>
+        <item name="colorAccent">@color/theme_color_black_accent</item>
 
         <item name="rounded_bg">@drawable/rounded_corners</item>
         <item name="advanced_options_style">@style/Theme.AppCompat.Dialog</item>
@@ -261,8 +266,10 @@
         <item name="ic_shuffle">@drawable/ic_shuffle_w</item>
 
         <item name="list_subtitle">@color/grey400</item>
-        <item name="list_title_last">@color/list_title_last</item>
+        <item name="list_title_last">?attr/colorAccent</item>
         <item name="list_title">@color/bt_list_title</item>
+
+
     </style>
 
     <style name="VLCTransparentTheme" parent="Theme.VLC">
@@ -297,7 +304,7 @@
 
     <style name="Result.Title" parent="Base.TextAppearance.AppCompat.Subhead">
         <item name="textAllCaps">true</item>
-        <item name="android:textColor">@color/tube_red500</item>
+        <item name="android:textColor">?attr/theme_color</item>
     </style>
 
     <style name="Result.List" parent="Base.Widget.AppCompat.ListView">
@@ -320,11 +327,482 @@
     <!-- Tips Apearance-->
 
     <style name="TipsFontStyle">
-      <item name="android:textColor">@color/tube_red700</item>
+      <item name="android:textColor">?attr/theme_color</item>
       <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TipsFontStyle.Small" parent="TipsFontStyle">
       <item name="android:textSize">10sp</item>
     </style>
+
+
+    <style name="Theme.HDXPlayer.Apearance.Black" parent="Theme.VLC.Apearance">
+        <item name="theme_color">@color/theme_color_black</item>
+        <item name="theme_color_dark">@color/theme_color_black_dark</item>
+        <item name="theme_color_light">@color/theme_color_black_light</item>
+
+        <item name="colorPrimary">@color/theme_color_black</item>
+        <item name="colorPrimaryDark">@color/theme_color_black_dark</item>
+        <item name="colorAccent">@color/theme_color_black_accent</item>
+
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">@color/theme_color_black</item>
+        <item name="item_footer">@color/grey300</item>
+        <item name="background_default">@color/grey100</item>
+        <item name="background_default_darker">@color/grey200</item>
+        <!--<item name="background_actionbar">@color/theme_color_black</item>-->
+        <item name="background_menu_divider">@color/grey400</item>
+        <item name="background_menu">@color/grey200</item>
+        <item name="background_menu_selected">@color/grey300</item>
+        <item name="background_player">@color/grey100</item>
+        <item name="background_header">@color/grey300</item>
+        <item name="background_audio_tips">@color/grey50transparent</item>
+        <item name="audio_player_background_tint">@color/whitetransparent</item>
+        <!--<item name="audio_browser_separator">@color/theme_color_black</item>-->
+        <!--<item name="playlist_item_drag_shadow">@color/theme_color_black</item>-->
+        <!--<item name="audio_player_header_time">@color/theme_color_black</item>-->
+        <item name="font_default">@color/grey900</item>
+        <item name="font_light">@color/grey600</item>
+        <item name="font_actionbar">@color/white87transparent</item>
+        <item name="font_actionbar_selected">@color/white</item>
+        <item name="navigationview_item_color">@color/navigationview_color</item>
+        <!--<item name="list_menu">@color/grey600</item>-->
+        <!--<item name="list_subtitle">@color/list_subtitle_item</item>-->
+        <!--<item name="list_title_last">@color/list_title_last_item</item>-->
+        <!--<item name="list_title">@color/list_title_item</item>-->
+        <item name="android:windowBackground">@color/grey100</item>
+
+        <item name="ic_playlist">@drawable/ic_playlist</item>
+        <item name="ic_playlist_on">@drawable/ic_playlist_on</item>
+        <item name="ic_menu_search">@drawable/ic_menu_search</item>
+        <item name="ic_repeat">@drawable/ic_repeat</item>
+        <item name="ic_repeat_all">@drawable/ic_repeat_all</item>
+        <item name="ic_repeat_one">@drawable/ic_repeat_one</item>
+        <item name="ic_shuffle">@drawable/ic_shuffle</item>
+        <item name="ic_shuffle_on">@drawable/ic_shuffle_on</item>
+        <item name="ic_audio_player_more">@drawable/ic_more</item>
+        <item name="ic_play">@drawable/ic_play</item>
+        <item name="ic_pause">@drawable/ic_pause</item>
+        <item name="ic_previous">@drawable/ic_previous</item>
+        <item name="ic_next">@drawable/ic_next</item>
+        <item name="ic_close">@drawable/ic_close</item>
+        <item name="ic_save">@drawable/ic_save</item>
+        <item name="ic_move_media">@drawable/ic_move_media</item>
+        <item name="ic_trash_small_normal">@drawable/ic_trash_small_normal</item>
+        <item name="shadow_top_9patch">@drawable/shadow_top</item>
+        <item name="shadow_bottom_9patch">@drawable/shadow_bottom</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar</item>
+        <item name="progress_mini_player">@drawable/progress_mini_player</item>
+        <item name="advanced_options_style">@style/Theme.AppCompat.Light.Dialog</item>
+        <item name="rounded_bg">@drawable/rounded_corners_light</item>
+        <item name="ic_playasaudio_off">@drawable/ic_playasaudio_off</item>
+        <item name="ic_playasaudio_on">@drawable/ic_playasaudio_on</item>
+        <item name="ic_popup_expand">@drawable/ic_popup_expand</item>
+        <item name="ic_popup_dim">@drawable/ic_popup_dim</item>
+        <item name="ic_speed_normal_style">@drawable/ic_speed</item>
+        <item name="ic_sleep_normal_style">@drawable/ic_sleep</item>
+        <item name="ic_jumpto_normal_style">@drawable/ic_jumpto</item>
+        <item name="ic_chapter_normal_style">@drawable/ic_chapter</item>
+        <item name="ic_equalizer_normal_style">@drawable/ic_equalizer</item>
+        <item name="ic_audiodelay">@drawable/ic_audiodelay</item>
+        <item name="ic_subtitledelay">@drawable/ic_subtitledelay</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Red" parent="Theme.VLC.Apearance">
+        <item name="theme_color">@color/theme_color_red</item>
+        <item name="theme_color_dark">@color/theme_color_red_dark</item>
+        <item name="theme_color_light">@color/theme_color_red_light</item>
+
+        <item name="colorPrimary">@color/theme_color_red</item>
+        <item name="colorPrimaryDark">@color/theme_color_red_dark</item>
+        <item name="colorAccent">@color/theme_color_red_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Pink" parent="Theme.VLC.Apearance">
+        <item name="theme_color">@color/theme_color_pink</item>
+        <item name="theme_color_dark">@color/theme_color_pink_dark</item>
+        <item name="theme_color_light">@color/theme_color_pink_light</item>
+
+        <item name="colorPrimary">@color/theme_color_pink</item>
+        <item name="colorPrimaryDark">@color/theme_color_pink_dark</item>
+        <item name="colorAccent">@color/theme_color_pink_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Purple" parent="Theme.VLC.Apearance">
+        <item name="theme_color">@color/theme_color_purple</item>
+        <item name="theme_color_dark">@color/theme_color_purple_dark</item>
+        <item name="theme_color_light">@color/theme_color_purple_light</item>
+
+        <item name="colorPrimary">@color/theme_color_purple</item>
+        <item name="colorPrimaryDark">@color/theme_color_purple_dark</item>
+        <item name="colorAccent">@color/theme_color_purple_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.DeepPurple" parent="Theme.VLC.Apearance">
+        <item name="theme_color">@color/theme_color_deep_purple</item>
+        <item name="theme_color_dark">@color/theme_color_deep_purple_dark</item>
+        <item name="theme_color_light">@color/theme_color_deep_purple_light</item>
+
+        <item name="colorPrimary">@color/theme_color_deep_purple</item>
+        <item name="colorPrimaryDark">@color/theme_color_deep_purple_dark</item>
+        <item name="colorAccent">@color/theme_color_deep_purple_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Indigo" parent="Theme.VLC.Apearance">
+        <item name="theme_color">@color/theme_color_indigo</item>
+        <item name="theme_color_dark">@color/theme_color_indigo_dark</item>
+        <item name="theme_color_light">@color/theme_color_indigo_light</item>
+
+        <item name="colorPrimary">@color/theme_color_indigo</item>
+        <item name="colorPrimaryDark">@color/theme_color_indigo_dark</item>
+        <item name="colorAccent">@color/theme_color_indigo_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Blue" parent="Theme.VLC.Apearance">
+        <item name="theme_color">@color/theme_color_blue</item>
+        <item name="theme_color_dark">@color/theme_color_blue_dark</item>
+        <item name="theme_color_light">@color/theme_color_blue_light</item>
+
+        <item name="colorPrimary">@color/theme_color_blue</item>
+        <item name="colorPrimaryDark">@color/theme_color_blue_dark</item>
+        <item name="colorAccent">@color/theme_color_blue_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.LightBlue" parent="Theme.VLC.Apearance">
+        <item name="theme_color">@color/theme_color_light_blue</item>
+        <item name="theme_color_dark">@color/theme_color_light_blue_dark</item>
+        <item name="theme_color_light">@color/theme_color_light_blue_light</item>
+
+        <item name="colorPrimary">@color/theme_color_light_blue</item>
+        <item name="colorPrimaryDark">@color/theme_color_light_blue_dark</item>
+        <item name="colorAccent">@color/theme_color_light_blue_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Cyan" parent="Theme.VLC.Apearance">
+        <item name="theme_color">@color/theme_color_cyan</item>
+        <item name="theme_color_dark">@color/theme_color_cyan_dark</item>
+        <item name="theme_color_light">@color/theme_color_cyan_light</item>
+
+        <item name="colorPrimary">@color/theme_color_cyan</item>
+        <item name="colorPrimaryDark">@color/theme_color_cyan_dark</item>
+        <item name="colorAccent">@color/theme_color_cyan_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Teal" parent="Theme.VLC.Apearance">
+        <item name="theme_color">@color/theme_color_teal</item>
+        <item name="theme_color_dark">@color/theme_color_teal_dark</item>
+        <item name="theme_color_light">@color/theme_color_teal_light</item>
+
+        <item name="colorPrimary">@color/theme_color_teal</item>
+        <item name="colorPrimaryDark">@color/theme_color_teal_dark</item>
+        <item name="colorAccent">@color/theme_color_teal_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Green" parent="Theme.VLC.Apearance">
+        <item name="theme_color">@color/theme_color_green</item>
+        <item name="theme_color_dark">@color/theme_color_green_dark</item>
+        <item name="theme_color_light">@color/theme_color_green_light</item>
+
+        <item name="colorPrimary">@color/theme_color_green</item>
+        <item name="colorPrimaryDark">@color/theme_color_green_dark</item>
+        <item name="colorAccent">@color/theme_color_green_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.LightGreen" parent="Theme.VLC.Apearance">
+        <item name="theme_color">@color/theme_color_light_green</item>
+        <item name="theme_color_dark">@color/theme_color_light_green_dark</item>
+        <item name="theme_color_light">@color/theme_color_light_green_light</item>
+
+        <item name="colorPrimary">@color/theme_color_light_green</item>
+        <item name="colorPrimaryDark">@color/theme_color_light_green_dark</item>
+        <item name="colorAccent">@color/theme_color_light_green_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Lime" parent="Theme.VLC.Apearance">
+        <item name="theme_color">@color/theme_color_lime</item>
+        <item name="theme_color_dark">@color/theme_color_lime_dark</item>
+        <item name="theme_color_light">@color/theme_color_lime_light</item>
+
+        <item name="colorPrimary">@color/theme_color_lime</item>
+        <item name="colorPrimaryDark">@color/theme_color_lime_dark</item>
+        <item name="colorAccent">@color/theme_color_lime_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Amber" parent="Theme.VLC.Apearance">
+        <item name="theme_color">@color/theme_color_amber</item>
+        <item name="theme_color_dark">@color/theme_color_amber_dark</item>
+        <item name="theme_color_light">@color/theme_color_amber_light</item>
+
+        <item name="colorPrimary">@color/theme_color_amber</item>
+        <item name="colorPrimaryDark">@color/theme_color_amber_dark</item>
+        <item name="colorAccent">@color/theme_color_amber_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Orange" parent="Theme.VLC.Apearance">
+        <item name="theme_color">@color/theme_color_orange</item>
+        <item name="theme_color_dark">@color/theme_color_orange_dark</item>
+        <item name="theme_color_light">@color/theme_color_orange_light</item>
+
+        <item name="colorPrimary">@color/theme_color_orange</item>
+        <item name="colorPrimaryDark">@color/theme_color_orange_dark</item>
+        <item name="colorAccent">@color/theme_color_orange_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.DeepOrange" parent="Theme.VLC.Apearance">
+        <item name="theme_color">@color/theme_color_deep_orange</item>
+        <item name="theme_color_dark">@color/theme_color_deep_orange_dark</item>
+        <item name="theme_color_light">@color/theme_color_deep_orange_light</item>
+
+        <item name="colorPrimary">@color/theme_color_deep_orange</item>
+        <item name="colorPrimaryDark">@color/theme_color_deep_orange_dark</item>
+        <item name="colorAccent">@color/theme_color_deep_orange_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Black.Night" parent="Theme.VLC.Apearance.Black">
+    </style>
+    <style name="Theme.HDXPlayer.Apearance.Red.Night" parent="Theme.VLC.Apearance.Black">
+        <item name="theme_color_light">@color/theme_color_red_light</item>
+        <item name="colorAccent">@color/theme_color_red_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Pink.Night" parent="Theme.VLC.Apearance.Black">
+        <item name="theme_color_light">@color/theme_color_pink_light</item>
+        <item name="colorAccent">@color/theme_color_pink_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Purple.Night" parent="Theme.VLC.Apearance.Black">
+        <item name="theme_color_light">@color/theme_color_purple_light</item>
+        <item name="colorAccent">@color/theme_color_purple_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.DeepPurple.Night" parent="Theme.VLC.Apearance.Black">
+        <item name="theme_color_light">@color/theme_color_deep_purple_light</item>
+        <item name="colorAccent">@color/theme_color_deep_purple_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Indigo.Night" parent="Theme.VLC.Apearance.Black">
+        <item name="theme_color_light">@color/theme_color_indigo_light</item>
+        <item name="colorAccent">@color/theme_color_indigo_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Blue.Night" parent="Theme.VLC.Apearance.Black">
+        <item name="theme_color_light">@color/theme_color_blue_light</item>
+        <item name="colorAccent">@color/theme_color_blue_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.LightBlue.Night" parent="Theme.VLC.Apearance.Black">
+        <item name="theme_color_light">@color/theme_color_light_blue_light</item>
+        <item name="colorAccent">@color/theme_color_light_blue_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Cyan.Night" parent="Theme.VLC.Apearance.Black">
+        <item name="theme_color_light">@color/theme_color_cyan_light</item>
+        <item name="colorAccent">@color/theme_color_cyan_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Teal.Night" parent="Theme.VLC.Apearance.Black">
+        <item name="theme_color_light">@color/theme_color_teal_light</item>
+        <item name="colorAccent">@color/theme_color_teal_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Green.Night" parent="Theme.VLC.Apearance.Black">
+        <item name="theme_color_light">@color/theme_color_green_light</item>
+        <item name="colorAccent">@color/theme_color_green_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.LightGreen.Night" parent="Theme.VLC.Apearance.Black">
+        <item name="theme_color_light">@color/theme_color_light_green_light</item>
+        <item name="colorAccent">@color/theme_color_light_green_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Lime.Night" parent="Theme.VLC.Apearance.Black">
+        <item name="theme_color_light">@color/theme_color_lime_light</item>
+        <item name="colorAccent">@color/theme_color_lime_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Amber.Night" parent="Theme.VLC.Apearance.Black">
+        <item name="theme_color_light">@color/theme_color_amber_light</item>
+        <item name="colorAccent">@color/theme_color_amber_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Orange.Night" parent="Theme.VLC.Apearance.Black">
+        <item name="theme_color_light">@color/theme_color_orange_light</item>
+        <item name="colorAccent">@color/theme_color_orange_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.DeepOrange.Night" parent="Theme.VLC.Apearance.Black">
+        <item name="theme_color_light">@color/theme_color_deep_orange_light</item>
+        <item name="colorAccent">@color/theme_color_deep_orange_accent</item>
+    </style>
+
+    <!-- for VideoPlayerActivity -->
+    <style name="Theme.HDXPlayer.Apearance.ActionBar" parent="Theme.AppCompat">
+        <item name="android:windowBackground">@color/black</item>
+        <item name="list_menu">@color/grey600</item>
+        <item name="list_subtitle">@color/grey50</item>
+        <item name="list_title_last">?attr/colorAccent</item>
+        <item name="list_title">@color/whitetransparent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Black.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+        <item name="theme_color">@color/theme_color_black</item>
+        <item name="theme_color_dark">@color/theme_color_black_dark</item>
+        <item name="theme_color_light">@color/theme_color_black_light</item>
+
+        <item name="colorPrimary">@color/theme_color_black</item>
+        <item name="colorPrimaryDark">@color/theme_color_black_dark</item>
+        <item name="colorAccent">@color/theme_color_black_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Red.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+        <item name="theme_color">@color/theme_color_red</item>
+        <item name="theme_color_dark">@color/theme_color_red_dark</item>
+        <item name="theme_color_light">@color/theme_color_red_light</item>
+
+        <item name="colorPrimary">@color/theme_color_red</item>
+        <item name="colorPrimaryDark">@color/theme_color_red_dark</item>
+        <item name="colorAccent">@color/theme_color_red_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Pink.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+        <item name="theme_color">@color/theme_color_pink</item>
+        <item name="theme_color_dark">@color/theme_color_pink_dark</item>
+        <item name="theme_color_light">@color/theme_color_pink_light</item>
+
+        <item name="colorPrimary">@color/theme_color_pink</item>
+        <item name="colorPrimaryDark">@color/theme_color_pink_dark</item>
+        <item name="colorAccent">@color/theme_color_pink_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Purple.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+        <item name="theme_color">@color/theme_color_purple</item>
+        <item name="theme_color_dark">@color/theme_color_purple_dark</item>
+        <item name="theme_color_light">@color/theme_color_purple_light</item>
+
+        <item name="colorPrimary">@color/theme_color_purple</item>
+        <item name="colorPrimaryDark">@color/theme_color_purple_dark</item>
+        <item name="colorAccent">@color/theme_color_purple_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.DeepPurple.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+        <item name="theme_color">@color/theme_color_deep_purple</item>
+        <item name="theme_color_dark">@color/theme_color_deep_purple_dark</item>
+        <item name="theme_color_light">@color/theme_color_deep_purple_light</item>
+
+        <item name="colorPrimary">@color/theme_color_deep_purple</item>
+        <item name="colorPrimaryDark">@color/theme_color_deep_purple_dark</item>
+        <item name="colorAccent">@color/theme_color_deep_purple_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Indigo.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+        <item name="theme_color">@color/theme_color_indigo</item>
+        <item name="theme_color_dark">@color/theme_color_indigo_dark</item>
+        <item name="theme_color_light">@color/theme_color_indigo_light</item>
+
+        <item name="colorPrimary">@color/theme_color_indigo</item>
+        <item name="colorPrimaryDark">@color/theme_color_indigo_dark</item>
+        <item name="colorAccent">@color/theme_color_indigo_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Blue.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+        <item name="theme_color">@color/theme_color_blue</item>
+        <item name="theme_color_dark">@color/theme_color_blue_dark</item>
+        <item name="theme_color_light">@color/theme_color_blue_light</item>
+
+        <item name="colorPrimary">@color/theme_color_blue</item>
+        <item name="colorPrimaryDark">@color/theme_color_blue_dark</item>
+        <item name="colorAccent">@color/theme_color_blue_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.LightBlue.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+        <item name="theme_color">@color/theme_color_light_blue</item>
+        <item name="theme_color_dark">@color/theme_color_light_blue_dark</item>
+        <item name="theme_color_light">@color/theme_color_light_blue_light</item>
+
+        <item name="colorPrimary">@color/theme_color_light_blue</item>
+        <item name="colorPrimaryDark">@color/theme_color_light_blue_dark</item>
+        <item name="colorAccent">@color/theme_color_light_blue_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Cyan.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+        <item name="theme_color">@color/theme_color_cyan</item>
+        <item name="theme_color_dark">@color/theme_color_cyan_dark</item>
+        <item name="theme_color_light">@color/theme_color_cyan_light</item>
+
+        <item name="colorPrimary">@color/theme_color_cyan</item>
+        <item name="colorPrimaryDark">@color/theme_color_cyan_dark</item>
+        <item name="colorAccent">@color/theme_color_cyan_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Teal.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+        <item name="theme_color">@color/theme_color_teal</item>
+        <item name="theme_color_dark">@color/theme_color_teal_dark</item>
+        <item name="theme_color_light">@color/theme_color_teal_light</item>
+
+        <item name="colorPrimary">@color/theme_color_teal</item>
+        <item name="colorPrimaryDark">@color/theme_color_teal_dark</item>
+        <item name="colorAccent">@color/theme_color_teal_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Green.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+        <item name="theme_color">@color/theme_color_green</item>
+        <item name="theme_color_dark">@color/theme_color_green_dark</item>
+        <item name="theme_color_light">@color/theme_color_green_light</item>
+
+        <item name="colorPrimary">@color/theme_color_green</item>
+        <item name="colorPrimaryDark">@color/theme_color_green_dark</item>
+        <item name="colorAccent">@color/theme_color_green_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.LightGreen.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+        <item name="theme_color">@color/theme_color_light_green</item>
+        <item name="theme_color_dark">@color/theme_color_light_green_dark</item>
+        <item name="theme_color_light">@color/theme_color_light_green_light</item>
+
+        <item name="colorPrimary">@color/theme_color_light_green</item>
+        <item name="colorPrimaryDark">@color/theme_color_light_green_dark</item>
+        <item name="colorAccent">@color/theme_color_light_green_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Lime.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+        <item name="theme_color">@color/theme_color_lime</item>
+        <item name="theme_color_dark">@color/theme_color_lime_dark</item>
+        <item name="theme_color_light">@color/theme_color_lime_light</item>
+
+        <item name="colorPrimary">@color/theme_color_lime</item>
+        <item name="colorPrimaryDark">@color/theme_color_lime_dark</item>
+        <item name="colorAccent">@color/theme_color_lime_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Amber.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+        <item name="theme_color">@color/theme_color_amber</item>
+        <item name="theme_color_dark">@color/theme_color_amber_dark</item>
+        <item name="theme_color_light">@color/theme_color_amber_light</item>
+
+        <item name="colorPrimary">@color/theme_color_amber</item>
+        <item name="colorPrimaryDark">@color/theme_color_amber_dark</item>
+        <item name="colorAccent">@color/theme_color_amber_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.Orange.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+        <item name="theme_color">@color/theme_color_orange</item>
+        <item name="theme_color_dark">@color/theme_color_orange_dark</item>
+        <item name="theme_color_light">@color/theme_color_orange_light</item>
+
+        <item name="colorPrimary">@color/theme_color_orange</item>
+        <item name="colorPrimaryDark">@color/theme_color_orange_dark</item>
+        <item name="colorAccent">@color/theme_color_orange_accent</item>
+    </style>
+
+    <style name="Theme.HDXPlayer.Apearance.DeepOrange.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+        <item name="theme_color">@color/theme_color_deep_orange</item>
+        <item name="theme_color_dark">@color/theme_color_deep_orange_dark</item>
+        <item name="theme_color_light">@color/theme_color_deep_orange_light</item>
+
+        <item name="colorPrimary">@color/theme_color_deep_orange</item>
+        <item name="colorPrimaryDark">@color/theme_color_deep_orange_dark</item>
+        <item name="colorAccent">@color/theme_color_deep_orange_accent</item>
+    </style>
+
+
 </resources>

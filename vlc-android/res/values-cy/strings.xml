@@ -237,8 +237,8 @@
     <string name="screen_orientation_landscape">Tirlun</string>
     <string name="screen_orientation_reverse_portrait">Darlun gwrthwyneb</string>
     <string name="screen_orientation_reverse_landscape">Tirlun gwrthwyneb</string>
-    <string name="enable_black_theme">Galluogi\'r thema du</string>
-    <string name="enable_black_theme_summary">Newidiwch liwiau\'r rhyngwyneb i fod yn fwy cyfforddus mewn amgylchedd heb lawer o olau.</string>
+    <string name="enable_night_theme">Galluogi\'r thema du</string>
+    <string name="enable_night_theme_summary">Newidiwch liwiau\'r rhyngwyneb i fod yn fwy cyfforddus mewn amgylchedd heb lawer o olau.</string>
     <string name="subtitle_text_encoding">Amgodiad testun isdeitlau</string>
     <string name="daynight_title">Modd DyddNos</string>
     <string name="daynight_summary">Newid i fodd nos yn awtomatig am amser addas</string>
@@ -458,4 +458,7 @@
     <string name="ml_external_storage_msg">Wyt ti am i HD XPlayer ychwanegu\'r ddyfais %1$s i dy lyfrgell cyfryngau?</string>
     <string name="last_added_media">ychwanegwyd diwethaf</string>
     <string name="rename">Ail-enwi</string>
+    <string name="theme">Thema</string>
+    <string name="night_mode">Modd nos</string>
+    <string name="share_app">Rhannu</string>
 </resources>

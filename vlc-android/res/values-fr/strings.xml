@@ -223,8 +223,8 @@
     <string name="screen_orientation_landscape">Paysage</string>
     <string name="screen_orientation_reverse_portrait">Portrait inversé</string>
     <string name="screen_orientation_reverse_landscape">Paysage inversé</string>
-    <string name="enable_black_theme">Activer le thème sombre</string>
-    <string name="enable_black_theme_summary">Change les couleurs de l\'interface pour un meilleur confort dans les environnement sous-éclairés.</string>
+    <string name="enable_night_theme">Activer le thème sombre</string>
+    <string name="enable_night_theme_summary">Change les couleurs de l\'interface pour un meilleur confort dans les environnement sous-éclairés.</string>
     <string name="subtitle_text_encoding">Encodage du texte des sous-titres</string>
     <string name="daynight_title">Mode Jour-Nuit</string>
     <string name="daynight_summary">Passer automatiquement en mode nuit à l\'heure appropriée</string>
@@ -443,4 +443,7 @@
     <string name="ml_external_storage_title">Nouveau stockage externe détecté</string>
     <string name="ml_external_storage_msg">Souhaitez-vous que HD XPlayer ajoute le périphérique %1$s à votre bibliothèque de media ?</string>
     <string name="rename">Rebaptiser</string>
+    <string name="theme">Thème</string>
+    <string name="night_mode">Mode nuit</string>
+    <string name="share_app">Partager</string>
 </resources>

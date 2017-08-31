@@ -248,8 +248,8 @@
     <string name="screen_orientation_landscape">عرضي</string>
     <string name="screen_orientation_reverse_portrait">طولي معكوس</string>
     <string name="screen_orientation_reverse_landscape">عرضي معكوس</string>
-    <string name="enable_black_theme">تشغيل السمة السوداء</string>
-    <string name="enable_black_theme_summary">غيّر ألوان الواجهة لراحة أفضل في أماكن ذات إضاءات ضعيفة.</string>
+    <string name="enable_night_theme">تشغيل السمة السوداء</string>
+    <string name="enable_night_theme_summary">غيّر ألوان الواجهة لراحة أفضل في أماكن ذات إضاءات ضعيفة.</string>
     <string name="subtitle_text_encoding">ترميز نص التّرجمة</string>
     <string name="extra_prefs_category">إعدادات إضافية</string>
     <string name="interface_prefs_screen">الواجهة</string>
@@ -420,4 +420,7 @@
     <string name="ml_scanning">مسح من أجل العثور على ملفات الوسائط</string>
     <string name="length">الطول</string>
     <string name="rename">إعادة تسمية</string>
+    <string name="theme">الموضوع</string>
+    <string name="night_mode">الوضع الليلي</string>
+    <string name="share_app">حصة</string>
 </resources>

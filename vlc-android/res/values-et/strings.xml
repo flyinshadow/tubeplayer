@@ -140,8 +140,8 @@
     <string name="screen_orientation_landscape">Rõhtasetus</string>
     <string name="screen_orientation_reverse_portrait">Tagurpidi püstasetus</string>
     <string name="screen_orientation_reverse_landscape">Tagurpidi rõhtasetus</string>
-    <string name="enable_black_theme">Võimalda must kujundusteema</string>
-    <string name="enable_black_theme_summary">Muuda kasutajaliite värvid sobivamaks halvema valgusega keskkonnas.</string>
+    <string name="enable_night_theme">Võimalda must kujundusteema</string>
+    <string name="enable_night_theme_summary">Muuda kasutajaliite värvid sobivamaks halvema valgusega keskkonnas.</string>
     <string name="extra_prefs_category">Lisaseaded</string>
     <string name="interface_prefs_screen">Kasutajaliides</string>
     <string name="interface_other_category">Kasutajaliides - Muu</string>
@@ -176,6 +176,8 @@
     <string name="quit">Sulge ning taaskäivita rakendus</string>
     <string name="restart_vlc">Taaskäivita HD XPlayer</string>
     <string name="rename">Ümber nimetada</string>
+    <string name="theme">Teema</string>
+    <string name="night_mode">Öörežiim</string>
     <!--Accessibility-->
     <!--Widget-->
 </resources>

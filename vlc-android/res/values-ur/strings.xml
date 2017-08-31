@@ -164,5 +164,8 @@
     <string name="copied_to_clipboard">کلپ بورڈ میں لاگ میں نقل کردیا گيا ھے.</string>
     <string name="length"></string>
     <string name="rename">نام تبدیل کریں</string>
+    <string name="theme">مرکزی خیال، موضوع</string>
+    <string name="night_mode">رات موڈ</string>
+    <string name="share_app">حصہ داری کریں</string>
     <!--Accessibility-->
 </resources>

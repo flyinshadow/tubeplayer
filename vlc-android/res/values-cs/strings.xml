@@ -232,8 +232,8 @@
     <string name="screen_orientation_landscape">Na šířku</string>
     <string name="screen_orientation_reverse_portrait">Obráceně na výšku</string>
     <string name="screen_orientation_reverse_landscape">Obráceně na šířku</string>
-    <string name="enable_black_theme">Povolit černý vzhled</string>
-    <string name="enable_black_theme_summary">Změní barvy rozhraní pro vyšší pohodlí v prostředí s nižším osvětlením.</string>
+    <string name="enable_night_theme">Povolit černý vzhled</string>
+    <string name="enable_night_theme_summary">Změní barvy rozhraní pro vyšší pohodlí v prostředí s nižším osvětlením.</string>
     <string name="subtitle_text_encoding">Znaková sada titulků</string>
     <string name="daynight_title">Mód dne a noci</string>
     <string name="daynight_summary">Automaticky zapnout noční mód</string>
@@ -451,4 +451,7 @@
     <string name="last_added_media">poslední přidané</string>
     <string name="no">Ne</string>
     <string name="rename">přejmenovat</string>
+    <string name="theme">Téma</string>
+    <string name="night_mode">Noční režim</string>
+    <string name="share_app">Podíl</string>
 </resources>

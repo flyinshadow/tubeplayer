@@ -225,8 +225,8 @@
     <string name="screen_orientation_landscape">Querformat</string>
     <string name="screen_orientation_reverse_portrait">Hochformat gedreht</string>
     <string name="screen_orientation_reverse_landscape">Querformat gedreht</string>
-    <string name="enable_black_theme">Schwarzes Design aktivieren</string>
-    <string name="enable_black_theme_summary">Die Schnittstellenfarben ändern, um eine bessere Annehmlichkeit in lichtschwachen Umgebungen zu erreichen.</string>
+    <string name="enable_night_theme">Schwarzes Design aktivieren</string>
+    <string name="enable_night_theme_summary">Die Schnittstellenfarben ändern, um eine bessere Annehmlichkeit in lichtschwachen Umgebungen zu erreichen.</string>
     <string name="subtitle_text_encoding">Untertiteltextkodierung</string>
     <string name="daynight_title">Tag-/Nachtmodus</string>
     <string name="daynight_summary">Zur passenden Zeit automatisch in den Nachtmodus wechseln</string>
@@ -457,4 +457,7 @@
     <string name="no">Nein</string>
     <string name="loading_medialibrary">Lade Medienbibliothek...</string>
     <string name="rename">Umbenennen</string>
+    <string name="theme">Thema</string>
+    <string name="night_mode">Nacht-Modus</string>
+    <string name="share_app">Freigeben</string>
 </resources>

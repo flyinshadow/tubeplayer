@@ -159,7 +159,7 @@
     <string name="screen_orientation_start_lock">ਸ਼ੁਰੂ ਉੱਤੇ ਲਾਕ ਹੈ</string>
     <string name="screen_orientation_portrait">ਪੋਰਟਰੇਟ</string>
     <string name="screen_orientation_landscape">ਲੈਂਡਸਕੇਪ</string>
-    <string name="enable_black_theme">ਕਾਲਾ ਥੀਮ ਸਮਰੱਥ ਕਰੋ</string>
+    <string name="enable_night_theme">ਕਾਲਾ ਥੀਮ ਸਮਰੱਥ ਕਰੋ</string>
     <string name="extra_prefs_category">ਵਾਧੂ ਸੈਟਿੰਗ</string>
     <string name="interface_prefs_screen">ਇੰਟਰਫੇਸ</string>
     <string name="interface_secondary_display_category">ਇੰਟਰਫੇਸ - ਸੈਕੰਡਰੀ ਡਿਸਪਲੇਅ</string>

@@ -190,5 +190,6 @@
     <string name="move">স্থানান্তর</string>
     <string name="file_deleted">ফাইল অপসারিত</string>
     <string name="rename">নামান্তর</string>
+    <string name="theme">থিম</string>
     <!--Widget-->
 </resources>

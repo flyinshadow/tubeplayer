@@ -3,24 +3,37 @@
 
     <item android:id="@android:id/background">
         <shape>
+            <corners android:radius="4dp"/>
             <solid android:color="@color/grey400transparent" />
         </shape>
     </item>
 
     <item android:id="@android:id/secondaryProgress">
-        <clip>
+        <!--<clip>-->
+            <!--<shape>-->
+                <!--<solid android:color="@color/grey400transparent" />-->
+            <!--</shape>-->
+        <!--</clip>-->
+        <scale android:scaleWidth="100%">
             <shape>
-                <solid android:color="@color/grey400transparent" />
+                <corners android:radius="4dp"/>
+                <solid android:color="@color/grey400transparent"/>
             </shape>
-        </clip>
+        </scale>
     </item>
 
     <item android:id="@android:id/progress">
-        <clip>
+        <!--<clip>-->
+            <!--<shape>-->
+                <!--<solid android:color="?attr/colorAccent" />-->
+            <!--</shape>-->
+        <!--</clip>-->
+        <scale android:scaleWidth="100%">
             <shape>
-                <solid android:color="@color/tube_red500" />
+                <corners android:radius="4dp"/>
+                <solid android:color="?attr/colorAccent"/>
             </shape>
-        </clip>
+        </scale>
     </item>
 
 </layer-list>

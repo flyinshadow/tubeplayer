@@ -161,7 +161,7 @@
     <string name="screen_orientation_landscape">ಭೂದೃಶ್ಯ</string>
     <string name="screen_orientation_reverse_portrait"> ಹಿಮ್ಮುಖ ಭಾವಚಿತ್ರ</string>
     <string name="screen_orientation_reverse_landscape"> ಹಿಮ್ಮುಖ ಭೂದೃಶ್ಯ</string>
-    <string name="enable_black_theme">ಕಪ್ಪು ಥೀಮ್ ಸಕ್ರಿಯಗೊಳಿಸು</string>
+    <string name="enable_night_theme">ಕಪ್ಪು ಥೀಮ್ ಸಕ್ರಿಯಗೊಳಿಸು</string>
     <string name="subtitle_text_encoding">ಉಪಶೀರ್ಷಿಕೆ ಪಠ್ಯ ಎನ್ಕೋಡಿಂಗ್</string>
     <string name="extra_prefs_category">ಹೆಚ್ಚಿನ ಸಿದ್ಧತೆಗಳು</string>
     <string name="enable_brightness_gesture">ಹೊಳಪು ಸಂಜ್ಞೆ  ಸಕ್ರಿಯಗೊಳಿಸಿ</string>

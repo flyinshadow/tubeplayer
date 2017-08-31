@@ -39,6 +39,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.media.AudioManager;
+import android.media.Image;
 import android.media.MediaRouter;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -66,7 +67,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.InputDevice;
@@ -107,9 +107,11 @@ import org.videolan.medialibrary.media.MediaWrapper;
 import com.wenjoyai.tubeplayer.BuildConfig;
 import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
+import com.wenjoyai.tubeplayer.StartActivity;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
 import com.wenjoyai.tubeplayer.gui.PlaybackServiceActivity;
+import com.wenjoyai.tubeplayer.gui.ThemeFragment;
 import com.wenjoyai.tubeplayer.gui.audio.PlaylistAdapter;
 import com.wenjoyai.tubeplayer.gui.browser.FilePickerActivity;
 import com.wenjoyai.tubeplayer.gui.browser.FilePickerFragment;
@@ -124,6 +126,7 @@ import com.wenjoyai.tubeplayer.media.MediaDatabase;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.FileUtils;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.Permissions;
 import com.wenjoyai.tubeplayer.util.Strings;
 import com.wenjoyai.tubeplayer.util.SubtitlesDownloader;
@@ -193,6 +196,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private PlaylistAdapter mPlaylistAdapter;
     private ImageView mPlaylistNext;
     private ImageView mPlaylistPrevious;
+
+    private ImageView mPopupPlayToggle;
+    private ImageView mGoBack;
 
     private static final int SURFACE_BEST_FIT = 0;
     private static final int SURFACE_FIT_SCREEN = 1;
@@ -364,6 +370,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @Override
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     protected void onCreate(Bundle savedInstanceState) {
+//        LogUtil.e(TAG,"onCreate");
+        mSettings = PreferenceManager.getDefaultSharedPreferences(this);
+        applyTheme();
         super.onCreate(savedInstanceState);
 
         if (!VLCInstance.testCompatibleCPU(this)) {
@@ -374,10 +383,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (AndroidUtil.isJellyBeanMR1OrLater) {
             // Get the media router service (Miracast)
             mMediaRouter = (MediaRouter) VLCApplication.getAppContext().getSystemService(Context.MEDIA_ROUTER_SERVICE);
-            Log.d(TAG, "MediaRouter information : " + mMediaRouter  .toString());
+//            LogUtil.d(TAG, "MediaRouter information : " + mMediaRouter  .toString());
         }
-
-        mSettings = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (!VLCApplication.showTvUi()) {
             mTouchControls = (mSettings.getBoolean("enable_volume_gesture", true) ? TOUCH_FLAG_AUDIO_VOLUME : 0)
@@ -413,7 +420,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mPlaylistToggle = (ImageView) findViewById(R.id.playlist_toggle);
         mPlaylist = (RecyclerView) findViewById(R.id.video_playlist);
 
-
+        mPopupPlayToggle = (ImageView) findViewById(R.id.popup_toggle);
+        mGoBack = (ImageView) findViewById(R.id.player_goback);
 
         mScreenOrientation = Integer.valueOf(
                 mSettings.getString("screen_orientation", "99" /*SCREEN ORIENTATION SENSOR*/));
@@ -498,6 +506,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     protected void onResume() {
+//        LogUtil.d(TAG, "onResume");
         super.onResume();
         /*
          * Set listeners here to avoid NPE when activity is closing
@@ -548,6 +557,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     protected void onNewIntent(Intent intent) {
+//        LogUtil.d(TAG, "onNewIntent");
         setIntent(intent);
         if (mPlaybackStarted && mService.getCurrentMediaWrapper() != null) {
             Uri uri = intent.hasExtra(PLAY_EXTRA_ITEM_LOCATION) ?
@@ -578,6 +588,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onPause() {
+//        LogUtil.e(TAG,"onPause");
         super.onPause();
         hideOverlay(true);
         if (mSeekbar != null)
@@ -641,6 +652,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     protected void onStart() {
+//        LogUtil.e(TAG,"onStart");
         super.onStart();
         mMedialibrary.pauseBackgroundOperations();
         mHelper.onStart();
@@ -663,6 +675,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onStop() {
+//        LogUtil.e(TAG,"onStop");
         super.onStop();
         mMedialibrary.resumeBackgroundOperations();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mServiceReceiver);
@@ -688,7 +701,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         // Save selected subtitles
         String subtitleList_serialized = null;
         if(mSubtitleSelectedFiles.size() > 0) {
-            Log.d(TAG, "Saving selected subtitle files");
+//            LogUtil.d(TAG, "Saving selected subtitle files");
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             try {
                 ObjectOutputStream oos = new ObjectOutputStream(bos);
@@ -732,13 +745,14 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     protected void onDestroy() {
+//        LogUtil.e(TAG,"onDestroy");
         super.onDestroy();
         if (mReceiver != null)
             unregisterReceiver(mReceiver);
 
         // Dismiss the presentation when the activity is not visible.
         if (mPresentation != null) {
-            Log.i(TAG, "Dismissing presentation because the activity is no longer visible.");
+//            LogUtil.i(TAG, "Dismissing presentation because the activity is no longer visible.");
             mPresentation.dismiss();
             mPresentation = null;
         }
@@ -762,7 +776,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 @Override
                 public void onRoutePresentationDisplayChanged(
                         MediaRouter router, MediaRouter.RouteInfo info) {
-                    Log.d(TAG, "onRoutePresentationDisplayChanged: info=" + info);
+//                    LogUtil.d(TAG, "onRoutePresentationDisplayChanged: info=" + info);
                     final Display presentationDisplay = info.getPresentationDisplay();
                     final int newDisplayId = presentationDisplay != null ? presentationDisplay.getDisplayId() : -1;
                     if (newDisplayId != mPresentationDisplayId)
@@ -895,6 +909,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         if (mRootView != null)
             mRootView.setKeepScreenOn(true);
+
+        mPopupPlayToggle.setOnClickListener(this);
+        mGoBack.setOnClickListener(this);
     }
 
     private void setPlaybackParameters() {
@@ -931,7 +948,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         vlcVout.detachViews();
 
         if (mSwitchingView && mService != null) {
-            Log.d(TAG, "mLocation = \"" + mUri + "\"");
+//            LogUtil.d(TAG, "mLocation = \"" + mUri + "\"");
             if (mSwitchToPopup)
                 mService.switchToPopup(mService.getCurrentMediaPosition());
             else {
@@ -991,8 +1008,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     MediaDatabase.getInstance().saveSlave(mService.getCurrentMediaLocation(), Media.Slave.Type.Subtitle, 2, data.getStringExtra(FilePickerFragment.EXTRA_MRL));
                 }
             });
-        } else
-            Log.d(TAG, "Subtitle selection dialog was cancelled");
+        } else {
+            LogUtil.d(TAG, "Subtitle selection dialog was cancelled");
+        }
     }
 
     public static void start(Context context, Uri uri) {
@@ -1727,7 +1745,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     break;
                 case CHECK_VIDEO_TRACKS:
                     if (mService.getVideoTracksCount() < 1 && mService.getAudioTracksCount() > 0) {
-                        Log.i(TAG, "No video track, open in audio mode");
+                        LogUtil.i(TAG, "No video track, open in audio mode");
                         switchToAudioMode(true);
                     }
                     break;
@@ -1774,7 +1792,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (mService.expand(false) == 0) {
             mHandler.removeMessages(LOADING_ANIMATION);
             mHandler.sendEmptyMessageDelayed(LOADING_ANIMATION, LOADING_ANIMATION_DELAY);
-            Log.d(TAG, "Found a video playlist, expanding it");
+            LogUtil.d(TAG, "Found a video playlist, expanding it");
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -1821,7 +1839,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         @Override
         public void run() {
             if (mService.hasMedia()) {
-                Log.i(TAG, "Video track lost, switching to audio");
+                LogUtil.i(TAG, "Video track lost, switching to audio");
                 mSwitchingView = true;
             }
             exit(RESULT_VIDEO_TRACK_LOST);
@@ -1944,7 +1962,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         // sanity check
         if (sw * sh == 0) {
-            Log.e(TAG, "Invalid surface size");
+            LogUtil.e(TAG, "Invalid surface size");
             return;
         }
 
@@ -2488,6 +2506,20 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 break;
             case R.id.player_overlay_tracks:
                 onAudioSubClick(v);
+                break;
+            case R.id.popup_toggle:
+                if (VLCApplication.showTvUi()) {
+                    enterPictureInPictureMode();
+                } else {
+                    if (Permissions.canDrawOverlays(this))
+                        switchToPopupMode();
+                    else
+                        Permissions.checkDrawOverlaysPermission(this);
+                }
+                break;
+            case R.id.player_goback:
+                exitOK();
+                break;
         }
     }
 
@@ -2849,7 +2881,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (mShowing) {
             mHandler.removeMessages(FADE_OUT);
             mHandler.removeMessages(SHOW_PROGRESS);
-            Log.i(TAG, "remove View!");
+            LogUtil.i(TAG, "remove View!");
             mObjectFocused = getCurrentFocus();
             UiTools.setViewVisibility(mOverlayTips, View.INVISIBLE);
             if (!fromUser && !mIsLocked) {
@@ -3064,6 +3096,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @TargetApi(12)
     @SuppressWarnings({ "unchecked" })
     protected void loadMedia() {
+        LogUtil.e(TAG, "loadMedia");
         if (mService == null)
             return;
         mUri = null;
@@ -3088,7 +3121,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (km.inKeyguardRestrictedInputMode())
             mWasPaused = true;
         if (mWasPaused)
-            Log.d(TAG, "Video was previously paused, resuming in paused mode");
+            LogUtil.d(TAG, "Video was previously paused, resuming in paused mode");
 
         if (intent.getData() != null)
             mUri = intent.getData();
@@ -3108,7 +3141,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         MediaWrapper openedMedia = null;
         if (positionInPlaylist != -1 && mService.hasMedia() && positionInPlaylist < mService.getMedias().size()) {
             // Provided externally from AudioService
-            Log.d(TAG, "Continuing playback from PlaybackService at index " + positionInPlaylist);
+            LogUtil.d(TAG, "Continuing playback from PlaybackService at index " + positionInPlaylist);
             openedMedia = mService.getMedias().get(positionInPlaylist);
             if (openedMedia == null) {
                 encounteredError();
@@ -3270,7 +3303,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 for (String file : prefsList) {
                     if (!mSubtitleSelectedFiles.contains(file))
                         mSubtitleSelectedFiles.add(file);
-                    Log.i(TAG, "Adding user-selected subtitle " + file);
+                    LogUtil.i(TAG, "Adding user-selected subtitle " + file);
                     mService.addSubtitleTrack(file, true);
                 }
             }
@@ -3459,19 +3492,19 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         if (presentationDisplay != null) {
             // Show a new presentation if possible.
-            Log.i(TAG, "Showing presentation on display: " + presentationDisplay);
+            LogUtil.i(TAG, "Showing presentation on display: " + presentationDisplay);
             mPresentation = new SecondaryDisplay(this, LibVLC(), presentationDisplay);
             mPresentation.setOnDismissListener(mOnDismissListener);
             try {
                 mPresentation.show();
                 mPresentationDisplayId = presentationDisplay.getDisplayId();
             } catch (WindowManager.InvalidDisplayException ex) {
-                Log.w(TAG, "Couldn't show presentation!  Display was removed in "
+                LogUtil.w(TAG, "Couldn't show presentation!  Display was removed in "
                         + "the meantime.", ex);
                 mPresentation = null;
             }
         } else
-            Log.i(TAG, "No secondary display detected");
+            LogUtil.i(TAG, "No secondary display detected");
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -3480,7 +3513,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             return;
 
         // Dismiss the current presentation if the display has changed.
-        Log.i(TAG, "Dismissing presentation because the current route no longer "
+        LogUtil.i(TAG, "Dismissing presentation because the current route no longer "
                 + "has a presentation display.");
         if (mPresentation != null) mPresentation.dismiss();
         mPresentation = null;
@@ -3497,7 +3530,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         @Override
         public void onDismiss(DialogInterface dialog) {
             if (dialog == mPresentation) {
-                Log.i(TAG, "Presentation was dismissed.");
+                LogUtil.i(TAG, "Presentation was dismissed.");
                 mPresentation = null;
             }
         }
@@ -3531,11 +3564,11 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mSubtitlesSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
             VideoPlayerActivity activity = (VideoPlayerActivity)getOwnerActivity();
             if (activity == null) {
-                Log.e(TAG, "Failed to get the VideoPlayerActivity instance, secondary display won't work");
+                LogUtil.e(TAG, "Failed to get the VideoPlayerActivity instance, secondary display won't work");
                 return;
             }
 
-            Log.i(TAG, "Secondary display created");
+            LogUtil.i(TAG, "Secondary display created");
         }
     }
 
@@ -3694,4 +3727,13 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 exitOK();
         }
     };
+
+    private void applyTheme() {
+//        boolean enableBlackTheme = mSettings.getBoolean("enable_night_theme", false);
+//        if (VLCApplication.showTvUi() || enableBlackTheme) {
+//            setTheme(R.style.Theme_VLC_Black);
+//        }
+        int themeIndex = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, 0);
+        setTheme(ThemeFragment.sThemeActionBarStyles[themeIndex]);
+    }
 }

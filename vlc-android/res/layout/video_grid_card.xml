@@ -40,108 +40,136 @@
         <variable
             name="holder"
             type="com.wenjoyai.tubeplayer.gui.video.VideoListAdapter.ViewHolder" />
+
+        <variable
+            name="selected"
+            type="boolean" />
+
     </data>
     <android.support.constraint.ConstraintLayout
-        android:layout_width="@dimen/grid_card_thumb_width"
-        android:layout_height="@dimen/grid_card_thumb_height"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
         android:longClickable="true"
         android:onClick="@{holder::onClick}"
         android:onLongClick="@{holder::onLongClick}"
-        android:paddingLeft="@dimen/left_right_1610_margin"
-        android:paddingRight="@dimen/left_right_1610_margin"
-        android:paddingBottom="@dimen/top_bottom_1610_margin"
-        android:paddingTop="@dimen/top_bottom_1610_margin" >
+        android:background="?attr/background_default_darker"
+        android:layout_margin="@dimen/half_default_margin"
+        >
+
         <!-- Image loading is handled by com.wenjoyai.tubeplayer.wenjoyai.videoplayer.gui.helpers.AsyncImageLoader.loadPicture() -->
-        <ImageView
-            android:id="@+id/ml_item_thumbnail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@{cover}"
-            android:scaleType="fitXY"
-            android:src="@drawable/black_gradient"
-            vlc:media="@{media}" />
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/ml_item_overlay_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            vlc:layout_constraintDimensionRatio="H,16:10"
+            vlc:layout_constraintStart_toStartOf="parent"
+            vlc:layout_constraintEnd_toEndOf="parent"
+            >
+            <ImageView
+                android:id="@+id/ml_item_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                vlc:media="@{media}"
+                android:scaleType="@{scaleType}"
+                android:src="@{cover}"
+                android:background="@color/black"
+                />
+            <ImageView
+                android:id="@+id/ml_item_check"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_action_mode_select_1610"
+                android:visibility="@{selected ? View.VISIBLE : View.GONE}"
+                />
+        </android.support.constraint.ConstraintLayout>
 
         <TextView
             android:id="@+id/ml_item_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             vlc:layout_constraintStart_toStartOf="parent"
+            vlc:layout_constraintTop_toBottomOf="@+id/ml_item_overlay_layout"
             vlc:layout_constraintEnd_toStartOf="@+id/item_more"
-            vlc:layout_constraintBottom_toTopOf="@+id/ml_item_time"
+            vlc:layout_constraintBottom_toTopOf="@+id/ml_item_progress"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginLeft="@dimen/info_default_margin"
+            android:layout_marginStart="@dimen/info_default_margin"
             android:ellipsize="end"
-            android:fontFamily="sans-serif"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_vertical"
             android:maxLines="2"
-            android:paddingLeft="@dimen/very_small_margin"
-            android:paddingStart="@dimen/half_default_margin"
             android:text="@{media.title}"
-            android:textColor="@color/white"
+            android:textColor="?attr/list_title"
             android:textSize="@dimen/grid_card_title_text_size"
             tools:targetApi="jelly_bean" />
 
         <TextView
             android:id="@+id/ml_item_time"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            vlc:layout_constraintBottom_toTopOf="@+id/ml_item_progress"
-            vlc:layout_constraintEnd_toStartOf="@+id/ml_item_resolution"
-            vlc:layout_constraintStart_toStartOf="parent"
-            android:fontFamily="sans-serif-light"
-            android:gravity="start"
-            android:paddingLeft="@dimen/half_default_margin"
-            android:paddingStart="@dimen/half_default_margin"
-            android:singleLine="true"
-            android:text="@{time}"
-            android:textColor="@color/grey50"
-            android:textSize="@dimen/grid_card_subtitle_text_size"
-            tools:targetApi="jelly_bean" />
-
-        <TextView
-            android:id="@+id/ml_item_resolution"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            vlc:layout_constraintBottom_toTopOf="@+id/ml_item_progress"
-            vlc:layout_constraintEnd_toStartOf="@+id/item_more"
-            vlc:layout_constraintStart_toEndOf="@+id/ml_item_time"
+            vlc:layout_constraintEnd_toEndOf="@+id/ml_item_overlay_layout"
+            vlc:layout_constraintBottom_toBottomOf="@+id/ml_item_overlay_layout"
             android:fontFamily="sans-serif-light"
             android:gravity="end"
-            android:singleLine="true"
-            android:text="@{resolution}"
-            android:textColor="@color/grey50"
+            android:paddingLeft="@dimen/half_default_margin"
+            android:paddingRight="@dimen/half_default_margin"
+            android:maxLines="1"
+            android:text="@{time}"
+            android:textColor="@color/white"
             android:textSize="@dimen/grid_card_subtitle_text_size"
+            android:background="@color/greytransparent"
             tools:targetApi="jelly_bean" />
+
+        <!--<TextView-->
+            <!--android:id="@+id/ml_item_resolution"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--vlc:layout_constraintBottom_toTopOf="@+id/ml_item_progress"-->
+            <!--vlc:layout_constraintEnd_toStartOf="@+id/item_more"-->
+            <!--vlc:layout_constraintStart_toEndOf="@+id/ml_item_time"-->
+            <!--android:fontFamily="sans-serif-light"-->
+            <!--android:gravity="end"-->
+            <!--android:singleLine="true"-->
+            <!--android:text="@{resolution}"-->
+            <!--android:textColor="@color/grey50"-->
+            <!--android:textSize="@dimen/grid_card_subtitle_text_size"-->
+            <!--tools:targetApi="jelly_bean" />-->
 
         <ImageView
             android:id="@+id/item_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            vlc:layout_constraintBottom_toTopOf="@+id/ml_item_progress"
+            android:layout_marginRight="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            vlc:layout_constraintTop_toTopOf="@+id/ml_item_title"
             vlc:layout_constraintEnd_toEndOf="parent"
             android:clickable="true"
             android:contentDescription="@string/more_actions"
             android:onClick="@{holder::onMoreClick}"
-            android:scaleType="fitEnd"
-            android:src="@drawable/ic_more_w" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_more"
+            />
 
         <ProgressBar
             android:id="@+id/ml_item_progress"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            vlc:layout_constraintTop_toBottomOf="@+id/ml_item_title"
+            vlc:layout_constraintStart_toStartOf="@+id/ml_item_title"
+            vlc:layout_constraintEnd_toStartOf="@+id/item_more"
             vlc:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="2dp"
-            android:layout_marginLeft="@dimen/very_small_margin"
-            android:layout_marginRight="@dimen/very_small_margin"
-            android:layout_marginTop="1dp"
-            android:background="@color/transparent"
+            android:layout_marginTop="@dimen/half_default_margin"
+            android:layout_marginBottom="@dimen/half_default_margin"
             android:focusable="false"
             android:indeterminate="false"
             android:max="@{max}"
-            android:maxHeight="2dip"
-            android:minHeight="2dip"
+            android:maxHeight="@dimen/progress_bar_height"
+            android:minHeight="@dimen/progress_bar_height"
             android:progress="@{progress}"
-            android:progressDrawable="@drawable/gridview_progressbar"
+            android:progressDrawable="?attr/gridview_progressbar"
             android:secondaryProgress="0"
             android:visibility="@{progress == 0 ? View.INVISIBLE : View.VISIBLE}" />
     </android.support.constraint.ConstraintLayout>

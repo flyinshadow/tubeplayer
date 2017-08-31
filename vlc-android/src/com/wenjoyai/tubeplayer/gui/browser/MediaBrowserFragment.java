@@ -47,6 +47,7 @@ import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.gui.InfoActivity;
 import com.wenjoyai.tubeplayer.gui.PlaybackServiceFragment;
+import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
 import com.wenjoyai.tubeplayer.gui.view.ContextMenuRecyclerView;
 import com.wenjoyai.tubeplayer.gui.view.SwipeRefreshLayout;
 import com.wenjoyai.tubeplayer.util.FileUtils;
@@ -73,7 +74,7 @@ public abstract class MediaBrowserFragment extends PlaybackServiceFragment imple
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (mSwipeRefreshLayout != null)
-            mSwipeRefreshLayout.setColorSchemeResources(R.color.orange700);
+            mSwipeRefreshLayout.setColorSchemeColors(UiTools.getColorFromAttribute(getActivity(), R.attr.theme_color_light));
     }
 
     public void onStart(){
@@ -146,6 +147,34 @@ public abstract class MediaBrowserFragment extends PlaybackServiceFragment imple
         ContextMenuRecyclerView.RecyclerContextMenuInfo info = (ContextMenuRecyclerView.RecyclerContextMenuInfo) menu.getMenuInfo();
 
         return info != null && handleContextItemSelected(menu, info.position);
+    }
+
+    protected void renameMedia(final MediaWrapper srcMedia, final MediaWrapper dstMedia, final boolean refresh) {
+        VLCApplication.runBackground(new Runnable() {
+            @Override
+            public void run() {
+                String folderToReload = null;
+
+                String path = srcMedia.getUri().getPath();
+                String parentPath = FileUtils.getParent(path);
+                if (FileUtils.renameFile(path, dstMedia.getUri().getPath()) && srcMedia.getId() > 0L)
+                    folderToReload = parentPath;
+
+                if (folderToReload != null) {
+                    mMediaLibrary.reload(folderToReload);
+                }
+
+                if (mService != null && getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (refresh)
+                                onRefresh();
+                        }
+                    });
+                }
+            }
+        });
     }
 
     protected void deleteMedia(final MediaLibraryItem mw, final boolean refresh) {

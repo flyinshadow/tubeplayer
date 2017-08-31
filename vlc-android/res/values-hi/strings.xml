@@ -165,5 +165,8 @@
     <string name="copy_to_clipboard">क्लिपबोर्ड में कॉपी करें</string>
     <string name="copied_to_clipboard">लॉग को क्लिपबोर्ड में कॉपी किया.</string>
     <string name="rename">नाम बदलें</string>
+    <string name="theme">थीम</string>
+    <string name="night_mode">रात मोड</string>
+    <string name="share_app">साझा करें</string>
     <!--Accessibility-->
 </resources>

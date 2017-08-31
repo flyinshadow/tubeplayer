@@ -225,8 +225,8 @@
     <string name="screen_orientation_landscape">Yatay</string>
     <string name="screen_orientation_reverse_portrait">Ters dikey</string>
     <string name="screen_orientation_reverse_landscape">Ters yatay</string>
-    <string name="enable_black_theme">Siyah tema kullanılsın</string>
-    <string name="enable_black_theme_summary">Düşük ışıklı ortamlarda daha rahat kullanım için arayüz renklerini değiştirir.</string>
+    <string name="enable_night_theme">Siyah tema kullanılsın</string>
+    <string name="enable_night_theme_summary">Düşük ışıklı ortamlarda daha rahat kullanım için arayüz renklerini değiştirir.</string>
     <string name="subtitle_text_encoding">Altyazı metin kodlaması</string>
     <string name="daynight_title">Gündüz/Gece kipi</string>
     <string name="daynight_summary">Uygun zamanda otomatik olarak gece kipine geçilsin</string>
@@ -457,4 +457,7 @@
     <string name="no">Hayır</string>
     <string name="loading_medialibrary">Ortam Kitaplığı Yükleniyor...</string>
     <string name="rename">Adını değiştirmek</string>
+    <string name="theme">Tema</string>
+    <string name="night_mode">Gece modu</string>
+    <string name="share_app">Paylaş</string>
 </resources>

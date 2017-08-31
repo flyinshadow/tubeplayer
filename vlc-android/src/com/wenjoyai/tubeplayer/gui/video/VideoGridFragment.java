@@ -22,10 +22,12 @@ package com.wenjoyai.tubeplayer.gui.video;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,6 +37,7 @@ import android.support.annotation.MainThread;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -60,9 +63,11 @@ import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
+import com.wenjoyai.tubeplayer.gui.RenameFileFragment;
 import com.wenjoyai.tubeplayer.gui.SecondaryActivity;
 import com.wenjoyai.tubeplayer.gui.browser.MediaBrowserFragment;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
+import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
 import com.wenjoyai.tubeplayer.gui.view.AutoFitRecyclerView;
 import com.wenjoyai.tubeplayer.gui.view.ContextMenuRecyclerView;
 import com.wenjoyai.tubeplayer.gui.view.SwipeRefreshLayout;
@@ -99,7 +104,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mVideoAdapter = new VideoListAdapter(this);
+        int viewMode = PreferenceManager.getDefaultSharedPreferences(
+                VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
+                VideoListAdapter.VIEW_MODE_DEFAULT);
+        mVideoAdapter = new VideoListAdapter(this, viewMode);
 
         if (savedInstanceState != null)
             setGroup(savedInstanceState.getString(KEY_GROUP));
@@ -121,7 +129,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         mDividerItemDecoration = new DividerItemDecoration(v.getContext(), DividerItemDecoration.VERTICAL);
-        if (mVideoAdapter.isListMode())
+        if (mVideoAdapter.getCurrentViewMode() == VideoListAdapter.VIEW_MODE_LIST)
             mGridView.addItemDecoration(mDividerItemDecoration);
         mGridView.setAdapter(mVideoAdapter);
         return v;
@@ -142,7 +150,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     public void onResume() {
         super.onResume();
         setSearchVisibility(false);
-        updateViewMode();
+        updateViewMode(mVideoAdapter.getCurrentViewMode());
     }
 
     @Override
@@ -181,15 +189,15 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             return mGroup + "\u2026";
     }
 
-    private void updateViewMode() {
+    private void updateViewMode(int targetViewMode) {
         if (getView() == null || getActivity() == null) {
             Log.w(TAG, "Unable to setup the view");
             return;
         }
         Resources res = getResources();
-        boolean listMode = res.getBoolean(R.bool.list_mode);
-        listMode |= res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT &&
-                PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("force_list_portrait", false);
+        boolean listMode = targetViewMode != VideoListAdapter.VIEW_MODE_GRID;
+//        listMode |= res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT &&
+//                PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("force_list_portrait", false);
         // Compute the left/right padding dynamically
         DisplayMetrics outMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
@@ -202,7 +210,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         }
         mGridView.setNumColumns(listMode ? 1 : -1);
         if (mVideoAdapter.isListMode() != listMode) {
-            if (listMode)
+            if (listMode && targetViewMode != VideoListAdapter.VIEW_MODE_BIGPIC)
                 mGridView.addItemDecoration(mDividerItemDecoration);
             else
                 mGridView.removeItemDecoration(mDividerItemDecoration);
@@ -246,6 +254,9 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             case R.id.video_list_info:
                 showInfoDialog(media);
                 return true;
+            case R.id.video_list_rename:
+                renameVideo(media);
+                return true;
             case R.id.video_list_delete:
                 removeVideo(media);
                 return true;
@@ -263,6 +274,33 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 return true;
         }
         return false;
+    }
+
+    private void renameVideo(final MediaWrapper media) {
+
+        final RenameFileFragment fragment = new RenameFileFragment();
+        fragment.setMedia(media);
+        fragment.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                String savedName = fragment.getSavedName();
+                if (!TextUtils.isEmpty(savedName) && !TextUtils.equals(savedName, media.getFileName())) {
+                    String path = media.getUri().getPath();
+                    String parentPath = FileUtils.getParent(path);
+
+                    String dstFilePath = parentPath + "/" + savedName;
+
+                    MediaWrapper dstMedia = new MediaWrapper(
+                            Uri.parse(dstFilePath), media.getTime(), media.getLength(), media.getType(),
+                            media.getPicture(), savedName, media.getArtist(), media.getGenre(), media.getAlbum(), media.getAlbumArtist(),
+                            media.getWidth(), media.getHeight(), media.getArtworkURL(), media.getAudioTrack(), media.getSpuTrack(), media.getTrackNumber(),
+                            media.getDiscNumber(), media.getLastModified());
+                    mVideoAdapter.updateVideo(media, dstMedia);
+                    renameMedia(media, dstMedia, false);
+                }
+            }
+        });
+        fragment.show(getFragmentManager(), "rename_file");
     }
 
     private void removeVideo(final MediaWrapper media) {
@@ -587,5 +625,31 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             mHandler.sendEmptyMessage(UNSET_REFRESHING);
         updateEmptyView();
         setFabPlayVisibility(true);
+    }
+
+    public void toggleViewMode(MenuItem item) {
+        if (mVideoAdapter != null) {
+            int targetViewMode = (mVideoAdapter.getCurrentViewMode() + 1) % VideoListAdapter.VIEW_MODE_MAX;
+            if (targetViewMode == VideoListAdapter.VIEW_MODE_GRID) {
+                item.setIcon(R.drawable.ic_view_grid);
+                mGridView.removeItemDecoration(mDividerItemDecoration);
+            } else if (targetViewMode == VideoListAdapter.VIEW_MODE_LIST) {
+                item.setIcon(R.drawable.ic_view_list);
+                mGridView.addItemDecoration(mDividerItemDecoration);
+            } else if (targetViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
+                item.setIcon(R.drawable.ic_view_bigpic);
+                mGridView.removeItemDecoration(mDividerItemDecoration);
+            }
+            updateViewMode(targetViewMode);
+            mVideoAdapter.toggleViewMode(targetViewMode);
+        }
+    }
+
+    public int getCurrentViewMode() {
+        int mode = 0;
+        if (mVideoAdapter != null) {
+            mode = mVideoAdapter.getCurrentViewMode();
+        }
+        return mode;
     }
 }
