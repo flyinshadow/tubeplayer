@@ -289,7 +289,7 @@ public class Medialibrary {
 
     public void onMediaDeleted(long[] ids) {
         for (long id : ids)
-            Log.d(TAG, "onMediaDeleted: "+id);
+            LogUtil.d(TAG, "onMediaDeleted: "+id);
     }
 
     public void onArtistsAdded() {
@@ -349,6 +349,7 @@ public class Medialibrary {
     }
 
     public void onDiscoveryCompleted(String entryPoint) {
+        LogUtil.d(TAG, "Medialibrary onDiscoveryCompleted");
         synchronized (devicesDiscoveryCbList) {
             if (!devicesDiscoveryCbList.isEmpty())
                 for (DevicesDiscoveryCb cb : devicesDiscoveryCbList)
@@ -362,6 +363,7 @@ public class Medialibrary {
     }
 
     public void onParsingStatsUpdated(int percent) {
+        LogUtil.d(TAG, "onParsingStatsUpdated percent=" + percent);
         synchronized (devicesDiscoveryCbList) {
             if (!devicesDiscoveryCbList.isEmpty())
                 for (DevicesDiscoveryCb cb : devicesDiscoveryCbList)
@@ -539,9 +541,9 @@ public class Medialibrary {
         return new File[]{
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES),
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC),
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PODCASTS),
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),
         };
     }
 
