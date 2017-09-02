@@ -183,7 +183,7 @@
         <item name="ic_playasaudio_off">@drawable/ic_playasaudio_off_w</item>
         <item name="ic_playasaudio_on">@drawable/ic_playasaudio_on_w</item>
         <item name="ic_popup_expand">@drawable/ic_popup_expand_w</item>
-        <item name="ic_popup_dim">@drawable/ic_popup_dim_w</item>
+        <item name="ic_popup_dim">@drawable/ic_popup_dim</item>
         <item name="ic_speed_normal_style">@drawable/ic_speed_w</item>
         <item name="ic_sleep_normal_style">@drawable/ic_sleep_w</item>
         <item name="ic_jumpto_normal_style">@drawable/ic_jumpto_w</item>
@@ -254,7 +254,7 @@
         <item name="rounded_bg">@drawable/rounded_corners</item>
         <item name="advanced_options_style">@style/Theme.AppCompat.Dialog</item>
         <item name="ic_playasaudio_on">@drawable/ic_playasaudio_on_w</item>
-        <item name="ic_popup_dim">@drawable/ic_popup_dim_w</item>
+        <item name="ic_popup_dim">@drawable/ic_popup_dim</item>
         <item name="ic_speed_normal_style">@drawable/ic_speed_w</item>
         <item name="ic_sleep_normal_style">@drawable/ic_sleep_w</item>
         <item name="ic_jumpto_normal_style">@drawable/ic_jumpto_w</item>
@@ -642,6 +642,8 @@
         <item name="list_subtitle">@color/grey50</item>
         <item name="list_title_last">?attr/colorAccent</item>
         <item name="list_title">@color/whitetransparent</item>
+
+        <item name="colorPrimaryDark">@color/black</item>
     </style>
 
     <style name="Theme.HDXPlayer.Apearance.Black.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
@@ -650,7 +652,7 @@
         <item name="theme_color_light">@color/theme_color_black_light</item>
 
         <item name="colorPrimary">@color/theme_color_black</item>
-        <item name="colorPrimaryDark">@color/theme_color_black_dark</item>
+        <!--<item name="colorPrimaryDark">@color/theme_color_black_dark</item>-->
         <item name="colorAccent">@color/theme_color_black_accent</item>
     </style>
 
@@ -660,7 +662,7 @@
         <item name="theme_color_light">@color/theme_color_red_light</item>
 
         <item name="colorPrimary">@color/theme_color_red</item>
-        <item name="colorPrimaryDark">@color/theme_color_red_dark</item>
+        <!--<item name="colorPrimaryDark">@color/theme_color_red_dark</item>-->
         <item name="colorAccent">@color/theme_color_red_accent</item>
     </style>
 
@@ -670,7 +672,7 @@
         <item name="theme_color_light">@color/theme_color_pink_light</item>
 
         <item name="colorPrimary">@color/theme_color_pink</item>
-        <item name="colorPrimaryDark">@color/theme_color_pink_dark</item>
+        <!--<item name="colorPrimaryDark">@color/theme_color_pink_dark</item>-->
         <item name="colorAccent">@color/theme_color_pink_accent</item>
     </style>
 
@@ -680,7 +682,7 @@
         <item name="theme_color_light">@color/theme_color_purple_light</item>
 
         <item name="colorPrimary">@color/theme_color_purple</item>
-        <item name="colorPrimaryDark">@color/theme_color_purple_dark</item>
+        <!--<item name="colorPrimaryDark">@color/theme_color_purple_dark</item>-->
         <item name="colorAccent">@color/theme_color_purple_accent</item>
     </style>
 
@@ -690,7 +692,7 @@
         <item name="theme_color_light">@color/theme_color_deep_purple_light</item>
 
         <item name="colorPrimary">@color/theme_color_deep_purple</item>
-        <item name="colorPrimaryDark">@color/theme_color_deep_purple_dark</item>
+        <!--<item name="colorPrimaryDark">@color/theme_color_deep_purple_dark</item>-->
         <item name="colorAccent">@color/theme_color_deep_purple_accent</item>
     </style>
 
@@ -700,7 +702,7 @@
         <item name="theme_color_light">@color/theme_color_indigo_light</item>
 
         <item name="colorPrimary">@color/theme_color_indigo</item>
-        <item name="colorPrimaryDark">@color/theme_color_indigo_dark</item>
+        <!--<item name="colorPrimaryDark">@color/theme_color_indigo_dark</item>-->
         <item name="colorAccent">@color/theme_color_indigo_accent</item>
     </style>
 
@@ -710,7 +712,7 @@
         <item name="theme_color_light">@color/theme_color_blue_light</item>
 
         <item name="colorPrimary">@color/theme_color_blue</item>
-        <item name="colorPrimaryDark">@color/theme_color_blue_dark</item>
+        <!--<item name="colorPrimaryDark">@color/theme_color_blue_dark</item>-->
         <item name="colorAccent">@color/theme_color_blue_accent</item>
     </style>
 
@@ -720,7 +722,7 @@
         <item name="theme_color_light">@color/theme_color_light_blue_light</item>
 
         <item name="colorPrimary">@color/theme_color_light_blue</item>
-        <item name="colorPrimaryDark">@color/theme_color_light_blue_dark</item>
+        <!--<item name="colorPrimaryDark">@color/theme_color_light_blue_dark</item>-->
         <item name="colorAccent">@color/theme_color_light_blue_accent</item>
     </style>
 
@@ -730,7 +732,7 @@
         <item name="theme_color_light">@color/theme_color_cyan_light</item>
 
         <item name="colorPrimary">@color/theme_color_cyan</item>
-        <item name="colorPrimaryDark">@color/theme_color_cyan_dark</item>
+        <!--<item name="colorPrimaryDark">@color/theme_color_cyan_dark</item>-->
         <item name="colorAccent">@color/theme_color_cyan_accent</item>
     </style>
 
@@ -740,7 +742,7 @@
         <item name="theme_color_light">@color/theme_color_teal_light</item>
 
         <item name="colorPrimary">@color/theme_color_teal</item>
-        <item name="colorPrimaryDark">@color/theme_color_teal_dark</item>
+        <!--<item name="colorPrimaryDark">@color/theme_color_teal_dark</item>-->
         <item name="colorAccent">@color/theme_color_teal_accent</item>
     </style>
 
@@ -750,7 +752,7 @@
         <item name="theme_color_light">@color/theme_color_green_light</item>
 
         <item name="colorPrimary">@color/theme_color_green</item>
-        <item name="colorPrimaryDark">@color/theme_color_green_dark</item>
+        <!--<item name="colorPrimaryDark">@color/theme_color_green_dark</item>-->
         <item name="colorAccent">@color/theme_color_green_accent</item>
     </style>
 
@@ -760,7 +762,7 @@
         <item name="theme_color_light">@color/theme_color_light_green_light</item>
 
         <item name="colorPrimary">@color/theme_color_light_green</item>
-        <item name="colorPrimaryDark">@color/theme_color_light_green_dark</item>
+        <!--<item name="colorPrimaryDark">@color/theme_color_light_green_dark</item>-->
         <item name="colorAccent">@color/theme_color_light_green_accent</item>
     </style>
 
@@ -770,7 +772,7 @@
         <item name="theme_color_light">@color/theme_color_lime_light</item>
 
         <item name="colorPrimary">@color/theme_color_lime</item>
-        <item name="colorPrimaryDark">@color/theme_color_lime_dark</item>
+        <!--<item name="colorPrimaryDark">@color/theme_color_lime_dark</item>-->
         <item name="colorAccent">@color/theme_color_lime_accent</item>
     </style>
 
@@ -780,7 +782,7 @@
         <item name="theme_color_light">@color/theme_color_amber_light</item>
 
         <item name="colorPrimary">@color/theme_color_amber</item>
-        <item name="colorPrimaryDark">@color/theme_color_amber_dark</item>
+        <!--<item name="colorPrimaryDark">@color/theme_color_amber_dark</item>-->
         <item name="colorAccent">@color/theme_color_amber_accent</item>
     </style>
 
@@ -790,7 +792,7 @@
         <item name="theme_color_light">@color/theme_color_orange_light</item>
 
         <item name="colorPrimary">@color/theme_color_orange</item>
-        <item name="colorPrimaryDark">@color/theme_color_orange_dark</item>
+        <!--<item name="colorPrimaryDark">@color/theme_color_orange_dark</item>-->
         <item name="colorAccent">@color/theme_color_orange_accent</item>
     </style>
 
@@ -800,7 +802,7 @@
         <item name="theme_color_light">@color/theme_color_deep_orange_light</item>
 
         <item name="colorPrimary">@color/theme_color_deep_orange</item>
-        <item name="colorPrimaryDark">@color/theme_color_deep_orange_dark</item>
+        <!--<item name="colorPrimaryDark">@color/theme_color_deep_orange_dark</item>-->
         <item name="colorAccent">@color/theme_color_deep_orange_accent</item>
     </style>
 
