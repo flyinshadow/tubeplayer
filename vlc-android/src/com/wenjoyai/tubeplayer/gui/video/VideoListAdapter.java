@@ -72,8 +72,12 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     public final static int SORT_BY_TITLE = 0;
     public final static int SORT_BY_LENGTH = 1;
-
     public final static int SORT_BY_DATE = 2;
+
+    // 默认按日期倒序排列
+    public final static int SORT_BY_DEFAULT = SORT_BY_DATE;
+    public final static int SORT_DIRECTION_DEFAULT = -1;
+
 
     final static int UPDATE_SELECTION = 0;
     final static int UPDATE_THUMB = 1;
@@ -423,8 +427,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         protected SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
 
         VideoComparator() {
-            mSortBy = mSettings.getInt(KEY_SORT_BY, SORT_BY_TITLE);
-            mSortDirection = mSettings.getInt(KEY_SORT_DIRECTION, 1);
+            mSortBy = mSettings.getInt(KEY_SORT_BY, SORT_BY_DEFAULT);
+            mSortDirection = mSettings.getInt(KEY_SORT_DIRECTION, SORT_DIRECTION_DEFAULT);
         }
 
         int sortDirection(int sortby) {
