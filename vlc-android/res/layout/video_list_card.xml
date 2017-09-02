@@ -74,15 +74,15 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/ml_item_overlay_layout"
-            android:layout_width="120dp"
-            android:layout_height="75dp"
+            android:layout_width="160dp"
+            android:layout_height="90dp"
             vlc:layout_constraintTop_toTopOf="parent"
             vlc:layout_constraintStart_toStartOf="parent"
             vlc:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginRight="@dimen/default_margin"
-            android:layout_marginTop="@dimen/info_default_margin"
-            android:layout_marginBottom="@dimen/info_default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin"
             >
             <ImageView
                 android:id="@+id/ml_item_thumbnail"
@@ -98,6 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_action_mode_select_1610"
+                android:scaleType="@{scaleType}"
                 android:visibility="@{selected ? View.VISIBLE : View.GONE}"
                 />
         </android.support.constraint.ConstraintLayout>

@@ -154,7 +154,7 @@ public class AsyncImageLoader {
         if (bitmap == null || bitmap.getWidth() <= 1 || bitmap.getHeight() <= 1)
             return;
         if (vdb != null) {
-            vdb.setVariable(BR.scaleType, ImageView.ScaleType.FIT_CENTER);
+            vdb.setVariable(BR.scaleType, ImageView.ScaleType.CENTER_CROP);
             vdb.setVariable(BR.cover, new BitmapDrawable(VLCApplication.getAppResources(), bitmap));
             vdb.setVariable(BR.protocol, null);
         } else {
@@ -164,7 +164,7 @@ public class AsyncImageLoader {
                     if (target instanceof ImageView) {
                         ImageView iv = (ImageView) target;
                         iv.setVisibility(View.VISIBLE);
-                        iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         iv.setImageBitmap(bitmap);
                     } else if (target instanceof TextView) {
                         ViewCompat.setBackground(target, new BitmapDrawable(VLCApplication.getAppResources(), bitmap));
