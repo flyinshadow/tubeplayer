@@ -203,6 +203,9 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
             return;
         }
 
+        if (width < height) {
+            displayW = VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_width_vertical);
+        }
         displayH = displayW * height / width;
         mRootView.setViewSize(displayW, displayH);
     }

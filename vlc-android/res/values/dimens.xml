@@ -32,6 +32,7 @@
 
 
     <dimen name="video_pip_width">240dp</dimen>
+    <dimen name="video_pip_width_vertical">120dp</dimen>
     <dimen name="video_pip_heigth">135dp</dimen>
 
     <!-- Adv options -->
