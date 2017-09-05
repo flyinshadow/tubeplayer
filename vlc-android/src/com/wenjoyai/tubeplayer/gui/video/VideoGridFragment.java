@@ -80,6 +80,7 @@ import com.wenjoyai.tubeplayer.util.FileUtils;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class VideoGridFragment extends MediaBrowserFragment implements MediaUpdatedCb, ISortable, SwipeRefreshLayout.OnRefreshListener, MediaAddedCb, Filterable, IEventsHandler {
@@ -396,6 +397,13 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             public void run() {
                 final MediaWrapper[] itemList = mMediaLibrary.getVideos();
                 final ArrayList<MediaWrapper> displayList = new ArrayList<>();
+                int count = 0;
+//                for (MediaWrapper item : itemList) {
+//                    Log.d(TAG, "[" + count++ + "] uri_path: " + item.getUri().getPath() +
+//                            " dir: " + FileUtils.getParent(item.getUri().getPath()) +
+//                            " folder: " + item.getUri().getPathSegments().get(item.getUri().getPathSegments().size()-2) +
+//                            " lastPathSegment: " + item.getUri().getLastPathSegment());
+//                }
                 if (mGroup != null || itemList.length <= 10) {
                     for (MediaWrapper item : itemList) {
                         String title = item.getTitle().substring(item.getTitle().toLowerCase().startsWith("the") ? 4 : 0);

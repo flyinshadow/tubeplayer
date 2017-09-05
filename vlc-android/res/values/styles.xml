@@ -304,7 +304,7 @@
 
     <style name="Result.Title" parent="Base.TextAppearance.AppCompat.Subhead">
         <item name="textAllCaps">true</item>
-        <item name="android:textColor">?attr/theme_color</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
     <style name="Result.List" parent="Base.Widget.AppCompat.ListView">

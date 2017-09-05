@@ -49,10 +49,14 @@ import com.wenjoyai.tubeplayer.util.Strings;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FileBrowserFragment<T extends BaseBrowserAdapter> extends BaseBrowserFragment {
 
     private AlertDialog mAlertDialog;
+
+    private ArrayList<String> mFolders;
+    private MediaWrapper[] mVideos;
 
     public FileBrowserFragment() {
         super();
@@ -63,6 +67,9 @@ public class FileBrowserFragment<T extends BaseBrowserAdapter> extends BaseBrows
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         mRoot = mMrl == null;
+
+        mFolders = new ArrayList<>(Arrays.asList(mMediaLibrary.getFoldersList()));
+        mVideos = mMediaLibrary.getVideos();
     }
 
     @Override
