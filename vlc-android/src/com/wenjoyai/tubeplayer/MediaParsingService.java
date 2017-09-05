@@ -62,6 +62,8 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
     private String mCurrentDiscovery = null;
     private long mLastNotificationTime = 0L;
 
+    private boolean mStartFullScan = false;
+
     private final ExecutorService mCallsExecutor = Executors.newSingleThreadExecutor();
     private final ExecutorService mNotificationsExecutor = Executors.newSingleThreadExecutor();
 
@@ -89,11 +91,11 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
                             return;
                         }
                     }
-                    synchronized (MediaParsingService.this) {
-                        if (mLastNotificationTime != -1L)
-                            mLastNotificationTime = 0L;
-                    }
-                    showNotification();
+//                    synchronized (MediaParsingService.this) {
+//                        if (mLastNotificationTime != -1L)
+//                            mLastNotificationTime = 0L;
+//                    }
+//                    showNotification();
                     break;
             }
         }
@@ -324,6 +326,10 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
     @Override
     public void onDiscoveryStarted(String entryPoint) {
         if (BuildConfig.DEBUG) Log.d(TAG, "onDiscoveryStarted: "+entryPoint);
+        String entryPath = Strings.stripTrailingSlash(Uri.decode(Strings.removeFileProtocole(entryPoint)));
+        if (entryPath.equals(AndroidDevices.EXTERNAL_PUBLIC_DIRECTORY)) {
+            mStartFullScan = true;
+        }
     }
 
     @Override
@@ -340,6 +346,9 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
 
     @Override
     public void onParsingStatsUpdated(int percent) {
+        if (!mStartFullScan) {
+            return;
+        }
         if (BuildConfig.DEBUG) Log.d(TAG, "onParsingStatsUpdated: "+percent);
         mParsing = percent;
         if (mParsing != 100)
