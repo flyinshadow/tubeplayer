@@ -2,11 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:vlc="http://schemas.android.com/apk/res-auto" >
     <item
+        android:id="@+id/ml_menu_view_mode"
+        android:icon="@drawable/ic_view_bigpic"
+        android:title="@string/media_view_mode"
+        vlc:showAsAction="always"
+        />
+    <item
         android:title="@string/sortby"
         android:icon="@drawable/ic_menu_sort"
         android:id="@+id/ml_menu_sortby"
         vlc:showAsAction="ifRoom">
         <menu>
+            <item
+                android:id="@+id/ml_menu_sortby_date"
+                android:title="@string/sortby_date" />
             <item
                 android:id="@+id/ml_menu_sortby_name"
                 android:title="@string/sortby_name" />

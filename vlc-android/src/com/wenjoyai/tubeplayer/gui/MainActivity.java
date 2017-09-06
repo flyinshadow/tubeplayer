@@ -448,6 +448,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 return new HistoryFragment();
             case R.id.nav_network:
                 return new NetworkBrowserFragment();
+            case R.id.nav_folders:
+                return new VideoFolderFragment();
             default:
                 return new VideoGridFragment();
         }
@@ -903,6 +905,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 return ID_AUDIO;
             case R.id.nav_directories:
                 return ID_DIRECTORIES;
+            case R.id.nav_folders:
+                return ID_FOLDERS;
             case R.id.nav_history:
                 return ID_HISTORY;
             case R.id.nav_mrl:

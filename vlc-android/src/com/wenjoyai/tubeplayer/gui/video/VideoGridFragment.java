@@ -88,12 +88,14 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     public final static String TAG = "VLC/VideoListFragment";
 
     public final static String KEY_GROUP = "key_group";
+    public final static String KEY_FOLDER_GROUP = "key_folder_group";
 
     protected LinearLayout mLayoutFlipperLoading;
     protected AutoFitRecyclerView mGridView;
     protected TextView mTextViewNomedia;
     protected View mViewNomedia;
     protected String mGroup;
+    protected String mFolderGroup;
     private View mSearchButtonView;
     private VideoListAdapter mVideoAdapter;
     private DividerItemDecoration mDividerItemDecoration;
@@ -110,8 +112,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 VideoListAdapter.VIEW_MODE_DEFAULT);
         mVideoAdapter = new VideoListAdapter(this, viewMode);
 
-        if (savedInstanceState != null)
+        if (savedInstanceState != null) {
             setGroup(savedInstanceState.getString(KEY_GROUP));
+            setFolderGroup(savedInstanceState.getString(KEY_FOLDER_GROUP));
+        }
     }
 
     @Override
@@ -166,6 +170,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(KEY_GROUP, mGroup);
+        outState.putString(KEY_FOLDER_GROUP, mFolderGroup);
     }
 
     @Override
@@ -183,7 +188,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         mHandler.sendEmptyMessage(UPDATE_LIST);
     }
 
-    protected String getTitle(){
+    protected String getTitle() {
         if (mGroup == null)
             return getString(R.string.video);
         else
@@ -404,7 +409,14 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 //                            " folder: " + item.getUri().getPathSegments().get(item.getUri().getPathSegments().size()-2) +
 //                            " lastPathSegment: " + item.getUri().getLastPathSegment());
 //                }
-                if (mGroup != null || itemList.length <= 10) {
+                if (mFolderGroup != null) {
+                    for (MediaWrapper item : itemList) {
+                        String path = item.getUri().getPath();
+                        if (path.startsWith(mFolderGroup)) {
+                            displayList.add(item);
+                        }
+                    }
+                } else if (mGroup != null || itemList.length <= 10) {
                     for (MediaWrapper item : itemList) {
                         String title = item.getTitle().substring(item.getTitle().toLowerCase().startsWith("the") ? 4 : 0);
                         if (mGroup == null || title.toLowerCase().startsWith(mGroup.toLowerCase()))
@@ -441,6 +453,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     public void setGroup(String prefix) {
         mGroup = prefix;
+    }
+
+    public void setFolderGroup(String folder) {
+        mFolderGroup = folder;
     }
 
     @Override

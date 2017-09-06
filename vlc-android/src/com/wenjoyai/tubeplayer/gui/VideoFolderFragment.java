@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.MainThread;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,24 +22,31 @@ import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.gui.browser.MediaBrowserFragment;
 import com.wenjoyai.tubeplayer.gui.view.SwipeRefreshLayout;
+import com.wenjoyai.tubeplayer.interfaces.IEventsHandler;
+import com.wenjoyai.tubeplayer.media.FolderGroup;
 import com.wenjoyai.tubeplayer.media.MediaGroup;
+import com.wenjoyai.tubeplayer.util.AndroidDevices;
+import com.wenjoyai.tubeplayer.util.FileUtils;
 import com.wenjoyai.tubeplayer.util.Strings;
 
 import org.videolan.medialibrary.Medialibrary;
 import org.videolan.medialibrary.interfaces.MediaAddedCb;
 import org.videolan.medialibrary.interfaces.MediaUpdatedCb;
+import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by yuqilin on 2017/9/5.
  */
 
-public class VideoFolderFragment extends MediaBrowserFragment implements MediaAddedCb, MediaUpdatedCb {
+public class VideoFolderFragment extends MediaBrowserFragment implements MediaAddedCb, MediaUpdatedCb, IEventsHandler {
 
-    private ArrayList<String> mFolders = new ArrayList<>();
-    private ArrayList<MediaWrapper> mVideos = new ArrayList<>();
+    private List<FolderGroup> mFolders = new ArrayList<>();
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
@@ -50,7 +58,7 @@ public class VideoFolderFragment extends MediaBrowserFragment implements MediaAd
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAdapter = new VideoFolderAdapter();
+        mAdapter = new VideoFolderAdapter(this);
     }
 
     @Override
@@ -60,6 +68,7 @@ public class VideoFolderFragment extends MediaBrowserFragment implements MediaAd
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipeLayout);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview);
 
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
 
         return v;
@@ -131,8 +140,23 @@ public class VideoFolderFragment extends MediaBrowserFragment implements MediaAd
     }
 
     @Override
-    public void onMediaAdded(MediaWrapper[] mediaList) {
+    public void onMediaAdded(final MediaWrapper[] mediaList) {
+        VLCApplication.runBackground(new Runnable() {
+            @Override
+            public void run() {
+                for (MediaWrapper media : mediaList) {
+                    FolderGroup.insertInto(mFolders, media);
+                }
+                FolderGroup.sort(mFolders);
 
+                VLCApplication.runOnMainThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -143,49 +167,53 @@ public class VideoFolderFragment extends MediaBrowserFragment implements MediaAd
     @MainThread
     public void updateList() {
         mHandler.sendEmptyMessageDelayed(SET_REFRESHING, 300);
-
         VLCApplication.runBackground(new Runnable() {
             @Override
             public void run() {
                 final MediaWrapper[] itemList = mMediaLibrary.getVideos();
-                final ArrayList<MediaWrapper> displayList = new ArrayList<>();
-                for (MediaWrapper item : itemList) {
-//                    Strings.removeFileProtocole(item.getUri());
-                }
-//                if (mGroup != null) {
-//                    for (MediaWrapper item : itemList) {
-//                        String title = item.getTitle().substring(item.getTitle().toLowerCase().startsWith("the") ? 4 : 0);
-//                        if (mGroup == null || title.toLowerCase().startsWith(mGroup.toLowerCase()))
-//                            displayList.add(item);
-//                    }
-//                } else {
-//                    for (MediaGroup item : MediaGroup.group(itemList))
-//                        displayList.add(item.getMedia());
-//                }
-//                VLCApplication.runOnMainThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mVideoAdapter.update(displayList, false);
-//                    }
-//                });
+                mFolders = FolderGroup.group(itemList);
+                FolderGroup.sort(mFolders);
+                VLCApplication.runOnMainThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
                 mHandler.sendEmptyMessage(UNSET_REFRESHING);
             }
         });
     }
 
-    public void updateItems(final MediaWrapper[] mediaList) {
-        for (final MediaWrapper mw : mediaList)
-            if (mw != null && mw.getType() == MediaWrapper.TYPE_VIDEO)
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mAdapter.update(mw);
-//                        updateEmptyView();
-                    }
-                });
+    @Override
+    public void onClick(View v, int position, MediaLibraryItem item) {
+        if (item instanceof FolderGroup) {
+//            String folderName = FileUtils.getFileNameFromPath();
+            ((MainActivity)getActivity()).showSecondaryFragment(SecondaryActivity.VIDEO_FOLDER_GROUP, ((FolderGroup) item).getFolderPath());
+        }
     }
 
-    public class VideoFolderAdapter extends RecyclerView.Adapter<VideoFolderViewHolder> {
+    @Override
+    public boolean onLongClick(View v, int position, MediaLibraryItem item) {
+        return false;
+    }
+
+    @Override
+    public void onCtxClick(View v, int position, MediaLibraryItem item) {
+
+    }
+
+    @Override
+    public void onUpdateFinished(RecyclerView.Adapter adapter) {
+
+    }
+
+    public class VideoFolderAdapter extends RecyclerView.Adapter<VideoFolderAdapter.VideoFolderViewHolder> {
+
+        private IEventsHandler mEventsHandler;
+
+        public VideoFolderAdapter(IEventsHandler eventsHandler) {
+            mEventsHandler = eventsHandler;
+        }
 
         @Override
         public VideoFolderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -200,7 +228,22 @@ public class VideoFolderFragment extends MediaBrowserFragment implements MediaAd
             if (position >= mFolders.size()) {
                 return;
             }
-            holder.mFolderName.setText(mFolders.get(position));
+            String folderPath = mFolders.get(position).getFolderPath();
+            String folderName = FileUtils.getFileNameFromPath(folderPath);
+            if (folderPath.equals(AndroidDevices.EXTERNAL_PUBLIC_DIRECTORY)) {
+                folderName = "Internal Storage";
+            }
+            holder.mFolderName.setText(folderName);
+            holder.mVideoCount.setText(String.valueOf(mFolders.get(position).size()));
+        }
+
+        @Override
+        public void onBindViewHolder(VideoFolderViewHolder holder, int position, List<Object> payloads) {
+            if (payloads.isEmpty()) {
+                onBindViewHolder(holder, position);
+            } else {
+                onBindViewHolder(holder, position);
+            }
         }
 
         @Override
@@ -209,14 +252,8 @@ public class VideoFolderFragment extends MediaBrowserFragment implements MediaAd
         }
 
         @MainThread
-        public void update(MediaWrapper item) {
-            int position = mVideos.indexOf(item);
-            if (position != -1) {
-                if (!(mVideos.get(position) instanceof MediaGroup))
-                    mVideos.set(position, item);
-            } else {
-                add(item);
-            }
+        public void update(List<FolderGroup> folders) {
+
         }
 
         @MainThread
@@ -232,15 +269,29 @@ public class VideoFolderFragment extends MediaBrowserFragment implements MediaAd
 //            if (mPendingUpdates.size() == 1)
 //                internalUpdate(items, detectMoves);
         }
-    }
 
-    public class VideoFolderViewHolder extends  RecyclerView.ViewHolder {
+        public class VideoFolderViewHolder extends  RecyclerView.ViewHolder {
 
-        private TextView mFolderName;
+            private View mList;
+            private TextView mFolderName;
+            private TextView mVideoCount;
 
-        public VideoFolderViewHolder(View itemView) {
-            super(itemView);
-            mFolderName = (TextView) itemView.findViewById(R.id.item_folder_name);
+            public VideoFolderViewHolder(View itemView) {
+                super(itemView);
+                mList = itemView.findViewById(R.id.folder_list_item);
+                mFolderName = (TextView) itemView.findViewById(R.id.item_folder_name);
+                mVideoCount = (TextView) itemView.findViewById(R.id.item_video_count);
+                mList.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int position = getLayoutPosition();
+                        if (mEventsHandler != null) {
+                            mEventsHandler.onClick(view, position, mFolders.get(position));
+                        }
+                    }
+                });
+            }
+
         }
     }
 }

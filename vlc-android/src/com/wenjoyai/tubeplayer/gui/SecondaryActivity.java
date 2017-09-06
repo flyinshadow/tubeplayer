@@ -56,6 +56,8 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
     public static final String ABOUT = "about";
     public static final String VIDEO_GROUP_LIST = "videoGroupList";
     public static final String STORAGE_BROWSER = "storage_browser";
+    public static final String VIDEO_FOLDER_GROUP = "videoFolderGroup";
+
 
     Fragment mFragment;
 
@@ -112,6 +114,16 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         if (mFragment instanceof VideoGridFragment)
             getMenuInflater().inflate(R.menu.video_group, menu);
+
+        MenuItem viewModeItem = menu.findItem(R.id.ml_menu_view_mode);
+        int currentViewMode = mSettings.getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE, VideoListAdapter.VIEW_MODE_DEFAULT);
+        if (currentViewMode == VideoListAdapter.VIEW_MODE_LIST) {
+            viewModeItem.setIcon(R.drawable.ic_view_list);
+        } else if (currentViewMode == VideoListAdapter.VIEW_MODE_GRID) {
+            viewModeItem.setIcon(R.drawable.ic_view_grid);
+        } else {
+            viewModeItem.setIcon(R.drawable.ic_view_bigpic);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -120,11 +132,19 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
 
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.ml_menu_view_mode:
+                ((VideoGridFragment)mFragment).toggleViewMode(item);
+                mSettings.edit().putInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
+                        ((VideoGridFragment)mFragment).getCurrentViewMode()).apply();
+                break;
+            case R.id.ml_menu_sortby_date:
+                ((ISortable) mFragment).sortBy(VideoListAdapter.SORT_BY_DATE);
+                break;
             case R.id.ml_menu_sortby_name:
+                ((ISortable) mFragment).sortBy(VideoListAdapter.SORT_BY_TITLE);
+                break;
             case R.id.ml_menu_sortby_length:
-                ((ISortable) mFragment).sortBy(item.getItemId() == R.id.ml_menu_sortby_name
-                ? VideoListAdapter.SORT_BY_TITLE
-                : VideoListAdapter.SORT_BY_LENGTH);
+                ((ISortable) mFragment).sortBy(VideoListAdapter.SORT_BY_LENGTH);
                 break;
             case R.id.ml_menu_refresh:
                 Medialibrary ml = VLCApplication.getMLInstance();
@@ -148,6 +168,9 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
         } else if(id.equals(VIDEO_GROUP_LIST)) {
             mFragment = new VideoGridFragment();
             ((VideoGridFragment) mFragment).setGroup(getIntent().getStringExtra("param"));
+        } else if (id.equals(VIDEO_FOLDER_GROUP)) {
+            mFragment = new VideoGridFragment();
+            ((VideoGridFragment) mFragment).setFolderGroup(getIntent().getStringExtra("param"));
         } else if (id.equals(STORAGE_BROWSER)){
             mFragment = new StorageBrowserFragment();
         } else {
