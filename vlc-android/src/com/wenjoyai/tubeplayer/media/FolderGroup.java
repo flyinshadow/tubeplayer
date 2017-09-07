@@ -71,7 +71,7 @@ public class FolderGroup extends MediaWrapper {
                 }
                 String folderName1 = FileUtils.getFileNameFromPath(item1.getFolderPath());
                 String folderName2 = FileUtils.getFileNameFromPath(item2.getFolderPath());
-                int compare = folderName1.compareTo(folderName2);
+                int compare = folderName1.compareToIgnoreCase(folderName2);
                 return compare;
             }
         });

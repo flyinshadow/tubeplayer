@@ -411,8 +411,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 //                }
                 if (mFolderGroup != null) {
                     for (MediaWrapper item : itemList) {
-                        String path = item.getUri().getPath();
-                        if (path.startsWith(mFolderGroup)) {
+                        String path = FileUtils.getParent(item.getUri().getPath());
+                        if (path.equals(mFolderGroup)) {
                             displayList.add(item);
                         }
                     }

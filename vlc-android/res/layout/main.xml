@@ -47,7 +47,7 @@
             app:layout_behavior="com.wenjoyai.tubeplayer.gui.helpers.FloatingActionButtonBehavior"
             android:visibility="invisible"
             android:layout_margin="16dp"/>
-    </android.support.design.widget.CoordinatorLayout>
+        </android.support.design.widget.CoordinatorLayout>
 
     <!-- The navigation drawer -->
     <android.support.design.widget.NavigationView
