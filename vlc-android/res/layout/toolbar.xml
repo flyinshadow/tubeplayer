@@ -17,5 +17,6 @@
         app:popupTheme="?attr/toolbar_popup_style"
         android:background="?attr/background_actionbar"
         app:navigationIcon="?attr/homeAsUpIndicator"
+        app:layout_scrollFlags="scroll|enterAlways"
         app:titleMarginStart="@dimen/default_margin" />
 </android.support.design.widget.AppBarLayout>
