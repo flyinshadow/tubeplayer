@@ -25,7 +25,9 @@ package com.wenjoyai.tubeplayer.gui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.ViewGroup;
 
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.gui.dialogs.ExternalStorageDialog;
@@ -35,13 +37,16 @@ import com.wenjoyai.tubeplayer.gui.dialogs.VlcProgressDialog;
 import com.wenjoyai.tubeplayer.gui.dialogs.VlcQuestionDialog;
 import com.wenjoyai.tubeplayer.gui.network.MRLPanelFragment;
 
-public class DialogActivity extends BaseActivity {
+public class DialogActivity extends AppCompatActivity {
 
     public static final String KEY_LOGIN = "LoginDialog";
     public static final String KEY_QUESTION = "QuestionDialog";
     public static final String KEY_PROGRESS = "ProgressDialog";
     public static final String KEY_STREAM = "streamDialog";
     public static final String KEY_STORAGE = "storageDialog";
+    public static final String KEY_RATE = "rateDialog";
+
+    private RateFragment mRate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,8 @@ public class DialogActivity extends BaseActivity {
             setupStreamDialog();
         else if (KEY_STORAGE.equals(key))
             setupStorageDialog();
+        else if (KEY_RATE.equals(key))
+            startRateDialog();
     }
 
     private void setupStorageDialog() {
@@ -94,5 +101,15 @@ public class DialogActivity extends BaseActivity {
         dialog.init(key);
         FragmentManager fm = getSupportFragmentManager();
         dialog.show(fm, key);
+    }
+
+    private void startRateDialog() {
+        getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        if (mRate != null && mRate.isVisible())
+            return;
+        if (mRate == null) {
+            mRate = new RateFragment();
+        }
+        mRate.show(getSupportFragmentManager(), "rate_fragment");
     }
 }

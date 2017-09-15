@@ -33,7 +33,10 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 public class Util {
@@ -120,5 +123,16 @@ public class Util {
             if (obj.equals(item))
                 return true;
         return false;
+    }
+
+    public static String millisToDate(long millis) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        return format.format(new Date(millis));
+    }
+
+    public static long getDateNext(int days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, days);
+        return calendar.getTimeInMillis();
     }
 }

@@ -35,16 +35,20 @@ import android.util.Log;
 
 import org.videolan.libvlc.Dialog;
 import org.videolan.libvlc.util.AndroidUtil;
+import org.videolan.medialibrary.LogUtil;
 import org.videolan.medialibrary.Medialibrary;
 import com.wenjoyai.tubeplayer.gui.DialogActivity;
+import com.wenjoyai.tubeplayer.gui.RateFragment;
 import com.wenjoyai.tubeplayer.gui.dialogs.VlcProgressDialog;
 import com.wenjoyai.tubeplayer.gui.helpers.AudioUtil;
 import com.wenjoyai.tubeplayer.gui.helpers.BitmapCache;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.Strings;
+import com.wenjoyai.tubeplayer.util.Util;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
@@ -146,6 +150,40 @@ public class VLCApplication extends Application {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setLocale(this);
+
+        // 切换到横屏时提示
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            long lastTime = mSettings.getLong(RateFragment.KEY_RATE_SHOW_LAST, 0);
+            long nextTime = mSettings.getLong(RateFragment.KEY_RATE_SHOW_NEXT, 0);
+            int count = mSettings.getInt(RateFragment.KEY_RATE_SHOW_COUNT, 0);
+            long currentTime = new Date().getTime();
+            LogUtil.d(TAG, "rate tip, currentTime:" + currentTime + "(" + Util.millisToDate(currentTime) + ")" +
+                    " lastTime:" + lastTime + "(" + Util.millisToDate(lastTime) + ")" +
+                    " nextTime:" + nextTime + "(" + Util.millisToDate(nextTime) + ")" +
+                    " count:" + count
+                );
+            if (nextTime == -1) {
+                // 本版本不提示
+                LogUtil.d(TAG, "rate tip will not show this version");
+            } else if (nextTime == 0) {
+                // 可以提示
+                LogUtil.d(TAG, "rate tip can show NOW");
+                showRateDialog();
+            } else if (nextTime > 0) {
+                 // 到提示时间
+                if (currentTime - nextTime >= 0) {
+                    LogUtil.d(TAG, "rate tip reach time, can show NOW");
+                    showRateDialog();
+                } else {
+                    LogUtil.d(TAG, "rate tip not reach time");
+                }
+            }
+        }
+    }
+
+    private void showRateDialog() {
+        startActivity(new Intent(instance, DialogActivity.class).setAction(DialogActivity.KEY_RATE)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
     /**
