@@ -163,7 +163,7 @@ public class VLCApplication extends Application {
         setLocale(this);
 
         // 切换到横屏时提示
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (!DialogActivity.sRateStarted && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             long lastTime = mSettings.getLong(RateFragment.KEY_RATE_SHOW_LAST, 0);
             long nextTime = mSettings.getLong(RateFragment.KEY_RATE_SHOW_NEXT, 0);
             int count = mSettings.getInt(RateFragment.KEY_RATE_SHOW_COUNT, 0);

@@ -484,7 +484,6 @@
         <activity
             android:name="com.wenjoyai.tubeplayer.gui.DialogActivity"
             android:configChanges="orientation|screenSize"
-            android:launchMode="singleInstance"
             android:theme="@style/VLCTransparentTheme" />
 
         <service android:name="com.wenjoyai.tubeplayer.extensions.ExtensionManagerService" />

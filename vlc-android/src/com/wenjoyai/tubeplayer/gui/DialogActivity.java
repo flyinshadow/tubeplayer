@@ -46,7 +46,7 @@ public class DialogActivity extends AppCompatActivity {
     public static final String KEY_STORAGE = "storageDialog";
     public static final String KEY_RATE = "rateDialog";
 
-    private RateFragment mRate;
+    public static boolean sRateStarted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +68,17 @@ public class DialogActivity extends AppCompatActivity {
             setupStorageDialog();
         else if (KEY_RATE.equals(key))
             startRateDialog();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sRateStarted = false;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     private void setupStorageDialog() {
@@ -104,12 +115,13 @@ public class DialogActivity extends AppCompatActivity {
     }
 
     private void startRateDialog() {
+        sRateStarted = true;
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        if (mRate != null && mRate.isVisible())
-            return;
-        if (mRate == null) {
-            mRate = new RateFragment();
-        }
-        mRate.show(getSupportFragmentManager(), "rate_fragment");
+//        if (mRate != null && mRate.isVisible())
+//            return;
+//        if (mRate == null) {
+//            mRate = new RateFragment();
+//        }
+        new RateFragment().show(getSupportFragmentManager(), "rate_fragment");
     }
 }

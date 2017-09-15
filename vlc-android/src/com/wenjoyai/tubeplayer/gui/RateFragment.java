@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.util.LogUtil;
+import com.wenjoyai.tubeplayer.util.ShareUtils;
 import com.wenjoyai.tubeplayer.util.Util;
 
 import java.util.Calendar;
@@ -54,6 +55,16 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     public void onClick(View view) {
         long time = new Date().getTime();
         switch (view.getId()) {
@@ -61,6 +72,7 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
                 LogUtil.d(TAG, "rate_star time:" + time + "(" + Util.millisToDate(time) + ")");
                 mNextTime = -1;
                 dismiss();
+                ShareUtils.launchAppDetail(getActivity(), getActivity().getPackageName());
                 break;
             case R.id.rate_cancel:
                 LogUtil.d(TAG, "rate_cancel last time:" + time + "(" + Util.millisToDate(time) + ")");
