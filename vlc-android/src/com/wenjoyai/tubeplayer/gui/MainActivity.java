@@ -443,13 +443,11 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             case R.id.nav_audio:
                 return new AudioBrowserFragment();
             case R.id.nav_directories:
-                return new FileBrowserFragment();
+                return new VideoFolderFragment();
             case R.id.nav_history:
                 return new HistoryFragment();
             case R.id.nav_network:
                 return new NetworkBrowserFragment();
-            case R.id.nav_folders:
-                return new VideoFolderFragment();
             default:
                 return new VideoGridFragment();
         }
@@ -500,6 +498,18 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         slideDownAudioPlayer();
     }
 
+    public void showSecondaryFragment2(String fragmentTag, String param, String param2) {
+        Intent i = new Intent(this, SecondaryActivity.class);
+        i.putExtra("fragment", fragmentTag);
+        if (param != null)
+            i.putExtra("param", param);
+        if (param2 != null)
+            i.putExtra("param2", param2);
+        startActivityForResult(i, ACTIVITY_RESULT_SECONDARY);
+        // Slide down the audio player if needed.
+        slideDownAudioPlayer();
+    }
+
     @Nullable
     @Override
     public ActionMode startSupportActionMode(@NonNull ActionMode.Callback callback) {
@@ -526,13 +536,15 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         MenuItemCompat.setOnActionExpandListener(searchItem, this);
 
         MenuItem viewModeItem = menu.findItem(R.id.ml_menu_view_mode);
-        int currentViewMode = mSettings.getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE, VideoListAdapter.VIEW_MODE_DEFAULT);
-        if (currentViewMode == VideoListAdapter.VIEW_MODE_LIST) {
-            viewModeItem.setIcon(R.drawable.ic_view_list);
-        } else if (currentViewMode == VideoListAdapter.VIEW_MODE_GRID) {
-            viewModeItem.setIcon(R.drawable.ic_view_grid);
-        } else {
-            viewModeItem.setIcon(R.drawable.ic_view_bigpic);
+        if (viewModeItem != null) {
+            int currentViewMode = mSettings.getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE, VideoListAdapter.VIEW_MODE_DEFAULT);
+            if (currentViewMode == VideoListAdapter.VIEW_MODE_LIST) {
+                viewModeItem.setIcon(R.drawable.ic_view_list);
+            } else if (currentViewMode == VideoListAdapter.VIEW_MODE_GRID) {
+                viewModeItem.setIcon(R.drawable.ic_view_grid);
+            } else {
+                viewModeItem.setIcon(R.drawable.ic_view_bigpic);
+            }
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -905,8 +917,6 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 return ID_AUDIO;
             case R.id.nav_directories:
                 return ID_DIRECTORIES;
-            case R.id.nav_folders:
-                return ID_FOLDERS;
             case R.id.nav_history:
                 return ID_HISTORY;
             case R.id.nav_mrl:

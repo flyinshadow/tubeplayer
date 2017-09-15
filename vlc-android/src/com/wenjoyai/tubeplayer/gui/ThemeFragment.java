@@ -103,7 +103,6 @@ public class ThemeFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Looper looper = Looper.getMainLooper();
         View v = inflater.inflate(R.layout.theme_selector, container, false);
         mGridView = (GridView)v.findViewById(R.id.theme_selector_grid);
         mThemeAdapter = new ThemeAdapter(getActivity());

@@ -9,17 +9,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/searchButton">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/default_margin"
-            android:clipToPadding="false"
-            android:numColumns="auto_fit"
-            android:fastScrollEnabled="true"
-            android:fadingEdge="none"
-            android:stretchMode="none"
-            android:gravity="center" />
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/folder_directories"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/default_margin"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/directories"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/default_margin"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:textSize="@dimen/default_text_size"
+                    android:textColor="?attr/list_title"
+                    android:text="Directories"
+                    />
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/default_margin"
+                android:clipToPadding="false"
+                android:numColumns="auto_fit"
+                android:fastScrollEnabled="true"
+                android:fadingEdge="none"
+                android:stretchMode="none"
+                android:gravity="center" />
+
+        </LinearLayout>
+
     </com.wenjoyai.tubeplayer.gui.view.SwipeRefreshLayout>
 
 </LinearLayout>

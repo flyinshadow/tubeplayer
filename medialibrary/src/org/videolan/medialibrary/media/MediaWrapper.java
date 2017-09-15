@@ -36,6 +36,7 @@ import org.videolan.libvlc.util.VLCUtil;
 import org.videolan.medialibrary.Medialibrary;
 import org.videolan.medialibrary.Tools;
 
+import java.io.File;
 import java.util.Locale;
 
 public class MediaWrapper extends MediaLibraryItem implements Parcelable {
@@ -590,6 +591,15 @@ public class MediaWrapper extends MediaLibraryItem implements Parcelable {
         if (mId != 0)
             nativeSetMediaStringMetadata(ml, mId, metaDataType, metadataValue);
         return mId != 0;
+    }
+
+    public long getFileSize() {
+        long fileSize = 0;
+        if (mUri != null) {
+            File itemFile = new File(mUri.getPath());
+            fileSize = itemFile.length();
+        }
+        return fileSize;
     }
 
     private native long nativeGetMediaLongMetadata(Medialibrary ml, long id, int metaDataType);

@@ -51,6 +51,7 @@ public class VideoFolderFragment extends MediaBrowserFragment implements MediaAd
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private VideoFolderAdapter mAdapter;
+    private View mFolderDirectories;
 
     public VideoFolderFragment() {}
 
@@ -67,9 +68,17 @@ public class VideoFolderFragment extends MediaBrowserFragment implements MediaAd
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipeLayout);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview);
+        mFolderDirectories = v.findViewById(R.id.folder_directories);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
+
+        mFolderDirectories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).showSecondaryFragment(SecondaryActivity.FILE_BROWSER);
+            }
+        });
 
         return v;
     }
@@ -85,7 +94,7 @@ public class VideoFolderFragment extends MediaBrowserFragment implements MediaAd
 
     @Override
     protected String getTitle() {
-        return "VideoFolderFragment";
+        return getString(R.string.directories);
     }
 
     @Override
@@ -187,8 +196,13 @@ public class VideoFolderFragment extends MediaBrowserFragment implements MediaAd
     @Override
     public void onClick(View v, int position, MediaLibraryItem item) {
         if (item instanceof FolderGroup) {
-//            String folderName = FileUtils.getFileNameFromPath();
-            ((MainActivity)getActivity()).showSecondaryFragment(SecondaryActivity.VIDEO_FOLDER_GROUP, ((FolderGroup) item).getFolderPath());
+            TextView folderName = (TextView) v.findViewById(R.id.item_folder_name);
+            String title = "";
+            if (folderName != null && folderName.getText() != null) {
+                title = folderName.getText().toString();
+            }
+            ((MainActivity)getActivity()).showSecondaryFragment2(SecondaryActivity.VIDEO_FOLDER_GROUP,
+                    ((FolderGroup) item).getFolderPath(), title);
         }
     }
 
@@ -231,10 +245,11 @@ public class VideoFolderFragment extends MediaBrowserFragment implements MediaAd
             String folderPath = mFolders.get(position).getFolderPath();
             String folderName = FileUtils.getFileNameFromPath(folderPath);
             if (folderPath.equals(AndroidDevices.EXTERNAL_PUBLIC_DIRECTORY)) {
-                folderName = "Internal Storage";
+                folderName = getString(R.string.internal_memory);
             }
+            folderName = folderName + "(" + mFolders.get(position).size() + ")";
             holder.mFolderName.setText(folderName);
-            holder.mVideoCount.setText(String.valueOf(mFolders.get(position).size()));
+//            holder.mVideoCount.setText(String.valueOf(mFolders.get(position).size()));
         }
 
         @Override
@@ -274,13 +289,13 @@ public class VideoFolderFragment extends MediaBrowserFragment implements MediaAd
 
             private View mList;
             private TextView mFolderName;
-            private TextView mVideoCount;
+//            private TextView mVideoCount;
 
             public VideoFolderViewHolder(View itemView) {
                 super(itemView);
                 mList = itemView.findViewById(R.id.folder_list_item);
                 mFolderName = (TextView) itemView.findViewById(R.id.item_folder_name);
-                mVideoCount = (TextView) itemView.findViewById(R.id.item_video_count);
+//                mVideoCount = (TextView) itemView.findViewById(R.id.item_video_count);
                 mList.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

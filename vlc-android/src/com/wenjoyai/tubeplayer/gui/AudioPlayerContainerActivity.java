@@ -72,7 +72,7 @@ public class AudioPlayerContainerActivity extends BaseActivity implements Playba
     protected static final String ID_AUDIO = "audio";
     protected static final String ID_NETWORK = "network";
     protected static final String ID_DIRECTORIES = "directories";
-    protected static final String ID_FOLDERS = "folders";
+//    protected static final String ID_FOLDERS = "folders";
     protected static final String ID_HISTORY = "history";
     protected static final String ID_MRL = "mrl";
     protected static final String ID_PREFERENCES = "preferences";

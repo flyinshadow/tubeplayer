@@ -23,19 +23,4 @@
         android:textColor="?attr/list_title"
         />
 
-    <TextView
-        android:id="@+id/item_video_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/default_margin"
-        android:textSize="@dimen/default_text_size"
-        />
-
-    <ImageView
-        android:id="@+id/item_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_more"
-        />
-
 </LinearLayout>

@@ -37,6 +37,7 @@ import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.gui.audio.AudioAlbumsSongsFragment;
 import com.wenjoyai.tubeplayer.gui.audio.AudioBrowserFragment;
 import com.wenjoyai.tubeplayer.gui.audio.EqualizerFragment;
+import com.wenjoyai.tubeplayer.gui.browser.FileBrowserFragment;
 import com.wenjoyai.tubeplayer.gui.browser.StorageBrowserFragment;
 import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
 import com.wenjoyai.tubeplayer.gui.tv.TvUtil;
@@ -57,6 +58,7 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
     public static final String VIDEO_GROUP_LIST = "videoGroupList";
     public static final String STORAGE_BROWSER = "storage_browser";
     public static final String VIDEO_FOLDER_GROUP = "videoFolderGroup";
+    public static final String FILE_BROWSER = "file_browser";
 
 
     Fragment mFragment;
@@ -112,17 +114,25 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (mFragment instanceof VideoGridFragment)
+        if (mFragment instanceof VideoGridFragment) {
             getMenuInflater().inflate(R.menu.video_group, menu);
+        }
 
         MenuItem viewModeItem = menu.findItem(R.id.ml_menu_view_mode);
-        int currentViewMode = mSettings.getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE, VideoListAdapter.VIEW_MODE_DEFAULT);
-        if (currentViewMode == VideoListAdapter.VIEW_MODE_LIST) {
-            viewModeItem.setIcon(R.drawable.ic_view_list);
-        } else if (currentViewMode == VideoListAdapter.VIEW_MODE_GRID) {
-            viewModeItem.setIcon(R.drawable.ic_view_grid);
-        } else {
-            viewModeItem.setIcon(R.drawable.ic_view_bigpic);
+        if (viewModeItem != null) {
+            int currentViewMode = mSettings.getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE, VideoListAdapter.VIEW_MODE_DEFAULT);
+            if (currentViewMode == VideoListAdapter.VIEW_MODE_LIST) {
+                viewModeItem.setIcon(R.drawable.ic_view_list);
+            } else if (currentViewMode == VideoListAdapter.VIEW_MODE_GRID) {
+                viewModeItem.setIcon(R.drawable.ic_view_grid);
+            } else if (currentViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
+                viewModeItem.setIcon(R.drawable.ic_view_bigpic);
+            } else {
+                viewModeItem.setVisible(false);
+            }
+            if (mFragment instanceof VideoGridFragment && (((VideoGridFragment) mFragment).getFolderGroup() != null)) {
+                viewModeItem.setVisible(false);
+            }
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -170,9 +180,11 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
             ((VideoGridFragment) mFragment).setGroup(getIntent().getStringExtra("param"));
         } else if (id.equals(VIDEO_FOLDER_GROUP)) {
             mFragment = new VideoGridFragment();
-            ((VideoGridFragment) mFragment).setFolderGroup(getIntent().getStringExtra("param"));
+            ((VideoGridFragment) mFragment).setFolderGroup(getIntent().getStringExtra("param"), getIntent().getStringExtra("param2"));
         } else if (id.equals(STORAGE_BROWSER)){
             mFragment = new StorageBrowserFragment();
+        } else if (id.equals(FILE_BROWSER)) {
+            mFragment = new FileBrowserFragment();
         } else {
             throw new IllegalArgumentException("Wrong fragment id.");
         }

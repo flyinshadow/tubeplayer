@@ -44,6 +44,7 @@ import android.view.WindowManager;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.videolan.medialibrary.Tools;
 import org.videolan.medialibrary.media.MediaLibraryItem;
@@ -56,6 +57,7 @@ import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
 import com.wenjoyai.tubeplayer.interfaces.IEventsHandler;
 import com.wenjoyai.tubeplayer.media.MediaGroup;
 import com.wenjoyai.tubeplayer.util.MediaItemFilter;
+import com.wenjoyai.tubeplayer.util.Strings;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -87,6 +89,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     public final static int VIEW_MODE_LIST = 1;
     public final static int VIEW_MODE_GRID = 0;
     public final static int VIEW_MODE_MAX = 3;
+
+    public static final int VIEW_MODE_FULL_TITLE = 4;
 
     public final static int VIEW_MODE_DEFAULT = VIEW_MODE_GRID;
 
@@ -122,6 +126,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             video_layout = R.layout.video_list_card;
         } else if (mCurrentViewMode == VIEW_MODE_BIGPIC) {
             video_layout = R.layout.video_bigpic_card;
+        } else if (mCurrentViewMode == VIEW_MODE_FULL_TITLE) {
+            video_layout = R.layout.video_full_title;
         }
         View v = inflater.inflate(video_layout, parent, false);
 //        if (!mListMode) {
@@ -144,7 +150,10 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         holder.binding.setVariable(BR.media, media);
         boolean isSelected = media.hasStateFlags(MediaLibraryItem.FLAG_SELECTED);
         holder.binding.setVariable(BR.selected, isSelected);
-//        holder.binding.setVariable(BR.bgColor, ContextCompat.getColor(holder.itemView.getContext(), mListMode && isSelected ? R.color.orange200transparent : R.color.transparent));
+
+        if (holder.fileSize != null) {
+            holder.fileSize.setText(Strings.readableSize(media.getFileSize()));
+        }
     }
 
     @Override
@@ -371,11 +380,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnFocusChangeListener {
         public ViewDataBinding binding;
         private ImageView thumbView;
+        private TextView fileSize;
 
         public ViewHolder(View itemView) {
             super(itemView);
             binding = DataBindingUtil.bind(itemView);
             thumbView = (ImageView) itemView.findViewById(R.id.ml_item_thumbnail);
+            fileSize = (TextView) itemView.findViewById(R.id.ml_item_size);
 
             binding.setVariable(BR.holder, this);
             binding.setVariable(BR.cover, AsyncImageLoader.DEFAULT_COVER_VIDEO_DRAWABLE);

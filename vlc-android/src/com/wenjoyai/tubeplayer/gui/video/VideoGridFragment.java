@@ -25,7 +25,6 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
@@ -80,7 +79,6 @@ import com.wenjoyai.tubeplayer.util.FileUtils;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class VideoGridFragment extends MediaBrowserFragment implements MediaUpdatedCb, ISortable, SwipeRefreshLayout.OnRefreshListener, MediaAddedCb, Filterable, IEventsHandler {
@@ -89,6 +87,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     public final static String KEY_GROUP = "key_group";
     public final static String KEY_FOLDER_GROUP = "key_folder_group";
+    public final static String KEY_FOLDER_TITLE = "key_folder_title";
 
     protected LinearLayout mLayoutFlipperLoading;
     protected AutoFitRecyclerView mGridView;
@@ -96,6 +95,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     protected View mViewNomedia;
     protected String mGroup;
     protected String mFolderGroup;
+    protected String mFolderTitle;
     private View mSearchButtonView;
     private VideoListAdapter mVideoAdapter;
     private DividerItemDecoration mDividerItemDecoration;
@@ -107,15 +107,20 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        int viewMode = PreferenceManager.getDefaultSharedPreferences(
-                VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
-                VideoListAdapter.VIEW_MODE_DEFAULT);
-        mVideoAdapter = new VideoListAdapter(this, viewMode);
-
         if (savedInstanceState != null) {
             setGroup(savedInstanceState.getString(KEY_GROUP));
-            setFolderGroup(savedInstanceState.getString(KEY_FOLDER_GROUP));
+            setFolderGroup(savedInstanceState.getString(KEY_FOLDER_GROUP), savedInstanceState.getString(KEY_FOLDER_TITLE));
         }
+
+        int viewMode;
+        if (mFolderGroup != null) {
+            viewMode = VideoListAdapter.VIEW_MODE_FULL_TITLE;
+        } else {
+            viewMode = PreferenceManager.getDefaultSharedPreferences(
+                    VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
+                    VideoListAdapter.VIEW_MODE_DEFAULT);
+        }
+        mVideoAdapter = new VideoListAdapter(this, viewMode);
     }
 
     @Override
@@ -138,6 +143,14 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             mGridView.addItemDecoration(mDividerItemDecoration);
         mGridView.setAdapter(mVideoAdapter);
         return v;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        if (mFolderGroup != null) {
+            menu.findItem(R.id.ml_menu_view_mode).setVisible(false);
+        }
     }
 
 
@@ -171,6 +184,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         super.onSaveInstanceState(outState);
         outState.putString(KEY_GROUP, mGroup);
         outState.putString(KEY_FOLDER_GROUP, mFolderGroup);
+        outState.putString(KEY_FOLDER_TITLE, mFolderTitle);
     }
 
     @Override
@@ -189,10 +203,12 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     }
 
     protected String getTitle() {
-        if (mGroup == null)
+        if (mGroup == null && mFolderGroup == null)
             return getString(R.string.video);
-        else
+        else if (mGroup != null)
             return mGroup + "\u2026";
+        else
+            return mFolderTitle;
     }
 
     private void updateViewMode(int targetViewMode) {
@@ -216,14 +232,13 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         }
         mGridView.setNumColumns(listMode ? 1 : -1);
         if (mVideoAdapter.isListMode() != listMode) {
-            if (listMode && targetViewMode != VideoListAdapter.VIEW_MODE_BIGPIC)
+            if (listMode && targetViewMode != VideoListAdapter.VIEW_MODE_BIGPIC && targetViewMode != VideoListAdapter.VIEW_MODE_FULL_TITLE)
                 mGridView.addItemDecoration(mDividerItemDecoration);
             else
                 mGridView.removeItemDecoration(mDividerItemDecoration);
             mVideoAdapter.setListMode(listMode);
         }
     }
-
 
     protected void playVideo(MediaWrapper media, boolean fromStart) {
         Activity activity = getActivity();
@@ -455,8 +470,13 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         mGroup = prefix;
     }
 
-    public void setFolderGroup(String folder) {
+    public void setFolderGroup(String folder, String title) {
         mFolderGroup = folder;
+        mFolderTitle = title;
+    }
+
+    public String getFolderGroup() {
+        return mFolderGroup;
     }
 
     @Override
