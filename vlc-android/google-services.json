@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "705098303102",
+    "firebase_url": "https://tubeplayer-67e17.firebaseio.com",
+    "project_id": "tubeplayer-67e17",
+    "storage_bucket": "tubeplayer-67e17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:705098303102:android:5f0991014308f0c1",
+        "android_client_info": {
+          "package_name": "com.wenjoyai.tubeplayer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "705098303102-g6t7lq7m3v837nonopb8af2gag83fll4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wenjoyai.tubeplayer",
+            "certificate_hash": "61272858845595b9f98c5a3030779ad78b8eb8bd"
+          }
+        },
+        {
+          "client_id": "705098303102-5qnqggfm13p6c6hcsrgo1jcb1f8asrji.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBi0DOZbniSF2qJemPW3Blw5sJ_kXszP34"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "705098303102-5qnqggfm13p6c6hcsrgo1jcb1f8asrji.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

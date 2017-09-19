@@ -193,6 +193,11 @@ dependencies {
 //    compile 'com.android.support:gridlayout-v7:'+rootProject.ext.appCompatVersion
     compile 'com.android.support:cardview-v7:'+rootProject.ext.appCompatVersion
     testCompile 'junit:junit:4.12'
+
+    //google 分析
+//    compile 'com.google.firebase:firebase-core:11.2.0'
+    compile 'com.google.firebase:firebase-analytics:10.0.1'
+//    compile 'com.google.firebase:firebase-analytics:11.2.0'
 }
 
 static def buildTime() {
@@ -221,3 +226,5 @@ def revision() {
 //    }
 //    return vlc.toString()
 //}
+
+apply plugin: 'com.google.gms.google-services'

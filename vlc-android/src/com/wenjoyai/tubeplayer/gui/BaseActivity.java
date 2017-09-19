@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
@@ -15,6 +16,8 @@ import java.util.Calendar;
 
 
 public class BaseActivity extends AppCompatActivity {
+    //firebase统计  https://firebase.google.com/docs/analytics/android/start/
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     static {
         AppCompatDelegate.setDefaultNightMode(PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getBoolean("daynight", false) ? AppCompatDelegate.MODE_NIGHT_AUTO : AppCompatDelegate.MODE_NIGHT_NO);
@@ -28,6 +31,7 @@ public class BaseActivity extends AppCompatActivity {
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
         /* Theme must be applied before super.onCreate */
         applyTheme();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         super.onCreate(savedInstanceState);
     }
 

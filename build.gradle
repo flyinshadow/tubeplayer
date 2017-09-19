@@ -3,15 +3,18 @@ buildscript {
     repositories {
         flatDir dirs: "gradle/plugins"
         jcenter()
+        maven { url 'https://maven.google.com'  }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.google.gms:google-services:3.1.0'
     }
 }
 
 allprojects {
     repositories {
         jcenter()
+        maven { url 'https://maven.google.com'  }
     }
 }
 
