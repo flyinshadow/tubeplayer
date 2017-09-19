@@ -41,9 +41,9 @@
         <item name="background_header">@color/grey300</item>
         <item name="background_audio_tips">@color/grey50transparent</item>
         <item name="audio_player_background_tint">@color/whitetransparent</item>
-        <item name="audio_browser_separator">?attr/theme_color</item>
-        <item name="playlist_item_drag_shadow">?attr/theme_color</item>
-        <item name="audio_player_header_time">?attr/theme_color</item>
+        <item name="audio_browser_separator">?attr/colorAccent</item>
+        <item name="playlist_item_drag_shadow">?attr/colorAccent</item>
+        <item name="audio_player_header_time">?attr/colorAccent</item>
         <item name="font_default">@color/grey900</item>
         <item name="font_light">@color/grey600</item>
         <item name="font_actionbar">@color/white87transparent</item>
