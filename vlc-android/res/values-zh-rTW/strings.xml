@@ -381,5 +381,5 @@
     <string name="night_mode">夜間模式</string>
     <string name="share_app">分享</string>
     <string name="file_name">檔案名稱</string>
-    <string name="file_other"></string>
+    <string name="folders">文件夾</string>
 </resources>

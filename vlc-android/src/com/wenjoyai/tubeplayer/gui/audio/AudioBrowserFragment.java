@@ -31,6 +31,7 @@ import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -82,8 +83,9 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
     private AudioBrowserAdapter mArtistsAdapter;
     private AudioBrowserAdapter mAlbumsAdapter;
     private AudioBrowserAdapter mSongsAdapter;
-    private AudioBrowserAdapter mGenresAdapter;
+//    private AudioBrowserAdapter mGenresAdapter;
     private AudioBrowserAdapter mPlaylistAdapter;
+    private AudioBrowserAdapter mFolderAdapter;
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
@@ -98,11 +100,12 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
     public static final int SET_REFRESHING = 103;
     public static final int UNSET_REFRESHING = 104;
     public static final int UPDATE_EMPTY_VIEW = 105;
-    private final static int MODE_ARTIST = 0;
-    private final static int MODE_ALBUM = 1;
-    private final static int MODE_SONG = 2;
-    private final static int MODE_GENRE = 3;
-    private final static int MODE_PLAYLIST = 4;
+    private final static int MODE_SONG = 0;
+    private final static int MODE_ARTIST = 1;
+    private final static int MODE_ALBUM = 2;
+    private final static int MODE_PLAYLIST = 3;
+//    private final static int MODE_GENRE = 4;
+    private final static int MODE_FOLDER = 4;
     private final static int MODE_TOTAL = 5; // Number of audio browser modes
 
     public final static int MSG_LOADING = 0;
@@ -119,9 +122,10 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
         mSongsAdapter = new AudioBrowserAdapter(getActivity(), MediaLibraryItem.TYPE_MEDIA, this, true);
         mArtistsAdapter = new AudioBrowserAdapter(getActivity(), MediaLibraryItem.TYPE_ARTIST, this, true);
         mAlbumsAdapter = new AudioBrowserAdapter(getActivity(), MediaLibraryItem.TYPE_ALBUM, this, true);
-        mGenresAdapter = new AudioBrowserAdapter(getActivity(), MediaLibraryItem.TYPE_GENRE, this, true);
+//        mGenresAdapter = new AudioBrowserAdapter(getActivity(), MediaLibraryItem.TYPE_GENRE, this, true);
         mPlaylistAdapter = new AudioBrowserAdapter(getActivity(), MediaLibraryItem.TYPE_PLAYLIST, this, true);
-        mAdapters = new AudioBrowserAdapter[]{mArtistsAdapter, mAlbumsAdapter, mSongsAdapter, mGenresAdapter, mPlaylistAdapter};
+        mFolderAdapter = new AudioBrowserAdapter(getActivity(), MediaLibraryItem.TYPE_FOLDER, this, false);
+        mAdapters = new AudioBrowserAdapter[]{mSongsAdapter, mArtistsAdapter, mAlbumsAdapter, mPlaylistAdapter, mFolderAdapter};
     }
 
     @Override
@@ -137,8 +141,8 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
         for (int i = 0; i < MODE_TOTAL; i++)
             mLists[i] = (ContextMenuRecyclerView) mViewPager.getChildAt(i);
 
-        String[] titles = new String[] {getString(R.string.artists), getString(R.string.albums),
-                getString(R.string.songs), getString(R.string.genres), getString(R.string.playlists)};
+        String[] titles = new String[] {getString(R.string.songs), getString(R.string.artists), getString(R.string.albums),
+                 getString(R.string.playlists), getString(R.string.folders)};
         mViewPager.setOffscreenPageLimit(MODE_TOTAL - 1);
         mViewPager.setAdapter(new AudioPagerAdapter(mLists, titles));
 
@@ -213,8 +217,7 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
         mMediaLibrary.setAlbumsAddedCb(this);
         mMediaLibrary.setMediaAddedCb(this, Medialibrary.FLAG_MEDIA_ADDED_AUDIO_EMPTY);
         mMediaLibrary.setMediaUpdatedCb(this, Medialibrary.FLAG_MEDIA_UPDATED_AUDIO_EMPTY);
-        if (mArtistsAdapter.isEmpty() || mGenresAdapter.isEmpty() ||
-                mAlbumsAdapter.isEmpty() || mSongsAdapter.isEmpty())
+        if (mArtistsAdapter.isEmpty() || mAlbumsAdapter.isEmpty() || mSongsAdapter.isEmpty())
             mHandler.sendEmptyMessage(UPDATE_LIST);
         else {
             updateEmptyView(mViewPager.getCurrentItem());
@@ -228,7 +231,7 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
             menu.setGroupVisible(R.id.songs_view_only, false);
             menu.setGroupVisible(R.id.phone_only, false);
         }
-        if (pos == MODE_ARTIST || pos == MODE_GENRE || pos == MODE_ALBUM)
+        if (pos == MODE_ARTIST || pos == MODE_ALBUM)
             menu.findItem(R.id.audio_list_browser_play).setVisible(true);
         if (pos != MODE_SONG && pos != MODE_PLAYLIST)
             menu.findItem(R.id.audio_list_browser_delete).setVisible(false);
@@ -263,8 +266,11 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
             case MODE_PLAYLIST:
                 adapter = mPlaylistAdapter;
                 break;
-            case MODE_GENRE:
-                adapter = mGenresAdapter;
+//            case MODE_GENRE:
+//                adapter = mGenresAdapter;
+//                break;
+            case MODE_FOLDER:
+                adapter = mFolderAdapter;
                 break;
             default:
                 return false;
@@ -525,14 +531,15 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
         }
         Intent i;
         switch (item.getItemType()) {
+//            case MediaLibraryItem.TYPE_GENRE:
+//                i = new Intent(getActivity(), SecondaryActivity.class);
+//                i.putExtra(SecondaryActivity.KEY_FRAGMENT, SecondaryActivity.ALBUMS_SONGS);
+//                i.putExtra(TAG_ITEM, item);
+//                break;
             case MediaLibraryItem.TYPE_ARTIST:
-            case MediaLibraryItem.TYPE_GENRE:
-                i = new Intent(getActivity(), SecondaryActivity.class);
-                i.putExtra(SecondaryActivity.KEY_FRAGMENT, SecondaryActivity.ALBUMS_SONGS);
-                i.putExtra(TAG_ITEM, item);
-                break;
             case MediaLibraryItem.TYPE_ALBUM:
             case MediaLibraryItem.TYPE_PLAYLIST:
+            case MediaLibraryItem.TYPE_FOLDER:
                 i = new Intent(getActivity(), PlaylistActivity.class);
                 i.putExtra(TAG_ITEM, item);
                 break;
@@ -677,7 +684,7 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
         switch (msg.what) {
             case MSG_LOADING:
                 if (fragment.mArtistsAdapter.isEmpty() && fragment.mAlbumsAdapter.isEmpty() &&
-                        fragment.mSongsAdapter.isEmpty() && fragment.mGenresAdapter.isEmpty())
+                        fragment.mSongsAdapter.isEmpty() && fragment.mFolderAdapter.isEmpty())
                     fragment.mSwipeRefreshLayout.setRefreshing(true);
                 break;
             case REFRESH:
@@ -717,8 +724,9 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
         updateArtists();
         updateAlbums();
         updateSongs();
-        updateGenres();
+//        updateGenres();
         updatePlaylists();
+        updateFolders();
     }
 
     private void updateArtists() {
@@ -767,18 +775,18 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
     }
 
     private void updateGenres() {
-        VLCApplication.runBackground(new Runnable() {
-            @Override
-            public void run() {
-                final Genre[] genres = mMediaLibrary.getGenres();
-                VLCApplication.runOnMainThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mGenresAdapter.update(genres);
-                    }
-                });
-            }
-        });
+//        VLCApplication.runBackground(new Runnable() {
+//            @Override
+//            public void run() {
+//                final Genre[] genres = mMediaLibrary.getGenres();
+//                VLCApplication.runOnMainThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mGenresAdapter.update(genres);
+//                    }
+//                });
+//            }
+//        });
     }
 
     private void updatePlaylists() {
@@ -790,6 +798,21 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
                     @Override
                     public void run() {
                         mPlaylistAdapter.update(playlists);
+                    }
+                });
+            }
+        });
+    }
+
+    private void updateFolders() {
+        VLCApplication.runBackground(new Runnable() {
+            @Override
+            public void run() {
+                final MediaWrapper[] media = mMediaLibrary.getAudio();
+                VLCApplication.runOnMainThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mFolderAdapter.update(media);
                     }
                 });
             }
@@ -817,11 +840,12 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
     };
 
     public void clear(){
-        mGenresAdapter.clear();
+//        mGenresAdapter.clear();
         mArtistsAdapter.clear();
         mAlbumsAdapter.clear();
         mSongsAdapter.clear();
         mPlaylistAdapter.clear();
+        mFolderAdapter.clear();
     }
 
     @Override

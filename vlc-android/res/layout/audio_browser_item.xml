@@ -41,7 +41,7 @@
             android:layout_gravity="center"
             vlc:media="@{item}"
             android:background="@{cover}"
-            android:visibility="@{(item.getItemType() &amp; (MediaLibraryItem.TYPE_ALBUM|MediaLibraryItem.TYPE_ARTIST|MediaLibraryItem.TYPE_MEDIA)) != 0 ? View.VISIBLE : View.GONE}"/>
+            android:visibility="@{(item.getItemType() &amp; (MediaLibraryItem.TYPE_ALBUM|MediaLibraryItem.TYPE_ARTIST|MediaLibraryItem.TYPE_PLAYLIST|MediaLibraryItem.TYPE_FOLDER)) != 0 ? View.VISIBLE : View.GONE}"/>
 
 
         <!-- TextView must be set to singleLine
@@ -73,13 +73,26 @@
             vlc:layout_constraintTop_toBottomOf="@+id/title"
             vlc:layout_constraintStart_toStartOf="@+id/title"
             vlc:layout_constraintEnd_toEndOf="@+id/title"
-            vlc:layout_constraintBottom_toBottomOf="parent"
+            vlc:layout_constraintBottom_toTopOf="@+id/media_counts"
             android:singleLine="true"
             android:ellipsize="middle"
             android:text="@{item.description}"
             android:fontFamily="sans-serif-light"
             android:textColor="?attr/list_subtitle"
             android:visibility="@{TextUtils.isEmpty(item.description) ? View.GONE : View.VISIBLE}"/>
+        
+        <TextView
+            android:id="@+id/media_counts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            vlc:layout_constraintStart_toStartOf="@+id/title"
+            vlc:layout_constraintEnd_toEndOf="@+id/title"
+            vlc:layout_constraintBottom_toBottomOf="parent"
+            android:singleLine="true"
+            android:fontFamily="sans-serif-light"
+            android:textColor="?attr/list_subtitle"
+            android:visibility="@{(item.getItemType() &amp; (MediaLibraryItem.TYPE_ARTIST|MediaLibraryItem.TYPE_ALBUM|MediaLibraryItem.TYPE_PLAYLIST|MediaLibraryItem.TYPE_FOLDER)) != 0 ? View.VISIBLE : View.GONE}"
+            />
 
         <ImageView
             android:id="@+id/item_more"
@@ -91,6 +104,8 @@
             android:scaleType="center"
             android:src="@drawable/ic_more"
             android:contentDescription="@string/more_actions"
-            android:onClick="@{holder::onMoreClick}" />
+            android:onClick="@{holder::onMoreClick}"
+            android:visibility="@{(item.getItemType() &amp; MediaLibraryItem.TYPE_FOLDER) == 0 ? View.VISIBLE : View.GONE}"
+            />
     </android.support.constraint.ConstraintLayout>
 </layout>

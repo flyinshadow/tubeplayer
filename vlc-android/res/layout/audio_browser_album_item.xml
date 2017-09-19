@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View"/>
+        <import type="android.text.TextUtils"/>
+        <import type="org.videolan.medialibrary.media.MediaLibraryItem"/>
+        <variable
+            name="alignMode"
+            type="int" />
+        <variable
+            name="item"
+            type="MediaLibraryItem"/>
+        <variable
+            name="cover"
+            type="android.graphics.drawable.BitmapDrawable"/>
+    </data>
+    <GridView
+        android:id="@+id/album_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:scrollbars="none"
+        >
+    </GridView>
+</layout>

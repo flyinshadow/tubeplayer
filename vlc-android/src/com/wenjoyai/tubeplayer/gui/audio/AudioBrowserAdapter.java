@@ -25,6 +25,7 @@ package com.wenjoyai.tubeplayer.gui.audio;
 
 import android.app.Activity;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.MainThread;
@@ -34,15 +35,19 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 
 import org.videolan.medialibrary.Tools;
 import org.videolan.medialibrary.media.DummyItem;
 import org.videolan.medialibrary.media.MediaLibraryItem;
+import org.videolan.medialibrary.media.MediaWrapper;
+
 import com.wenjoyai.tubeplayer.BR;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.databinding.AudioBrowserAlbumItemBinding;
 import com.wenjoyai.tubeplayer.databinding.AudioBrowserItemBinding;
 import com.wenjoyai.tubeplayer.databinding.AudioBrowserSeparatorBinding;
 import com.wenjoyai.tubeplayer.gui.BaseQueuedAdapter;
@@ -50,6 +55,9 @@ import com.wenjoyai.tubeplayer.gui.helpers.AsyncImageLoader;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
 import com.wenjoyai.tubeplayer.gui.view.FastScroller;
 import com.wenjoyai.tubeplayer.interfaces.IEventsHandler;
+import com.wenjoyai.tubeplayer.media.FolderGroup;
+import com.wenjoyai.tubeplayer.util.FileUtils;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.MediaItemDiffCallback;
 import com.wenjoyai.tubeplayer.util.MediaItemFilter;
 import com.wenjoyai.tubeplayer.util.Util;
@@ -88,7 +96,12 @@ public class AudioBrowserAdapter extends BaseQueuedAdapter<MediaLibraryItem[], A
         if (viewType == MediaLibraryItem.TYPE_DUMMY) {
             AudioBrowserSeparatorBinding binding = AudioBrowserSeparatorBinding.inflate(inflater, parent, false);
             return new ViewHolder(binding);
-        } else {
+        }
+//        else if (viewType == MediaLibraryItem.TYPE_ALBUM) {
+//            AudioBrowserAlbumItemBinding binding = AudioBrowserAlbumItemBinding.inflate(inflater, parent, false);
+//            return new AlbumItemViewHolder(binding);
+//        }
+        else {
             AudioBrowserItemBinding binding = AudioBrowserItemBinding.inflate(inflater, parent, false);
             return new MediaItemViewHolder(binding);
         }
@@ -113,10 +126,28 @@ public class AudioBrowserAdapter extends BaseQueuedAdapter<MediaLibraryItem[], A
         else {
             boolean isSelected = ((MediaLibraryItem)payloads.get(0)).hasStateFlags(MediaLibraryItem.FLAG_SELECTED);
             MediaItemViewHolder miv = (MediaItemViewHolder) holder;
+//            ((MediaItemViewHolder)holder).vdb.mediaCover.setVisibility(View.GONE);
             miv.setCoverlay(isSelected);
             miv.setViewBackground(miv.itemView.hasFocus(), isSelected);
         }
-
+        if (holder.getType() == MediaLibraryItem.TYPE_MEDIA) {
+            int count = 0;
+//            if (mType == MediaLibraryItem.TYPE_FOLDER)
+//                count = ((FolderGroup)mDataList[position]).size();
+//            else
+                count = getTracksCount(mDataList[position]);
+            if (count > 0) {
+                String text = count + " Song" + (count > 1 ? "s" : "");
+                ((MediaItemViewHolder) holder).vdb.mediaCounts.setText(text);
+            } else {
+                ((MediaItemViewHolder) holder).vdb.mediaCounts.setVisibility(View.GONE);
+            }
+            if (mType == MediaLibraryItem.TYPE_PLAYLIST) {
+                ((MediaItemViewHolder) holder).vdb.mediaCover.setImageResource(R.drawable.ic_audio_playlist);
+            } else if (mType == MediaLibraryItem.TYPE_FOLDER) {
+                ((MediaItemViewHolder) holder).vdb.mediaCover.setImageResource(R.drawable.music_directories);
+            }
+        }
     }
 
     @Override
@@ -149,6 +180,15 @@ public class AudioBrowserAdapter extends BaseQueuedAdapter<MediaLibraryItem[], A
             if (!(mDataList[i].getItemType() == MediaLibraryItem.TYPE_DUMMY))
                 list.add(mDataList[i]);
         return list;
+    }
+
+    private int getTracksCount(MediaLibraryItem item) {
+        int count = 0;
+        if (item.getItemType() != MediaLibraryItem.TYPE_DUMMY) {
+            MediaWrapper[] tracks = item.getTracks(VLCApplication.getMLInstance());
+            count = tracks.length;
+        }
+        return count;
     }
 
     int getListWithPosition(ArrayList<MediaLibraryItem> list, int position) {
@@ -202,7 +242,7 @@ public class AudioBrowserAdapter extends BaseQueuedAdapter<MediaLibraryItem[], A
     public void addAll(MediaLibraryItem[] items, boolean generateSections) {
         if (mContext == null)
             return;
-        mDataList = generateSections ? generateList(items) : items;
+        mDataList = (generateSections || mType == MediaLibraryItem.TYPE_FOLDER) ? generateList(items) : items;
         for (int i = 0; i<getItemCount(); ++i) {
             if (mDataList[i].getItemType() == MediaLibraryItem.TYPE_DUMMY)
                 continue;
@@ -227,6 +267,23 @@ public class AudioBrowserAdapter extends BaseQueuedAdapter<MediaLibraryItem[], A
         boolean isLetter, emptyTitle;
         String firstLetter = null, currentLetter = null;
         int count = items.length;
+
+        // generate folder list
+        if (mType == MediaLibraryItem.TYPE_FOLDER) {
+            List<FolderGroup> mFolders = new ArrayList<>();
+            for (MediaLibraryItem item : items) {
+                if (item.getItemType() == MediaLibraryItem.TYPE_MEDIA) {
+                    FolderGroup.insertInto(mFolders, (MediaWrapper)item);
+                }
+            }
+            FolderGroup.sort(mFolders);
+            for (FolderGroup folderGroup : mFolders) {
+                folderGroup.setTitle(FileUtils.getFileNameFromPath(folderGroup.getFolderPath()));
+                datalist.add(folderGroup);
+            }
+            return datalist.toArray(new MediaLibraryItem[datalist.size()]);
+        }
+
         for (int i = 0; i < count; ++i) {
             MediaLibraryItem item = items[i];
             if (item.getItemType() == MediaLibraryItem.TYPE_DUMMY)
@@ -348,6 +405,96 @@ public class AudioBrowserAdapter extends BaseQueuedAdapter<MediaLibraryItem[], A
 
         public int getType() {
             return MediaLibraryItem.TYPE_DUMMY;
+        }
+    }
+
+    public class AlbumItemViewHolder extends ViewHolder<AudioBrowserAlbumItemBinding> implements View.OnFocusChangeListener {
+        int selectionColor = 0, coverlayResource = 0;
+
+        private class AlbumAdapter extends BaseAdapter {
+
+            public AlbumAdapter() {
+
+            }
+
+            @Override
+            public int getCount() {
+                int count = getMediaItems().size();
+                LogUtil.d(TAG, "AlbumAdapter getCount=" + count);
+                return count;
+            }
+
+            @Override
+            public Object getItem(int i) {
+                return null;
+            }
+
+            @Override
+            public long getItemId(int i) {
+                return 0;
+            }
+
+            @Override
+            public View getView(int i, View convertView, ViewGroup viewGroup) {
+                LayoutInflater inflater = (LayoutInflater) mContext
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View view;
+                if (convertView == null) {
+                    view = inflater.inflate(R.layout.album_grid_item, null);
+                } else {
+                    view = convertView;
+                }
+                return view;
+            }
+        }
+
+        public AlbumItemViewHolder(AudioBrowserAlbumItemBinding binding) {
+            super(binding);
+            binding.albumGrid.setAdapter(new AlbumAdapter());
+        }
+
+        public void onClick(View v) {
+            if (mIEventsHandler != null) {
+                int position = getLayoutPosition();
+                mIEventsHandler.onClick(v, position, mDataList[position]);
+            }
+        }
+
+        public void onMoreClick(View v) {
+            if (mIEventsHandler != null) {
+                int position = getLayoutPosition();
+                mIEventsHandler.onCtxClick(v, position, mDataList[position]);
+            }
+        }
+
+        public boolean onLongClick(View view) {
+            int position = getLayoutPosition();
+            return mIEventsHandler.onLongClick(view, position, mDataList[position]);
+        }
+
+        private void setCoverlay(boolean selected) {
+            int resId = selected ? R.drawable.ic_action_mode_select : 0;
+            if (resId != coverlayResource) {
+//                vdb.mediaCover.setImageResource(selected ? R.drawable.ic_action_mode_select : 0);
+                coverlayResource = resId;
+            }
+        }
+
+        public int getType() {
+            return MediaLibraryItem.TYPE_ALBUM;
+        }
+
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+//            setViewBackground(hasFocus, vdb.getItem().hasStateFlags(MediaLibraryItem.FLAG_SELECTED));
+        }
+
+        private void setViewBackground(boolean focused, boolean selected) {
+            int selectionColor = selected || focused ? UiTools.ITEM_SELECTION_ON : 0;
+            if (selectionColor != this.selectionColor) {
+                itemView.setBackgroundColor(selectionColor);
+                this.selectionColor = selectionColor;
+            }
         }
     }
 

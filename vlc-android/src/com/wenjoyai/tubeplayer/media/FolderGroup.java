@@ -1,9 +1,14 @@
 package com.wenjoyai.tubeplayer.media;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.wenjoyai.tubeplayer.gui.helpers.BitmapUtil;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.FileUtils;
 
+import org.videolan.medialibrary.Medialibrary;
+import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
 
 import java.util.ArrayList;
@@ -15,7 +20,7 @@ import java.util.List;
  * Created by yuqilin on 2017/9/6.
  */
 
-public class FolderGroup extends MediaWrapper {
+public class FolderGroup extends MediaWrapper implements Parcelable {
 
     private String mFolderPath;
     private ArrayList<MediaWrapper> mMedias = new ArrayList<>();
@@ -43,6 +48,36 @@ public class FolderGroup extends MediaWrapper {
         mFolderPath = FileUtils.getParent(media.getUri().getPath());
     }
 
+    protected FolderGroup(Parcel in) {
+        super(in);
+        mFolderPath = in.readString();
+        mMedias = in.createTypedArrayList(MediaWrapper.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(mFolderPath);
+        dest.writeTypedList(mMedias);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<FolderGroup> CREATOR = new Creator<FolderGroup>() {
+        @Override
+        public FolderGroup createFromParcel(Parcel in) {
+            return new FolderGroup(in);
+        }
+
+        @Override
+        public FolderGroup[] newArray(int size) {
+            return new FolderGroup[size];
+        }
+    };
+
     public String getFolderPath() {
         return mFolderPath;
     }
@@ -53,6 +88,16 @@ public class FolderGroup extends MediaWrapper {
 
     public int size() {
         return mMedias.size();
+    }
+
+    @Override
+    public MediaWrapper[] getTracks(Medialibrary ml) {
+        return mMedias.toArray(new MediaWrapper[mMedias.size()]);
+    }
+
+    @Override
+    public int getItemType() {
+        return MediaLibraryItem.TYPE_FOLDER;
     }
 
     public static void sort(List<FolderGroup> folders) {

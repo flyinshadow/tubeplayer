@@ -92,7 +92,7 @@ public class PlaylistActivity extends AudioPlayerContainerActivity implements IE
                 savedInstanceState.getParcelable(AudioBrowserFragment.TAG_ITEM) :
                 getIntent().getParcelableExtra(AudioBrowserFragment.TAG_ITEM));
         mBinding.setPlaylist(mPlaylist);
-        mAdapter = new AudioBrowserAdapter(this, MediaLibraryItem.TYPE_MEDIA, this, false);
+        mAdapter = new AudioBrowserAdapter(this, MediaLibraryItem.TYPE_PLAYLIST, this, false);
 
         mBinding.songs.setLayoutManager(new LinearLayoutManager(this));
         mBinding.songs.setAdapter(mAdapter);

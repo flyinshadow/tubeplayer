@@ -45,6 +45,7 @@ import android.widget.TextView;
 
 import org.videolan.libvlc.util.AndroidUtil;
 import com.wenjoyai.tubeplayer.R;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -158,10 +159,12 @@ public class FastScroller extends LinearLayout {
         mRecyclerviewTotalHeight = 0;
         recyclerView.addOnScrollListener(scrollListener);
         mShowBubble = ((SeparatedAdapter)recyclerView.getAdapter()).hasSections();
+        LogUtil.d(TAG, "setRecyclerView mShowBubble=" + mShowBubble);
     }
 
     @Override
     public boolean onTouchEvent(@NonNull MotionEvent event) {
+        LogUtil.d(TAG, "onTouchEvent event.getAction()=" + event.getAction());
         if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
             mFastScrolling = true;
             setPosition(event.getY());
@@ -169,8 +172,10 @@ public class FastScroller extends LinearLayout {
                 currentAnimator.cancel();
             mHandler.removeMessages(HIDE_SCROLLER);
             mHandler.removeMessages(HIDE_HANDLE);
-            if (mShowBubble && bubble.getVisibility() == GONE)
+            LogUtil.d(TAG, "onTouchEvent mShowBubble=" + mShowBubble + ",bubble.getVisibility()="+ bubble.getVisibility());
+            if (mShowBubble && bubble.getVisibility() == GONE) {
                 showBubble();
+            }
             setRecyclerViewPosition(event.getY());
             return true;
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -197,6 +202,9 @@ public class FastScroller extends LinearLayout {
             if (targetPos == formerPosition)
                 return;
             mRecyclerView.scrollToPosition(targetPos);
+            String letter = ((SeparatedAdapter)mRecyclerView.getAdapter()).getSectionforPosition(targetPos);
+            LogUtil.d(TAG, "setRecyclerViewPosition letter=" + letter);
+            bubble.setText(letter);
         }
     }
 
@@ -231,8 +239,23 @@ public class FastScroller extends LinearLayout {
             if (mRecyclerviewTotalHeight == 0)
                 mRecyclerviewTotalHeight = mRecyclerView.computeVerticalScrollRange()-mRecyclerView.computeVerticalScrollExtent();
             int firstVisiblePosition = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+            int firstCompletelyVisiblePosition = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+            int lastVisiblePosition = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findLastVisibleItemPosition();
+            int lastCompletelyVisiblePosition = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+
+            String firstVisiblePositionLetter = ((SeparatedAdapter)mRecyclerView.getAdapter()).getSectionforPosition(firstVisiblePosition);
+            String firstCompletelyVisiblePositionLetter = ((SeparatedAdapter)mRecyclerView.getAdapter()).getSectionforPosition(firstCompletelyVisiblePosition);
+            String lastVisiblePositionLetter = ((SeparatedAdapter)mRecyclerView.getAdapter()).getSectionforPosition(lastVisiblePosition);
+            String lastCompletelyVisiblePositionLetter = ((SeparatedAdapter)mRecyclerView.getAdapter()).getSectionforPosition(lastCompletelyVisiblePosition);
+            LogUtil.d(TAG, "onScrolled firstVisiblePositionLetter=" + firstVisiblePositionLetter);
+            LogUtil.d(TAG, "onScrolled firstCompletelyVisiblePositionLetter=" + firstCompletelyVisiblePositionLetter);
+            LogUtil.d(TAG, "onScrolled lastVisiblePositionLetter=" + lastVisiblePositionLetter);
+            LogUtil.d(TAG, "onScrolled lastCompletelyVisiblePositionLetter=" + lastCompletelyVisiblePositionLetter);
+
+            LogUtil.d(TAG, "onScrolled mFastScrolling=" + mFastScrolling);
             if (mFastScrolling) {
                 String letter = ((SeparatedAdapter)mRecyclerView.getAdapter()).getSectionforPosition(firstVisiblePosition);
+                LogUtil.d(TAG, "onScrolled bubble letter=" + letter);
                 bubble.setText(letter);
                 return;
             }
