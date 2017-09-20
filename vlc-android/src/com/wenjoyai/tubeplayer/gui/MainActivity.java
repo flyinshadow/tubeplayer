@@ -63,6 +63,7 @@ import android.widget.FilterQueryProvider;
 
 import org.videolan.medialibrary.Medialibrary;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.mobvista.msdk.MobVistaConstans;
 import com.mobvista.msdk.MobVistaSDK;
 import com.mobvista.msdk.out.MobVistaSDKFactory;
@@ -1017,6 +1018,10 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             @Override
             public void onClick(View v) {
                 openWall();
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "library_roate_offer_wall");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "library_roate_offer_wall");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             }
         });
     }

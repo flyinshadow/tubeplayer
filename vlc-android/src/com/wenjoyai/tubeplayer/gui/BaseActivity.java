@@ -17,7 +17,7 @@ import java.util.Calendar;
 
 public class BaseActivity extends AppCompatActivity {
     //firebase统计  https://firebase.google.com/docs/analytics/android/start/
-    private FirebaseAnalytics mFirebaseAnalytics;
+    protected FirebaseAnalytics mFirebaseAnalytics;
 
     static {
         AppCompatDelegate.setDefaultNightMode(PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getBoolean("daynight", false) ? AppCompatDelegate.MODE_NIGHT_AUTO : AppCompatDelegate.MODE_NIGHT_NO);

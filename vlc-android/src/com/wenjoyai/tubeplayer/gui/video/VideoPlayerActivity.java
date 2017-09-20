@@ -106,6 +106,7 @@ import org.videolan.medialibrary.Medialibrary;
 import org.videolan.medialibrary.Tools;
 import org.videolan.medialibrary.media.MediaWrapper;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.mobvista.msdk.MobVistaConstans;
 import com.mobvista.msdk.MobVistaSDK;
 import com.mobvista.msdk.out.MobVistaSDKFactory;
@@ -3803,6 +3804,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             @Override
             public void onClick(View v) {
                 openWall();
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "video_rotate_offer_wall");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "video_rotate_offer_wall");
+                FirebaseAnalytics.getInstance(VideoPlayerActivity.this).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             }
         });
     }

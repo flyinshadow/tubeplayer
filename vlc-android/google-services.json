@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "705098303102-835criu5jmgvlv51kj026gah49g71f5o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wenjoyai.tubeplayer",
+            "certificate_hash": "ab01fd6fb1532e3e4fee26c8eed21b4e8b850e84"
+          }
+        },
+        {
           "client_id": "705098303102-g6t7lq7m3v837nonopb8af2gag83fll4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
