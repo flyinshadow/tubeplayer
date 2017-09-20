@@ -807,4 +807,11 @@
     </style>
 
 
+    <!--广告墙-->
+    <!--如果配置墙沉浸式，请在res/values/style文件中添加以下样式-->
+    <style name="AppTheme2" parent="Theme.VLC.Apearance">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item></style>
+
 </resources>

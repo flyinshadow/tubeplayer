@@ -37,6 +37,10 @@ import org.videolan.libvlc.Dialog;
 import org.videolan.libvlc.util.AndroidUtil;
 import org.videolan.medialibrary.LogUtil;
 import org.videolan.medialibrary.Medialibrary;
+
+import com.mobvista.msdk.MobVistaSDK;
+import com.mobvista.msdk.out.MobVistaSDKFactory;
+import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.gui.DialogActivity;
 import com.wenjoyai.tubeplayer.gui.RateFragment;
 import com.wenjoyai.tubeplayer.gui.dialogs.VlcProgressDialog;
@@ -50,6 +54,7 @@ import com.wenjoyai.tubeplayer.util.VLCInstance;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -142,6 +147,12 @@ public class VLCApplication extends Application {
                 // Disable remote control receiver on Fire TV.
                 if (!AndroidDevices.hasTsp())
                     AndroidDevices.setRemoteControlReceiverEnabled(false);
+                /**     初始化广告     */
+                Looper.prepare();
+                MobVistaSDK sdk = MobVistaSDKFactory.getMobVistaSDK();
+                Map<String, String> map = sdk.getMVConfigurationMap(ADConstants.APP_ID,ADConstants.APP_KEY);
+                sdk.init(map, VLCApplication.this);
+                Looper.loop();
             }
         });
     }

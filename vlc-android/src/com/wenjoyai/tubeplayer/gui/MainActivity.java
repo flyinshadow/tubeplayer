@@ -50,6 +50,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -61,19 +62,25 @@ import android.view.Window;
 import android.widget.FilterQueryProvider;
 
 import org.videolan.medialibrary.Medialibrary;
+
+import com.mobvista.msdk.MobVistaConstans;
+import com.mobvista.msdk.MobVistaSDK;
+import com.mobvista.msdk.out.MobVistaSDKFactory;
+import com.mobvista.msdk.out.PreloadListener;
 import com.wenjoyai.tubeplayer.BuildConfig;
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.StartActivity;
 import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.ad.ADConstants;
+import com.wenjoyai.tubeplayer.ad.RotateAD;
 import com.wenjoyai.tubeplayer.extensions.ExtensionListing;
 import com.wenjoyai.tubeplayer.extensions.ExtensionManagerService;
 import com.wenjoyai.tubeplayer.extensions.api.VLCExtensionItem;
 import com.wenjoyai.tubeplayer.gui.audio.AudioBrowserFragment;
 import com.wenjoyai.tubeplayer.gui.browser.BaseBrowserFragment;
 import com.wenjoyai.tubeplayer.gui.browser.ExtensionBrowser;
-import com.wenjoyai.tubeplayer.gui.browser.FileBrowserFragment;
 import com.wenjoyai.tubeplayer.gui.browser.MediaBrowserFragment;
 import com.wenjoyai.tubeplayer.gui.browser.NetworkBrowserFragment;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
@@ -93,7 +100,9 @@ import com.wenjoyai.tubeplayer.util.Permissions;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity.RESULT_RESTART;
 
@@ -128,6 +137,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private ServiceConnection mExtensionServiceConnection;
     private ExtensionManagerService mExtensionManagerService;
     private static final int PLUGIN_NAVIGATION_GROUP = 2;
+    //广告view
+    private RotateAD mRotateAD;
 
 
     @Override
@@ -146,7 +157,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         /*** Start initializing the UI ***/
 
         setContentView(R.layout.main);
-
+        initAD();
         mDrawerLayout = (HackyDrawerLayout) findViewById(R.id.root_container);
         setupNavigationView();
 
@@ -209,6 +220,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         mScanNeeded = savedInstanceState == null && mSettings.getBoolean("auto_rescan", true);
 
         mMediaLibrary = VLCApplication.getMLInstance();
+
+        preloadWall();
     }
 
     private void setupNavigationView() {
@@ -957,6 +970,55 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
         // 设置分享列表的标题，并且每次都显示分享列表
         startActivity(Intent.createChooser(shareIntent, "Share To"));
+    }
+
+    /**
+     * 对appwall做预加载，建议开发者使用，会提高收入
+     */
+    public void preloadWall(){
+        Log.e(TAG, "preloadWall");
+        MobVistaSDK sdk = MobVistaSDKFactory.getMobVistaSDK();
+        Map<String,Object> preloadMap = new HashMap<String,Object>();
+        preloadMap.put(MobVistaConstans.PROPERTIES_LAYOUT_TYPE, MobVistaConstans.LAYOUT_APPWALL);
+        preloadMap.put(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.library_roate_offer_wall);
+        preloadMap.put(MobVistaConstans.PRELOAD_RESULT_LISTENER, new PreloadListener() {
+            @Override
+            public void onPreloadSucceed() {
+                mRotateAD.setVisibility(View.VISIBLE);
+//                Log.e(TAG, "onPreloadSucceed");
+            }
+
+            @Override
+            public void onPreloadFaild(String s) {
+//                Log.e(TAG, "onPreloadFaild"+s);
+            }
+        });
+        sdk.preload(preloadMap);
+    }
+    /**
+     * 通过intent打开appwall
+     */
+    public void openWall(){
+        try {
+            Class<?> aClass = Class.forName("com.mobvista.msdk.shell.MVActivity");
+            Intent intent = new Intent(this, aClass);
+            intent.putExtra(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.library_roate_offer_wall);
+            this.startActivity(intent);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
+    /**
+     * 初始化广告view
+     */
+    private void initAD(){
+        mRotateAD = (RotateAD)findViewById(R.id.act_main_roate_ad);
+        mRotateAD.setOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWall();
+            }
+        });
     }
 
 }

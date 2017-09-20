@@ -67,6 +67,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.InputDevice;
@@ -104,11 +105,18 @@ import org.videolan.libvlc.util.AndroidUtil;
 import org.videolan.medialibrary.Medialibrary;
 import org.videolan.medialibrary.Tools;
 import org.videolan.medialibrary.media.MediaWrapper;
+
+import com.mobvista.msdk.MobVistaConstans;
+import com.mobvista.msdk.MobVistaSDK;
+import com.mobvista.msdk.out.MobVistaSDKFactory;
+import com.mobvista.msdk.out.PreloadListener;
 import com.wenjoyai.tubeplayer.BuildConfig;
 import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.StartActivity;
 import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.ad.ADConstants;
+import com.wenjoyai.tubeplayer.ad.RotateAD;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
 import com.wenjoyai.tubeplayer.gui.PlaybackServiceActivity;
 import com.wenjoyai.tubeplayer.gui.ThemeFragment;
@@ -141,7 +149,9 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.Callback, IVLCVout.OnNewVideoLayoutListener,
         IPlaybackSettingsController, PlaybackService.Client.Callback, PlaybackService.Callback,
@@ -363,6 +373,11 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     protected boolean mIsBenchmark = false;
 
+
+    //广告
+    private RotateAD mRotateAD;
+    private boolean mIsAdLoadSuc = false;
+
     private static LibVLC LibVLC() {
         return VLCInstance.get();
     }
@@ -502,6 +517,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mCurrentSize = mSettings.getInt(PreferencesActivity.VIDEO_RATIO, SURFACE_BEST_FIT);
         }
         mMedialibrary = VLCApplication.getMLInstance();
+
+        initAD();
+        preloadWall();
     }
 
     @Override
@@ -1638,9 +1656,13 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 break;
             case MediaPlayer.Event.Playing:
                 onPlaying();
+                mRotateAD.setVisibility(View.INVISIBLE);
                 break;
             case MediaPlayer.Event.Paused:
                 updateOverlayPausePlay();
+                if (mIsAdLoadSuc){
+                    mRotateAD.setVisibility(View.VISIBLE);
+                }
                 break;
             case MediaPlayer.Event.Stopped:
                 exitOK();
@@ -3735,5 +3757,53 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 //        }
         int themeIndex = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, 0);
         setTheme(ThemeFragment.sThemeActionBarStyles[themeIndex]);
+    }
+
+    /**
+     * 对appwall做预加载，建议开发者使用，会提高收入
+     */
+    public void preloadWall(){
+        MobVistaSDK sdk = MobVistaSDKFactory.getMobVistaSDK();
+        Map<String,Object> preloadMap = new HashMap<String,Object>();
+        preloadMap.put(MobVistaConstans.PROPERTIES_LAYOUT_TYPE, MobVistaConstans.LAYOUT_APPWALL);
+        preloadMap.put(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.video_rotate_offer_wall);
+        preloadMap.put(MobVistaConstans.PRELOAD_RESULT_LISTENER, new PreloadListener() {
+            @Override
+            public void onPreloadSucceed() {
+//                Log.e(TAG, "onPreloadSucceed");
+                mIsAdLoadSuc = true;
+            }
+
+            @Override
+            public void onPreloadFaild(String s) {
+//                Log.e(TAG, "onPreloadFaild"+s);
+            }
+        });
+        sdk.preload(preloadMap);
+    }
+    /**
+     * 通过intent打开appwall
+     */
+    public void openWall(){
+        try {
+            Class<?> aClass = Class.forName("com.mobvista.msdk.shell.MVActivity");
+            Intent intent = new Intent(this, aClass);
+            intent.putExtra(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.video_rotate_offer_wall);
+            this.startActivity(intent);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
+    /**
+     * 初始化广告view
+     */
+    private void initAD(){
+        mRotateAD = (RotateAD)findViewById(R.id.player_roate_ad);
+        mRotateAD.setOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWall();
+            }
+        });
     }
 }
