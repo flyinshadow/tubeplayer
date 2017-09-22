@@ -91,7 +91,7 @@
                 vlc:media="@{media}"
                 android:scaleType="@{scaleType}"
                 android:src="@{cover}"
-                android:background="@color/black"
+                android:background="@color/video_cover_background"
                 />
             <ImageView
                 android:id="@+id/ml_item_check"

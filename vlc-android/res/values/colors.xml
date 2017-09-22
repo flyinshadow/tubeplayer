@@ -156,5 +156,6 @@
 
     <color name="ripple_color">#eeeeee</color>
 
+    <color name="video_cover_background">#e6e6e6</color>
 
 </resources>

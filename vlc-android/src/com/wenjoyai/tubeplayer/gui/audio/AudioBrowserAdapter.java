@@ -145,7 +145,7 @@ public class AudioBrowserAdapter extends BaseQueuedAdapter<MediaLibraryItem[], A
             if (mType == MediaLibraryItem.TYPE_PLAYLIST) {
                 ((MediaItemViewHolder) holder).vdb.mediaCover.setImageResource(R.drawable.ic_audio_playlist);
             } else if (mType == MediaLibraryItem.TYPE_FOLDER) {
-                ((MediaItemViewHolder) holder).vdb.mediaCover.setImageResource(R.drawable.music_directories);
+                ((MediaItemViewHolder) holder).vdb.mediaCover.setImageResource(R.drawable.ic_music_folder);
             }
         }
     }

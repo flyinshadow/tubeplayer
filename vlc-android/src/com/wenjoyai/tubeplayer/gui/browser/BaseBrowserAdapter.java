@@ -58,7 +58,7 @@ import static org.videolan.medialibrary.media.MediaLibraryItem.TYPE_STORAGE;
 public class BaseBrowserAdapter extends BaseQueuedAdapter<ArrayList<MediaLibraryItem>, BaseBrowserAdapter.ViewHolder> implements Filterable {
     protected static final String TAG = "VLC/BaseBrowserAdapter";
 
-    private static int FOLDER_RES_ID = R.drawable.ic_menu_folder;
+    private static int FOLDER_RES_ID = R.drawable.ic_browser_folder;
 
     private static final BitmapDrawable IMAGE_FOLDER = new BitmapDrawable(VLCApplication.getAppResources(), BitmapFactory.decodeResource(VLCApplication.getAppResources(), FOLDER_RES_ID));
     private static final BitmapDrawable IMAGE_AUDIO = new BitmapDrawable(VLCApplication.getAppResources(), BitmapFactory.decodeResource(VLCApplication.getAppResources(), R.drawable.ic_browser_audio_normal));

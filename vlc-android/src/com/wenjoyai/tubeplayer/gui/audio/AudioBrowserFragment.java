@@ -217,7 +217,7 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
         mMediaLibrary.setAlbumsAddedCb(this);
         mMediaLibrary.setMediaAddedCb(this, Medialibrary.FLAG_MEDIA_ADDED_AUDIO_EMPTY);
         mMediaLibrary.setMediaUpdatedCb(this, Medialibrary.FLAG_MEDIA_UPDATED_AUDIO_EMPTY);
-        if (mArtistsAdapter.isEmpty() || mAlbumsAdapter.isEmpty() || mSongsAdapter.isEmpty())
+        if (mArtistsAdapter.isEmpty() || mAlbumsAdapter.isEmpty() || mSongsAdapter.isEmpty() || mFolderAdapter.isEmpty())
             mHandler.sendEmptyMessage(UPDATE_LIST);
         else {
             updateEmptyView(mViewPager.getCurrentItem());
