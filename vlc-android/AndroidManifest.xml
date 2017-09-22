@@ -4,7 +4,7 @@
     package="com.wenjoyai.tubeplayer"
     android:installLocation="auto">
 
-    <uses-sdk tools:overrideLibrary="android.support.v17.leanback, android.support.v14.preference, android.support.v17.preference" />
+    <uses-sdk tools:overrideLibrary="android.support.v17.leanback, android.support.v14.preference, android.support.v17.preference, com.google.firebase.firebase_core" />
 
     <uses-permission
         android:name="android.permission.READ_LOGS"

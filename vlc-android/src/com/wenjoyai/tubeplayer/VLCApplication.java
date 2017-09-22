@@ -157,6 +157,8 @@ public class VLCApplication extends Application {
         });
     }
 
+    public static boolean sWillShowRate = false;
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -173,17 +175,20 @@ public class VLCApplication extends Application {
                     " nextTime:" + nextTime + "(" + Util.millisToDate(nextTime) + ")" +
                     " count:" + count
                 );
+            sWillShowRate = false;
             if (nextTime == -1) {
                 // 本版本不提示
                 LogUtil.d(TAG, "rate tip will not show this version");
             } else if (nextTime == 0) {
                 // 可以提示
                 LogUtil.d(TAG, "rate tip can show NOW");
+                sWillShowRate = true;
                 showRateDialog();
             } else if (nextTime > 0) {
                  // 到提示时间
                 if (currentTime - nextTime >= 0) {
                     LogUtil.d(TAG, "rate tip reach time, can show NOW");
+                    sWillShowRate = true;
                     showRateDialog();
                 } else {
                     LogUtil.d(TAG, "rate tip not reach time");
