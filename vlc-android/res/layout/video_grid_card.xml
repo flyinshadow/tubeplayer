@@ -71,10 +71,10 @@
                 android:id="@+id/ml_item_thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                vlc:media="@{media}"
                 android:scaleType="@{scaleType}"
                 android:src="@{cover}"
                 android:background="@color/black"
+                vlc:media="@{media}"
                 />
             <ImageView
                 android:id="@+id/ml_item_check"

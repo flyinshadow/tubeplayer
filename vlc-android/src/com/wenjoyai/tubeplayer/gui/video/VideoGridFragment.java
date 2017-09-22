@@ -76,6 +76,7 @@ import com.wenjoyai.tubeplayer.interfaces.ISortable;
 import com.wenjoyai.tubeplayer.media.MediaGroup;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
 import com.wenjoyai.tubeplayer.util.FileUtils;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
 import java.util.ArrayList;
@@ -388,24 +389,30 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     @Override
     public void onMediaUpdated(final MediaWrapper[] mediaList) {
+        int count = 0;
+        for (MediaWrapper media : mediaList) {
+            LogUtil.d(TAG, "xxxx onMediaUpdated [" + count++ + "] " + media.getUri().getPath() + " " + media.getArtworkMrl());
+        }
         updateItems(mediaList);
     }
 
     @Override
     public void onMediaAdded(final MediaWrapper[] mediaList) {
+        int count = 0;
+        for (MediaWrapper media : mediaList) {
+            LogUtil.d(TAG, "xxxx onMediaAdded [" + count++ + "] " + media.getUri().getPath() + " " + media.getArtworkMrl());
+        }
         updateItems(mediaList);
     }
 
     public void updateItems(final MediaWrapper[] mediaList) {
-        for (final MediaWrapper mw : mediaList)
-            if (mw != null && mw.getType() == MediaWrapper.TYPE_VIDEO)
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mVideoAdapter.update(mw);
-                        updateEmptyView();
-                    }
-                });
+        VLCApplication.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                mVideoAdapter.update(mediaList);
+                updateEmptyView();
+            }
+        });
     }
 
     @MainThread
@@ -503,6 +510,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     @Override
     protected void onParsingServiceFinished() {
+        LogUtil.d(TAG, "xxxx onParsingServiceFinished");
         mHandler.sendEmptyMessage(UPDATE_LIST);
     }
 
@@ -665,6 +673,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     @Override
     public void onUpdateFinished(RecyclerView.Adapter adapter) {
+        LogUtil.d(TAG, "xxxx onUpdateFinished mMediaLibrary.isWorking() : " + mMediaLibrary.isWorking());
         if (!mMediaLibrary.isWorking())
             mHandler.sendEmptyMessage(UNSET_REFRESHING);
         updateEmptyView();

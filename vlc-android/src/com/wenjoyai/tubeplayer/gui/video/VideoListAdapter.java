@@ -56,8 +56,10 @@ import com.wenjoyai.tubeplayer.gui.helpers.AsyncImageLoader;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
 import com.wenjoyai.tubeplayer.interfaces.IEventsHandler;
 import com.wenjoyai.tubeplayer.media.MediaGroup;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.MediaItemFilter;
 import com.wenjoyai.tubeplayer.util.Strings;
+import com.wenjoyai.tubeplayer.util.Util;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -67,6 +69,9 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.RejectedExecutionException;
 
 public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.ViewHolder> implements Filterable {
 
@@ -105,6 +110,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     private int mGridCardWidth = 0;
 
     private int mCurrentViewMode = VIEW_MODE_DEFAULT;
+
+    protected final ExecutorService mUpdateExecutor = Executors.newSingleThreadExecutor();
 
     VideoListAdapter(IEventsHandler eventsHandler, int viewMode) {
         super();
@@ -145,6 +152,10 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         MediaWrapper media = mVideos.get(position);
         if (media == null)
             return;
+
+        LogUtil.d(TAG, "xxxx onBindViewHolder position: " + position + " " + media.getUri().getPath() +
+        " " + media.getArtworkMrl());
+
         holder.binding.setVariable(BR.scaleType, ImageView.ScaleType.CENTER_CROP);
         fillView(holder, media);
         holder.binding.setVariable(BR.media, media);
@@ -165,6 +176,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             for (Object data : payloads) {
                 switch ((int) data) {
                     case UPDATE_THUMB:
+                        LogUtil.d(TAG, "xxxx onBindViewHolder UPDATE_THUMB position: " + position + " " + media.getUri().getPath() +
+                                " " + media.getArtworkMrl());
                         AsyncImageLoader.loadPicture(holder.thumbView, media);
                         break;
                     case UPDATE_TIME:
@@ -202,6 +215,10 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     public void add(MediaWrapper item) {
         ArrayList<MediaWrapper> list = new ArrayList<>(peekLast());
         list.add(item);
+        int cnt = 0;
+        for (MediaWrapper media : list) {
+            LogUtil.d(TAG, "xxxx add items[" + cnt++ + "] " + media.getUri().getPath() + " " + media.getArtworkMrl());
+        }
         update(list, false);
     }
 
@@ -233,7 +250,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     @MainThread
     private ArrayList<MediaWrapper> peekLast() {
-        return mPendingUpdates.isEmpty() ? mVideos : mPendingUpdates.peekLast();
+        if (mPendingUpdates.isEmpty()) {
+            LogUtil.d(TAG, "xxxx peekLast return mVideos");
+            return mVideos;
+        } else {
+            LogUtil.d(TAG, "xxxx peekLast return mPendingUpdates peekLast");
+            return mPendingUpdates.peekLast();
+        }
     }
 
     public boolean contains(MediaWrapper mw) {
@@ -275,18 +298,32 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     }
 
     @MainThread
-    public void update(MediaWrapper item) {
-        int position = mVideos.indexOf(item);
-        if (position != -1) {
-            if (!(mVideos.get(position) instanceof MediaGroup))
-                mVideos.set(position, item);
-            notifyItemChanged(position, UPDATE_THUMB);
-        } else
-            add(item);
+    public void update(final MediaWrapper[] items) {
+        final ArrayList<MediaWrapper> list = new ArrayList<>(peekLast());
+        VLCApplication.runBackground(new Runnable() {
+            @Override
+            public void run() {
+                int i = 0;
+                for (MediaWrapper media : list) {
+                    LogUtil.d(TAG, "xxxx insertOrUdpate 0 peekLast[" + i++ + "] " + media.getUri().getPath() + " " + media.getArtworkMrl());
+                }
+                Util.insertOrUdpate(list, items);
+                for (MediaWrapper media : list) {
+                    LogUtil.d(TAG, "xxxx insertOrUdpate 1 peekLast[" + i++ + "] " + media.getUri().getPath() + " " + media.getArtworkMrl());
+                }
+                VLCApplication.runOnMainThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        update(list, false);
+                    }
+                });
+            }
+        });
     }
 
     @MainThread
     public void clear() {
+        LogUtil.d(TAG, "xxxx clear");
         mVideos.clear();
         mOriginalData = null;
     }
@@ -557,29 +594,64 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     @MainThread
     void update(final ArrayList<MediaWrapper> items, final boolean detectMoves) {
         mPendingUpdates.add(items);
-        if (mPendingUpdates.size() == 1)
+        if (mPendingUpdates.size() == 1) {
             internalUpdate(items, detectMoves);
+        } else {
+            LogUtil.d(TAG, "xxxx mPendingUpdates.size()=" + mPendingUpdates.size());
+        }
     }
 
     private void internalUpdate(final ArrayList<MediaWrapper> items, final boolean detectMoves) {
-        VLCApplication.runBackground(new Runnable() {
-            @Override
-            public void run() {
-                Collections.sort(items, mVideoComparator);
-                final DiffUtil.DiffResult result = DiffUtil.calculateDiff(new VideoItemDiffCallback(mVideos, items), detectMoves);
-                VLCApplication.runOnMainThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPendingUpdates.remove();
-                        mVideos = items;
-                        result.dispatchUpdatesTo(VideoListAdapter.this);
-                        mEventsHandler.onUpdateFinished(null);
-                        if (!mPendingUpdates.isEmpty())
-                            internalUpdate(mPendingUpdates.peek(), true);
+        int cnt = 0;
+        for (MediaWrapper media : items) {
+            LogUtil.d(TAG, "xxxx internalUpdate items[" + cnt++ + "] " + media.getUri().getPath() + " " +
+                    media.getArtworkMrl());
+        }
+
+        try {
+            mUpdateExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    Collections.sort(items, mVideoComparator);
+                    final DiffUtil.DiffResult result = DiffUtil.calculateDiff(new VideoItemDiffCallback(mVideos, items), detectMoves);
+                    int i = 0;
+                    for (MediaWrapper media : mVideos) {
+                        LogUtil.d(TAG, "xxxx internalUpdate 0 mVideos[" + i++ + "] " + media.getUri().getPath() + " " +
+                                media.getArtworkMrl());
                     }
-                });
-            }
-        });
+                    VLCApplication.runOnMainThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            int cnt = 0;
+                            for (MediaWrapper media : mVideos) {
+                                LogUtil.d(TAG, "xxxx internalUpdate 1 mVideos[" + cnt++ + "] " + media.getUri().getPath() + " " +
+                                        media.getArtworkMrl());
+                            }
+                            mVideos = items;
+                            cnt = 0;
+                            for (MediaWrapper media : mVideos) {
+                                LogUtil.d(TAG, "xxxx internalUpdate 2 mVideos[" + cnt++ + "] " + media.getUri().getPath() + " " +
+                                        media.getArtworkMrl());
+                            }
+                            result.dispatchUpdatesTo(VideoListAdapter.this);
+
+                            mPendingUpdates.remove();
+                            if (mPendingUpdates.isEmpty())
+                                mEventsHandler.onUpdateFinished(null);
+                            else {
+                                ArrayList<MediaWrapper> lastList = mPendingUpdates.peekLast();
+                                if (!mPendingUpdates.isEmpty()) {
+                                    mPendingUpdates.clear();
+                                    mPendingUpdates.add(lastList);
+                                }
+                                internalUpdate(lastList, false);
+                            }
+                        }
+                    });
+                }
+            });
+        } catch (RejectedExecutionException ignored) {} // Will be retried
     }
 
     private class VideoItemDiffCallback extends DiffUtil.Callback {
@@ -603,14 +675,16 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
             MediaWrapper oldItem = oldList.get(oldItemPosition);
             MediaWrapper newItem = newList.get(newItemPosition);
-            return oldList != null && newList != null && oldItem.getType() == newItem.getType() && oldItem.equals(newItem);
+            return oldItem == newItem ||
+                    (oldList != null && newList != null && oldItem.getType() == newItem.getType() && oldItem.equals(newItem));
         }
 
         @Override
         public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
             MediaWrapper oldItem = oldList.get(oldItemPosition);
             MediaWrapper newItem = newList.get(newItemPosition);
-            return oldItem.getTime() == newItem.getTime() && TextUtils.equals(oldItem.getArtworkMrl(), newItem.getArtworkMrl());
+            return oldItem == newItem ||
+                    (oldItem.getTime() == newItem.getTime() && TextUtils.equals(oldItem.getArtworkMrl(), newItem.getArtworkMrl()));
         }
 
         @Nullable
@@ -620,8 +694,11 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             MediaWrapper newItem = newList.get(newItemPosition);
             if (oldItem.getTime() != newItem.getTime())
                 return UPDATE_TIME;
-            else
+            else {
+                LogUtil.d(TAG, "xxxx getChangePayload UPDATE_THUMB oldItem:" + oldItemPosition +
+                        " newItem:" + newItemPosition);
                 return UPDATE_THUMB;
+            }
         }
     }
 }

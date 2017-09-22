@@ -34,10 +34,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 
 public class Util {
     public final static String TAG = "VLC/Util";
@@ -134,5 +136,21 @@ public class Util {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, days);
         return calendar.getTimeInMillis();
+    }
+
+    public static <T> void insertOrUdpate(List<T> dataset, T[] items) {
+        ArrayList<T> newItems = new ArrayList<>();
+        outer:
+        for (T newItem : items) {
+            for (ListIterator it = dataset.listIterator(); it.hasNext();) {
+                T oldItem = (T) it.next();
+                if (newItem.equals(oldItem)) {
+                    it.set(newItem);
+                    continue outer;
+                }
+            }
+            newItems.add(newItem);
+        }
+        dataset.addAll(newItems);
     }
 }
