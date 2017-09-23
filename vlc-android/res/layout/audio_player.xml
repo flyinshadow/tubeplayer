@@ -20,7 +20,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/ic_music_background"
+            android:src="@drawable/ic_music_background"
             android:scaleType="centerCrop" />
 
         <ProgressBar
