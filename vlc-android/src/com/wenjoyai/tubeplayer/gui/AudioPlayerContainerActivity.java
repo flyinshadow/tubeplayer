@@ -160,7 +160,8 @@ public class AudioPlayerContainerActivity extends BaseActivity implements Playba
         if (mBottomSheetBehavior != null && mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
             LogUtil.d(TAG, "onResume mFragmentContainer padding:" + mFragmentContainer.getPaddingLeft() + "," +
                     mFragmentContainer.getPaddingTop() + "," + mFragmentContainer.getPaddingRight() + "," + mFragmentContainer.getPaddingBottom());
-            mFragmentContainer.setPadding(mFragmentContainer.getPaddingLeft(), mFragmentContainer.getPaddingTop(), mFragmentContainer.getPaddingRight(), mBottomSheetBehavior.getPeekHeight());
+            mFragmentContainer.setPadding(0, 0, 0, mBottomSheetBehavior.getPeekHeight());
+//            mFragmentContainer.setPadding(mFragmentContainer.getPaddingLeft(), mFragmentContainer.getPaddingTop(), mFragmentContainer.getPaddingRight(), mBottomSheetBehavior.getPeekHeight());
             applyMarginToProgressBar(mBottomSheetBehavior.getPeekHeight());
         }
     }
@@ -257,7 +258,8 @@ public class AudioPlayerContainerActivity extends BaseActivity implements Playba
             mAudioPlayerContainer.setVisibility(View.VISIBLE);
             LogUtil.d(TAG, "showAudioPlayer mFragmentContainer padding:" + mFragmentContainer.getPaddingLeft() + "," +
                     mFragmentContainer.getPaddingTop() + "," + mFragmentContainer.getPaddingRight() + "," + mFragmentContainer.getPaddingBottom());
-            mFragmentContainer.setPadding(mFragmentContainer.getPaddingLeft(), mFragmentContainer.getPaddingTop(), mFragmentContainer.getPaddingRight(), mBottomSheetBehavior.getPeekHeight());
+            mFragmentContainer.setPadding(0, 0, 0, mBottomSheetBehavior.getPeekHeight());
+//            mFragmentContainer.setPadding(mFragmentContainer.getPaddingLeft(), mFragmentContainer.getPaddingTop(), mFragmentContainer.getPaddingRight(), mBottomSheetBehavior.getPeekHeight());
             applyMarginToProgressBar(mBottomSheetBehavior.getPeekHeight());
         }
         if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN) {
@@ -322,7 +324,8 @@ public class AudioPlayerContainerActivity extends BaseActivity implements Playba
             if (mBottomSheetBehavior != null && mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
                 LogUtil.d(TAG, "showProgressBar mFragmentContainer padding:" + mFragmentContainer.getPaddingLeft() + "," +
                         mFragmentContainer.getPaddingTop() + "," + mFragmentContainer.getPaddingRight() + "," + mFragmentContainer.getPaddingBottom());
-                mFragmentContainer.setPadding(mFragmentContainer.getPaddingLeft(), mFragmentContainer.getPaddingTop(), mFragmentContainer.getPaddingRight(), mBottomSheetBehavior.getPeekHeight());
+                mFragmentContainer.setPadding(0, 0, 0, mBottomSheetBehavior.getPeekHeight());
+//                mFragmentContainer.setPadding(mFragmentContainer.getPaddingLeft(), mFragmentContainer.getPaddingTop(), mFragmentContainer.getPaddingRight(), mBottomSheetBehavior.getPeekHeight());
                 applyMarginToProgressBar(mBottomSheetBehavior.getPeekHeight());
             }
         } else if (mScanProgressLayout != null)
@@ -394,14 +397,16 @@ public class AudioPlayerContainerActivity extends BaseActivity implements Playba
                     removeTipViewIfDisplayed();
                     LogUtil.d(TAG, "BottomSheetBehavior.STATE_COLLAPSED mFragmentContainer padding:" + mFragmentContainer.getPaddingLeft() + "," +
                             mFragmentContainer.getPaddingTop() + "," + mFragmentContainer.getPaddingRight() + "," + mFragmentContainer.getPaddingBottom());
-                    mFragmentContainer.setPadding(mFragmentContainer.getPaddingLeft(), mFragmentContainer.getPaddingTop(), mFragmentContainer.getPaddingRight(), mBottomSheetBehavior.getPeekHeight());
+                    mFragmentContainer.setPadding(0, 0, 0, mBottomSheetBehavior.getPeekHeight());
+//                    mFragmentContainer.setPadding(mFragmentContainer.getPaddingLeft(), mFragmentContainer.getPaddingTop(), mFragmentContainer.getPaddingRight(), mBottomSheetBehavior.getPeekHeight());
                     applyMarginToProgressBar(mBottomSheetBehavior.getPeekHeight());
                     break;
                 case BottomSheetBehavior.STATE_HIDDEN:
                     removeTipViewIfDisplayed();
                     LogUtil.d(TAG, "BottomSheetBehavior.STATE_HIDDEN mFragmentContainer padding:" + mFragmentContainer.getPaddingTop() + "," +
                             mFragmentContainer.getPaddingLeft() + "," + mFragmentContainer.getPaddingRight() + "," + mFragmentContainer.getPaddingBottom());
-                    mFragmentContainer.setPadding(mFragmentContainer.getPaddingLeft(), mFragmentContainer.getPaddingTop(), mFragmentContainer.getPaddingRight(), mFragmentContainer.getPaddingBottom());
+                    mFragmentContainer.setPadding(0, 0, 0, 0);
+//                    mFragmentContainer.setPadding(mFragmentContainer.getPaddingLeft(), mFragmentContainer.getPaddingTop(), mFragmentContainer.getPaddingRight(), mFragmentContainer.getPaddingBottom());
                     applyMarginToProgressBar(0);
                     break;
             }

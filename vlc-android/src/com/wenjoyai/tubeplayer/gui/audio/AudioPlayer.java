@@ -126,7 +126,7 @@ public class AudioPlayer extends PlaybackServiceFragment implements PlaybackServ
         super.onViewCreated(view, savedInstanceState);
         if (AndroidUtil.isJellyBeanMR1OrLater) {
             DEFAULT_BACKGROUND_DARKER_ID = UiTools.getResourceFromAttribute(view.getContext(), R.attr.background_default_darker);
-            DEFAULT_BACKGROUND_ID = UiTools.getResourceFromAttribute(view.getContext(), R.attr.background_default);
+            DEFAULT_BACKGROUND_ID = UiTools.getResourceFromAttribute(view.getContext(), R.attr.background_default_darker);
         }
         mPlaylistAdapter = new PlaylistAdapter(this);
         mBinding.header.setBackgroundResource(DEFAULT_BACKGROUND_DARKER_ID);
@@ -324,7 +324,7 @@ public class AudioPlayer extends PlaybackServiceFragment implements PlaybackServ
                                     mBinding.backgroundView.setColorFilter(UiTools.getColorFromAttribute(activity, R.attr.audio_player_background_tint));
                                     mBinding.backgroundView.setImageBitmap(blurredCover);
                                     mBinding.backgroundView.setVisibility(View.VISIBLE);
-                                    mBinding.songsList.setBackgroundResource(0);
+//                                    mBinding.songsList.setBackgroundResource(0);
                                 }
                             });
                         else {
@@ -346,8 +346,8 @@ public class AudioPlayer extends PlaybackServiceFragment implements PlaybackServ
 
     @MainThread
     private void setDefaultBackground() {
-        mBinding.songsList.setBackgroundResource(DEFAULT_BACKGROUND_ID);
-        mBinding.backgroundView.setVisibility(View.INVISIBLE);
+//        mBinding.songsList.setBackgroundResource(DEFAULT_BACKGROUND_ID);
+        mBinding.backgroundView.setImageResource(0);
     }
 
     public void updateList() {
