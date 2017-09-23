@@ -53,12 +53,10 @@
             android:id="@+id/act_main_roate_ad"
             android:layout_gravity="right|bottom"
             android:layout_marginRight="11dp"
-            android:layout_marginBottom="80dp"
             android:layout_width="72dp"
             android:visibility="invisible"
-            app:layout_anchor="@+id/fragment_placeholder"
-            app:layout_behavior="com.wenjoyai.tubeplayer.gui.helpers.FloatingActionButtonBehavior"
-            app:layout_anchorGravity="bottom|end"
+            app:layout_behavior="com.wenjoyai.tubeplayer.gui.helpers.FollowBehavior"
+            app:target="@id/fab"
             android:layout_height="72dp"/>
 
         </android.support.design.widget.CoordinatorLayout>
