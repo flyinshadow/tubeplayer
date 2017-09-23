@@ -524,9 +524,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         initAD();
         preloadWall();
-        if (ADManager.isShowGoogleAD) {
+//        if (ADManager.isShowGoogleAD) {
             loadGoogle();
-        }
+//        }
     }
 
     @Override
@@ -775,6 +775,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @Override
     protected void onDestroy() {
 //        LogUtil.e(TAG,"onDestroy");
+        if (null!= mInterstitialAd&&mInterstitialAd.isLoaded()){
+            mInterstitialAd.show();
+        }
         super.onDestroy();
         if (mReceiver != null)
             unregisterReceiver(mReceiver);
