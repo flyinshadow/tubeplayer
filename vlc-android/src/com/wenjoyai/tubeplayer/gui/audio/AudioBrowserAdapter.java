@@ -143,9 +143,9 @@ public class AudioBrowserAdapter extends BaseQueuedAdapter<MediaLibraryItem[], A
                 ((MediaItemViewHolder) holder).vdb.mediaCounts.setVisibility(View.GONE);
             }
             if (mType == MediaLibraryItem.TYPE_PLAYLIST) {
-                ((MediaItemViewHolder) holder).vdb.mediaCover.setImageResource(R.drawable.ic_audio_playlist);
+                ((MediaItemViewHolder) holder).vdb.mediaCover.setBackgroundResource(R.drawable.ic_audio_playlist);
             } else if (mType == MediaLibraryItem.TYPE_FOLDER) {
-                ((MediaItemViewHolder) holder).vdb.mediaCover.setImageResource(R.drawable.ic_music_folder);
+                ((MediaItemViewHolder) holder).vdb.mediaCover.setBackgroundResource(R.drawable.ic_music_folder);
             }
         }
     }
@@ -257,6 +257,8 @@ public class AudioBrowserAdapter extends BaseQueuedAdapter<MediaLibraryItem[], A
                     if (TextUtils.isEmpty(mDataList[i].getDescription()))
                         mDataList[i].setDescription(mContext.getString(R.string.unknown_artist));
                 }
+            } else if (mDataList[i].getItemType() == MediaLibraryItem.TYPE_MEDIA && TextUtils.isEmpty(mDataList[i].getDescription())) {
+                mDataList[i].setDescription(mContext.getString(R.string.unknown_artist));
             } else if (generateSections)
                 break;
         }
@@ -390,6 +392,10 @@ public class AudioBrowserAdapter extends BaseQueuedAdapter<MediaLibraryItem[], A
                 return AsyncImageLoader.DEFAULT_COVER_ARTIST_DRAWABLE;
             case MediaLibraryItem.TYPE_MEDIA:
                 return AsyncImageLoader.DEFAULT_COVER_AUDIO_DRAWABLE;
+            case MediaLibraryItem.TYPE_PLAYLIST:
+                return AsyncImageLoader.DEFAULT_COVER_AUDIO_PLAYLIST_DRAWABLE;
+            case MediaLibraryItem.TYPE_FOLDER:
+                return AsyncImageLoader.DEFAULT_COVER_AUDIO_FOLDER_DRAWABLE;
             default:
                 return null;
         }
@@ -405,96 +411,6 @@ public class AudioBrowserAdapter extends BaseQueuedAdapter<MediaLibraryItem[], A
 
         public int getType() {
             return MediaLibraryItem.TYPE_DUMMY;
-        }
-    }
-
-    public class AlbumItemViewHolder extends ViewHolder<AudioBrowserAlbumItemBinding> implements View.OnFocusChangeListener {
-        int selectionColor = 0, coverlayResource = 0;
-
-        private class AlbumAdapter extends BaseAdapter {
-
-            public AlbumAdapter() {
-
-            }
-
-            @Override
-            public int getCount() {
-                int count = getMediaItems().size();
-                LogUtil.d(TAG, "AlbumAdapter getCount=" + count);
-                return count;
-            }
-
-            @Override
-            public Object getItem(int i) {
-                return null;
-            }
-
-            @Override
-            public long getItemId(int i) {
-                return 0;
-            }
-
-            @Override
-            public View getView(int i, View convertView, ViewGroup viewGroup) {
-                LayoutInflater inflater = (LayoutInflater) mContext
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View view;
-                if (convertView == null) {
-                    view = inflater.inflate(R.layout.album_grid_item, null);
-                } else {
-                    view = convertView;
-                }
-                return view;
-            }
-        }
-
-        public AlbumItemViewHolder(AudioBrowserAlbumItemBinding binding) {
-            super(binding);
-            binding.albumGrid.setAdapter(new AlbumAdapter());
-        }
-
-        public void onClick(View v) {
-            if (mIEventsHandler != null) {
-                int position = getLayoutPosition();
-                mIEventsHandler.onClick(v, position, mDataList[position]);
-            }
-        }
-
-        public void onMoreClick(View v) {
-            if (mIEventsHandler != null) {
-                int position = getLayoutPosition();
-                mIEventsHandler.onCtxClick(v, position, mDataList[position]);
-            }
-        }
-
-        public boolean onLongClick(View view) {
-            int position = getLayoutPosition();
-            return mIEventsHandler.onLongClick(view, position, mDataList[position]);
-        }
-
-        private void setCoverlay(boolean selected) {
-            int resId = selected ? R.drawable.ic_action_mode_select : 0;
-            if (resId != coverlayResource) {
-//                vdb.mediaCover.setImageResource(selected ? R.drawable.ic_action_mode_select : 0);
-                coverlayResource = resId;
-            }
-        }
-
-        public int getType() {
-            return MediaLibraryItem.TYPE_ALBUM;
-        }
-
-        @Override
-        public void onFocusChange(View v, boolean hasFocus) {
-//            setViewBackground(hasFocus, vdb.getItem().hasStateFlags(MediaLibraryItem.FLAG_SELECTED));
-        }
-
-        private void setViewBackground(boolean focused, boolean selected) {
-            int selectionColor = selected || focused ? UiTools.ITEM_SELECTION_ON : 0;
-            if (selectionColor != this.selectionColor) {
-                itemView.setBackgroundColor(selectionColor);
-                this.selectionColor = selectionColor;
-            }
         }
     }
 

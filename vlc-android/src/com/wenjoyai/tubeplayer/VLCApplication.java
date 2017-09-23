@@ -23,32 +23,26 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Process;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.util.SimpleArrayMap;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.videolan.libvlc.Dialog;
 import org.videolan.libvlc.util.AndroidUtil;
 import org.videolan.medialibrary.LogUtil;
 import org.videolan.medialibrary.Medialibrary;
 
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.mobvista.msdk.MobVistaSDK;
 import com.mobvista.msdk.out.MobVistaSDKFactory;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
-import com.wenjoyai.tubeplayer.ad.ADManager;
 import com.wenjoyai.tubeplayer.gui.DialogActivity;
 import com.wenjoyai.tubeplayer.gui.RateFragment;
 import com.wenjoyai.tubeplayer.gui.dialogs.VlcProgressDialog;
@@ -100,6 +94,7 @@ public class VLCApplication extends Application {
 
     private static int sDialogCounter = 0;
 
+    private boolean mAppForeground = false;
 
     public static void setLocale(Context context){
         // Are we using advanced debugging - locale?
@@ -141,6 +136,20 @@ public class VLCApplication extends Application {
 
         setLocale(this);
 
+        //监听程序进入前台、后台
+        ForegroundCallbacks.init(this);
+        ForegroundCallbacks.get().addListener(new ForegroundCallbacks.Listener() {
+            @Override
+            public void onBecameForeground() {
+                mAppForeground = true;
+            }
+
+            @Override
+            public void onBecameBackground() {
+                mAppForeground = false;
+            }
+        });
+
         runBackground(new Runnable() {
             @Override
             public void run() {
@@ -161,9 +170,6 @@ public class VLCApplication extends Application {
                 MobVistaSDK sdk = MobVistaSDKFactory.getMobVistaSDK();
                 Map<String, String> map = sdk.getMVConfigurationMap(ADConstants.APP_ID,ADConstants.APP_KEY);
                 sdk.init(map, VLCApplication.this);
-
-                //初始化google广告
-                MobileAds.initialize(instance, ADManager.GOOGLE_APP_ID);
                 Looper.loop();
             }
         });
@@ -177,16 +183,23 @@ public class VLCApplication extends Application {
         setLocale(this);
 
         // 切换到横屏时提示
-        if (!DialogActivity.sRateStarted && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (mAppForeground && !DialogActivity.sRateStarted && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             long lastTime = mSettings.getLong(RateFragment.KEY_RATE_SHOW_LAST, 0);
             long nextTime = mSettings.getLong(RateFragment.KEY_RATE_SHOW_NEXT, 0);
             int count = mSettings.getInt(RateFragment.KEY_RATE_SHOW_COUNT, 0);
+            int versionCode = mSettings.getInt(RateFragment.KEY_RATE_LAST_VERSION, 0);
             long currentTime = new Date().getTime();
             LogUtil.d(TAG, "rate tip, currentTime:" + currentTime + "(" + Util.millisToDate(currentTime) + ")" +
                     " lastTime:" + lastTime + "(" + Util.millisToDate(lastTime) + ")" +
                     " nextTime:" + nextTime + "(" + Util.millisToDate(nextTime) + ")" +
                     " count:" + count
                 );
+
+            // 版本更新重新提示
+            if (VLCApplication.getVersionCode() != versionCode && nextTime == -1) {
+                nextTime = 0;
+            }
+
             sWillShowRate = false;
             if (nextTime == -1) {
                 // 本版本不提示
@@ -330,5 +343,29 @@ public class VLCApplication extends Application {
             sMedialibraryInstance = Medialibrary.getInstance(instance);
         }
         return sMedialibraryInstance;
+    }
+
+    public static int getVersionCode() {
+        int versionCode = 0;
+        PackageManager packageManager = VLCApplication.getAppContext().getPackageManager();
+        try {
+            PackageInfo info = packageManager.getPackageInfo(VLCApplication.getAppContext().getPackageName(), 0);
+            versionCode = info.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionCode;
+    }
+
+    public static String getVersionString() {
+        String version = "";
+        PackageManager manager = VLCApplication.getAppContext().getPackageManager();
+        try {
+            PackageInfo info = manager.getPackageInfo(VLCApplication.getAppContext().getPackageName(), 0);
+            version = info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return version;
     }
 }

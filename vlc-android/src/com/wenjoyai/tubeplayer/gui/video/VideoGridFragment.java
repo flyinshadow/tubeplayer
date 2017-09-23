@@ -61,6 +61,7 @@ import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
 import com.wenjoyai.tubeplayer.gui.RenameFileFragment;
 import com.wenjoyai.tubeplayer.gui.SecondaryActivity;
@@ -686,12 +687,20 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             if (targetViewMode == VideoListAdapter.VIEW_MODE_GRID) {
                 item.setIcon(R.drawable.ic_view_grid);
                 mGridView.removeItemDecoration(mDividerItemDecoration);
+
+                StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER, StatisticsManager.ITEM_VIEWER_GRID);
+
             } else if (targetViewMode == VideoListAdapter.VIEW_MODE_LIST) {
                 item.setIcon(R.drawable.ic_view_list);
                 mGridView.addItemDecoration(mDividerItemDecoration);
+
+                StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER, StatisticsManager.ITEM_VIEWER_LIST);
+
             } else if (targetViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
                 item.setIcon(R.drawable.ic_view_bigpic);
                 mGridView.removeItemDecoration(mDividerItemDecoration);
+
+                StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER, StatisticsManager.ITEM_VIEWER_BIGPIC);
             }
             updateViewMode(targetViewMode);
             mVideoAdapter.toggleViewMode(targetViewMode);

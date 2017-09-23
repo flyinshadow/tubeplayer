@@ -45,6 +45,7 @@ import org.videolan.medialibrary.media.MediaWrapper;
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.InfoActivity;
 import com.wenjoyai.tubeplayer.gui.PlaybackServiceFragment;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
@@ -74,7 +75,7 @@ public abstract class MediaBrowserFragment extends PlaybackServiceFragment imple
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (mSwipeRefreshLayout != null)
-            mSwipeRefreshLayout.setColorSchemeColors(UiTools.getColorFromAttribute(getActivity(), R.attr.theme_color_light));
+            mSwipeRefreshLayout.setColorSchemeColors(UiTools.getColorFromAttribute(getActivity(), R.attr.colorAccent));
     }
 
     public void onStart(){
@@ -91,6 +92,9 @@ public abstract class MediaBrowserFragment extends PlaybackServiceFragment imple
             mFabPlay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_PLAY_ALL_VIDEO, null);
+
                     onFabPlayClick(v);
                 }
             });

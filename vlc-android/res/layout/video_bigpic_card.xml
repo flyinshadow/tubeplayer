@@ -180,7 +180,7 @@
                 android:minHeight="@dimen/progress_bar_height"
                 android:progress="@{progress}"
                 android:progressDrawable="?attr/gridview_progressbar"
-                android:visibility="@{max == 0 ? View.GONE : View.VISIBLE}" />
+                android:visibility="@{progress &gt; 10 ? View.VISIBLE : View.GONE}" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
