@@ -39,7 +39,6 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.media.AudioManager;
-import android.media.Image;
 import android.media.MediaRouter;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -106,7 +105,6 @@ import org.videolan.medialibrary.Medialibrary;
 import org.videolan.medialibrary.Tools;
 import org.videolan.medialibrary.media.MediaWrapper;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.mobvista.msdk.MobVistaConstans;
 import com.mobvista.msdk.MobVistaSDK;
 import com.mobvista.msdk.out.MobVistaSDKFactory;
@@ -114,14 +112,12 @@ import com.mobvista.msdk.out.PreloadListener;
 import com.wenjoyai.tubeplayer.BuildConfig;
 import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
-import com.wenjoyai.tubeplayer.StartActivity;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.ad.RotateAD;
-import com.wenjoyai.tubeplayer.gui.DialogActivity;
+import com.wenjoyai.tubeplayer.firebase.StatiscManager;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
 import com.wenjoyai.tubeplayer.gui.PlaybackServiceActivity;
-import com.wenjoyai.tubeplayer.gui.RateFragment;
 import com.wenjoyai.tubeplayer.gui.ThemeFragment;
 import com.wenjoyai.tubeplayer.gui.audio.PlaylistAdapter;
 import com.wenjoyai.tubeplayer.gui.browser.FilePickerActivity;
@@ -3810,10 +3806,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             @Override
             public void onClick(View v) {
                 openWall();
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "video_rotate_offer_wall");
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "video_rotate_offer_wall");
-                FirebaseAnalytics.getInstance(VideoPlayerActivity.this).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                StatiscManager.submitAd(VideoPlayerActivity.this, StatiscManager.TYPE_AD,StatiscManager.ITEM_AD_VIDEO_NAME);
             }
         });
     }

@@ -2,8 +2,10 @@
 buildscript {
     repositories {
         flatDir dirs: "gradle/plugins"
-        jcenter()
+//        jcenter{url "http://jcenter.bintray.com/"}
+        jcenter{}
         maven { url 'https://maven.google.com'  }
+        maven { url "https://s3.amazonaws.com/moat-sdk-builds" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
@@ -13,8 +15,9 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
+        jcenter{}
         maven { url 'https://maven.google.com'  }
+        maven { url "https://s3.amazonaws.com/moat-sdk-builds" }
     }
 }
 

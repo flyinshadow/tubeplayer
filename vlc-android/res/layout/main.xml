@@ -56,6 +56,9 @@
             android:layout_marginBottom="80dp"
             android:layout_width="72dp"
             android:visibility="invisible"
+            app:layout_anchor="@+id/fragment_placeholder"
+            app:layout_behavior="com.wenjoyai.tubeplayer.gui.helpers.FloatingActionButtonBehavior"
+            app:layout_anchorGravity="bottom|end"
             android:layout_height="72dp"/>
 
         </android.support.design.widget.CoordinatorLayout>

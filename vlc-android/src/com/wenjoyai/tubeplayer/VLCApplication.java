@@ -92,6 +92,10 @@ public class VLCApplication extends Application {
 
     private static int sDialogCounter = 0;
 
+
+    //google lijiazhi
+//    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+
     public static void setLocale(Context context){
         // Are we using advanced debugging - locale?
         String p = mSettings.getString("set_locale", "");
