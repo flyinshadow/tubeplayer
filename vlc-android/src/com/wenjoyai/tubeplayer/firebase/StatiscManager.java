@@ -26,7 +26,7 @@ public class StatiscManager {
     public static final String TYPE_VIDEO_PAUSE="pause";
     public static final String TYPE_VIDEO_POPUP="popup";
     public static final String TYPE_VIDEO_LOCK="lock";
-    public static final String TYPE_VIDEO_SELECT="select";
+    public static final String TYPE_VIDEO_SELECT="select";//字幕
     public static final String TYPE_VIDEO_DOWNLOAD="download";
     public static final String TYPE_VIDEO_EXTEND="extend";
 
@@ -94,7 +94,7 @@ public class StatiscManager {
     }
 
     /**
-     * 上报视频播放
+     * 上报音频播放
      * @param context
      * @param type
      * @param itemName

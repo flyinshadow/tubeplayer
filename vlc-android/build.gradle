@@ -195,7 +195,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     //google 分析
     compile 'com.google.firebase:firebase-core:11.2.0'
-//    compile 'com.google.firebase:firebase-config:11.2.0'
+    compile 'com.google.firebase:firebase-config:11.2.0'
+    compile 'com.google.firebase:firebase-ads:11.2.0'
     //mobvista
     compile(name: 'mobvista_alphab', ext: 'aar')
     compile(name: 'mobvista_appwall', ext: 'aar')
@@ -204,7 +205,6 @@ dependencies {
 //    compile('com.mopub:mopub-sdk:4.16.1@aar') {
 //        transitive = true
 //    }
-
 }
 
 static def buildTime() {

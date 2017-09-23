@@ -29,18 +29,26 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Process;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.util.SimpleArrayMap;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.videolan.libvlc.Dialog;
 import org.videolan.libvlc.util.AndroidUtil;
 import org.videolan.medialibrary.LogUtil;
 import org.videolan.medialibrary.Medialibrary;
 
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.mobvista.msdk.MobVistaSDK;
 import com.mobvista.msdk.out.MobVistaSDKFactory;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
+import com.wenjoyai.tubeplayer.ad.ADManager;
 import com.wenjoyai.tubeplayer.gui.DialogActivity;
 import com.wenjoyai.tubeplayer.gui.RateFragment;
 import com.wenjoyai.tubeplayer.gui.dialogs.VlcProgressDialog;
@@ -92,9 +100,6 @@ public class VLCApplication extends Application {
 
     private static int sDialogCounter = 0;
 
-
-    //google lijiazhi
-//    private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     public static void setLocale(Context context){
         // Are we using advanced debugging - locale?
@@ -156,6 +161,9 @@ public class VLCApplication extends Application {
                 MobVistaSDK sdk = MobVistaSDKFactory.getMobVistaSDK();
                 Map<String, String> map = sdk.getMVConfigurationMap(ADConstants.APP_ID,ADConstants.APP_KEY);
                 sdk.init(map, VLCApplication.this);
+
+                //初始化google广告
+                MobileAds.initialize(instance, ADManager.GOOGLE_APP_ID);
                 Looper.loop();
             }
         });

@@ -61,8 +61,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FilterQueryProvider;
 
-import org.videolan.medialibrary.Medialibrary;
-
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.mobvista.msdk.MobVistaConstans;
 import com.mobvista.msdk.MobVistaSDK;
 import com.mobvista.msdk.out.MobVistaSDKFactory;
@@ -74,6 +77,7 @@ import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.StartActivity;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
+import com.wenjoyai.tubeplayer.ad.ADManager;
 import com.wenjoyai.tubeplayer.ad.RotateAD;
 import com.wenjoyai.tubeplayer.extensions.ExtensionListing;
 import com.wenjoyai.tubeplayer.extensions.ExtensionManagerService;
@@ -99,6 +103,8 @@ import com.wenjoyai.tubeplayer.media.MediaDatabase;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
 import com.wenjoyai.tubeplayer.util.Permissions;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
+
+import org.videolan.medialibrary.Medialibrary;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -140,6 +146,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private static final int PLUGIN_NAVIGATION_GROUP = 2;
     //广告view
     private RotateAD mRotateAD;
+//    private MoPubInterstitial mInterstitial;
+    private InterstitialAd mInterstitialAd;
 
 
     @Override
@@ -158,6 +166,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         /*** Start initializing the UI ***/
 
         setContentView(R.layout.main);
+        initConfig();
         initAD();
         mDrawerLayout = (HackyDrawerLayout) findViewById(R.id.root_container);
         setupNavigationView();
@@ -273,7 +282,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     protected void onStart() {
         super.onStart();
 
-          //Deactivated for now
+        //Deactivated for now
 //        createExtensionServiceConnection();
 
         clearBackstackFromClass(ExtensionBrowser.class);
@@ -299,9 +308,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             return;
         }
         PackageManager pm = getPackageManager();
-            SubMenu subMenu = navMenu.addSubMenu(PLUGIN_NAVIGATION_GROUP, PLUGIN_NAVIGATION_GROUP,
-               PLUGIN_NAVIGATION_GROUP, R.string.plugins);
-        for (int i = 0 ; i < plugins.size() ; ++i) {
+        SubMenu subMenu = navMenu.addSubMenu(PLUGIN_NAVIGATION_GROUP, PLUGIN_NAVIGATION_GROUP,
+                PLUGIN_NAVIGATION_GROUP, R.string.plugins);
+        for (int i = 0; i < plugins.size(); ++i) {
             ExtensionListing extension = plugins.get(i);
             MenuItem item = subMenu.add(PLUGIN_NAVIGATION_GROUP, i, 0, extension.title());
             int iconRes = extension.menuIcon();
@@ -310,7 +319,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 try {
                     Resources res = VLCApplication.getAppContext().getPackageManager().getResourcesForApplication(extension.componentName().getPackageName());
                     extensionIcon = res.getDrawable(extension.menuIcon());
-                } catch (PackageManager.NameNotFoundException e) {}
+                } catch (PackageManager.NameNotFoundException e) {
+                }
             }
             if (extensionIcon != null)
                 item.setIcon(extensionIcon);
@@ -329,13 +339,14 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                mExtensionManagerService = ((ExtensionManagerService.LocalBinder)service).getService();
+                mExtensionManagerService = ((ExtensionManagerService.LocalBinder) service).getService();
                 mExtensionManagerService.setExtensionManagerActivity(MainActivity.this);
                 loadPlugins();
             }
 
             @Override
-            public void onServiceDisconnected(ComponentName name) {}
+            public void onServiceDisconnected(ComponentName name) {
+            }
         };
         // Bind service which discoverves au connects toplugins
         if (!bindService(new Intent(MainActivity.this,
@@ -349,13 +360,72 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         if (mMediaLibrary.isInitiated()) {
             /* Load media items from database and storage */
             if (mScanNeeded && Permissions.canReadStorage())
-                startService(new Intent(MediaParsingService.ACTION_RELOAD, null,this, MediaParsingService.class));
+                startService(new Intent(MediaParsingService.ACTION_RELOAD, null, this, MediaParsingService.class));
             else
                 restoreCurrentList();
         }
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setCheckedItem(mCurrentFragmentId);
         mCurrentFragmentId = mSettings.getInt("fragment_id", R.id.nav_video);
+    }
+    //google lijiazhi
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+    private void initConfig(){
+        // Get Remote Config instance.
+        // [START get_remote_config_instance]
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        // [END get_remote_config_instance]
+
+        // Create a Remote Config Setting to enable developer mode, which you can use to increase
+        // the number of fetches available per hour during development. See Best Practices in the
+        // README for more information.
+        // [START enable_dev_mode]
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setDeveloperModeEnabled(BuildConfig.DEBUG)
+                .build();
+        mFirebaseRemoteConfig.setConfigSettings(configSettings);
+        // [END enable_dev_mode]
+
+        // Set default Remote Config parameter values. An app uses the in-app default values, and
+        // when you need to adjust those defaults, you set an updated value for only the values you
+        // want to change in the Firebase console. See Best Practices in the README for more
+        // information.
+        // [START set_default_values]
+//        mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
+        // [END set_default_values]
+
+        fetchWelcome();
+    }
+    /**
+     * Fetch a welcome message from the Remote Config service, and then activate it.
+     */
+    private void fetchWelcome() {
+//        mWelcomeTextView.setText(mFirebaseRemoteConfig.getString(LOADING_PHRASE_CONFIG_KEY));
+        long cacheExpiration = 3600; // 1 hour in seconds.
+        // If your app is using developer mode, cacheExpiration is set to 0, so each fetch will
+        // retrieve values from the service.
+        if (mFirebaseRemoteConfig.getInfo().getConfigSettings().isDeveloperModeEnabled()) {
+            cacheExpiration = 0;
+        }
+
+        // [START fetch_config_with_callback]
+        // cacheExpirationSeconds is set to cacheExpiration here, indicating the next fetch request
+        // will use fetch data from the Remote Config service, rather than cached parameter values,
+        // if cached parameter values are more than cacheExpiration seconds old.
+        // See Best Practices in the README for more information.
+        mFirebaseRemoteConfig.fetch(cacheExpiration)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // After config data is successfully fetched, it must be activated before newly fetched
+                            // values are returned.
+                            mFirebaseRemoteConfig.activateFetched();
+                        }
+                        ADManager.isShowGoogleAD = mFirebaseRemoteConfig.getBoolean("is_google_ad_show");
+                    }
+                });
+        // [END fetch_config_with_callback]
     }
 
     @Override
@@ -383,9 +453,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             mNavigationView.setCheckedItem(mCurrentFragmentId);
             Fragment ff = getFragment(mCurrentFragmentId);
             getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_placeholder, ff, tag)
-                .addToBackStack(tag)
-                .commit();
+                    .add(R.id.fragment_placeholder, ff, tag)
+                    .addToBackStack(tag)
+                    .commit();
         }
     }
 
@@ -421,7 +491,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     @Override
     public void onBackPressed() {
         /* Close the menu first */
-        if(mDrawerLayout.isDrawerOpen(mNavigationView)) {
+        if (mDrawerLayout.isDrawerOpen(mNavigationView)) {
             mDrawerLayout.closeDrawer(mNavigationView);
             return;
         }
@@ -432,9 +502,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
         // If it's the directory view, a "backpressed" action shows a parent.
         Fragment fragment = getSupportFragmentManager()
-                    .findFragmentById(R.id.fragment_placeholder);
-        if (fragment instanceof BaseBrowserFragment){
-            ((BaseBrowserFragment)fragment).goBack();
+                .findFragmentById(R.id.fragment_placeholder);
+        if (fragment instanceof BaseBrowserFragment) {
+            ((BaseBrowserFragment) fragment).goBack();
             return;
         } else if (fragment instanceof ExtensionBrowser) {
             ((ExtensionBrowser) fragment).goBack();
@@ -443,8 +513,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         finish();
     }
 
-    private Fragment getFragment(int id)
-    {
+    private Fragment getFragment(int id) {
         Fragment frag = getSupportFragmentManager().findFragmentByTag(getTag(id));
         if (frag != null)
             return frag;
@@ -531,7 +600,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         return super.startSupportActionMode(callback);
     }
 
-    /** Create menu from XML
+    /**
+     * Create menu from XML
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -564,7 +634,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     }
 
     @Override
-    public boolean onPrepareOptionsMenu (Menu menu) {
+    public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         if (menu == null)
             return false;
@@ -602,10 +672,10 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         }
 
         if (current instanceof NetworkBrowserFragment &&
-                !((NetworkBrowserFragment)current).isRootDirectory()) {
+                !((NetworkBrowserFragment) current).isRootDirectory()) {
             item = menu.findItem(R.id.ml_menu_save);
             item.setVisible(true);
-            String mrl = ((BaseBrowserFragment)current).mMrl;
+            String mrl = ((BaseBrowserFragment) current).mMrl;
             boolean isFavorite = MediaDatabase.getInstance().networkFavExists(Uri.parse(mrl));
             item.setIcon(isFavorite ?
                     R.drawable.ic_menu_bookmark_w :
@@ -617,7 +687,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             menu.findItem(R.id.ml_menu_clean).setVisible(!((IHistory) current).isEmpty());
         boolean showLast = current instanceof AudioBrowserFragment || current instanceof VideoGridFragment;
         menu.findItem(R.id.ml_menu_last_playlist).setVisible(showLast);
-        menu.findItem(R.id.ml_menu_filter).setVisible(current instanceof Filterable && ((Filterable)current).enableSearchOption());
+        menu.findItem(R.id.ml_menu_filter).setVisible(current instanceof Filterable && ((Filterable) current).enableSearchOption());
         menu.findItem(R.id.ml_menu_view_mode).setVisible(current instanceof VideoGridFragment);
         return true;
     }
@@ -643,7 +713,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                     int sortBy = VideoListAdapter.SORT_BY_TITLE;
                     if (item.getItemId() == R.id.ml_menu_sortby_length)
                         sortBy = VideoListAdapter.SORT_BY_LENGTH;
-                    else if(item.getItemId() == R.id.ml_menu_sortby_date)
+                    else if (item.getItemId() == R.id.ml_menu_sortby_date)
                         sortBy = VideoListAdapter.SORT_BY_DATE;
                     ((ISortable) current).sortBy(sortBy);
                     supportInvalidateOptionsMenu();
@@ -662,9 +732,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             // Restore last playlist
             case R.id.ml_menu_last_playlist:
                 boolean audio = current instanceof AudioBrowserFragment;
-                    Intent i = new Intent(audio ? PlaybackService.ACTION_REMOTE_LAST_PLAYLIST :
-                           PlaybackService.ACTION_REMOTE_LAST_VIDEO_PLAYLIST);
-                    sendBroadcast(i);
+                Intent i = new Intent(audio ? PlaybackService.ACTION_REMOTE_LAST_PLAYLIST :
+                        PlaybackService.ACTION_REMOTE_LAST_VIDEO_PLAYLIST);
+                sendBroadcast(i);
                 break;
             case android.R.id.home:
                 // Slide down the audio player.
@@ -677,20 +747,20 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 break;
             case R.id.ml_menu_clean:
                 if (current instanceof IHistory)
-                    ((IHistory)current).clearHistory();
+                    ((IHistory) current).clearHistory();
                 break;
             case R.id.ml_menu_save:
                 if (current == null)
                     break;
-                ((NetworkBrowserFragment)current).toggleFavorite();
+                ((NetworkBrowserFragment) current).toggleFavorite();
                 item.setIcon(R.drawable.ic_menu_bookmark_w);
                 break;
             case R.id.ml_menu_view_mode:
                 if (current == null)
                     break;
-                ((VideoGridFragment)current).toggleViewMode(item);
+                ((VideoGridFragment) current).toggleViewMode(item);
                 mSettings.edit().putInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
-                        ((VideoGridFragment)current).getCurrentViewMode()).apply();
+                        ((VideoGridFragment) current).getCurrentViewMode()).apply();
                 break;
         }
         mDrawerLayout.closeDrawer(mNavigationView);
@@ -703,10 +773,10 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
     private void forceRefresh(Fragment current) {
         if (!mMediaLibrary.isWorking()) {
-            if(current != null && current instanceof IRefreshable)
+            if (current != null && current instanceof IRefreshable)
                 ((IRefreshable) current).refresh();
             else
-                startService(new Intent(MediaParsingService.ACTION_RELOAD, null,this, MediaParsingService.class));
+                startService(new Intent(MediaParsingService.ACTION_RELOAD, null, this, MediaParsingService.class));
         }
     }
 
@@ -719,7 +789,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                     for (Fragment fragment : getSupportFragmentManager().getFragments())
                         if (fragment instanceof MediaBrowserFragment)
                             ((MediaBrowserFragment) fragment).clear();
-                    startService(new Intent(MediaParsingService.ACTION_RELOAD, null,this, MediaParsingService.class));
+                    startService(new Intent(MediaParsingService.ACTION_RELOAD, null, this, MediaParsingService.class));
                     break;
                 case PreferencesActivity.RESULT_RESTART:
                 case PreferencesActivity.RESULT_RESTART_APP:
@@ -728,7 +798,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                     startActivity(intent);
                     break;
             }
-        } else if (requestCode == ACTIVITY_RESULT_OPEN && resultCode == RESULT_OK){
+        } else if (requestCode == ACTIVITY_RESULT_OPEN && resultCode == RESULT_OK) {
             MediaUtils.openUri(this, data.getData());
         } else if (requestCode == ACTIVITY_RESULT_SECONDARY) {
             if (resultCode == PreferencesActivity.RESULT_RESCAN) {
@@ -812,7 +882,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
     public void openSearchActivity() {
         startActivity(new Intent(Intent.ACTION_SEARCH, null, this, SearchActivity.class)
-                        .putExtra(SearchManager.QUERY, mSearchView.getQuery().toString()));
+                .putExtra(SearchManager.QUERY, mSearchView.getQuery().toString()));
     }
 
     public void restoreCurrentList() {
@@ -831,7 +901,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // This should not happen
-        if(item == null)
+        if (item == null)
             return false;
 
         getSupportActionBar().setTitle(null); //clear title
@@ -841,7 +911,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         FragmentManager fm = getSupportFragmentManager();
         Fragment current = fm.findFragmentById(R.id.fragment_placeholder);
 
-        if (item.getGroupId() == PLUGIN_NAVIGATION_GROUP)  {
+        if (item.getGroupId() == PLUGIN_NAVIGATION_GROUP) {
             mExtensionManagerService.openExtension(id);
             mCurrentFragmentId = id;
         } else {
@@ -853,7 +923,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 return false;
             }
 
-            if(mCurrentFragmentId == id) { /* Already selected */
+            if (mCurrentFragmentId == id) { /* Already selected */
                 // Go back at root level of current browser
                 if (current instanceof BaseBrowserFragment && !((BaseBrowserFragment) current).isRootDirectory()) {
                     clearBackstackFromClass(current.getClass());
@@ -864,7 +934,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             }
 
             String tag = getTag(id);
-            switch (id){
+            switch (id) {
                 case R.id.nav_about:
                     showSecondaryFragment(SecondaryActivity.ABOUT);
                     break;
@@ -898,9 +968,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 /* Switch the fragment */
                     Fragment fragment = getFragment(id);
                     fm.beginTransaction()
-                        .replace(R.id.fragment_placeholder, fragment, tag)
-                        .addToBackStack(tag)
-                        .commit();
+                            .replace(R.id.fragment_placeholder, fragment, tag)
+                            .addToBackStack(tag)
+                            .commit();
                     mCurrentFragmentId = id;
             }
         }
@@ -921,8 +991,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         }
     }
 
-    private String getTag(int id){
-        switch (id){
+    private String getTag(int id) {
+        switch (id) {
             case R.id.nav_about:
                 return ID_ABOUT;
             case R.id.nav_settings:
@@ -973,13 +1043,17 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         startActivity(Intent.createChooser(shareIntent, "Share To"));
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     /**
      * 对appwall做预加载，建议开发者使用，会提高收入
      */
-    public void preloadWall(){
-        Log.e(TAG, "preloadWall");
+    public void preloadWall() {
         MobVistaSDK sdk = MobVistaSDKFactory.getMobVistaSDK();
-        Map<String,Object> preloadMap = new HashMap<String,Object>();
+        Map<String, Object> preloadMap = new HashMap<String, Object>();
         preloadMap.put(MobVistaConstans.PROPERTIES_LAYOUT_TYPE, MobVistaConstans.LAYOUT_APPWALL);
         preloadMap.put(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.library_roate_offer_wall);
         preloadMap.put(MobVistaConstans.PRELOAD_RESULT_LISTENER, new PreloadListener() {
@@ -996,10 +1070,11 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         });
         sdk.preload(preloadMap);
     }
+
     /**
      * 通过intent打开appwall
      */
-    public void openWall(){
+    public void openWall() {
         try {
             Class<?> aClass = Class.forName("com.mobvista.msdk.shell.MVActivity");
             Intent intent = new Intent(this, aClass);
@@ -1009,16 +1084,24 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             Log.e(TAG, e.getMessage());
         }
     }
+
     /**
      * 初始化广告view
      */
-    private void initAD(){
-        mRotateAD = (RotateAD)findViewById(R.id.act_main_roate_ad);
+    private void initAD() {
+        mRotateAD = (RotateAD) findViewById(R.id.act_main_roate_ad);
         mRotateAD.setOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openWall();
-                StatiscManager.submitAd(MainActivity.this, StatiscManager.TYPE_AD,StatiscManager.ITEM_AD_LIBRARY_NAME);
+                    openWall();
+//                } else if (ADManager.isShowGoogleAD == ADManager.AD_Google) {
+//                    if (null!=mInterstitialAd) {
+//                        mInterstitialAd.show();
+//                        mRotateAD.setVisibility(View.INVISIBLE);
+//                        loadGoogle();
+//                    }
+//                }
+                StatiscManager.submitAd(MainActivity.this, StatiscManager.TYPE_AD, StatiscManager.ITEM_AD_LIBRARY_NAME);
             }
         });
     }
