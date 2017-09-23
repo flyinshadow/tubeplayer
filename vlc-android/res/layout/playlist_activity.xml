@@ -59,10 +59,8 @@
             android:fastScrollEnabled="true"
             android:scrollbarStyle="outsideOverlay"
             android:paddingBottom="@dimen/listview_bottom_padding"
-            android:paddingLeft="16dp"
-            android:paddingStart="16dp"
-            android:paddingRight="8dp"
-            android:paddingEnd="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
             vlc:layout_behavior="@string/appbar_scrolling_view_behavior"
             style="@style/Theme.VLC.List" />
 
