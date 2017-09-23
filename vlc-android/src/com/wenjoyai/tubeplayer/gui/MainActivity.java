@@ -78,7 +78,7 @@ import com.wenjoyai.tubeplayer.ad.RotateAD;
 import com.wenjoyai.tubeplayer.extensions.ExtensionListing;
 import com.wenjoyai.tubeplayer.extensions.ExtensionManagerService;
 import com.wenjoyai.tubeplayer.extensions.api.VLCExtensionItem;
-import com.wenjoyai.tubeplayer.firebase.StatiscManager;
+import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.audio.AudioBrowserFragment;
 import com.wenjoyai.tubeplayer.gui.browser.BaseBrowserFragment;
 import com.wenjoyai.tubeplayer.gui.browser.ExtensionBrowser;
@@ -632,6 +632,18 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         // Current fragment loaded
         Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_placeholder);
 
+        switch (item.getItemId()) {
+            case R.id.ml_menu_sortby_name:
+                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_SORTBY, StatisticsManager.ITEM_SORTBY_NAME);
+                break;
+            case R.id.ml_menu_sortby_length:
+                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_SORTBY, StatisticsManager.ITEM_SORTBY_LENGTH);
+                break;
+            case R.id.ml_menu_sortby_date:
+                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_SORTBY, StatisticsManager.ITEM_SORTBY_DATE);
+                break;
+        }
+
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.ml_menu_sortby_name:
@@ -650,17 +662,29 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 }
                 break;
             case R.id.ml_menu_equalizer:
+
+                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_EQUALIZER, null);
+
                 showSecondaryFragment(SecondaryActivity.EQUALIZER);
                 break;
             // Refresh
             case R.id.ml_menu_refresh:
+
+                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_REFRESH, null);
+
                 forceRefresh(current);
                 break;
             case R.id.ml_menu_search:
+
+                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_SEARCH, null);
+
                 startActivity(new Intent(Intent.ACTION_SEARCH, null, this, SearchActivity.class));
                 break;
             // Restore last playlist
             case R.id.ml_menu_last_playlist:
+
+                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_LAST_PLAYLIST, null);
+
                 boolean audio = current instanceof AudioBrowserFragment;
                     Intent i = new Intent(audio ? PlaybackService.ACTION_REMOTE_LAST_PLAYLIST :
                            PlaybackService.ACTION_REMOTE_LAST_VIDEO_PLAYLIST);
@@ -838,6 +862,36 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         getSupportActionBar().setSubtitle(null); //clear subtitle
 
         int id = item.getItemId();
+
+        {
+            // 统计上报
+            switch (id) {
+                case R.id.nav_video:
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_VIDEO);
+                    break;
+                case R.id.nav_audio:
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_AUDIO);
+                    break;
+                case R.id.nav_directories:
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_DIRECT);
+                    break;
+                case R.id.nav_network:
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_LOCALNET);
+                    break;
+                case R.id.nav_mrl:
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_STREAM);
+                    break;
+                case R.id.nav_settings:
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_SETTING);
+                case R.id.nav_share_app:
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_SHARE);
+                    break;
+                case R.id.nav_night_mode:
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_NIGHTMODE);
+                    break;
+            }
+        }
+
         FragmentManager fm = getSupportFragmentManager();
         Fragment current = fm.findFragmentById(R.id.fragment_placeholder);
 
@@ -1018,7 +1072,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             @Override
             public void onClick(View v) {
                 openWall();
-                StatiscManager.submitAd(MainActivity.this, StatiscManager.TYPE_AD,StatiscManager.ITEM_AD_LIBRARY_NAME);
+                StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD,StatisticsManager.ITEM_AD_LIBRARY_NAME);
             }
         });
     }

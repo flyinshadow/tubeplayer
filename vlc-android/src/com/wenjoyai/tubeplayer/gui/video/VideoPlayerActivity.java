@@ -115,7 +115,7 @@ import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.ad.RotateAD;
-import com.wenjoyai.tubeplayer.firebase.StatiscManager;
+import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
 import com.wenjoyai.tubeplayer.gui.PlaybackServiceActivity;
 import com.wenjoyai.tubeplayer.gui.ThemeFragment;
@@ -2412,6 +2412,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     selectSubtitles();
                     return true;
                 } else if (item.getItemId() == R.id.video_menu_subtitles_picker) {
+
+                    StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_SELECT,
+                            null, null);
+
                     if (mUri == null)
                         return false;
                     Intent filePickerIntent = new Intent(context, FilePickerActivity.class);
@@ -2419,6 +2423,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     context.startActivityForResult(filePickerIntent, 0);
                     return true;
                 } else if (item.getItemId() == R.id.video_menu_subtitles_download) {
+
+                    StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_DOWNLOAD,
+                            null, null);
+
                     if (mUri == null)
                         return false;
                     MediaUtils.getSubs(VideoPlayerActivity.this, mService.getCurrentMediaWrapper(), new SubtitlesDownloader.Callback() {
@@ -2475,6 +2483,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.player_overlay_play:
+
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_PAUSE, null, null);
+
                 doPlayPause();
                 break;
             case R.id.playlist_toggle:
@@ -2493,6 +2504,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 seekDelta(-10000);
                 break;
             case R.id.lock_overlay_button:
+
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_LOCK, null, null);
+
                 if (mIsLocked)
                     unlockScreen();
                 else
@@ -2527,12 +2541,18 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     changeSpeed(0.05f);
                 break;
             case R.id.player_overlay_adv_function:
+
+                StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_EXTEND, null, null);
+
                 showAdvancedOptions();
                 break;
             case R.id.player_overlay_tracks:
                 onAudioSubClick(v);
                 break;
             case R.id.popup_toggle:
+
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_POPUP, null, null);
+
                 if (VLCApplication.showTvUi()) {
                     enterPictureInPictureMode();
                 } else {
@@ -2775,21 +2795,39 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         changeSurfaceLayout();
         switch (mCurrentSize) {
             case SURFACE_BEST_FIT:
+
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_BEST_FIT, null);
+
                 showInfo(R.string.surface_best_fit, 1000);
                 break;
             case SURFACE_FIT_SCREEN:
+
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_FIT_SCREEN, null);
+
                 showInfo(R.string.surface_fit_screen, 1000);
                 break;
             case SURFACE_FILL:
+
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_FILL_SCREEN, null);
+
                 showInfo(R.string.surface_fill, 1000);
                 break;
             case SURFACE_16_9:
+
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_16_9, null);
+
                 showInfo("16:9", 1000);
                 break;
             case SURFACE_4_3:
+
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_4_3, null);
+
                 showInfo("4:3", 1000);
                 break;
             case SURFACE_ORIGINAL:
+
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_CENTER, null);
+
                 showInfo(R.string.surface_original, 1000);
                 break;
         }
@@ -3806,7 +3844,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             @Override
             public void onClick(View v) {
                 openWall();
-                StatiscManager.submitAd(VideoPlayerActivity.this, StatiscManager.TYPE_AD,StatiscManager.ITEM_AD_VIDEO_NAME);
+                StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD,StatisticsManager.ITEM_AD_VIDEO_NAME);
             }
         });
     }

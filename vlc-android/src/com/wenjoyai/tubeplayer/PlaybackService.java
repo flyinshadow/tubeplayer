@@ -75,6 +75,8 @@ import org.videolan.medialibrary.Tools;
 import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
 import org.videolan.medialibrary.media.SearchAggregate;
+
+import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.AudioPlayerContainerActivity;
 import com.wenjoyai.tubeplayer.gui.ThemeFragment;
 import com.wenjoyai.tubeplayer.gui.helpers.AudioUtil;
@@ -621,6 +623,8 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
                     changeAudioFocus(false);
                     break;
                 case MediaPlayer.Event.EncounteredError:
+                    StatisticsManager.submitVideoPlay(PlaybackService.this, StatisticsManager.TYPE_VIDEO_FAILED,
+                            FileUtils.getFileExt(mMediaList.getMRL(mCurrentIndex)), StatisticsManager.getVideoLengthType(getCurrentMedia().getLength()));
                     showToast(getString(
                             R.string.invalid_location,
                             mMediaList.getMRL(mCurrentIndex)), Toast.LENGTH_SHORT);
@@ -1988,6 +1992,14 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
         media.setEventListener(mMediaListener);
         mMediaPlayer.setMedia(media);
         media.release();
+
+        if (mw.getType() == MediaWrapper.TYPE_VIDEO) {
+            StatisticsManager.submitVideoPlay(PlaybackService.this, StatisticsManager.TYPE_VIDEO_SUCCESS,
+                    FileUtils.getFileExt(mrl), StatisticsManager.getVideoLengthType(mw.getLength()));
+        } else if (mw.getType() == MediaWrapper.TYPE_AUDIO) {
+            StatisticsManager.submitAudioPlay(PlaybackService.this, StatisticsManager.TYPE_AUDIO_PLAY,
+                    FileUtils.getFileExt(mrl));
+        }
 
         if (mw.getType() != MediaWrapper.TYPE_VIDEO || isVideoPlaying || mw.hasFlag(MediaWrapper.MEDIA_FORCE_AUDIO)) {
             mMediaPlayer.setEqualizer(VLCOptions.getEqualizer(this));

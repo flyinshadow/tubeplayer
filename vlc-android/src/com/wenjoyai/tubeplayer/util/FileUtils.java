@@ -52,6 +52,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.LongBuffer;
 import java.nio.channels.FileChannel;
+import java.util.Locale;
 
 public class FileUtils {
 
@@ -410,5 +411,15 @@ public class FileUtils {
             }
         }
         return uri;
+    }
+
+    public static String getFileExt(String filename) {
+        String fileExt = "";
+        if (!TextUtils.isEmpty(filename)) {
+            int index = filename.lastIndexOf(".");
+            if (index != -1)
+                fileExt = filename.substring(index).toLowerCase(Locale.ENGLISH);
+        }
+        return fileExt;
     }
 }

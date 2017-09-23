@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.ShareUtils;
 import com.wenjoyai.tubeplayer.util.Util;
@@ -70,12 +71,18 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
         long time = new Date().getTime();
         switch (view.getId()) {
             case R.id.rate_star:
+
+                StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_RATE, StatisticsManager.ITEM_RATE_STAR);
+
                 LogUtil.d(TAG, "rate_star time:" + time + "(" + Util.millisToDate(time) + ")");
                 mNextTime = -1;
                 dismiss();
                 ShareUtils.launchAppDetail(getActivity(), getActivity().getPackageName());
                 break;
             case R.id.rate_cancel:
+
+                StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_RATE, StatisticsManager.ITEM_RATE_CANCEL);
+
                 LogUtil.d(TAG, "rate_cancel last time:" + time + "(" + Util.millisToDate(time) + ")");
                 time = Util.getDateNext(1);
                 LogUtil.d(TAG, "rate_cancel next time:" + time + "(" + Util.millisToDate(time) + ")");
@@ -83,6 +90,9 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
                 dismiss();
                 break;
             case R.id.rate_dislike:
+
+                StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_RATE, StatisticsManager.ITEM_RATE_DISLIKE);
+
                 LogUtil.d(TAG, "rate_dislike last time:" + time + "(" + Util.millisToDate(time) + ")");
                 time = Util.getDateNext(7);
                 LogUtil.d(TAG, "rate_dislike next time:" + time + "(" + Util.millisToDate(time) + ")");

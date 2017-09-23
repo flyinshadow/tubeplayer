@@ -21,6 +21,7 @@ import android.widget.ImageView;
 
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
 
 import static com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity.RESULT_RESTART;
@@ -114,6 +115,8 @@ public class ThemeFragment extends DialogFragment {
 
 //                getActivity().setTheme(mThemeStyles[i]);
 //                getActivity().getTheme().applyStyle(mThemeStyles[i], true);
+
+                StatisticsManager.submitTheme(getActivity(), String.valueOf(i));
 
                 if (sSettings.getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, 0) == i) {
                     return;
