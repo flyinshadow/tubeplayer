@@ -524,9 +524,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         initAD();
         preloadWall();
-//        if (ADManager.isShowGoogleAD) {
+        if (ADManager.isShowGoogleAD) {
             loadGoogle();
-//        }
+        }
     }
 
     @Override
