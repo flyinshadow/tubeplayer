@@ -171,6 +171,6 @@
             android:progress="@{progress}"
             android:progressDrawable="?attr/gridview_progressbar"
             android:secondaryProgress="0"
-            android:visibility="@{progress == 0 ? View.INVISIBLE : View.VISIBLE}" />
+            android:visibility="@{progress &gt; 10 ? View.VISIBLE : View.INVISIBLE}" />
     </android.support.constraint.ConstraintLayout>
 </layout>
