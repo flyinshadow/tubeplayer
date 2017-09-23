@@ -63,6 +63,8 @@ public class AsyncImageLoader {
     public static final BitmapDrawable DEFAULT_COVER_AUDIO_DRAWABLE = new BitmapDrawable(VLCApplication.getAppResources(), DEFAULT_COVER_AUDIO);
     public static final BitmapDrawable DEFAULT_COVER_ARTIST_DRAWABLE = new BitmapDrawable(VLCApplication.getAppResources(), BitmapCache.getFromResource(VLCApplication.getAppResources(), R.drawable.ic_no_artist));
     public static final BitmapDrawable DEFAULT_COVER_ALBUM_DRAWABLE = new BitmapDrawable(VLCApplication.getAppResources(), BitmapCache.getFromResource(VLCApplication.getAppResources(), R.drawable.ic_no_album));
+    public static final BitmapDrawable DEFAULT_COVER_AUDIO_PLAYLIST_DRAWABLE = new BitmapDrawable(VLCApplication.getAppResources(), BitmapCache.getFromResource(VLCApplication.getAppResources(), R.drawable.ic_audio_playlist));
+    public static final BitmapDrawable DEFAULT_COVER_AUDIO_FOLDER_DRAWABLE = new BitmapDrawable(VLCApplication.getAppResources(), BitmapCache.getFromResource(VLCApplication.getAppResources(), R.drawable.ic_music_folder));
 
     /*
      * Custom bindings to trigger image (down)loading

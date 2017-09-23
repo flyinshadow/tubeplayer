@@ -57,9 +57,12 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:fastScrollEnabled="true"
+            android:scrollbarStyle="outsideOverlay"
             android:paddingBottom="@dimen/listview_bottom_padding"
             android:paddingLeft="16dp"
+            android:paddingStart="16dp"
             android:paddingRight="8dp"
+            android:paddingEnd="8dp"
             vlc:layout_behavior="@string/appbar_scrolling_view_behavior"
             style="@style/Theme.VLC.List" />
 
