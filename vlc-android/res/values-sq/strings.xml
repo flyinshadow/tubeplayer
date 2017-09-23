@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main HD XPlayer Interface -->
+    <!-- Main Video Player Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Anulo</string>
     <string name="other">Të Tjera</string>
@@ -36,7 +36,7 @@
     <string name="ringtone_error">Një error ndodhi gjatë vendosjes së ziles.</string>
     <string name="pause">Pusho</string>
     <string name="not_show_again">Mos shfaq përsëri</string>
-    <string name="info_title">HD XPlayer</string>
+    <string name="info_title">Video Player</string>
     <string name="unknown_artist">Artiste i panjohur</string>
     <string name="unknown_album">Album i panjohur</string>
     <string name="unknown_genre">Zhanri i panjohur</string>
@@ -135,11 +135,11 @@
     <string name="open_mrl">Hap MRL</string>
     <string name="open_mrl_dialog_title">Hap transmetimin ne rrejt</string>
     <string name="open_mrl_dialog_msg">Shkruaj network MRL: e.g. http://, mms:// or rtsp://</string>
-    <string name="error_not_compatible">Na vjen keq, aparati i juaj nuk është i suportuar nga ky version i HD XPlayer për Android™.</string>
-    <string name="error_problem">Na vjen keq, HD XPlayer për Android ksihte një problem gjatë ngarkimit dhe u mbyll.</string>
+    <string name="error_not_compatible">Na vjen keq, aparati i juaj nuk është i suportuar nga ky version i Video Player për Android™.</string>
+    <string name="error_problem">Na vjen keq, Video Player për Android ksihte një problem gjatë ngarkimit dhe u mbyll.</string>
     <string name="error_message_is">Mesazhi i errorit është (ju lutem përmendeni këtë gjatë debugging):\n</string>
     <string name="encountered_error_title">Error ne luajtje</string>
-    <string name="encountered_error_message">HD XPlayer hasi një error me këtë media.\nJu lutem provoni te rifreskoni librarin tuaj.</string>
+    <string name="encountered_error_message">Video Player hasi një error me këtë media.\nJu lutem provoni te rifreskoni librarin tuaj.</string>
     <string name="invalid_location">Lokacion jo i drejt</string>
     <string name="search">Kërko</string>
     <string name="search_history">Kërko historinë</string>
@@ -161,13 +161,13 @@
     <string name="show_playlist">Shfaq listen</string>
     <string name="hold_to_stop">Mbaje për ta ndalur</string>
     <!-- About -->
-    <string name="app_name_full">HD XPlayer per Android™</string>
+    <string name="app_name_full">Video Player per Android™</string>
     <string name="licence">Liçenca</string>
     <string name="revision">Rishikim</string>
     <string name="about">Rreth</string>
-    <string name="about_text">HD XPlayer për Android™ është pjesë e HD XPlayer media player, media player popullor falas dhe open source. Versioni i Android mund të lexojë shumicën e skedarëve dhe transmetimeve ne rrjet.</string>
-    <string name="compiled_by">Ky version i HD XPlayer është kompiluar nga:</string>
-    <string name="vlc_authors">Autorët e HD XPlayer</string>
+    <string name="about_text">Video Player për Android™ është pjesë e Video Player media player, media player popullor falas dhe open source. Versioni i Android mund të lexojë shumicën e skedarëve dhe transmetimeve ne rrjet.</string>
+    <string name="compiled_by">Ky version i Video Player është kompiluar nga:</string>
+    <string name="vlc_authors">Autorët e Video Player</string>
     <!-- Preferences -->
     <string name="preferences">Preferencat</string>
     <string name="general_prefs_category">Të përgjithshme</string>
@@ -230,13 +230,13 @@
     <string name="enable_time_stretching_audio_summary">Rrit dhe ul shpejtësinë e zërit pa ndryshuar ritmin (kërkon një pajisje të shpejtë).</string>
     <string name="advanced_prefs_category">Avancuar</string>
     <string name="aout">Dalja audio</string>
-    <string name="aout_summary">Ndrysho mënyrën qe HD XPlayer përdor për të shfaqur audio</string>
+    <string name="aout_summary">Ndrysho mënyrën qe Video Player përdor për të shfaqur audio</string>
     <string name="clear_media_db">Fshij databazen e medias</string>
     <string name="clear_history">Fshij historinë</string>
     <string name="media_db_cleared">Database-i Media u pastrua!</string>
     <string name="set_locale">Zgjidhe lokale</string>
     <string name="set_locale_detail">Lëre bosht për t\'i bërë reset</string>
-    <string name="set_locale_popup">Dil dhe ristartoje HD XPlayer që ndryshimet të kenë efekt.</string>
+    <string name="set_locale_popup">Dil dhe ristartoje Video Player që ndryshimet të kenë efekt.</string>
     <string name="network_caching">Vlera e ruajtjes ne rrjet</string>
     <string name="network_caching_summary">Koha që nevojitet për bufferin e medias ne rrjet (në ms). Nuk punon me dekodimin hardware. Lëre bosh për t\'i bërë reset.</string>
     <string name="developer_prefs_category">Zhvillues</string>
@@ -246,7 +246,7 @@
     <string name="start_logging">Fillo logimin</string>
     <string name="stop_logging">Ndalo logimin</string>
     <string name="clear_log">Fshij log-et</string>
-    <string name="log_service_title">Regjistrimi i HD XPlayer log-eve</string>
+    <string name="log_service_title">Regjistrimi i Video Player log-eve</string>
     <string name="log_service_text">Hap log console</string>
     <string name="copy_to_clipboard">Kopjo në Clipboard</string>
     <string name="copied_to_clipboard">U kopjua ne Clipboard</string>
@@ -254,9 +254,9 @@
     <string name="dump_logcat">Zbraz tek logacat log</string>
     <string name="dump_logcat_success">Logcat u zbraz me suykses tek %1$s!</string>
     <string name="dump_logcat_failure">Dështoi zbrazja e logcat.</string>
-    <string name="serious_crash">Për fat të keq ndoshi nje error serioz dhe HD XPlayer u mbyll.</string>
-    <string name="help_us_send_log">Na ndihmoni të përmirsojme HD XPlayer duke dërguar crash log-un e mëposhtëm:</string>
-    <string name="restart_vlc">Ristarto HD XPlayer</string>
+    <string name="serious_crash">Për fat të keq ndoshi nje error serioz dhe Video Player u mbyll.</string>
+    <string name="help_us_send_log">Na ndihmoni të përmirsojme Video Player duke dërguar crash log-un e mëposhtëm:</string>
+    <string name="restart_vlc">Ristarto Video Player</string>
     <string name="send_log">Dërgo te log</string>
     <string name="sending_log">Duke e derguar tek log...</string>
     <string name="drawer_open">Haptërheqësin e navigimit</string>

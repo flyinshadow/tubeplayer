@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main HD XPlayer Interface -->
+    <!-- Main Video Player Interface -->
     <string name="ok">У реду</string>
     <string name="cancel">Откажи</string>
     <string name="other">Друго</string>
@@ -31,7 +31,7 @@
     <string name="ringtone_error">Дошло је до грешке при постављању мелодије звона.</string>
     <string name="pause">Паузирај</string>
     <string name="not_show_again">Не приказуј поново</string>
-    <string name="info_title">HD XPlayer</string>
+    <string name="info_title">Video Player</string>
     <string name="unknown_artist">Непознат извођач</string>
     <string name="unknown_album">Непознат албум</string>
     <string name="unknown_genre">Непознат жанр</string>
@@ -119,11 +119,11 @@
     <string name="open_mrl">Отвори MRL…</string>
     <string name="open_mrl_dialog_title">Отварање мрежног тока</string>
     <string name="open_mrl_dialog_msg">Отворите мрежну адресу са медијима (нпр. http://, mms:// или rtsp://).</string>
-    <string name="error_not_compatible">Нажалост, ова верзија HD XPlayer-а за Android не подржава ваш уређај.</string>
-    <string name="error_problem">Нажалост, HD XPlayer за Android је наишао на проблем и затворио се.</string>
+    <string name="error_not_compatible">Нажалост, ова верзија Video Player-а за Android не подржава ваш уређај.</string>
+    <string name="error_problem">Нажалост, Video Player за Android је наишао на проблем и затворио се.</string>
     <string name="error_message_is">Порука о грешци гласи (помените ово при отклањању грешака):\n</string>
     <string name="encountered_error_title">Грешка при репродукцији</string>
-    <string name="encountered_error_message">HD XPlayer је наишао на грешку у овом медију.\nПробајте да освежите медијску библиотеку.</string>
+    <string name="encountered_error_message">Video Player је наишао на грешку у овом медију.\nПробајте да освежите медијску библиотеку.</string>
     <string name="invalid_location">Локацију %1$s није могуће пустити.</string>
     <string name="search">Претражи</string>
     <string name="search_history">Историја претраге</string>
@@ -144,13 +144,13 @@
     <string name="show_playlist">Прикажи плејлисту</string>
     <string name="hold_to_stop">Држите да зауставите</string>
     <!-- About -->
-    <string name="app_name_full">HD XPlayer за Android</string>
+    <string name="app_name_full">Video Player за Android</string>
     <string name="licence">Лиценца</string>
     <string name="revision">Ревизија</string>
     <string name="about">О апликацији</string>
-    <string name="about_text">HD XPlayer за Android је порт HD XPlayer Media Player-а, популарног медијског плејера отвореног кода. Верзија за Android може да репродукује многе датотеке и мрежне токове.</string>
-    <string name="compiled_by">Ову верзију HD XPlayer-а је компилирао:</string>
-    <string name="vlc_authors">Аутори HD XPlayer-а.</string>
+    <string name="about_text">Video Player за Android је порт Video Player Media Player-а, популарног медијског плејера отвореног кода. Верзија за Android може да репродукује многе датотеке и мрежне токове.</string>
+    <string name="compiled_by">Ову верзију Video Player-а је компилирао:</string>
+    <string name="vlc_authors">Аутори Video Player-а.</string>
     <!-- Preferences -->
     <string name="preferences">Жељене поставке</string>
     <string name="general_prefs_category">Опште</string>
@@ -205,13 +205,13 @@
     <string name="enable_time_stretching_audio_summary">Убрзајте и успорите звук без промене висине тона (захтева брз уређај).</string>
     <string name="advanced_prefs_category">Напредно</string>
     <string name="aout">Звучни излаз</string>
-    <string name="aout_summary">Промените метод који користи HD XPlayer да произведе звук.</string>
+    <string name="aout_summary">Промените метод који користи Video Player да произведе звук.</string>
     <string name="clear_media_db">Очисти медијску базу</string>
     <string name="clear_history">Очисти историју претраге</string>
     <string name="media_db_cleared">Медијска база је очишћена.</string>
     <string name="set_locale">Локализација</string>
     <string name="set_locale_detail">Оставите празно ради поништавања</string>
-    <string name="set_locale_popup">Искључите HD XPlayer и поново га покрените како би измене ступиле на снагу.</string>
+    <string name="set_locale_popup">Искључите Video Player и поново га покрените како би измене ступиле на снагу.</string>
     <string name="network_caching">Вредност веб кеширања</string>
     <string name="network_caching_summary">Време у милисекундама за које је потребно да се мрежни медиј постави у бафер. Не ради са хардверским декодирањем. Оставите празно ради успостављања почетних вредности.</string>
     <string name="developer_prefs_category">Програмер</string>
@@ -227,9 +227,9 @@
     <string name="dump_logcat">Испиши logcat евиденцију</string>
     <string name="dump_logcat_success">Logcat је успешно исписан у %1$s.</string>
     <string name="dump_logcat_failure">Не могу да испишем logcat.</string>
-    <string name="serious_crash">Нажалост, дошло је до озбиљне грешке која је проузроковала пад HD XPlayer-а.</string>
-    <string name="help_us_send_log">Помозите нам да побољшамо HD XPlayer слањем следећег извештаја о паду:</string>
-    <string name="restart_vlc">Поново покрени HD XPlayer</string>
+    <string name="serious_crash">Нажалост, дошло је до озбиљне грешке која је проузроковала пад Video Player-а.</string>
+    <string name="help_us_send_log">Помозите нам да побољшамо Video Player слањем следећег извештаја о паду:</string>
+    <string name="restart_vlc">Поново покрени Video Player</string>
     <string name="send_log">Пошаљи извештај</string>
     <string name="sending_log">Шаљем извештај…</string>
     <string name="rename">Преименуј</string>

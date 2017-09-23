@@ -1,8 +1,8 @@
 <resources>
   <!--<string name="app_name">VLC extension library</string>-->
-  <string name="app_name">HD XPlayer</string>
+  <string name="app_name">Video Player</string>
   <string name="network_error_title">No Internet connection</string>
   <string name="network_error_message">This extension needs your device to be connected to internet</string>
-  <string name="vlc_error_title">HD XPlayer is not installed</string>
-  <string name="vlc_error_message">This feature needs HD XPlayer application to be installed on your device</string>
+  <string name="vlc_error_title">Video Player is not installed</string>
+  <string name="vlc_error_message">This feature needs Video Player application to be installed on your device</string>
 </resources>

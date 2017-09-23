@@ -336,7 +336,7 @@
     </style>
 
 
-    <style name="Theme.HDXPlayer.Apearance.Black" parent="Theme.VLC.Apearance">
+    <style name="Theme.VideoPlayer.Apearance.Black" parent="Theme.VLC.Apearance">
         <item name="theme_color">@color/theme_color_black</item>
         <item name="theme_color_dark">@color/theme_color_black_dark</item>
         <item name="theme_color_light">@color/theme_color_black_light</item>
@@ -408,7 +408,7 @@
         <item name="ic_subtitledelay">@drawable/ic_subtitledelay</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Red" parent="Theme.VLC.Apearance">
+    <style name="Theme.VideoPlayer.Apearance.Red" parent="Theme.VLC.Apearance">
         <item name="theme_color">@color/theme_color_red</item>
         <item name="theme_color_dark">@color/theme_color_red_dark</item>
         <item name="theme_color_light">@color/theme_color_red_light</item>
@@ -418,7 +418,7 @@
         <item name="colorAccent">@color/theme_color_red_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Pink" parent="Theme.VLC.Apearance">
+    <style name="Theme.VideoPlayer.Apearance.Pink" parent="Theme.VLC.Apearance">
         <item name="theme_color">@color/theme_color_pink</item>
         <item name="theme_color_dark">@color/theme_color_pink_dark</item>
         <item name="theme_color_light">@color/theme_color_pink_light</item>
@@ -428,7 +428,7 @@
         <item name="colorAccent">@color/theme_color_pink_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Purple" parent="Theme.VLC.Apearance">
+    <style name="Theme.VideoPlayer.Apearance.Purple" parent="Theme.VLC.Apearance">
         <item name="theme_color">@color/theme_color_purple</item>
         <item name="theme_color_dark">@color/theme_color_purple_dark</item>
         <item name="theme_color_light">@color/theme_color_purple_light</item>
@@ -438,7 +438,7 @@
         <item name="colorAccent">@color/theme_color_purple_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.DeepPurple" parent="Theme.VLC.Apearance">
+    <style name="Theme.VideoPlayer.Apearance.DeepPurple" parent="Theme.VLC.Apearance">
         <item name="theme_color">@color/theme_color_deep_purple</item>
         <item name="theme_color_dark">@color/theme_color_deep_purple_dark</item>
         <item name="theme_color_light">@color/theme_color_deep_purple_light</item>
@@ -448,7 +448,7 @@
         <item name="colorAccent">@color/theme_color_deep_purple_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Indigo" parent="Theme.VLC.Apearance">
+    <style name="Theme.VideoPlayer.Apearance.Indigo" parent="Theme.VLC.Apearance">
         <item name="theme_color">@color/theme_color_indigo</item>
         <item name="theme_color_dark">@color/theme_color_indigo_dark</item>
         <item name="theme_color_light">@color/theme_color_indigo_light</item>
@@ -458,7 +458,7 @@
         <item name="colorAccent">@color/theme_color_indigo_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Blue" parent="Theme.VLC.Apearance">
+    <style name="Theme.VideoPlayer.Apearance.Blue" parent="Theme.VLC.Apearance">
         <item name="theme_color">@color/theme_color_blue</item>
         <item name="theme_color_dark">@color/theme_color_blue_dark</item>
         <item name="theme_color_light">@color/theme_color_blue_light</item>
@@ -468,7 +468,7 @@
         <item name="colorAccent">@color/theme_color_blue_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.LightBlue" parent="Theme.VLC.Apearance">
+    <style name="Theme.VideoPlayer.Apearance.LightBlue" parent="Theme.VLC.Apearance">
         <item name="theme_color">@color/theme_color_light_blue</item>
         <item name="theme_color_dark">@color/theme_color_light_blue_dark</item>
         <item name="theme_color_light">@color/theme_color_light_blue_light</item>
@@ -478,7 +478,7 @@
         <item name="colorAccent">@color/theme_color_light_blue_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Cyan" parent="Theme.VLC.Apearance">
+    <style name="Theme.VideoPlayer.Apearance.Cyan" parent="Theme.VLC.Apearance">
         <item name="theme_color">@color/theme_color_cyan</item>
         <item name="theme_color_dark">@color/theme_color_cyan_dark</item>
         <item name="theme_color_light">@color/theme_color_cyan_light</item>
@@ -488,7 +488,7 @@
         <item name="colorAccent">@color/theme_color_cyan_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Teal" parent="Theme.VLC.Apearance">
+    <style name="Theme.VideoPlayer.Apearance.Teal" parent="Theme.VLC.Apearance">
         <item name="theme_color">@color/theme_color_teal</item>
         <item name="theme_color_dark">@color/theme_color_teal_dark</item>
         <item name="theme_color_light">@color/theme_color_teal_light</item>
@@ -498,7 +498,7 @@
         <item name="colorAccent">@color/theme_color_teal_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Green" parent="Theme.VLC.Apearance">
+    <style name="Theme.VideoPlayer.Apearance.Green" parent="Theme.VLC.Apearance">
         <item name="theme_color">@color/theme_color_green</item>
         <item name="theme_color_dark">@color/theme_color_green_dark</item>
         <item name="theme_color_light">@color/theme_color_green_light</item>
@@ -508,7 +508,7 @@
         <item name="colorAccent">@color/theme_color_green_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.LightGreen" parent="Theme.VLC.Apearance">
+    <style name="Theme.VideoPlayer.Apearance.LightGreen" parent="Theme.VLC.Apearance">
         <item name="theme_color">@color/theme_color_light_green</item>
         <item name="theme_color_dark">@color/theme_color_light_green_dark</item>
         <item name="theme_color_light">@color/theme_color_light_green_light</item>
@@ -518,7 +518,7 @@
         <item name="colorAccent">@color/theme_color_light_green_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Lime" parent="Theme.VLC.Apearance">
+    <style name="Theme.VideoPlayer.Apearance.Lime" parent="Theme.VLC.Apearance">
         <item name="theme_color">@color/theme_color_lime</item>
         <item name="theme_color_dark">@color/theme_color_lime_dark</item>
         <item name="theme_color_light">@color/theme_color_lime_light</item>
@@ -528,7 +528,7 @@
         <item name="colorAccent">@color/theme_color_lime_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Amber" parent="Theme.VLC.Apearance">
+    <style name="Theme.VideoPlayer.Apearance.Amber" parent="Theme.VLC.Apearance">
         <item name="theme_color">@color/theme_color_amber</item>
         <item name="theme_color_dark">@color/theme_color_amber_dark</item>
         <item name="theme_color_light">@color/theme_color_amber_light</item>
@@ -538,7 +538,7 @@
         <item name="colorAccent">@color/theme_color_amber_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Orange" parent="Theme.VLC.Apearance">
+    <style name="Theme.VideoPlayer.Apearance.Orange" parent="Theme.VLC.Apearance">
         <item name="theme_color">@color/theme_color_orange</item>
         <item name="theme_color_dark">@color/theme_color_orange_dark</item>
         <item name="theme_color_light">@color/theme_color_orange_light</item>
@@ -548,7 +548,7 @@
         <item name="colorAccent">@color/theme_color_orange_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.DeepOrange" parent="Theme.VLC.Apearance">
+    <style name="Theme.VideoPlayer.Apearance.DeepOrange" parent="Theme.VLC.Apearance">
         <item name="theme_color">@color/theme_color_deep_orange</item>
         <item name="theme_color_dark">@color/theme_color_deep_orange_dark</item>
         <item name="theme_color_light">@color/theme_color_deep_orange_light</item>
@@ -558,85 +558,85 @@
         <item name="colorAccent">@color/theme_color_deep_orange_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Black.Night" parent="Theme.VLC.Apearance.Black">
+    <style name="Theme.VideoPlayer.Apearance.Black.Night" parent="Theme.VLC.Apearance.Black">
     </style>
-    <style name="Theme.HDXPlayer.Apearance.Red.Night" parent="Theme.VLC.Apearance.Black">
+    <style name="Theme.VideoPlayer.Apearance.Red.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_red_light</item>
         <item name="colorAccent">@color/theme_color_red_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Pink.Night" parent="Theme.VLC.Apearance.Black">
+    <style name="Theme.VideoPlayer.Apearance.Pink.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_pink_light</item>
         <item name="colorAccent">@color/theme_color_pink_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Purple.Night" parent="Theme.VLC.Apearance.Black">
+    <style name="Theme.VideoPlayer.Apearance.Purple.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_purple_light</item>
         <item name="colorAccent">@color/theme_color_purple_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.DeepPurple.Night" parent="Theme.VLC.Apearance.Black">
+    <style name="Theme.VideoPlayer.Apearance.DeepPurple.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_deep_purple_light</item>
         <item name="colorAccent">@color/theme_color_deep_purple_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Indigo.Night" parent="Theme.VLC.Apearance.Black">
+    <style name="Theme.VideoPlayer.Apearance.Indigo.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_indigo_light</item>
         <item name="colorAccent">@color/theme_color_indigo_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Blue.Night" parent="Theme.VLC.Apearance.Black">
+    <style name="Theme.VideoPlayer.Apearance.Blue.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_blue_light</item>
         <item name="colorAccent">@color/theme_color_blue_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.LightBlue.Night" parent="Theme.VLC.Apearance.Black">
+    <style name="Theme.VideoPlayer.Apearance.LightBlue.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_light_blue_light</item>
         <item name="colorAccent">@color/theme_color_light_blue_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Cyan.Night" parent="Theme.VLC.Apearance.Black">
+    <style name="Theme.VideoPlayer.Apearance.Cyan.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_cyan_light</item>
         <item name="colorAccent">@color/theme_color_cyan_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Teal.Night" parent="Theme.VLC.Apearance.Black">
+    <style name="Theme.VideoPlayer.Apearance.Teal.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_teal_light</item>
         <item name="colorAccent">@color/theme_color_teal_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Green.Night" parent="Theme.VLC.Apearance.Black">
+    <style name="Theme.VideoPlayer.Apearance.Green.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_green_light</item>
         <item name="colorAccent">@color/theme_color_green_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.LightGreen.Night" parent="Theme.VLC.Apearance.Black">
+    <style name="Theme.VideoPlayer.Apearance.LightGreen.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_light_green_light</item>
         <item name="colorAccent">@color/theme_color_light_green_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Lime.Night" parent="Theme.VLC.Apearance.Black">
+    <style name="Theme.VideoPlayer.Apearance.Lime.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_lime_light</item>
         <item name="colorAccent">@color/theme_color_lime_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Amber.Night" parent="Theme.VLC.Apearance.Black">
+    <style name="Theme.VideoPlayer.Apearance.Amber.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_amber_light</item>
         <item name="colorAccent">@color/theme_color_amber_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Orange.Night" parent="Theme.VLC.Apearance.Black">
+    <style name="Theme.VideoPlayer.Apearance.Orange.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_orange_light</item>
         <item name="colorAccent">@color/theme_color_orange_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.DeepOrange.Night" parent="Theme.VLC.Apearance.Black">
+    <style name="Theme.VideoPlayer.Apearance.DeepOrange.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_deep_orange_light</item>
         <item name="colorAccent">@color/theme_color_deep_orange_accent</item>
     </style>
 
     <!-- for VideoPlayerActivity -->
-    <style name="Theme.HDXPlayer.Apearance.ActionBar" parent="Theme.AppCompat">
+    <style name="Theme.VideoPlayer.Apearance.ActionBar" parent="Theme.AppCompat">
         <item name="android:windowBackground">@color/black</item>
         <item name="list_menu">@color/grey600</item>
         <item name="list_subtitle">@color/grey50</item>
@@ -646,7 +646,7 @@
         <item name="colorPrimaryDark">@color/black</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Black.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+    <style name="Theme.VideoPlayer.Apearance.Black.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
         <item name="theme_color">@color/theme_color_black</item>
         <item name="theme_color_dark">@color/theme_color_black_dark</item>
         <item name="theme_color_light">@color/theme_color_black_light</item>
@@ -656,7 +656,7 @@
         <item name="colorAccent">@color/theme_color_black_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Red.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+    <style name="Theme.VideoPlayer.Apearance.Red.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
         <item name="theme_color">@color/theme_color_red</item>
         <item name="theme_color_dark">@color/theme_color_red_dark</item>
         <item name="theme_color_light">@color/theme_color_red_light</item>
@@ -666,7 +666,7 @@
         <item name="colorAccent">@color/theme_color_red_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Pink.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+    <style name="Theme.VideoPlayer.Apearance.Pink.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
         <item name="theme_color">@color/theme_color_pink</item>
         <item name="theme_color_dark">@color/theme_color_pink_dark</item>
         <item name="theme_color_light">@color/theme_color_pink_light</item>
@@ -676,7 +676,7 @@
         <item name="colorAccent">@color/theme_color_pink_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Purple.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+    <style name="Theme.VideoPlayer.Apearance.Purple.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
         <item name="theme_color">@color/theme_color_purple</item>
         <item name="theme_color_dark">@color/theme_color_purple_dark</item>
         <item name="theme_color_light">@color/theme_color_purple_light</item>
@@ -686,7 +686,7 @@
         <item name="colorAccent">@color/theme_color_purple_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.DeepPurple.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+    <style name="Theme.VideoPlayer.Apearance.DeepPurple.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
         <item name="theme_color">@color/theme_color_deep_purple</item>
         <item name="theme_color_dark">@color/theme_color_deep_purple_dark</item>
         <item name="theme_color_light">@color/theme_color_deep_purple_light</item>
@@ -696,7 +696,7 @@
         <item name="colorAccent">@color/theme_color_deep_purple_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Indigo.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+    <style name="Theme.VideoPlayer.Apearance.Indigo.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
         <item name="theme_color">@color/theme_color_indigo</item>
         <item name="theme_color_dark">@color/theme_color_indigo_dark</item>
         <item name="theme_color_light">@color/theme_color_indigo_light</item>
@@ -706,7 +706,7 @@
         <item name="colorAccent">@color/theme_color_indigo_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Blue.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+    <style name="Theme.VideoPlayer.Apearance.Blue.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
         <item name="theme_color">@color/theme_color_blue</item>
         <item name="theme_color_dark">@color/theme_color_blue_dark</item>
         <item name="theme_color_light">@color/theme_color_blue_light</item>
@@ -716,7 +716,7 @@
         <item name="colorAccent">@color/theme_color_blue_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.LightBlue.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+    <style name="Theme.VideoPlayer.Apearance.LightBlue.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
         <item name="theme_color">@color/theme_color_light_blue</item>
         <item name="theme_color_dark">@color/theme_color_light_blue_dark</item>
         <item name="theme_color_light">@color/theme_color_light_blue_light</item>
@@ -726,7 +726,7 @@
         <item name="colorAccent">@color/theme_color_light_blue_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Cyan.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+    <style name="Theme.VideoPlayer.Apearance.Cyan.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
         <item name="theme_color">@color/theme_color_cyan</item>
         <item name="theme_color_dark">@color/theme_color_cyan_dark</item>
         <item name="theme_color_light">@color/theme_color_cyan_light</item>
@@ -736,7 +736,7 @@
         <item name="colorAccent">@color/theme_color_cyan_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Teal.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+    <style name="Theme.VideoPlayer.Apearance.Teal.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
         <item name="theme_color">@color/theme_color_teal</item>
         <item name="theme_color_dark">@color/theme_color_teal_dark</item>
         <item name="theme_color_light">@color/theme_color_teal_light</item>
@@ -746,7 +746,7 @@
         <item name="colorAccent">@color/theme_color_teal_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Green.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+    <style name="Theme.VideoPlayer.Apearance.Green.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
         <item name="theme_color">@color/theme_color_green</item>
         <item name="theme_color_dark">@color/theme_color_green_dark</item>
         <item name="theme_color_light">@color/theme_color_green_light</item>
@@ -756,7 +756,7 @@
         <item name="colorAccent">@color/theme_color_green_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.LightGreen.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+    <style name="Theme.VideoPlayer.Apearance.LightGreen.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
         <item name="theme_color">@color/theme_color_light_green</item>
         <item name="theme_color_dark">@color/theme_color_light_green_dark</item>
         <item name="theme_color_light">@color/theme_color_light_green_light</item>
@@ -766,7 +766,7 @@
         <item name="colorAccent">@color/theme_color_light_green_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Lime.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+    <style name="Theme.VideoPlayer.Apearance.Lime.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
         <item name="theme_color">@color/theme_color_lime</item>
         <item name="theme_color_dark">@color/theme_color_lime_dark</item>
         <item name="theme_color_light">@color/theme_color_lime_light</item>
@@ -776,7 +776,7 @@
         <item name="colorAccent">@color/theme_color_lime_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Amber.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+    <style name="Theme.VideoPlayer.Apearance.Amber.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
         <item name="theme_color">@color/theme_color_amber</item>
         <item name="theme_color_dark">@color/theme_color_amber_dark</item>
         <item name="theme_color_light">@color/theme_color_amber_light</item>
@@ -786,7 +786,7 @@
         <item name="colorAccent">@color/theme_color_amber_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.Orange.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+    <style name="Theme.VideoPlayer.Apearance.Orange.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
         <item name="theme_color">@color/theme_color_orange</item>
         <item name="theme_color_dark">@color/theme_color_orange_dark</item>
         <item name="theme_color_light">@color/theme_color_orange_light</item>
@@ -796,7 +796,7 @@
         <item name="colorAccent">@color/theme_color_orange_accent</item>
     </style>
 
-    <style name="Theme.HDXPlayer.Apearance.DeepOrange.ActionBar" parent="Theme.HDXPlayer.Apearance.ActionBar">
+    <style name="Theme.VideoPlayer.Apearance.DeepOrange.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
         <item name="theme_color">@color/theme_color_deep_orange</item>
         <item name="theme_color_dark">@color/theme_color_deep_orange_dark</item>
         <item name="theme_color_light">@color/theme_color_deep_orange_light</item>

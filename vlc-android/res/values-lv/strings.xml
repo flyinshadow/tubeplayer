@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main HD XPlayer Interface -->
+    <!-- Main Video Player Interface -->
     <string name="ok">Labi</string>
     <string name="cancel">Atcelt</string>
     <string name="other">Cits</string>
@@ -36,7 +36,7 @@
     <string name="ringtone_error">Radās kļūda nosakot zvana signālu.</string>
     <string name="pause">Nopauzēt</string>
     <string name="not_show_again">Nerādīt šo ziņu atkārtoti.</string>
-    <string name="info_title">HD XPlayer</string>
+    <string name="info_title">Video Player</string>
     <string name="unknown_artist">Nezināms Mākslinieks</string>
     <string name="unknown_album">Nezināms Albūms</string>
     <string name="unknown_genre">Nezināms Žanrs</string>
@@ -130,8 +130,8 @@
     <string name="open_mrl">Atvērt MRL</string>
     <string name="open_mrl_dialog_title">Atvērt tīkla plūsmu</string>
     <string name="open_mrl_dialog_msg">Ievadiet tīkla MRL: piemēram, http://, mms:// vai rtsp://</string>
-    <string name="error_not_compatible">Žēl, jūsu ierīce pašlaik neatbalsta šo versiju HD XPlayer Android™.</string>
-    <string name="error_problem">Žēl, HD XPlayer Android bija problēma ielādešanā un nācās aizvērt.</string>
+    <string name="error_not_compatible">Žēl, jūsu ierīce pašlaik neatbalsta šo versiju Video Player Android™.</string>
+    <string name="error_problem">Žēl, Video Player Android bija problēma ielādešanā un nācās aizvērt.</string>
     <string name="encountered_error_title">Atskaņošanas kļūda</string>
     <string name="search">Meklēt</string>
     <string name="search_history">Meklēšanas vēsture</string>
@@ -141,13 +141,13 @@
     <string name="remove_song">Noņemt dziesmu</string>
     <string name="hold_to_stop">Turiet lai apturētu</string>
     <!-- About -->
-    <string name="app_name_full">HD XPlayer priekš Android™</string>
+    <string name="app_name_full">Video Player priekš Android™</string>
     <string name="licence">License</string>
     <string name="revision">Revīzija</string>
     <string name="about">Par</string>
-    <string name="about_text">HD XPlayer priekš Android ™ ir osta no HD XPlayer multimediju atskaņotāja, populārā atvērtā koda multimediju atskaņotājs.Android ™ versiju var izlasīt lielāko failus un tīkla plūsmas.</string>
-    <string name="compiled_by">Šī versija HD XPlayer tiek apkopota pēc:</string>
-    <string name="vlc_authors">HD XPlayer Autori</string>
+    <string name="about_text">Video Player priekš Android ™ ir osta no Video Player multimediju atskaņotāja, populārā atvērtā koda multimediju atskaņotājs.Android ™ versiju var izlasīt lielāko failus un tīkla plūsmas.</string>
+    <string name="compiled_by">Šī versija Video Player tiek apkopota pēc:</string>
+    <string name="vlc_authors">Video Player Autori</string>
     <!-- Preferences -->
     <string name="preferences">Iestatījumi</string>
     <string name="general_prefs_category">Vispārīgi</string>
@@ -193,7 +193,7 @@
     <string name="enable_time_stretching_audio_summary">Paātrināt un palēnināt audio nemainot piķi (prasa ātru ierīci).</string>
     <string name="advanced_prefs_category">Uzlabots</string>
     <string name="aout">Audio izeja</string>
-    <string name="aout_summary">Mainīt metodi, ko HD XPlayer izmanto, lai izvadītu audio.</string>
+    <string name="aout_summary">Mainīt metodi, ko Video Player izmanto, lai izvadītu audio.</string>
     <string name="clear_media_db">Iztīrīt mediju datubāzi</string>
     <string name="clear_history">Tīrīt meklēšanas vēsturi</string>
     <string name="media_db_cleared">Mediju datubāze izvadītīta!</string>
@@ -214,7 +214,7 @@
     <string name="dump_logcat">Izgāzt logcat log</string>
     <string name="dump_logcat_success">Logcat veiksmīgi izgāza uz %1$s!</string>
     <string name="dump_logcat_failure">Neizdevās izgāzt logcat.</string>
-    <string name="restart_vlc">Pārstartēt HD XPlayer</string>
+    <string name="restart_vlc">Pārstartēt Video Player</string>
     <string name="rename">Pārdēvēt</string>
     <string name="theme">Tēma</string>
     <string name="night_mode">Nakts režīms</string>

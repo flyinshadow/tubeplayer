@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main HD XPlayer Interface -->
+    <!-- Main Video Player Interface -->
     <string name="ok">Í lagi</string>
     <string name="cancel">Hætta við</string>
     <string name="other">Annað</string>
@@ -39,7 +39,7 @@
     <string name="ringtone_error">Upp kom villa þegar verið var að setja hringitón.</string>
     <string name="pause">Í bið</string>
     <string name="not_show_again">Ekki sýna þessi skilaboð aftur.</string>
-    <string name="info_title">HD XPlayer</string>
+    <string name="info_title">Video Player</string>
     <string name="unknown_artist">Óþekktur flytjandi</string>
     <string name="unknown_album">Óþekkt albúm</string>
     <string name="unknown_genre">Óþekkt tegund</string>
@@ -161,11 +161,11 @@
     <string name="open_mrl">Opna MRL</string>
     <string name="open_mrl_dialog_title">Opna straum af neti</string>
     <string name="open_mrl_dialog_msg">Settu inn MRL netslóð: t.d. http://, mms:// eða rtsp://</string>
-    <string name="error_not_compatible">Því miður, tækið þitt er ekki ennþá stutt af þessari útgáfu HD XPlayer fyrir Android™.</string>
-    <string name="error_problem">Því miður, HD XPlayer fyrir Android átti í vandræðum með að ræsast og varð því að hætta.</string>
+    <string name="error_not_compatible">Því miður, tækið þitt er ekki ennþá stutt af þessari útgáfu Video Player fyrir Android™.</string>
+    <string name="error_problem">Því miður, Video Player fyrir Android átti í vandræðum með að ræsast og varð því að hætta.</string>
     <string name="error_message_is">Villumeldingin er (taktu þetta fram við aflúsun):\n</string>
     <string name="encountered_error_title">Afspilunarvilla</string>
-    <string name="encountered_error_message">HD XPlayer rakst á villu í þessum miðli.\nReyndu að endurlesa margmiðlunarsafnið.</string>
+    <string name="encountered_error_message">Video Player rakst á villu í þessum miðli.\nReyndu að endurlesa margmiðlunarsafnið.</string>
     <string name="invalid_location">Ekki er hægt að spila staðsetninguna %1$s</string>
     <string name="search">Leita</string>
     <string name="search_history">Leita í ferilskrá</string>
@@ -192,13 +192,13 @@
     <string name="show_playlist">Birta spilunarlista</string>
     <string name="hold_to_stop">Halda til að stöðva</string>
     <!-- About -->
-    <string name="app_name_full">HD XPlayer fyrir Android™</string>
+    <string name="app_name_full">Video Player fyrir Android™</string>
     <string name="licence">Notkunarleyfi</string>
     <string name="revision">Útgáfuauðkenni</string>
     <string name="about">Um hugbúnaðinn</string>
-    <string name="about_text">HD XPlayer fyrir Android™ er yfirfærð útgáfa af HD XPlayer margmiðlunarspilaranum, einum vinsælasta opna/frjálsa margmiðlunarspilaranum. Android™ útgáfan getur lesið flestar skrár og netstrauma.</string>
-    <string name="compiled_by">Þessi útgáfa af HD XPlayer var vistþýdd af:</string>
-    <string name="vlc_authors">Höfundar HD XPlayer.</string>
+    <string name="about_text">Video Player fyrir Android™ er yfirfærð útgáfa af Video Player margmiðlunarspilaranum, einum vinsælasta opna/frjálsa margmiðlunarspilaranum. Android™ útgáfan getur lesið flestar skrár og netstrauma.</string>
+    <string name="compiled_by">Þessi útgáfa af Video Player var vistþýdd af:</string>
+    <string name="vlc_authors">Höfundar Video Player.</string>
     <!-- Preferences -->
     <string name="preferences">Kjörstillingar</string>
     <string name="general_prefs_category">Almennt</string>
@@ -289,7 +289,7 @@
     <string name="enable_steal_remote_control">Sérstök fjarstýring heyrnartóla</string>
     <string name="enable_steal_remote_control_summary">Forðast árekstra við að stela fjarstýringu frá öðrum forritum. Þetta kemur í veg fyrir að hringt sé við tvíslátt á HTC-símum.</string>
     <string name="aout">Hljóðúttak</string>
-    <string name="aout_summary">Breyttu aðferðinni sem HD XPlayer notar til að senda út hljóð.</string>
+    <string name="aout_summary">Breyttu aðferðinni sem Video Player notar til að senda út hljóð.</string>
     <string name="controls_prefs_category">Stýringar</string>
     <string name="performance_prefs_category">Afköst</string>
     <string name="chroma_format">Þvinga litgildi (chroma) myndmerkis</string>
@@ -311,12 +311,12 @@
     <string name="auto_rescan">Sjálfvirk endurskönnun</string>
     <string name="auto_rescan_summary">Skanna tækið sjálfvirkt við ræsingu forritsins eftir nýjum eða eyddum margmiðlunargögnum</string>
     <string name="clear_media_db">Hreinsa gagnagrunn yfir margmiðlunarefni</string>
-    <string name="clear_media_db_summary">Fá aðgang að upplýsingum Android HD XPlayer til að hreinsa út gögn</string>
+    <string name="clear_media_db_summary">Fá aðgang að upplýsingum Android Video Player til að hreinsa út gögn</string>
     <string name="clear_history">Hreinsa leitarferil</string>
     <string name="media_db_cleared">Hreinsaði gagnagrunn yfir margmiðlunarefni!</string>
     <string name="set_locale">Setja staðfærslu</string>
     <string name="set_locale_detail">Skilja eftir autt til að frumstilla</string>
-    <string name="set_locale_popup">Hætta og endurræsa HD XPlayer svo breytingar taki gildi.</string>
+    <string name="set_locale_popup">Hætta og endurræsa Video Player svo breytingar taki gildi.</string>
     <string name="network_caching">Gildi skyndiminnis fyrir net</string>
     <string name="network_caching_summary">Tímalengd sem á að setja netmargmiðlunargögn í biðminni (í msek). Virkar ekki með vélbúnaðarafkóðun. Skildu eftir autt til að frumstilla.</string>
     <string name="resume_playback_title">Halda afspilun áfram eftir símtal</string>
@@ -330,16 +330,16 @@
     <string name="start_logging">Byrja annálsskráningu</string>
     <string name="stop_logging">Stöðva annálsskráningu</string>
     <string name="clear_log">Hreinsa annál</string>
-    <string name="log_service_title">HD XPlayer annálsskráning</string>
+    <string name="log_service_title">Video Player annálsskráning</string>
     <string name="log_service_text">Opna stjórnskjá fyrir annála</string>
     <string name="copy_to_clipboard">Afrita á klippispjald</string>
     <string name="copied_to_clipboard">Afritaði annál á klippispjald.</string>
     <string name="dump_logcat">Demba logcat annál</string>
     <string name="dump_logcat_success">Tókst að demba logcat í %1$s!</string>
     <string name="dump_logcat_failure">Mistókst að demba logcat.</string>
-    <string name="serious_crash">Því miður kom upp alvarleg villa og loka varð HD XPlayer.</string>
-    <string name="help_us_send_log">Hjálpaðu okkur við að bæta HD XPlayer með því að senda inn eftirfarandi hrunskýrslu:</string>
-    <string name="restart_vlc">Endurræsa HD XPlayer</string>
+    <string name="serious_crash">Því miður kom upp alvarleg villa og loka varð Video Player.</string>
+    <string name="help_us_send_log">Hjálpaðu okkur við að bæta Video Player með því að senda inn eftirfarandi hrunskýrslu:</string>
+    <string name="restart_vlc">Endurræsa Video Player</string>
     <string name="send_log">Senda annál</string>
     <string name="sending_log">Sendi annál…</string>
     <string name="drawer_open">Opna hliðarvalmynd</string>
@@ -383,18 +383,18 @@
     <string name="no_subs_found">Engir skjátextar í þessari möppu</string>
     <string name="music_now_playing">Í afspilun</string>
     <!--Widget-->
-    <string name="widget_name_w">Hvítir HD XPlayer-viðmótshlutar</string>
-    <string name="widget_name_b">Dökkir HD XPlayer-viðmótshlutar</string>
-    <string name="allow_storage_access_title">Leyfa HD XPlayer að fá aðgang að hljóð- og myndskeiðaskrám</string>
-    <string name="allow_storage_access_description">HD XPlayer þarf að fá þessa heimild hjá þér til að fá aðgang að margmiðlunarskrám á þessu tæki.</string>
-    <string name="allow_settings_access_ringtone_title">Leyfa HD XPlayer að setja hringitón</string>
-    <string name="allow_settings_access_ringtone_description">HD XPlayer þarf að fá þessa heimild hjá þér til að setja þetta lag upp sem hringitón.</string>
-    <string name="allow_settings_access_brightness_title">Leyfa HD XPlayer að stilla birtustig</string>
-    <string name="allow_settings_access_brightness_description">HD XPlayer þarf að fá þessa heimild hjá þér til að breyta birtustigshamnum.</string>
-    <string name="allow_draw_overlays_title">Leyfa HD XPlayer-spilaranum að spretta upp yfir aðra forritsglugga</string>
-    <string name="allow_sdraw_overlays_description">HD XPlayer þarf að fá þessa heimild hjá þér til að birta myndskeið í sprettglugga ofan á öðrum forritum.</string>
+    <string name="widget_name_w">Hvítir Video Player-viðmótshlutar</string>
+    <string name="widget_name_b">Dökkir Video Player-viðmótshlutar</string>
+    <string name="allow_storage_access_title">Leyfa Video Player að fá aðgang að hljóð- og myndskeiðaskrám</string>
+    <string name="allow_storage_access_description">Video Player þarf að fá þessa heimild hjá þér til að fá aðgang að margmiðlunarskrám á þessu tæki.</string>
+    <string name="allow_settings_access_ringtone_title">Leyfa Video Player að setja hringitón</string>
+    <string name="allow_settings_access_ringtone_description">Video Player þarf að fá þessa heimild hjá þér til að setja þetta lag upp sem hringitón.</string>
+    <string name="allow_settings_access_brightness_title">Leyfa Video Player að stilla birtustig</string>
+    <string name="allow_settings_access_brightness_description">Video Player þarf að fá þessa heimild hjá þér til að breyta birtustigshamnum.</string>
+    <string name="allow_draw_overlays_title">Leyfa Video Player-spilaranum að spretta upp yfir aðra forritsglugga</string>
+    <string name="allow_sdraw_overlays_description">Video Player þarf að fá þessa heimild hjá þér til að birta myndskeið í sprettglugga ofan á öðrum forritum.</string>
     <string name="permission_ask_again">Gefa leyfi</string>
-    <string name="exit_app">Loka HD XPlayer</string>
+    <string name="exit_app">Loka Video Player</string>
     <!--fast scroller-->
     <string name="fastscroller_track">FastScroller spor</string>
     <string name="fastscroller_handle">FastScroller haldfang</string>
@@ -444,7 +444,7 @@
     <string name="length">Lengd</string>
     <string name="tv_settings_hint">Ýttu lengi á \'Í lagi\'-hnappinn til að merkja/afmerkja möppur</string>
     <string name="ml_external_storage_title">Ný ytri gagnageymsla fannst</string>
-    <string name="ml_external_storage_msg">Vilt þú að HD XPlayer bæti %1$s tækinu í margmiðlunarsafnið þitt?</string>
+    <string name="ml_external_storage_msg">Vilt þú að Video Player bæti %1$s tækinu í margmiðlunarsafnið þitt?</string>
     <string name="last_added_media">síðast bætt við</string>
     <string name="no">Nei</string>
     <string name="rename">Endurnefna</string>

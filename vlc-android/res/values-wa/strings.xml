@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main HD XPlayer Interface -->
+    <!-- Main Video Player Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Rinoncî</string>
     <string name="other">Ôte</string>
@@ -85,15 +85,15 @@
     <string name="open_mrl">Drovi MRL</string>
     <string name="open_mrl_dialog_title">Drovi l\' floû rantoele</string>
     <string name="open_mrl_dialog_msg">Dinez l\' no del rantoele MRL: e.g. http://, mms:// or rtsp://</string>
-    <string name="error_not_compatible">Mande escuze, mins  voste éndjole n\' est nén sopoirté pol moumint pa cisse modêye di HD XPlayer po Android™.\n\nLi messaedje d\' aroke est (si vs plait dijhoz çoula cwand vos disbuguez):\n</string>
+    <string name="error_not_compatible">Mande escuze, mins  voste éndjole n\' est nén sopoirté pol moumint pa cisse modêye di Video Player po Android™.\n\nLi messaedje d\' aroke est (si vs plait dijhoz çoula cwand vos disbuguez):\n</string>
     <!--Tips-->
     <!-- About -->
-    <string name="app_name_full">HD XPlayer po Android™</string>
+    <string name="app_name_full">Video Player po Android™</string>
     <string name="licence">Licince</string>
     <string name="revision">Rivizion</string>
     <string name="about">Åd fwait</string>
-    <string name="about_text">HD XPlayer po Android™ est on pôrt do djouweu d\' media HD XPlayer, li djouweu d\' media libe et spårdou. Li modêye Android™ pout lére li plupårt des fitchîs et des floûs rantoele.</string>
-    <string name="compiled_by">Ci modêye di HD XPlayer est copilêye pa:</string>
+    <string name="about_text">Video Player po Android™ est on pôrt do djouweu d\' media Video Player, li djouweu d\' media libe et spårdou. Li modêye Android™ pout lére li plupårt des fitchîs et des floûs rantoele.</string>
+    <string name="compiled_by">Ci modêye di Video Player est copilêye pa:</string>
     <string name="vlc_authors">Oteurs di VC.</string>
     <!-- Preferences -->
     <string name="preferences">Preferinces</string>

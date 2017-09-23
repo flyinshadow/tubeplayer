@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main HD XPlayer Interface -->
+    <!-- Main Video Player Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Адмена</string>
     <string name="other">Іншы</string>
@@ -32,7 +32,7 @@
     <string name="ringtone_error">Не ўдалося змяніць рынгтон.</string>
     <string name="pause">Паўза</string>
     <string name="not_show_again">Не паказваць зноў.</string>
-    <string name="info_title">HD XPlayer</string>
+    <string name="info_title">Video Player</string>
     <string name="unknown_artist">Невядомы артыст</string>
     <string name="unknown_album">Невядомы альбом</string>
     <string name="unknown_genre">Невядомы жанр</string>
@@ -137,11 +137,11 @@
     <string name="open_mrl">Адкрыць MRL</string>
     <string name="open_mrl_dialog_title">Адкрыць сеткавы паток</string>
     <string name="open_mrl_dialog_msg">Увядзіце сеткавы MRL: прыкл., http://, mms:// ці rtsp://</string>
-    <string name="error_not_compatible">Выбачайце, гэтай версіяй HD XPlayer для Android™ вашая прылада не падтрымліваецца.</string>
-    <string name="error_problem">Выбачайце, HD XPlayer для Android не здолеў загрузіцца і мусіў закрыцца.</string>
+    <string name="error_not_compatible">Выбачайце, гэтай версіяй Video Player для Android™ вашая прылада не падтрымліваецца.</string>
+    <string name="error_problem">Выбачайце, Video Player для Android не здолеў загрузіцца і мусіў закрыцца.</string>
     <string name="error_message_is">Паведамленне пра памылку (згадайце пры адладцы):\n</string>
     <string name="encountered_error_title">Памылка прайгравання</string>
-    <string name="encountered_error_message">У HD XPlayer узніклі цяжкасці з гэтым медыя-аб’ектам.\nПаспрабуйце абнавіць медыятэку.</string>
+    <string name="encountered_error_message">У Video Player узніклі цяжкасці з гэтым медыя-аб’ектам.\nПаспрабуйце абнавіць медыятэку.</string>
     <string name="invalid_location">Немагчыма прайграць месца %1$s</string>
     <string name="search">Шукаць</string>
     <string name="search_history">Гісторыя пошуку</string>
@@ -164,13 +164,13 @@
     <string name="show_playlist">Паказаць плэйліст</string>
     <string name="hold_to_stop">Утрымлівайце, каб спыніць</string>
     <!-- About -->
-    <string name="app_name_full">HD XPlayer для Android™</string>
+    <string name="app_name_full">Video Player для Android™</string>
     <string name="licence">Ліцэнзія</string>
     <string name="revision">Рэвізія</string>
     <string name="about">Апісанне праграмы</string>
-    <string name="about_text">HD XPlayer для Android™ — гэта порт HD XPlayer, папулярнага адкрытага медыяплэера. Версія для Android™ можа чытаць бальшыню файлаў і сеткавых патокаў.</string>
-    <string name="compiled_by">Гэта версія HD XPlayer скампілявана:</string>
-    <string name="vlc_authors">Аўтары HD XPlayer.</string>
+    <string name="about_text">Video Player для Android™ — гэта порт Video Player, папулярнага адкрытага медыяплэера. Версія для Android™ можа чытаць бальшыню файлаў і сеткавых патокаў.</string>
+    <string name="compiled_by">Гэта версія Video Player скампілявана:</string>
+    <string name="vlc_authors">Аўтары Video Player.</string>
     <!-- Preferences -->
     <string name="preferences">Настаўленні</string>
     <string name="general_prefs_category">Агульныя</string>
@@ -236,7 +236,7 @@
     <string name="media_db_cleared">Медыятэка ачышчана!</string>
     <string name="set_locale">Задаць лакаль</string>
     <string name="set_locale_detail">Пакінуць пустой, каб скінуць</string>
-    <string name="set_locale_popup">Закрыць і перазапусціць HD XPlayer для дастасавання змен.</string>
+    <string name="set_locale_popup">Закрыць і перазапусціць Video Player для дастасавання змен.</string>
     <string name="network_caching">Сеткавы буфер</string>
     <string name="network_caching_summary">Велічыня буфера сеткавага медыя (у мс). Не працуе з апаратным дэкадаваннем. Пакінуць пустым, каб скінуць.</string>
     <string name="developer_prefs_category">Распрацоўнік</string>
@@ -252,15 +252,15 @@
     <string name="dump_logcat">Дамп часапісу logcat</string>
     <string name="dump_logcat_success">Дапм logcat паспяхова запісаны ў %1$s!</string>
     <string name="dump_logcat_failure">Не ўдалося стварыць дамп logcat.</string>
-    <string name="serious_crash">На жаль, здарылася сур’ёзная памылка і HD XPlayer давялося закрыцца.</string>
-    <string name="help_us_send_log">Дапамажыце палепшыць HD XPlayer, адправіўшы гэтую справаздачу:</string>
-    <string name="restart_vlc">Перазапусціць HD XPlayer</string>
+    <string name="serious_crash">На жаль, здарылася сур’ёзная памылка і Video Player давялося закрыцца.</string>
+    <string name="help_us_send_log">Дапамажыце палепшыць Video Player, адправіўшы гэтую справаздачу:</string>
+    <string name="restart_vlc">Перазапусціць Video Player</string>
     <string name="send_log">Адправіць часапіс</string>
     <string name="sending_log">Адпраўка часапісу...</string>
     <string name="drawer_open">Адкрыць панэль навігацыі</string>
     <string name="drawer_close">Закрыць панэль навігацыі</string>
     <string name="new_app">Даступна новая праграма</string>
-    <string name="new_app_msg">Фаза бэта-тэставання HD XPlayer скончылася. Усе наступныя абнаўленні будуць публікавацца для новай праграмы.</string>
+    <string name="new_app_msg">Фаза бэта-тэставання Video Player скончылася. Усе наступныя абнаўленні будуць публікавацца для новай праграмы.</string>
     <string name="new_app_go">Атрымаць</string>
     <string name="rename">перайменаваць</string>
 </resources>

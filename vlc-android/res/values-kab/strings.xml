@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main HD XPlayer Interface -->
+    <!-- Main Video Player Interface -->
     <string name="ok">Ih</string>
     <string name="cancel">Semmet</string>
     <string name="other">Wayeḍ</string>
@@ -38,7 +38,7 @@
     <string name="ringtone_error">An error occurred while setting the ringtone.</string>
     <string name="pause">Asgunfu</string>
     <string name="not_show_again">Ur beqqeḍ ara izen-agi tikkelt-nniḍen.</string>
-    <string name="info_title">HD XPlayer</string>
+    <string name="info_title">Video Player</string>
     <string name="unknown_artist">Anaẓur ur nettwassen ara</string>
     <string name="unknown_album">Album ur nettwassen ara</string>
     <string name="unknown_genre">Tawsit ur nettwassen ara</string>
@@ -139,8 +139,8 @@
     <string name="open_mrl">Ldi MRL</string>
     <string name="open_mrl_dialog_title">Ldi asuddem ɣef uẓetta</string>
     <string name="open_mrl_dialog_msg">Sekcem tansa n uẓetta : amedya: http://, mms:// or rtsp://</string>
-    <string name="error_not_compatible">Surfaɣ, allal-inek/inem ur izmir ara i lqem-agi n HD XPlayer Android™.</string>
-    <string name="error_problem">Surfaɣ, HD XPlayer Android yemlal-d ugur ilaq ad yeḥbes.</string>
+    <string name="error_not_compatible">Surfaɣ, allal-inek/inem ur izmir ara i lqem-agi n Video Player Android™.</string>
+    <string name="error_problem">Surfaɣ, Video Player Android yemlal-d ugur ilaq ad yeḥbes.</string>
     <string name="error_message_is">Le message d\'erreur est (à indiquer en mode debug) :\n</string>
     <string name="encountered_error_title">Anezri di tɣuri</string>
     <string name="encountered_error_message">Ila-d unezri di tɣuri n umidya-agi.\nahat ilaq ad tsismiḍeḍ tamkarḍa tagetmidyatt.</string>
@@ -165,13 +165,13 @@
     <string name="show_playlist">Beqqeḍ tabdart n tɣuri</string>
     <string name="hold_to_stop">Maintenir pour arrêter</string>
     <!-- About -->
-    <string name="app_name_full">HD XPlayer n Android</string>
+    <string name="app_name_full">Video Player n Android</string>
     <string name="licence">Ttriḥ</string>
     <string name="revision">Tacaggart</string>
     <string name="about">Ɣef</string>
-    <string name="about_text">HD XPlayer for Android™ is a port of HD XPlayer media player, the popular open source media player. The Android™ version can read most files and network streams.</string>
-    <string name="compiled_by">Lqem-agi n HD XPlayer yesefsa-t :</string>
-    <string name="vlc_authors">Imeskaren n HD XPlayer</string>
+    <string name="about_text">Video Player for Android™ is a port of Video Player media player, the popular open source media player. The Android™ version can read most files and network streams.</string>
+    <string name="compiled_by">Lqem-agi n Video Player yesefsa-t :</string>
+    <string name="vlc_authors">Imeskaren n Video Player</string>
     <!-- Preferences -->
     <string name="preferences">Tixtiṛiyin</string>
     <string name="general_prefs_category">Amatu</string>
@@ -241,7 +241,7 @@
     <string name="media_db_cleared">Azadur n imidyaten yettwasfeḍ!</string>
     <string name="set_locale">Sbadu tutlayt</string>
     <string name="set_locale_detail">Eǧǧ-it d ilem iwakken ad iwennez</string>
-    <string name="set_locale_popup">Quitter et redémarrer HD XPlayer pour que les changements soient appliqués.</string>
+    <string name="set_locale_popup">Quitter et redémarrer Video Player pour que les changements soient appliqués.</string>
     <string name="network_caching">Taille du cache réseau</string>
     <string name="network_caching_summary">Durée en ms pour le tampon réseau. Ne fonctionne pas avec le décodage matériel. Laissez vide pour ré-initialiser.</string>
     <string name="quit">Ffeɣ sakin sekker asnas tikkelt nniḍen</string>
@@ -252,16 +252,16 @@
     <string name="start_logging">Bdu asekles</string>
     <string name="stop_logging">Ḥbes asekles</string>
     <string name="clear_log">Sfeḍ aɣmis</string>
-    <string name="log_service_title">Enregistrement des journaux de HD XPlayer</string>
+    <string name="log_service_title">Enregistrement des journaux de Video Player</string>
     <string name="log_service_text">Ouvrir la console du journal</string>
     <string name="copy_to_clipboard">Copier vers le presse papier</string>
     <string name="copied_to_clipboard">Journal copié vers le presse papier.</string>
     <string name="dump_logcat">Selkes aɣmis logcat.</string>
     <string name="dump_logcat_success">Logcat sauvegardé avec succès dans le fichier: %1$s !</string>
     <string name="dump_logcat_failure">Tucḍa deg uselkes n uɣmis logcat.</string>
-    <string name="serious_crash">Yella-d unezri,  HD XPlayer laq-as ad yemdel.</string>
-    <string name="help_us_send_log">Fk-aɣ-d tallalt i wesnnerni n HD XPlayer s tuzzna n unezri-agi:</string>
-    <string name="restart_vlc">Sekker HD XPlayer tikkelt nniḍen</string>
+    <string name="serious_crash">Yella-d unezri,  Video Player laq-as ad yemdel.</string>
+    <string name="help_us_send_log">Fk-aɣ-d tallalt i wesnnerni n Video Player s tuzzna n unezri-agi:</string>
+    <string name="restart_vlc">Sekker Video Player tikkelt nniḍen</string>
     <string name="send_log">Azen aɣmis</string>
     <string name="sending_log">Tuzzna n uɣmis...</string>
     <string name="drawer_open">Ouvrir le volet de navigation</string>
@@ -295,9 +295,9 @@
     <string name="no_subs_found">Ulac iduzwelen deg wekaram-agi</string>
     <string name="music_now_playing">Ulac urar</string>
     <!--Widget-->
-    <string name="widget_name_w">HD XPlayer White Widget</string>
-    <string name="widget_name_b">HD XPlayer Dark Widget</string>
-    <string name="exit_app">Mdel HD XPlayer</string>
+    <string name="widget_name_w">Video Player White Widget</string>
+    <string name="widget_name_b">Video Player Dark Widget</string>
+    <string name="exit_app">Mdel Video Player</string>
     <!--fast scroller-->
     <!--Plugins-->
 </resources>

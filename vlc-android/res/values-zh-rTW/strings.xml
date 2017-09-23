@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main HD XPlayer Interface -->
+    <!-- Main Video Player Interface -->
     <string name="ok">確定</string>
     <string name="cancel">取消</string>
     <string name="other">其他</string>
@@ -37,7 +37,7 @@
     <string name="ringtone_error">設為鈴聲時發生錯誤</string>
     <string name="pause">暫停</string>
     <string name="not_show_again">不再顯示此訊息。</string>
-    <string name="info_title">HD XPlayer</string>
+    <string name="info_title">Video Player</string>
     <string name="unknown_artist">未知藝人</string>
     <string name="unknown_album">未知專輯</string>
     <string name="unknown_genre">未知類型</string>
@@ -150,11 +150,11 @@
     <string name="open_mrl">開啟串流</string>
     <string name="open_mrl_dialog_title">開啟網路串流</string>
     <string name="open_mrl_dialog_msg">請輸入網址：例如 http://、mms:// 或 rtsp://</string>
-    <string name="error_not_compatible">抱歉，您的裝置目前尚未被此版本的 HD XPlayer for Android™ 支援。</string>
-    <string name="error_problem">抱歉，HD XPlayer for Android載入時發生問題必須關閉。</string>
+    <string name="error_not_compatible">抱歉，您的裝置目前尚未被此版本的 Video Player for Android™ 支援。</string>
+    <string name="error_problem">抱歉，Video Player for Android載入時發生問題必須關閉。</string>
     <string name="error_message_is">錯誤訊息為(請在匯報問題時附上這些內容)：\n</string>
     <string name="encountered_error_title">播放時發生錯誤</string>
-    <string name="encountered_error_message">HD XPlayer 處理該媒體時發生錯誤。\n請嘗試更新媒體庫。</string>
+    <string name="encountered_error_message">Video Player 處理該媒體時發生錯誤。\n請嘗試更新媒體庫。</string>
     <string name="invalid_location">位置 %1$s 無法被播放。</string>
     <string name="search">搜尋</string>
     <string name="search_history">清除歷史</string>
@@ -177,13 +177,13 @@
     <string name="show_playlist">顯示播放清單</string>
     <string name="hold_to_stop">按住停止</string>
     <!-- About -->
-    <string name="app_name_full">HD XPlayer for Android™</string>
+    <string name="app_name_full">Video Player for Android™</string>
     <string name="licence">授權</string>
     <string name="revision">修訂</string>
     <string name="about">關於</string>
-    <string name="about_text">HD XPlayer for Android™ 移植自VLC媒體播放器，是相當受歡迎的開源媒體播放器。此 Android™ 版本可以讀取大部分的媒體檔案和網路串流。</string>
-    <string name="compiled_by">This version of HD XPlayer is compiled by:</string>
-    <string name="vlc_authors">HD XPlayer Authors.</string>
+    <string name="about_text">Video Player for Android™ 移植自VLC媒體播放器，是相當受歡迎的開源媒體播放器。此 Android™ 版本可以讀取大部分的媒體檔案和網路串流。</string>
+    <string name="compiled_by">This version of Video Player is compiled by:</string>
+    <string name="vlc_authors">Video Player Authors.</string>
     <!-- Preferences -->
     <string name="preferences">偏好設定</string>
     <string name="general_prefs_category">一般</string>
@@ -252,7 +252,7 @@
     <string name="enable_steal_remote_control">專用耳機遙控</string>
     <string name="enable_steal_remote_control_summary">在使用其他 app 的遙控功能時避免衝突，這可以防止在 HTC 的手機上雙擊時撥號。</string>
     <string name="aout">音訊輸出</string>
-    <string name="aout_summary">改變 HD XPlayer 音訊輸出方式。</string>
+    <string name="aout_summary">改變 Video Player 音訊輸出方式。</string>
     <string name="performance_prefs_category">效能</string>
     <string name="chroma_format">強制套用視訊色彩格式</string>
     <string name="chroma_format_summary">RGB 32 位元：預設彩度\nRGB 16 位元​​：性能更佳，但畫質下降\nYUV: 性能最佳，但並非所有裝置可用。僅限 Android 2.3 及更新的版本。</string>
@@ -275,7 +275,7 @@
     <string name="media_db_cleared">媒體資料庫已清除！</string>
     <string name="set_locale">設定語系</string>
     <string name="set_locale_detail">保持空白以重置</string>
-    <string name="set_locale_popup">離開並重新啟動 HD XPlayer 以套用變更。</string>
+    <string name="set_locale_popup">離開並重新啟動 Video Player 以套用變更。</string>
     <string name="network_caching">網路快取值</string>
     <string name="network_caching_summary">緩衝網路媒體的時間(in ms)。不適用於硬體解碼。留下空白以重置。</string>
     <string name="quit">離開並重新啟動應用程式</string>
@@ -286,16 +286,16 @@
     <string name="start_logging">開始記錄</string>
     <string name="stop_logging">停止記錄</string>
     <string name="clear_log">清除記錄</string>
-    <string name="log_service_title">HD XPlayer 日誌紀錄中</string>
+    <string name="log_service_title">Video Player 日誌紀錄中</string>
     <string name="log_service_text">開啟日誌控制台</string>
     <string name="copy_to_clipboard">複製到剪貼簿</string>
     <string name="copied_to_clipboard">已複製記錄到剪貼簿。</string>
     <string name="dump_logcat">傾印 logcat 記錄檔</string>
     <string name="dump_logcat_success">Logcat 成功傾印到 %1$s！</string>
     <string name="dump_logcat_failure">傾印 logcat 失敗。</string>
-    <string name="serious_crash">很遺憾，HD XPlayer 因為發生嚴重的錯誤必須關閉。</string>
-    <string name="help_us_send_log">請發送以下的錯誤記錄來協助我們改善 HD XPlayer：</string>
-    <string name="restart_vlc">重新啟動 HD XPlayer</string>
+    <string name="serious_crash">很遺憾，Video Player 因為發生嚴重的錯誤必須關閉。</string>
+    <string name="help_us_send_log">請發送以下的錯誤記錄來協助我們改善 Video Player：</string>
+    <string name="restart_vlc">重新啟動 Video Player</string>
     <string name="send_log">發送記錄</string>
     <string name="sending_log">正在發送記錄...</string>
     <string name="drawer_open">開啟側邊欄</string>
@@ -336,16 +336,16 @@
     <string name="no_subs_found">資料夾中沒有字幕檔</string>
     <string name="music_now_playing">正在播放</string>
     <!--Widget-->
-    <string name="widget_name_w">HD XPlayer 白色小工具</string>
-    <string name="widget_name_b">HD XPlayer 暗色小工具</string>
-    <string name="allow_storage_access_title">允許 HD XPlayer 存取視訊與音訊檔案</string>
-    <string name="allow_storage_access_description">HD XPlayer 需要您的授權才能存取這個裝置上的媒體檔案。</string>
-    <string name="allow_settings_access_ringtone_title">允許 HD XPlayer 設定鈴聲</string>
-    <string name="allow_settings_access_ringtone_description">HD XPlayer 需要您授予權限來設定這首歌成為您的鈴聲。</string>
-    <string name="allow_settings_access_brightness_title">允許 HD XPlayer 改變亮度模式</string>
-    <string name="allow_settings_access_brightness_description">HD XPlayer 需要您授予權限來調整您的亮度模式。</string>
+    <string name="widget_name_w">Video Player 白色小工具</string>
+    <string name="widget_name_b">Video Player 暗色小工具</string>
+    <string name="allow_storage_access_title">允許 Video Player 存取視訊與音訊檔案</string>
+    <string name="allow_storage_access_description">Video Player 需要您的授權才能存取這個裝置上的媒體檔案。</string>
+    <string name="allow_settings_access_ringtone_title">允許 Video Player 設定鈴聲</string>
+    <string name="allow_settings_access_ringtone_description">Video Player 需要您授予權限來設定這首歌成為您的鈴聲。</string>
+    <string name="allow_settings_access_brightness_title">允許 Video Player 改變亮度模式</string>
+    <string name="allow_settings_access_brightness_description">Video Player 需要您授予權限來調整您的亮度模式。</string>
     <string name="permission_ask_again">授予權限</string>
-    <string name="exit_app">關閉 HD XPlayer</string>
+    <string name="exit_app">關閉 Video Player</string>
     <!--fast scroller-->
     <!--Plugins-->
     <string name="plugins">外掛</string>

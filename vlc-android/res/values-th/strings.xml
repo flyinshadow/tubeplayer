@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main HD XPlayer Interface -->
+    <!-- Main Video Player Interface -->
     <string name="ok">ตกลง</string>
     <string name="cancel">ยกเลิก</string>
     <string name="other">อย่างอื่น</string>
@@ -37,7 +37,7 @@
     <string name="ringtone_error">เกิดข้อขัดข้องขณะตั้งค่าเสียงเรียกเข้า</string>
     <string name="pause">พัก</string>
     <string name="not_show_again">ไม่ต้องแสดงข้อความนี้อีก</string>
-    <string name="info_title">HD XPlayer</string>
+    <string name="info_title">Video Player</string>
     <string name="unknown_artist">ไม่ทราบศิลปิน</string>
     <string name="unknown_album">ไม่ทราบอัลบั้ม</string>
     <string name="unknown_genre">ไม่ทราบประเภท</string>
@@ -153,11 +153,11 @@
     <string name="open_mrl">เปิด MRL</string>
     <string name="open_mrl_dialog_title">เปิดกระแสเครือข่าย</string>
     <string name="open_mrl_dialog_msg">เลือกเครือข่าย MRL: ตย. http://, mms:// หรือ rtsp://</string>
-    <string name="error_not_compatible">ขออภัย เครื่องของคุณยังไม่รองรับ การใช้งานของ HD XPlayer สำหรับ Android™ รุ่นนี้</string>
-    <string name="error_problem">ขออภัยด้วย ที่ HD XPlayer สำหรับ Andriod ปิดโปรแกรมไป อันเนื่องจากมีปัญหาในการโหลด</string>
+    <string name="error_not_compatible">ขออภัย เครื่องของคุณยังไม่รองรับ การใช้งานของ Video Player สำหรับ Android™ รุ่นนี้</string>
+    <string name="error_problem">ขออภัยด้วย ที่ Video Player สำหรับ Andriod ปิดโปรแกรมไป อันเนื่องจากมีปัญหาในการโหลด</string>
     <string name="error_message_is">ข้อขัดข้องคือ (กรุณากล่าวถึงสิ่งที่เกิดขึ้นนี้ เมื่อทำการดีบั๊ก):\n</string>
     <string name="encountered_error_title">การเล่นขัดข้อง</string>
-    <string name="encountered_error_message">HD XPlayer พบว่าสื่อนี้มีข้อขัดข้อง\nโปรดเรียกข้อมูลคลังสื่อดูอีกที</string>
+    <string name="encountered_error_message">Video Player พบว่าสื่อนี้มีข้อขัดข้อง\nโปรดเรียกข้อมูลคลังสื่อดูอีกที</string>
     <string name="invalid_location">ไม่สามารถเล่นยังตำแหน่ง %1$s ได้</string>
     <string name="search">ค้นหา</string>
     <string name="search_history">ประวัติการค้นหา</string>
@@ -184,13 +184,13 @@
     <string name="show_playlist">แสดงผังเล่น</string>
     <string name="hold_to_stop">ค้างไว้เพื่อหยุด</string>
     <!-- About -->
-    <string name="app_name_full">HD XPlayer สำหรับ Android™</string>
+    <string name="app_name_full">Video Player สำหรับ Android™</string>
     <string name="licence">สัญญาอนุญาต</string>
     <string name="revision">การปรับปรุง</string>
     <string name="about">เกี่ยวกับ</string>
-    <string name="about_text">HD XPlayer สำหรับ Android™ เป็นแขนงหนึ่งของโปรแกรมเล่นสื่อ HD XPlayer ซึ่งเป็นโปรแกรมเล่นสื่อยอดนิยมแบบโอเพนซอร์ส โดยรุ่น Android™ สามารถอ่านแฟ้มและกระแสข้อมูลเครือข่ายได้แทบทุกรูปแบบ</string>
-    <string name="compiled_by">HD XPlayer รุ่นนี้คอมไพล์โดย:</string>
-    <string name="vlc_authors">ผู้จัดทำ HD XPlayer</string>
+    <string name="about_text">Video Player สำหรับ Android™ เป็นแขนงหนึ่งของโปรแกรมเล่นสื่อ Video Player ซึ่งเป็นโปรแกรมเล่นสื่อยอดนิยมแบบโอเพนซอร์ส โดยรุ่น Android™ สามารถอ่านแฟ้มและกระแสข้อมูลเครือข่ายได้แทบทุกรูปแบบ</string>
+    <string name="compiled_by">Video Player รุ่นนี้คอมไพล์โดย:</string>
+    <string name="vlc_authors">ผู้จัดทำ Video Player</string>
     <!-- Preferences -->
     <string name="preferences">การปรับแต่ง</string>
     <string name="general_prefs_category">ทั่วไป</string>
@@ -257,7 +257,7 @@
     <string name="enable_steal_remote_control">ส่วนควบคุมระยะไกลชุดหูฟังเฉพาะแบบ</string>
     <string name="enable_steal_remote_control_summary">หลีกเลี่ยงปัญหาการแย่งการควบคุมไปจากแอพอื่นๆ สิ่งนี้ช่วยป้องกันการหมุนหมายเลขเมื่อหลงไปกดดับเบิลคลิกในโทรศัพท์รุ่น HTC</string>
     <string name="aout">การส่งเสียง</string>
-    <string name="aout_summary">เปลี่ยนวิธีการส่งเสียงของ HD XPlayer</string>
+    <string name="aout_summary">เปลี่ยนวิธีการส่งเสียงของ Video Player</string>
     <string name="performance_prefs_category">ประสิทธิภาพการทำงาน</string>
     <string name="chroma_format">บังคับค่าความสดสี</string>
     <string name="deblocking">ค่าตั้งตัวผันค่าการดีบล็อค</string>
@@ -279,7 +279,7 @@
     <string name="media_db_cleared">ล้างฐานข้อมูลสื่อเรียบร้อยแล้ว</string>
     <string name="set_locale">ตั้งโลเคล</string>
     <string name="set_locale_detail">ปล่อยว่างไว้เพื่อคืนค่าเดิม</string>
-    <string name="set_locale_popup">ออกและเริ่ม HD XPlayer ใหม่ เพื่อปรับใช้การเปลี่ยนค่า</string>
+    <string name="set_locale_popup">ออกและเริ่ม Video Player ใหม่ เพื่อปรับใช้การเปลี่ยนค่า</string>
     <string name="network_caching">ค่าการทำแคชเครือข่าย</string>
     <string name="network_caching_summary">ระยะเวลาที่ใช้ทำบัฟเฟอร์สื่อทางเครือข่าย (ใน ms), ไม่มีผลกับการอ่านรหัสฮาร์ดแวร์, ปล่อยว่างไว้หากต้องการล้างค่า</string>
     <string name="quit">ออกและเริ่มโปรแกรมใหม่</string>
@@ -292,9 +292,9 @@
     <string name="clear_log">ล้างปูม</string>
     <string name="copy_to_clipboard">คัดลอกไปยังคลิปบอร์ด</string>
     <string name="copied_to_clipboard">คัดลอกปูมไปยังคลิปบอร์ด</string>
-    <string name="serious_crash">ขอโทษด้วย ที่มีการขัดข้องอย่างหนักเกิดขึ้น ซึ่งทำให้ HD XPlayer ต้องปิดไป</string>
-    <string name="help_us_send_log">ช่วยพวกเราปรับปรุง HD XPlayer ได้โดยการส่งปูมบันทึกข้อขัดข้องดังกล่าวมา:</string>
-    <string name="restart_vlc">เปิด HD XPlayer ใหม่</string>
+    <string name="serious_crash">ขอโทษด้วย ที่มีการขัดข้องอย่างหนักเกิดขึ้น ซึ่งทำให้ Video Player ต้องปิดไป</string>
+    <string name="help_us_send_log">ช่วยพวกเราปรับปรุง Video Player ได้โดยการส่งปูมบันทึกข้อขัดข้องดังกล่าวมา:</string>
+    <string name="restart_vlc">เปิด Video Player ใหม่</string>
     <string name="send_log">ส่งปูม</string>
     <string name="sending_log">กำลังส่งปูม…</string>
     <string name="file_size">ขนาดไฟล์:</string>
@@ -314,9 +314,9 @@
     <string name="no_subs_found">ไม่มีบทบรรยายในที่ตั้งนี้</string>
     <string name="music_now_playing">กำลังเล่น</string>
     <!--Widget-->
-    <string name="allow_settings_access_ringtone_title">อนุญาตให้ HD XPlayer สามารถตั้งเสียงเรียกเข้าได้</string>
-    <string name="allow_settings_access_ringtone_description">HD XPlayer ต้องได้รับการอนุญาตจากคุณเสียก่อน จึงจะสามารถเลือกเพลงตั้งเป็นเสียงเรียกเข้าได้</string>
-    <string name="exit_app">ปิด HD XPlayer</string>
+    <string name="allow_settings_access_ringtone_title">อนุญาตให้ Video Player สามารถตั้งเสียงเรียกเข้าได้</string>
+    <string name="allow_settings_access_ringtone_description">Video Player ต้องได้รับการอนุญาตจากคุณเสียก่อน จึงจะสามารถเลือกเพลงตั้งเป็นเสียงเรียกเข้าได้</string>
+    <string name="exit_app">ปิด Video Player</string>
     <!--fast scroller-->
     <!--Plugins-->
     <string name="plugins">ปลั๊กอิน</string>

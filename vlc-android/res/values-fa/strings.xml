@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main HD XPlayer Interface -->
+    <!-- Main Video Player Interface -->
     <string name="ok">تأیید</string>
     <string name="cancel">لغو</string>
     <string name="other">دیگر</string>
@@ -37,7 +37,7 @@
     <string name="ringtone_error">خطایی برای تنظیم آهنگ‌زنگ بوجود آمده است.</string>
     <string name="pause">مکث</string>
     <string name="not_show_again">دیگر این پیام نشان داده نشود.</string>
-    <string name="info_title">HD XPlayer</string>
+    <string name="info_title">Video Player</string>
     <string name="unknown_artist">خواننده ناشناس</string>
     <string name="unknown_album">آلبوم ناشناس</string>
     <string name="unknown_genre">ژانر ناشناس</string>
@@ -152,11 +152,11 @@
     <string name="open_mrl">باز کردن MRL</string>
     <string name="open_mrl_dialog_title">باز کردن جریان شبکه</string>
     <string name="open_mrl_dialog_msg">MRL شبكه را وارد کنید: مثل http://، mms:// یا rtsp://</string>
-    <string name="error_not_compatible">با عرض پوزش، دستگاه کنونی شما این نسخه HD XPlayer برای اندروید™ را پشتیبانی نمیکند.</string>
-    <string name="error_problem">با عرض پوزش، HD XPlayer اندروید با مشکل مواجه شده و اکنون بسته میشود.</string>
+    <string name="error_not_compatible">با عرض پوزش، دستگاه کنونی شما این نسخه Video Player برای اندروید™ را پشتیبانی نمیکند.</string>
+    <string name="error_problem">با عرض پوزش، Video Player اندروید با مشکل مواجه شده و اکنون بسته میشود.</string>
     <string name="error_message_is">پیغام خطا (لطفا خطا را هنگام اشکال زدایی ذکر کنید) :\n</string>
     <string name="encountered_error_title">خطای پخش</string>
-    <string name="encountered_error_message">HD XPlayer با این رسانه به مشکل مواجه شده./ لطفا کتابخانه رسانه‌‌ها را بازنشانی کنید.</string>
+    <string name="encountered_error_message">Video Player با این رسانه به مشکل مواجه شده./ لطفا کتابخانه رسانه‌‌ها را بازنشانی کنید.</string>
     <string name="invalid_location">محل %1$s نمیتواند اجرا شود.</string>
     <string name="search">جستجو</string>
     <string name="search_history">سابقه جستجو</string>
@@ -183,13 +183,13 @@
     <string name="show_playlist">نمایش لیست پخش</string>
     <string name="hold_to_stop">برای متوفق کردن نگه دارید</string>
     <!-- About -->
-    <string name="app_name_full">HD XPlayer برای اندروید™</string>
+    <string name="app_name_full">Video Player برای اندروید™</string>
     <string name="licence">مجوز</string>
     <string name="revision">مرور</string>
     <string name="about">درباره</string>
-    <string name="about_text">HD XPlayer نسخه اندروید™ نسخه‌ای از برنامه پخش کننده معروف و کد باز HD XPlayer میباشد. نسخه اندرویدVLC برای اندروید™ برنامه میتواند اکثر فایل‌ها و جریانات شبکه‌ای را اجرا کند.</string>
-    <string name="compiled_by">این نسخه برنامه HD XPlayer تالیف شده توسط:</string>
-    <string name="vlc_authors">همکاران HD XPlayer.</string>
+    <string name="about_text">Video Player نسخه اندروید™ نسخه‌ای از برنامه پخش کننده معروف و کد باز Video Player میباشد. نسخه اندرویدVLC برای اندروید™ برنامه میتواند اکثر فایل‌ها و جریانات شبکه‌ای را اجرا کند.</string>
+    <string name="compiled_by">این نسخه برنامه Video Player تالیف شده توسط:</string>
+    <string name="vlc_authors">همکاران Video Player.</string>
     <!-- Preferences -->
     <string name="preferences">ترجیحات</string>
     <string name="general_prefs_category">عمومی</string>
@@ -277,7 +277,7 @@
     <string name="enable_steal_remote_control">کنترل از راه دور اختصاصی گوشی</string>
     <string name="enable_steal_remote_control_summary">از سرقت رفتن کنترل از راه دور توسط برنامه‌های دیگر جلوگیری شود. این مانع دوبار کلیک در گوشی‌های HTC میشود.</string>
     <string name="aout">خروجی صوتی</string>
-    <string name="aout_summary">تغییر روش خروجی صوتی مورد استفاده HD XPlayer.</string>
+    <string name="aout_summary">تغییر روش خروجی صوتی مورد استفاده Video Player.</string>
     <string name="controls_prefs_category">کنترل‌ها</string>
     <string name="performance_prefs_category">کارآیی</string>
     <string name="chroma_format">نیروی تصویر رنگی</string>
@@ -314,7 +314,7 @@
     <string name="start_logging">شروع گزارش گیری</string>
     <string name="stop_logging">توقف گزارش گیری</string>
     <string name="clear_log">پاک کرد گزارش</string>
-    <string name="log_service_title">گزارش های در حال ذخیره HD XPlayer</string>
+    <string name="log_service_title">گزارش های در حال ذخیره Video Player</string>
     <string name="log_service_text">باز کردن کنسول گزارش</string>
     <string name="copy_to_clipboard">کپی در حافظه موقت</string>
     <string name="copied_to_clipboard">گزارش در حافظه موقت کپی شد.</string>
@@ -322,8 +322,8 @@
     <string name="dump_logcat_success">logcat با موفقیت نسخه برداری شد در %1$s!</string>
     <string name="dump_logcat_failure">خطا در نسخه برداری Logcat.</string>
     <string name="serious_crash">متاسفانه، یک خطای جدی رخ داده و برنامه بسته میشود</string>
-    <string name="help_us_send_log">با ارسال گزارش خرابی میتوانید برای بهبودی HD XPlayer به ما کمک کنید:</string>
-    <string name="restart_vlc">بازنشانی HD XPlayer</string>
+    <string name="help_us_send_log">با ارسال گزارش خرابی میتوانید برای بهبودی Video Player به ما کمک کنید:</string>
+    <string name="restart_vlc">بازنشانی Video Player</string>
     <string name="send_log">ارسال گزارش</string>
     <string name="sending_log">در حال ارسال گزارش...</string>
     <string name="drawer_open">گشودن کشو ناوبری</string>
@@ -364,18 +364,18 @@
     <string name="no_subs_found">هیچ زیرنویسی در این شاخه موجود نمیباشد.</string>
     <string name="music_now_playing">در حال پخش</string>
     <!--Widget-->
-    <string name="widget_name_w">ویجت روشن HD XPlayer</string>
-    <string name="widget_name_b">ویجت تاریک HD XPlayer</string>
-    <string name="allow_storage_access_title">اجازه دهید به HD XPlayer تا به فایل های صوتی و تصویری شما دسترسی داشته باشد.</string>
-    <string name="allow_storage_access_description">HD XPlayer نیاز به اجازه دادن شما برای دسترسی به فایل های رسانه ی در این دستگاه نیاز دارد.</string>
-    <string name="allow_settings_access_ringtone_title">برای قرار دادن آهنگ زنگ به HD XPlayer اجازه داده شود</string>
-    <string name="allow_settings_access_ringtone_description">HD XPlayer نیاز به اجازه دادن شما برای قرار دادن این ترانه برای آهنگ زنگ نیاز دارد.</string>
-    <string name="allow_settings_access_brightness_title">برای تغییر حالت روشنایی به HD XPlayer اجازه داده شود</string>
-    <string name="allow_settings_access_brightness_description">HD XPlayer نیاز به اجازه دادن شما برای تغییر حالت روشنایی دارد.</string>
-    <string name="allow_draw_overlays_title">برای پخش کردن بالاتر از دیگر برنامه ها به HD XPlayer اجازه داده شود</string>
-    <string name="allow_sdraw_overlays_description">HD XPlayer نیاز به اجازه دادن شما برای پخش بالاتر از دیگر برنامه ها دارد.</string>
+    <string name="widget_name_w">ویجت روشن Video Player</string>
+    <string name="widget_name_b">ویجت تاریک Video Player</string>
+    <string name="allow_storage_access_title">اجازه دهید به Video Player تا به فایل های صوتی و تصویری شما دسترسی داشته باشد.</string>
+    <string name="allow_storage_access_description">Video Player نیاز به اجازه دادن شما برای دسترسی به فایل های رسانه ی در این دستگاه نیاز دارد.</string>
+    <string name="allow_settings_access_ringtone_title">برای قرار دادن آهنگ زنگ به Video Player اجازه داده شود</string>
+    <string name="allow_settings_access_ringtone_description">Video Player نیاز به اجازه دادن شما برای قرار دادن این ترانه برای آهنگ زنگ نیاز دارد.</string>
+    <string name="allow_settings_access_brightness_title">برای تغییر حالت روشنایی به Video Player اجازه داده شود</string>
+    <string name="allow_settings_access_brightness_description">Video Player نیاز به اجازه دادن شما برای تغییر حالت روشنایی دارد.</string>
+    <string name="allow_draw_overlays_title">برای پخش کردن بالاتر از دیگر برنامه ها به Video Player اجازه داده شود</string>
+    <string name="allow_sdraw_overlays_description">Video Player نیاز به اجازه دادن شما برای پخش بالاتر از دیگر برنامه ها دارد.</string>
     <string name="permission_ask_again">اجازه دسترسی</string>
-    <string name="exit_app">بستن HD XPlayer</string>
+    <string name="exit_app">بستن Video Player</string>
     <!--fast scroller-->
     <!--Plugins-->
     <string name="plugins">پلاگین ها</string>

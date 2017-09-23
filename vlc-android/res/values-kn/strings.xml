@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main HD XPlayer Interface -->
+    <!-- Main Video Player Interface -->
     <string name="ok">ಸರಿ</string>
     <string name="cancel">ರದ್ದುಮಾಡು</string>
     <string name="other">ಇತರ</string>
@@ -125,8 +125,8 @@
     <string name="open_mrl"> MRL ತೆರೆಯಿರಿ </string>
     <string name="open_mrl_dialog_title">Network stream ತೆರೆಯಿರಿ </string>
     <string name="open_mrl_dialog_msg">ಜಾಲ  MRL ನಮೂದಿಸಿ : e.g. http://, mms:// or rtsp://</string>
-    <string name="error_not_compatible">ಕ್ಷಮಿಸಿ, ನಿಮ್ಮ ಸಾಧನ ಪ್ರಸ್ತುತ ಆಂಡ್ರಾಯ್ಡ್ ™ ಗಾಗಿ HD XPlayer ಈ ಆವೃತ್ತಿಯ ಮೂಲಕ ಬೆಂಬಲಿತವಾಗಿಲ್ಲ.</string>
-    <string name="error_problem">ಕ್ಷಮಿಸಿ, Android ಗಾಗಿ HD XPlayer  ಲೋಡ್ ಮಾಡಲು ತೊಂದರೆಯಾಗಿ  ಮುಚ್ಚಬೇಕಾಗಿ ಬಂದಿತು .</string>
+    <string name="error_not_compatible">ಕ್ಷಮಿಸಿ, ನಿಮ್ಮ ಸಾಧನ ಪ್ರಸ್ತುತ ಆಂಡ್ರಾಯ್ಡ್ ™ ಗಾಗಿ Video Player ಈ ಆವೃತ್ತಿಯ ಮೂಲಕ ಬೆಂಬಲಿತವಾಗಿಲ್ಲ.</string>
+    <string name="error_problem">ಕ್ಷಮಿಸಿ, Android ಗಾಗಿ Video Player  ಲೋಡ್ ಮಾಡಲು ತೊಂದರೆಯಾಗಿ  ಮುಚ್ಚಬೇಕಾಗಿ ಬಂದಿತು .</string>
     <string name="encountered_error_title">ಪ್ಲೇಬ್ಯಾಕ್ ದೋಷ</string>
     <string name="search">ಹುಡುಕು</string>
     <string name="search_history">ಹುಡುಕು ಇತಿಹಾಸ </string>
@@ -137,13 +137,13 @@
     <string name="options">ಆಯ್ಕೆಗಳು</string>
     <string name="lock">ಬೀಗ</string>
     <!-- About -->
-    <string name="app_name_full">HD XPlayer  Android™ ಆವೃತ್ತಿ </string>
+    <string name="app_name_full">Video Player  Android™ ಆವೃತ್ತಿ </string>
     <string name="licence">ಪರವಾನಗೆ</string>
     <string name="revision">ಪರಿಷ್ಕರಣೆ</string>
     <string name="about">ಇದರ ಬಗ್ಗೆ</string>
-    <string name="about_text">Android™ಗಾಗಿ  VLCಯು ಜನಪ್ರಿಯ ಮುಕ್ತ HD XPlayer ಮಾಧ್ಯಮ ತಂತ್ರಾಂಶದ  Android™ನ ಅವತರಣಿಕೆ.  Android™ನ ಆವೃತ್ತಿಯು ಅನೇಕ ಕಡತಗಳು ಮತ್ತು ನೆಟ್ವರ್ಕ್  ಸ್ಟ್ರೀಮ್ ಗಳನ್ನು ಆಡಿಸಬಲ್ಲದು.  </string>
+    <string name="about_text">Android™ಗಾಗಿ  VLCಯು ಜನಪ್ರಿಯ ಮುಕ್ತ Video Player ಮಾಧ್ಯಮ ತಂತ್ರಾಂಶದ  Android™ನ ಅವತರಣಿಕೆ.  Android™ನ ಆವೃತ್ತಿಯು ಅನೇಕ ಕಡತಗಳು ಮತ್ತು ನೆಟ್ವರ್ಕ್  ಸ್ಟ್ರೀಮ್ ಗಳನ್ನು ಆಡಿಸಬಲ್ಲದು.  </string>
     <string name="compiled_by"> VLCಯ ಈ ಆವೃತ್ತಿಯ ಸಂಕಲನಕಾರರು:</string>
-    <string name="vlc_authors">HD XPlayer ಲೇಖಕರು.</string>
+    <string name="vlc_authors">Video Player ಲೇಖಕರು.</string>
     <!-- Preferences -->
     <string name="preferences">ಆಯ್ಕೆಗಳು</string>
     <string name="general_prefs_category">ಸಾಮಾನ್ಯ</string>
@@ -185,7 +185,7 @@
     <string name="enable_time_stretching_audio_summary">ಪಿಚ್ ಬದಲಿಸದೇ ವೇಗಗೊಳಿಸಿ ಮತ್ತು ನಿಧಾನಗೊಳಿಸಿ (ವೇಗದ ಸಾಧನವು ಅಗತ್ಯವಿದೆ). </string>
     <string name="advanced_prefs_category">ಉನ್ನತ </string>
     <string name="aout"> ಶ್ರವ್ಯ ಔಟ್ಪುಟ್</string>
-    <string name="aout_summary">HD XPlayer  ಆಡಿಯೊ  ಔಟ್ಪುಟ್ ಮಾಡುವ  ವಿಧಾನವನ್ನು ಬದಲಿಸಿ.</string>
+    <string name="aout_summary">Video Player  ಆಡಿಯೊ  ಔಟ್ಪುಟ್ ಮಾಡುವ  ವಿಧಾನವನ್ನು ಬದಲಿಸಿ.</string>
     <string name="clear_media_db">ಮಾಧ್ಯಮ ಡೇಟಾಬೇಸ್ ತರವುಗೊಳಿಸಿ </string>
     <string name="clear_history">ಹುಡುಕು ಇತಿಹಾಸವನ್ನು ತೆರವುಗೊಳಿಸಿ </string>
     <string name="media_db_cleared">ಮೀಡಿಯಾ ಡೇಟಾಬೇಸ್ ತೆರವುಗೊಳಿಸಲಾಗಿದೆ!</string>

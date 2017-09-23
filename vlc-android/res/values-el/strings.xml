@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main HD XPlayer Interface -->
+    <!-- Main Video Player Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Ακύρωση</string>
     <string name="other">Άλλο</string>
@@ -39,7 +39,7 @@
     <string name="ringtone_error">Ένα σφάλμα παρουσιάστηκε κατά τον ορισμό του ήχου κλήσης.</string>
     <string name="pause">Παύση</string>
     <string name="not_show_again">Να μην ξαναεμφανιστεί αυτό το μήνυμα</string>
-    <string name="info_title">HD XPlayer</string>
+    <string name="info_title">Video Player</string>
     <string name="unknown_artist">Άγνωστος καλλιτέχνης</string>
     <string name="unknown_album">Άγνωστο Άλμπουμ</string>
     <string name="unknown_genre">Άγνωστο Γένος</string>
@@ -161,11 +161,11 @@
     <string name="open_mrl">Άνοιγμα MRL</string>
     <string name="open_mrl_dialog_title">Άνοιγμα δικτυακής ροής</string>
     <string name="open_mrl_dialog_msg">Εισαγάγετε δικτυακό MRL: πχ http://, mms:// ή rtsp://</string>
-    <string name="error_not_compatible">Συγνώμη, αλλά η συσκευή σας αυτή τη στιγμή δεν υποστηρίζεται από την τρέχουσα έκδοση του HD XPlayer για Android™.</string>
-    <string name="error_problem">Συγνώμη, το HD XPlayer για το Android είχε ένα πρόβλημα κατά τη φόρτωση και έπρεπε να κλείσει.</string>
+    <string name="error_not_compatible">Συγνώμη, αλλά η συσκευή σας αυτή τη στιγμή δεν υποστηρίζεται από την τρέχουσα έκδοση του Video Player για Android™.</string>
+    <string name="error_problem">Συγνώμη, το Video Player για το Android είχε ένα πρόβλημα κατά τη φόρτωση και έπρεπε να κλείσει.</string>
     <string name="error_message_is">Το μήνυμα σφάλματος είναι (παρακαλούμε αναφέρετε το κατά την επίλυση προβλημάτων):\n\n</string>
     <string name="encountered_error_title">Σφάλμα στην αναπαραγωγή</string>
-    <string name="encountered_error_message">Το HD XPlayer αντιμετώπισε πρόβλημα με αυτό το μέσο.\n\nΠαρακαλώ ανανεώστε τη βιβλιοθήκη μέσων.</string>
+    <string name="encountered_error_message">Το Video Player αντιμετώπισε πρόβλημα με αυτό το μέσο.\n\nΠαρακαλώ ανανεώστε τη βιβλιοθήκη μέσων.</string>
     <string name="invalid_location">Η τοποθεσία %1$s δεν μπορεί να παιχτεί.</string>
     <string name="search">Εύρεση</string>
     <string name="search_history">Ιστορικό εύρεσης</string>
@@ -192,13 +192,13 @@
     <string name="show_playlist">Προβολή λίστας αναπαραγωγής</string>
     <string name="hold_to_stop">Κρατείστε για να σταματήσει</string>
     <!-- About -->
-    <string name="app_name_full">Το HD XPlayer για το Android™</string>
+    <string name="app_name_full">Το Video Player για το Android™</string>
     <string name="licence">Άδεια</string>
     <string name="revision">Αναθεώρηση</string>
     <string name="about">Σχετικά</string>
-    <string name="about_text">Το HD XPlayer για το Android™ είναι μια μεταφορά του αναπαραγωγού μέσων HD XPlayer, του δημοφιλούς ανοικτού κώδικα αναπαραγωγού μέσων. Η έκδοση για το Android™ μπορεί να διαβάσει τα περισσότερα αρχεία και ροές δικτύου.</string>
-    <string name="compiled_by">Αυτή η έκδοση του HD XPlayer συντάχθηκε από:</string>
-    <string name="vlc_authors">Συγγραφείς του HD XPlayer.</string>
+    <string name="about_text">Το Video Player για το Android™ είναι μια μεταφορά του αναπαραγωγού μέσων Video Player, του δημοφιλούς ανοικτού κώδικα αναπαραγωγού μέσων. Η έκδοση για το Android™ μπορεί να διαβάσει τα περισσότερα αρχεία και ροές δικτύου.</string>
+    <string name="compiled_by">Αυτή η έκδοση του Video Player συντάχθηκε από:</string>
+    <string name="vlc_authors">Συγγραφείς του Video Player.</string>
     <!-- Preferences -->
     <string name="preferences">Επιλογές</string>
     <string name="general_prefs_category">Γενικά</string>
@@ -297,7 +297,7 @@
     <string name="enable_steal_remote_control">Αποκλειστικός έλεγχος από απόσταση των ακουστικών</string>
     <string name="enable_steal_remote_control_summary">Αποφύγετε τις συγκρούσεις κλέβοντας τον απομακρυσμένο έλεγχο από άλλες εφαρμογές. Αυτό αποτρέπει την κλήση για το διπλό κλικ στα HTC τηλέφωνα.</string>
     <string name="aout">Έξοδος ήχου</string>
-    <string name="aout_summary">Αλλάξτε τη μέθοδο που χρησιμοποιεί το HD XPlayer για την παραγωγή ήχου.</string>
+    <string name="aout_summary">Αλλάξτε τη μέθοδο που χρησιμοποιεί το Video Player για την παραγωγή ήχου.</string>
     <string name="controls_prefs_category">Στοιχεία ελέγχου</string>
     <string name="performance_prefs_category">Απόδοση</string>
     <string name="chroma_format">Επιβολή βίντεο χρώματος</string>
@@ -319,12 +319,12 @@
     <string name="auto_rescan">Αυτόματη επανασάρωση</string>
     <string name="auto_rescan_summary">Αυτόματη σάρωση της συσκευής για νέα ή διαγραμμένα μέσα ενημέρωσης κατά την εκκίνηση εφαρμογής</string>
     <string name="clear_media_db">Καθαρισμός βάσης δεδομένων μέσων</string>
-    <string name="clear_media_db_summary">Πηγαίνετε στις πληροφορίες του Android HD XPlayer για να καθαρίσετε τα δεδομένα</string>
+    <string name="clear_media_db_summary">Πηγαίνετε στις πληροφορίες του Android Video Player για να καθαρίσετε τα δεδομένα</string>
     <string name="clear_history">Καθαρισμός ιστορικού εύρεσης</string>
     <string name="media_db_cleared">Η βάση δεδομένων των μέσων εκκαθαρίστηκε!</string>
     <string name="set_locale">Ορισμός τοπικής ρύθμισης</string>
     <string name="set_locale_detail">Αφήστε το κενό για να το επαναφέρετε</string>
-    <string name="set_locale_popup">Κλείστε και κάντε επανεκκίνηση του HD XPlayer για να ισχύσουν οι αλλαγές.</string>
+    <string name="set_locale_popup">Κλείστε και κάντε επανεκκίνηση του Video Player για να ισχύσουν οι αλλαγές.</string>
     <string name="network_caching">Τιμή αποθήκευσης σε κρυφή μνήμη</string>
     <string name="network_caching_summary">Το ποσό του χρόνου για να διαβαστούν δικτυακά μέσα (σε ms). Δεν λειτουργεί με την αποκωδικοποίηση υλικού. Αφήστε το κενό για επαναφορά.</string>
     <string name="resume_playback_title">Συνέχιση αναπαραγωγής μετά από κλήση</string>
@@ -338,16 +338,16 @@
     <string name="start_logging">Ξεκινήστε την καταγραφή</string>
     <string name="stop_logging">Τέλος καταγραφής</string>
     <string name="clear_log">Απαλοιφή καταγραφής</string>
-    <string name="log_service_title">Τα αρχεία του HD XPlayer καταγράφουν</string>
+    <string name="log_service_title">Τα αρχεία του Video Player καταγράφουν</string>
     <string name="log_service_text">Άνοιγμα της κονσόλας καταγραφής</string>
     <string name="copy_to_clipboard">Αντιγραφή στο πρόχειρο</string>
     <string name="copied_to_clipboard">Η καταγραφή αντιγράφηκε στο πρόχειρο.</string>
     <string name="dump_logcat">Κατεκτύπωση καταγραφών logcat </string>
     <string name="dump_logcat_success">Επιτυχής κατεκτύπωση logcat στο %1$s!</string>
     <string name="dump_logcat_failure">Αποτυχία κατεκτύπωσης logcat.</string>
-    <string name="serious_crash">Δυστυχώς, ένα σοβαρό σφάλμα ανάγκασε το HD XPlayer να κλείσει.</string>
-    <string name="help_us_send_log">Βοηθήστε μας να βελτιώσουμε το HD XPlayer αποστέλλοντας το ακόλουθο αρχείο καταγραφής:</string>
-    <string name="restart_vlc">Επανεκκίνηση του HD XPlayer</string>
+    <string name="serious_crash">Δυστυχώς, ένα σοβαρό σφάλμα ανάγκασε το Video Player να κλείσει.</string>
+    <string name="help_us_send_log">Βοηθήστε μας να βελτιώσουμε το Video Player αποστέλλοντας το ακόλουθο αρχείο καταγραφής:</string>
+    <string name="restart_vlc">Επανεκκίνηση του Video Player</string>
     <string name="send_log">Αποστολή του αρχείου καταγραφής</string>
     <string name="sending_log">Το αρχείο καταγραφής αποστέλλεται...</string>
     <string name="drawer_open">Ανοίξτε το συρτάρι πλοήγησης</string>
@@ -391,18 +391,18 @@
     <string name="no_subs_found">Δεν υπάρχουν υπότιτλοι σε αυτό τον κατάλογο</string>
     <string name="music_now_playing">Αναπαράγεται τώρα</string>
     <!--Widget-->
-    <string name="widget_name_w">Λευκό γραφικό στοιχείο HD XPlayer </string>
-    <string name="widget_name_b">Σκοτεινό γραφικό στοιχείο HD XPlayer </string>
-    <string name="allow_storage_access_title">Δώστε πρόσβαση στο HD XPlayer στα αρχεία βίντεο και ήχου</string>
-    <string name="allow_storage_access_description">Το HD XPlayer  σας ζητάει να του δώσετε πρόσβαση στα αρχεία μέσων σε αυτή τη συσκευή.</string>
-    <string name="allow_settings_access_ringtone_title">Επιτρέψτε στο HD XPlayer να ορίσει τον ήχο κλήσης</string>
-    <string name="allow_settings_access_ringtone_description">Το HD XPlayer  σας ζητάει να του επιτρέψετε να ορίσει αυτό το τραγούδι ως ήχο κλήσης.</string>
-    <string name="allow_settings_access_brightness_title">Επιτρέψτε στο HD XPlayer να ορίσει το επίπεδο φωτεινότητας</string>
-    <string name="allow_settings_access_brightness_description">Το HD XPlayer  σας ζητάει να του επιτρέψετε να ορίσει το επίπεδο φωτεινότητας.</string>
-    <string name="allow_draw_overlays_title">Επιτρέψτε το HD XPlayer να εμφανίζεται πάνω από άλλες εφαρμογές</string>
-    <string name="allow_sdraw_overlays_description">Το HD XPlayer σας ζητάει να του επιτρέψετε να παίζει το βίντεο αναδυόμενο πάνω από άλλες εφαρμογές.</string>
+    <string name="widget_name_w">Λευκό γραφικό στοιχείο Video Player </string>
+    <string name="widget_name_b">Σκοτεινό γραφικό στοιχείο Video Player </string>
+    <string name="allow_storage_access_title">Δώστε πρόσβαση στο Video Player στα αρχεία βίντεο και ήχου</string>
+    <string name="allow_storage_access_description">Το Video Player  σας ζητάει να του δώσετε πρόσβαση στα αρχεία μέσων σε αυτή τη συσκευή.</string>
+    <string name="allow_settings_access_ringtone_title">Επιτρέψτε στο Video Player να ορίσει τον ήχο κλήσης</string>
+    <string name="allow_settings_access_ringtone_description">Το Video Player  σας ζητάει να του επιτρέψετε να ορίσει αυτό το τραγούδι ως ήχο κλήσης.</string>
+    <string name="allow_settings_access_brightness_title">Επιτρέψτε στο Video Player να ορίσει το επίπεδο φωτεινότητας</string>
+    <string name="allow_settings_access_brightness_description">Το Video Player  σας ζητάει να του επιτρέψετε να ορίσει το επίπεδο φωτεινότητας.</string>
+    <string name="allow_draw_overlays_title">Επιτρέψτε το Video Player να εμφανίζεται πάνω από άλλες εφαρμογές</string>
+    <string name="allow_sdraw_overlays_description">Το Video Player σας ζητάει να του επιτρέψετε να παίζει το βίντεο αναδυόμενο πάνω από άλλες εφαρμογές.</string>
     <string name="permission_ask_again">Δώστε άδεια</string>
-    <string name="exit_app">Κλείσιμο του HD XPlayer</string>
+    <string name="exit_app">Κλείσιμο του Video Player</string>
     <!--fast scroller-->
     <string name="fastscroller_track">Κομμάτι FastScroller</string>
     <string name="fastscroller_handle">Λαβή FastScroller</string>
@@ -452,7 +452,7 @@
     <string name="length">Διάρκεια</string>
     <string name="tv_settings_hint">Μακρό πάτημα του ΟΚ για να επιλέξετε/απεπιλέξετε καταλόγους</string>
     <string name="ml_external_storage_title">Ανιχνεύτηκε νέος αποθηκευτικός χώρος</string>
-    <string name="ml_external_storage_msg">Θέλετε το HD XPlayer να προσθέσει τη συσκευή %1$sστη βιβλιοθήκη μέσων σας;</string>
+    <string name="ml_external_storage_msg">Θέλετε το Video Player να προσθέσει τη συσκευή %1$sστη βιβλιοθήκη μέσων σας;</string>
     <string name="last_added_media">τελευταία προσθήκη</string>
     <string name="no">Όχι</string>
     <string name="loading_medialibrary">Φόρτωση βιβλιοθήκης μέσων</string>

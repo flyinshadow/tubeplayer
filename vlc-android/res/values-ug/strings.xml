@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main HD XPlayer Interface -->
+    <!-- Main Video Player Interface -->
     <string name="ok">جەزملە</string>
     <string name="cancel">ۋاز كەچ</string>
     <string name="other">باشقا</string>
@@ -32,7 +32,7 @@
     <string name="ringtone_error">قوڭغۇراق ئاۋازىغا تەڭشىگەندە خاتالىق كۆرۈلدى.</string>
     <string name="pause">ۋاقىتلىق توختا</string>
     <string name="not_show_again">بۇ ئۇچۇرنى قايتا كۆرسەتمە.</string>
-    <string name="info_title">HD XPlayer</string>
+    <string name="info_title">Video Player</string>
     <string name="unknown_artist">يوچۇن سەنئەتكار</string>
     <string name="unknown_album">يوچۇن توپلام</string>
     <string name="unknown_genre">يوچۇن ئېقىم</string>
@@ -125,8 +125,8 @@
     <string name="open_mrl">MRL ئاچ</string>
     <string name="open_mrl_dialog_title">تور ئېقىمىنى ئاچ</string>
     <string name="open_mrl_dialog_msg">تور MRL نى كىرگۈزۈڭ: مەسىلەن: http://, mms:// ياكى rtsp://</string>
-    <string name="error_not_compatible">كەچۈرۈڭ، بۇ نەشرىدىكى HD XPlayer for Android™ ئۈسكۈنىڭىزنى قوللىمايدۇ.</string>
-    <string name="error_problem">كەچۈرۈڭ، HD XPlayer for Android نى يۈكلىيەلمىدى، تاقاش زۆرۈر.</string>
+    <string name="error_not_compatible">كەچۈرۈڭ، بۇ نەشرىدىكى Video Player for Android™ ئۈسكۈنىڭىزنى قوللىمايدۇ.</string>
+    <string name="error_problem">كەچۈرۈڭ، Video Player for Android نى يۈكلىيەلمىدى، تاقاش زۆرۈر.</string>
     <string name="encountered_error_title">تەكرار چېلىش خاتالىقى</string>
     <string name="search">ئىزدە</string>
     <string name="search_history">ئىزدەش تارىخى</string>
@@ -143,13 +143,13 @@
     <string name="audio_player_tips">ئاۋاز چاستۇتا ئەسكەرتكۈچ</string>
     <string name="hold_to_stop">باسسىڭز توختايدۇ</string>
     <!-- About -->
-    <string name="app_name_full">HD XPlayer for Android™</string>
+    <string name="app_name_full">Video Player for Android™</string>
     <string name="licence">ئىجازەتنامە</string>
     <string name="revision">تۈزىتىلگەن نەشرى</string>
     <string name="about">ھەققىدە</string>
-    <string name="about_text">HD XPlayer for Android™ ئالقىشقا ئېرىشكەن كودى ئوچۇق ۋاستە چالغۇچ HD XPlayer media player نىڭ يۆتكەلگەن نەشرى. Android™ نەشرى كۆپ قىسىم ھۆججەتلەر ۋە تور ئېقىم ۋاستىلىرىنى ئوقۇيالايدۇ.</string>
-    <string name="compiled_by">بۇ نەشرىدىكى HD XPlayer نى ھاسىللىغۇچى</string>
-    <string name="vlc_authors">HD XPlayer يازغۇچىلار</string>
+    <string name="about_text">Video Player for Android™ ئالقىشقا ئېرىشكەن كودى ئوچۇق ۋاستە چالغۇچ Video Player media player نىڭ يۆتكەلگەن نەشرى. Android™ نەشرى كۆپ قىسىم ھۆججەتلەر ۋە تور ئېقىم ۋاستىلىرىنى ئوقۇيالايدۇ.</string>
+    <string name="compiled_by">بۇ نەشرىدىكى Video Player نى ھاسىللىغۇچى</string>
+    <string name="vlc_authors">Video Player يازغۇچىلار</string>
     <!-- Preferences -->
     <string name="preferences">مايىللىقلار</string>
     <string name="general_prefs_category">ئادەتتىكى</string>
@@ -200,7 +200,7 @@
     <string name="enable_time_stretching_audio_summary">ئۈن چېلىش سۈرئىتىنى تېزلىتىپ ۋە ئاستىلىتىپ ئۈن ئۇدارىنى ئۆزگەرتمەيدۇ (تېز ئۈسكۈنە بولۇشى زۆرۈر).</string>
     <string name="advanced_prefs_category">ئالىي</string>
     <string name="aout">ئۈن چىقىرىش</string>
-    <string name="aout_summary">HD XPlayer نىڭ ئۈن چىقىرىدىغان ئۇسۇلىنى ئۆزگەرتىدۇ.</string>
+    <string name="aout_summary">Video Player نىڭ ئۈن چىقىرىدىغان ئۇسۇلىنى ئۆزگەرتىدۇ.</string>
     <string name="clear_media_db">ۋاستە سانداننى تازىلا</string>
     <string name="clear_history">ئىزدەش تارىخىنى تازىلا</string>
     <string name="media_db_cleared">ۋاستە ساندان تازىلاندى!</string>
@@ -218,7 +218,7 @@
     <string name="clear_log">خاتىرە  تازىلا</string>
     <string name="copy_to_clipboard">چاپلاش تاختىسىغا كۆچۈر</string>
     <string name="copied_to_clipboard">خاتىرىنى چاپلاش تاختىسىغا كۆچۈرىدۇ.</string>
-    <string name="restart_vlc">HD XPlayer نى قايتا قوزغېتىش</string>
+    <string name="restart_vlc">Video Player نى قايتا قوزغېتىش</string>
     <string name="send_log">خاتىرىسنى يوللاش</string>
     <string name="sending_log">خاتىرىسى يوللنىۋاتىدۇ...</string>
     <string name="drawer_open">يولباشچى تىزىملىكىنى ئاچ</string>

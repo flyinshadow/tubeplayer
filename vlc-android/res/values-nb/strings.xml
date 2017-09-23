@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main HD XPlayer Interface -->
+    <!-- Main Video Player Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Avbryt</string>
     <string name="other">Annet</string>
@@ -39,7 +39,7 @@
     <string name="ringtone_error">En feil oppsto under valg av ny ringetone.</string>
     <string name="pause">Pause</string>
     <string name="not_show_again">Ikke vis denne meldingen igjen.</string>
-    <string name="info_title">HD XPlayer</string>
+    <string name="info_title">Video Player</string>
     <string name="unknown_artist">Ukjent artist</string>
     <string name="unknown_album">Ukjent album</string>
     <string name="unknown_genre">Ukjent sjanger</string>
@@ -161,11 +161,11 @@
     <string name="open_mrl">Kringkast</string>
     <string name="open_mrl_dialog_title">Åpne nettverkskringkasting</string>
     <string name="open_mrl_dialog_msg">Skriv inn nettverksadressen; f.eks: http://, mms://, eller rtsp://</string>
-    <string name="error_not_compatible">Beklager. Din enhet er for øyeblikket ikke støttet av denne versjonen av HD XPlayer for Android™.</string>
-    <string name="error_problem">Beklager. HD XPlayer for Android hadde et problem med lasting og måtte lukkes.</string>
+    <string name="error_not_compatible">Beklager. Din enhet er for øyeblikket ikke støttet av denne versjonen av Video Player for Android™.</string>
+    <string name="error_problem">Beklager. Video Player for Android hadde et problem med lasting og måtte lukkes.</string>
     <string name="error_message_is">Feilmeldingen er (nevn dette på engelsk når du innrapporterer en feil):\n\n</string>
     <string name="encountered_error_title">Avspillingsfeil</string>
-    <string name="encountered_error_message">HD XPlayer støtte på et problem med dette mediet.\n\nPrøv å oppdatere mediebiblioteket.</string>
+    <string name="encountered_error_message">Video Player støtte på et problem med dette mediet.\n\nPrøv å oppdatere mediebiblioteket.</string>
     <string name="invalid_location">Plasseringen %1$s kan ikke avspilles.</string>
     <string name="search">Søk</string>
     <string name="search_history">Søk i historien</string>
@@ -192,13 +192,13 @@
     <string name="show_playlist">Vis spilleliste</string>
     <string name="hold_to_stop">Hold for å stoppe</string>
     <!-- About -->
-    <string name="app_name_full">HD XPlayer for Android™</string>
+    <string name="app_name_full">Video Player for Android™</string>
     <string name="licence">Lisens</string>
     <string name="revision">Revisjon</string>
     <string name="about">Om</string>
-    <string name="about_text">HD XPlayer for Android™ er en port av HD XPlayer media player, den populære åpenkildete multimediespilleren. Android™-versjonen kan lese de fleste filer og nettverkstrømmer.</string>
-    <string name="compiled_by">Denne versjonen av HD XPlayer ble kompilert av:</string>
-    <string name="vlc_authors">HD XPlayer-utviklere.</string>
+    <string name="about_text">Video Player for Android™ er en port av Video Player media player, den populære åpenkildete multimediespilleren. Android™-versjonen kan lese de fleste filer og nettverkstrømmer.</string>
+    <string name="compiled_by">Denne versjonen av Video Player ble kompilert av:</string>
+    <string name="vlc_authors">Video Player-utviklere.</string>
     <!-- Preferences -->
     <string name="preferences">Innstillinger</string>
     <string name="general_prefs_category">Generelt</string>
@@ -297,7 +297,7 @@
     <string name="enable_steal_remote_control">Eksklusiv fjernkontroll fra hodetelefon</string>
     <string name="enable_steal_remote_control_summary">Unngå konflikter ved å stjele fjernkontrollen fra de andre appene. Dette hindrer oppringing ved dobbeltrykk på HTC-telefoner.</string>
     <string name="aout">Lydutdata</string>
-    <string name="aout_summary">Endre metoden HD XPlayer bruker for lydutgang.</string>
+    <string name="aout_summary">Endre metoden Video Player bruker for lydutgang.</string>
     <string name="controls_prefs_category">Kontrollere</string>
     <string name="performance_prefs_category">Ytelse</string>
     <string name="chroma_format">Fremtving krominering</string>
@@ -319,12 +319,12 @@
     <string name="auto_rescan">Automatisk oppfriskningssøk</string>
     <string name="auto_rescan_summary">Søk automatisk på enheten etter nye og slettede mediafiler ved oppstart av programmet</string>
     <string name="clear_media_db">Tøm mediedatabase</string>
-    <string name="clear_media_db_summary">Gå inn i Androids HD XPlayer-info for å slette dataer</string>
+    <string name="clear_media_db_summary">Gå inn i Androids Video Player-info for å slette dataer</string>
     <string name="clear_history">Tøm søkehistorie</string>
     <string name="media_db_cleared">Mediedatabase tømt!</string>
     <string name="set_locale">Velg beliggenhet</string>
     <string name="set_locale_detail">La den stå tom for å tilbakestille</string>
-    <string name="set_locale_popup">Avslutt og start HD XPlayer på nytt for å iverksette endringene.</string>
+    <string name="set_locale_popup">Avslutt og start Video Player på nytt for å iverksette endringene.</string>
     <string name="network_caching">Nettverksbufferverdi</string>
     <string name="network_caching_summary">Tiden det tar å bufre nettverksmedier (i ms). Fungerer ikke med maskinvarekoding. Forlat tomt for å tilbakestille.</string>
     <string name="resume_playback_title">Fortsett avspillingen etter en samtale</string>
@@ -338,16 +338,16 @@
     <string name="start_logging">Start loggføring</string>
     <string name="stop_logging">Stopp loggføring</string>
     <string name="clear_log">Tøm logg</string>
-    <string name="log_service_title">HD XPlayer-loggføring</string>
+    <string name="log_service_title">Video Player-loggføring</string>
     <string name="log_service_text">Åpne loggføringskonsollen</string>
     <string name="copy_to_clipboard">Kopier til utklippstavlen</string>
     <string name="copied_to_clipboard">Kopier logg til utklippstavlen</string>
     <string name="dump_logcat">Dump logcat-logg</string>
     <string name="dump_logcat_success">Vellykket logcat-dump til %1$s!</string>
     <string name="dump_logcat_failure">Klarte ikke å utføre logcat-dumpen.</string>
-    <string name="serious_crash">En markant feil har desverre inntruffet, og HD XPlayer må avstenges.</string>
-    <string name="help_us_send_log">Hjelp oss å forbedre HD XPlayer ved å sende oss følgende krasjlogg:</string>
-    <string name="restart_vlc">Start HD XPlayer på nytt</string>
+    <string name="serious_crash">En markant feil har desverre inntruffet, og Video Player må avstenges.</string>
+    <string name="help_us_send_log">Hjelp oss å forbedre Video Player ved å sende oss følgende krasjlogg:</string>
+    <string name="restart_vlc">Start Video Player på nytt</string>
     <string name="send_log">Send inn loggen</string>
     <string name="sending_log">Sender inn loggen...</string>
     <string name="drawer_open">Åpne navigasjonsskuffe</string>
@@ -391,18 +391,18 @@
     <string name="no_subs_found">Ingen undertekster i denne mappen</string>
     <string name="music_now_playing">Spilles nå</string>
     <!--Widget-->
-    <string name="widget_name_w">Lys HD XPlayer-modul</string>
-    <string name="widget_name_b">Mørk HD XPlayer-modul</string>
-    <string name="allow_storage_access_title">Gi HD XPlayer tilgang til video- og lyd-filer</string>
-    <string name="allow_storage_access_description">HD XPlayer behøver denne tilgangen for å kunne lese mediefilene på denne enheten.</string>
-    <string name="allow_settings_access_ringtone_title">Tillat HD XPlayer å velge ringetonen</string>
-    <string name="allow_settings_access_ringtone_description">HD XPlayer behøver denne tilgangen fra deg for å velge denne sangen som ringetone.</string>
-    <string name="allow_settings_access_brightness_title">Tillat HD XPlayer å endre lysstyrkemodus</string>
-    <string name="allow_settings_access_brightness_description">HD XPlayer behøver denne tilgangen for å endre din lysstyrkemodus.</string>
-    <string name="allow_draw_overlays_title">Tillat at HD XPlayer kan sprette opp over andre apper</string>
-    <string name="allow_sdraw_overlays_description">HD XPlayer behøver denne tilgangen for å vise video i et oppsprett over andre programmer.</string>
+    <string name="widget_name_w">Lys Video Player-modul</string>
+    <string name="widget_name_b">Mørk Video Player-modul</string>
+    <string name="allow_storage_access_title">Gi Video Player tilgang til video- og lyd-filer</string>
+    <string name="allow_storage_access_description">Video Player behøver denne tilgangen for å kunne lese mediefilene på denne enheten.</string>
+    <string name="allow_settings_access_ringtone_title">Tillat Video Player å velge ringetonen</string>
+    <string name="allow_settings_access_ringtone_description">Video Player behøver denne tilgangen fra deg for å velge denne sangen som ringetone.</string>
+    <string name="allow_settings_access_brightness_title">Tillat Video Player å endre lysstyrkemodus</string>
+    <string name="allow_settings_access_brightness_description">Video Player behøver denne tilgangen for å endre din lysstyrkemodus.</string>
+    <string name="allow_draw_overlays_title">Tillat at Video Player kan sprette opp over andre apper</string>
+    <string name="allow_sdraw_overlays_description">Video Player behøver denne tilgangen for å vise video i et oppsprett over andre programmer.</string>
     <string name="permission_ask_again">Gi tillatelse</string>
-    <string name="exit_app">Lukk HD XPlayer</string>
+    <string name="exit_app">Lukk Video Player</string>
     <!--fast scroller-->
     <string name="fastscroller_track">FastScroller-spor</string>
     <string name="fastscroller_handle">FastScroller-håndtering</string>
@@ -452,7 +452,7 @@
     <string name="length">Lengde</string>
     <string name="tv_settings_hint">Hold inn OK-knappen lenge for å velge/avvelge mapper.</string>
     <string name="ml_external_storage_title">Nytt eksternt lagringsmedie oppdaget</string>
-    <string name="ml_external_storage_msg">Ønsker du at HD XPlayer skal legge enheten %1$s til i ditt mediebibliotek?</string>
+    <string name="ml_external_storage_msg">Ønsker du at Video Player skal legge enheten %1$s til i ditt mediebibliotek?</string>
     <string name="last_added_media">Sist lagt til</string>
     <string name="no">Nei</string>
     <string name="loading_medialibrary">Laster inn mediebiblioteket...</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main HD XPlayer Interface -->
+    <!-- Main Video Player Interface -->
     <string name="ok">Olgu</string>
     <string name="cancel">Loobu</string>
     <string name="other">Muu</string>
@@ -108,21 +108,21 @@
     <string name="open_mrl">Ava MRL</string>
     <string name="open_mrl_dialog_title">Ava võrguvoog</string>
     <string name="open_mrl_dialog_msg">Sisesta võrgu MRL: nt. http://, mms:// või rtsp://</string>
-    <string name="error_not_compatible">Kahjuks pole sinu seade selle HD XPlayer Androidi™ versiooni poolt hetkel toetatud.</string>
-    <string name="error_problem">Kahjuks tekkis HD XPlayer Androidi versioonil laadimisel viga ja ta tuli sulgeda.</string>
+    <string name="error_not_compatible">Kahjuks pole sinu seade selle Video Player Androidi™ versiooni poolt hetkel toetatud.</string>
+    <string name="error_problem">Kahjuks tekkis Video Player Androidi versioonil laadimisel viga ja ta tuli sulgeda.</string>
     <string name="encountered_error_title">Tõrge taasesitamisel</string>
     <string name="invalid_location">Asukohta %1$s ei saa esitada.</string>
     <string name="search">Otsing</string>
     <string name="search_history">Otsingu ajalugu</string>
     <!--Tips-->
     <!-- About -->
-    <string name="app_name_full">HD XPlayer Androidile™</string>
+    <string name="app_name_full">Video Player Androidile™</string>
     <string name="licence">Litsents</string>
     <string name="revision">Revisioon</string>
     <string name="about">Programmist</string>
-    <string name="about_text">HD XPlayer Androidile™ on avatud lähtekoodiga populaarse HD XPlayer meediaesitaja port. Androidi™ versioon suudab avada enamikke meediafaile ja võrguvoogusid.</string>
-    <string name="compiled_by">Selle HD XPlayer versiooni kompileerisid:</string>
-    <string name="vlc_authors">HD XPlayer autorid.</string>
+    <string name="about_text">Video Player Androidile™ on avatud lähtekoodiga populaarse Video Player meediaesitaja port. Androidi™ versioon suudab avada enamikke meediafaile ja võrguvoogusid.</string>
+    <string name="compiled_by">Selle Video Player versiooni kompileerisid:</string>
+    <string name="vlc_authors">Video Player autorid.</string>
     <!-- Preferences -->
     <string name="preferences">Eelistused</string>
     <string name="general_prefs_category">Üldine</string>
@@ -157,13 +157,13 @@
     <string name="enable_time_stretching_audio_summary">Kiirenda või aeglusta audiot ilma helikõrgust muutmata (vajalik kiire seade)</string>
     <string name="advanced_prefs_category">Laiendatud</string>
     <string name="aout">Audioväljund</string>
-    <string name="aout_summary">Muuda meetod mida HD XPlayer kasutab audio väljundiks.</string>
+    <string name="aout_summary">Muuda meetod mida Video Player kasutab audio väljundiks.</string>
     <string name="clear_media_db">Puhasta meedia andmebaas</string>
     <string name="clear_history">Puhasta otsingu ajalugu</string>
     <string name="media_db_cleared">Meedia andmebaas puhastatud!</string>
     <string name="set_locale">Määra lokaat</string>
     <string name="set_locale_detail">Lähtestamiseks jäta tühjaks</string>
-    <string name="set_locale_popup">Sulge ja lähtesta HD XPlayer muutuste kinnitamiseks.</string>
+    <string name="set_locale_popup">Sulge ja lähtesta Video Player muutuste kinnitamiseks.</string>
     <string name="developer_prefs_category">Arendaja</string>
     <string name="enable_verbose_mode">Jutukas</string>
     <string name="enable_verbose_mode_summary">Suurenda jutukust (logcat)</string>
@@ -174,7 +174,7 @@
     <string name="copy_to_clipboard">Kopeeri lõikepuhvrisse</string>
     <string name="copied_to_clipboard">Logi lõikepuhvrisse kopeeritud.</string>
     <string name="quit">Sulge ning taaskäivita rakendus</string>
-    <string name="restart_vlc">Taaskäivita HD XPlayer</string>
+    <string name="restart_vlc">Taaskäivita Video Player</string>
     <string name="rename">Ümber nimetada</string>
     <string name="theme">Teema</string>
     <string name="night_mode">Öörežiim</string>

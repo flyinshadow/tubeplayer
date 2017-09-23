@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-    <!--Main HD XPlayer Interface-->
+    <!--Main Video Player Interface-->
     <string name="filebrowser_title">ప్రదర్శించుటకు మాధ్యమాన్ని ఎంచుకోండి</string>
     <string name="sortby">క్రమబద్ధీకరణ...</string>
     <string name="sortby_name">పేరు</string>

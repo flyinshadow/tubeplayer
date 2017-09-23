@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Main HD XPlayer Interface -->
+    <!-- Main Video Player Interface -->
     <string name="ok">OK</string>
     <string name="cancel">Annulla</string>
     <string name="other">Altro</string>
@@ -39,7 +39,7 @@
     <string name="ringtone_error">Si è verificato un errore durante l\'impostazione della suoneria.</string>
     <string name="pause">Pausa</string>
     <string name="not_show_again">Non mostrare ancora questo messaggio.</string>
-    <string name="info_title">HD XPlayer</string>
+    <string name="info_title">Video Player</string>
     <string name="unknown_artist">Artista sconosciuto</string>
     <string name="unknown_album">Album sconosciuto</string>
     <string name="unknown_genre">Genere sconosciuto</string>
@@ -161,11 +161,11 @@
     <string name="open_mrl">Apri MRL</string>
     <string name="open_mrl_dialog_title">Apri flusso di rete</string>
     <string name="open_mrl_dialog_msg">Inserisci MRL di rete: ad es. http://, mms:// o rtsp://</string>
-    <string name="error_not_compatible">Spiacenti, il tuo dispositivo non è supportato da questa versione di HD XPlayer per Android™.\n\nIl messaggio di errore è (da citare in caso di debug):\n</string>
-    <string name="error_problem">Spiacenti, HD XPlayer per Android ha riscontrato un problema in fase di caricamento ed è stato chiuso.</string>
+    <string name="error_not_compatible">Spiacenti, il tuo dispositivo non è supportato da questa versione di Video Player per Android™.\n\nIl messaggio di errore è (da citare in caso di debug):\n</string>
+    <string name="error_problem">Spiacenti, Video Player per Android ha riscontrato un problema in fase di caricamento ed è stato chiuso.</string>
     <string name="error_message_is">Il messaggio di errore è (da citare in caso di debug):\n\n</string>
     <string name="encountered_error_title">Errore di riproduzione</string>
-    <string name="encountered_error_message">HD XPlayer ha riscontrato un errore con questo media.\nProva ad aggiornare la raccolta multimediale.</string>
+    <string name="encountered_error_message">Video Player ha riscontrato un errore con questo media.\nProva ad aggiornare la raccolta multimediale.</string>
     <string name="invalid_location">La posizione %1$s non può essere riprodotta.</string>
     <string name="search">Cerca</string>
     <string name="search_history">Cerca nella cronologia</string>
@@ -192,13 +192,13 @@
     <string name="show_playlist">Mostra scaletta</string>
     <string name="hold_to_stop">Trattieni per fermare</string>
     <!-- About -->
-    <string name="app_name_full">HD XPlayer per Android</string>
+    <string name="app_name_full">Video Player per Android</string>
     <string name="licence">Licenza</string>
     <string name="revision">Revisione</string>
     <string name="about">Informazioni</string>
-    <string name="about_text">HD XPlayer per Android™ è un port del lettore multimediale HD XPlayer, il popolare lettore multimediale open source. La versione per Android™ può leggere la maggior parte dei file e dei flussi di rete.</string>
-    <string name="compiled_by">Questa versione di HD XPlayer è compilata da:</string>
-    <string name="vlc_authors">Autori di HD XPlayer.</string>
+    <string name="about_text">Video Player per Android™ è un port del lettore multimediale Video Player, il popolare lettore multimediale open source. La versione per Android™ può leggere la maggior parte dei file e dei flussi di rete.</string>
+    <string name="compiled_by">Questa versione di Video Player è compilata da:</string>
+    <string name="vlc_authors">Autori di Video Player.</string>
     <!-- Preferences -->
     <string name="preferences">Preferenze</string>
     <string name="general_prefs_category">Generale</string>
@@ -289,7 +289,7 @@
     <string name="enable_steal_remote_control">Controllo esclusivo delle cuffie</string>
     <string name="enable_steal_remote_control_summary">Evita conflitti acquisendo il controllo remoto delle cuffie da altre applicazioni. Ciò impedisce la chiamata con doppio tocco sui telefoni HTC.</string>
     <string name="aout">Uscita audio</string>
-    <string name="aout_summary">Cambia il metodo utilizzato da HD XPlayer per l\'uscita audio.</string>
+    <string name="aout_summary">Cambia il metodo utilizzato da Video Player per l\'uscita audio.</string>
     <string name="controls_prefs_category">Controlli</string>
     <string name="performance_prefs_category">Prestazioni</string>
     <string name="chroma_format">Forza crominanza video</string>
@@ -311,12 +311,12 @@
     <string name="auto_rescan">Nuova scansione automatica</string>
     <string name="auto_rescan_summary">Scansione automatica del dispositivo all\'avvio dell\'applicazione per media nuovi o eliminati</string>
     <string name="clear_media_db">Cancella il database multimediale</string>
-    <string name="clear_media_db_summary">Accedi alle informazioni di Android HD XPlayer per cancellare i dati</string>
+    <string name="clear_media_db_summary">Accedi alle informazioni di Android Video Player per cancellare i dati</string>
     <string name="clear_history">Cancella cronologia ricerche</string>
     <string name="media_db_cleared">Database multimediale cancellato!</string>
     <string name="set_locale">Imposta locale</string>
     <string name="set_locale_detail">Lascia vuoto per ripristinare</string>
-    <string name="set_locale_popup">Esci e riavvia HD XPlayer per applicare le modifiche.</string>
+    <string name="set_locale_popup">Esci e riavvia Video Player per applicare le modifiche.</string>
     <string name="network_caching">Valore della cache di rete</string>
     <string name="network_caching_summary">La quantità di tempo dedicata al buffer dei media di rete (in ms). Non funziona con la decodifica hardware. Lasciala vuota per ripristinare.</string>
     <string name="resume_playback_title">Riprendi riproduzione dopo una chiamata</string>
@@ -330,16 +330,16 @@
     <string name="start_logging">Avvia la scrittura del log</string>
     <string name="stop_logging">Ferma la scrittura del log</string>
     <string name="clear_log">Cancella il log</string>
-    <string name="log_service_title">Registrazione log di HD XPlayer</string>
+    <string name="log_service_title">Registrazione log di Video Player</string>
     <string name="log_service_text">Apri la console dei log</string>
     <string name="copy_to_clipboard">Copia negli appunti</string>
     <string name="copied_to_clipboard">Log copiato negli appunti.</string>
     <string name="dump_logcat">Salva log di logcat</string>
     <string name="dump_logcat_success">Logcat salvato correttamente su %1$s!</string>
     <string name="dump_logcat_failure">Salvataggio logcat non riuscito.</string>
-    <string name="serious_crash">Sfortunatamente, si è verificato un errore grave e HD XPlayer è stato chiuso.</string>
-    <string name="help_us_send_log">Aiutaci a migliorare HD XPlayer inviando il seguente registro del crash: </string>
-    <string name="restart_vlc">Riavvia HD XPlayer</string>
+    <string name="serious_crash">Sfortunatamente, si è verificato un errore grave e Video Player è stato chiuso.</string>
+    <string name="help_us_send_log">Aiutaci a migliorare Video Player inviando il seguente registro del crash: </string>
+    <string name="restart_vlc">Riavvia Video Player</string>
     <string name="send_log">Invia il registro</string>
     <string name="sending_log">Invio del registro in corso...</string>
     <string name="drawer_open">Apri cassetto di navigazione</string>
@@ -383,18 +383,18 @@
     <string name="no_subs_found">Nessun sottotitolo in questa cartella</string>
     <string name="music_now_playing">In riproduzione</string>
     <!--Widget-->
-    <string name="widget_name_w">Widget HD XPlayer bianco</string>
-    <string name="widget_name_b">Widget HD XPlayer scuro</string>
-    <string name="allow_storage_access_title">Consenti a HD XPlayer di accedere ai file video e audio</string>
-    <string name="allow_storage_access_description">HD XPlayer ha bisogno di questo permesso per accedere ai file multimediali su questo dispositivo.</string>
-    <string name="allow_settings_access_ringtone_title">Consenti a HD XPlayer di impostare la suoneria</string>
-    <string name="allow_settings_access_ringtone_description">HD XPlayer ha bisogno di questo permesso per impostare questo brano come suoneria.</string>
-    <string name="allow_settings_access_brightness_title">Consenti a HD XPlayer di cambiare la luminosità</string>
-    <string name="allow_settings_access_brightness_description">HD XPlayer ha bisogno di questo permesso per modificare la luminosità.</string>
-    <string name="allow_draw_overlays_title">Consenti al lettore HD XPlayer di apparire sopra le altre applicazioni</string>
-    <string name="allow_sdraw_overlays_description">HD XPlayer ha bisogno di questo permesso per visualizzare il video in una finestra che appare sopra le altre applicazioni.</string>
+    <string name="widget_name_w">Widget Video Player bianco</string>
+    <string name="widget_name_b">Widget Video Player scuro</string>
+    <string name="allow_storage_access_title">Consenti a Video Player di accedere ai file video e audio</string>
+    <string name="allow_storage_access_description">Video Player ha bisogno di questo permesso per accedere ai file multimediali su questo dispositivo.</string>
+    <string name="allow_settings_access_ringtone_title">Consenti a Video Player di impostare la suoneria</string>
+    <string name="allow_settings_access_ringtone_description">Video Player ha bisogno di questo permesso per impostare questo brano come suoneria.</string>
+    <string name="allow_settings_access_brightness_title">Consenti a Video Player di cambiare la luminosità</string>
+    <string name="allow_settings_access_brightness_description">Video Player ha bisogno di questo permesso per modificare la luminosità.</string>
+    <string name="allow_draw_overlays_title">Consenti al lettore Video Player di apparire sopra le altre applicazioni</string>
+    <string name="allow_sdraw_overlays_description">Video Player ha bisogno di questo permesso per visualizzare il video in una finestra che appare sopra le altre applicazioni.</string>
     <string name="permission_ask_again">Accorda permesso</string>
-    <string name="exit_app">Chiudi HD XPlayer</string>
+    <string name="exit_app">Chiudi Video Player</string>
     <!--fast scroller-->
     <string name="fastscroller_track">Traccia FastScroller</string>
     <string name="fastscroller_handle">Maniglia FastScroller</string>
@@ -444,7 +444,7 @@
     <string name="length">Durata</string>
     <string name="tv_settings_hint">Premi a lungo il pulsante OK per marcare/smarcare le cartelle</string>
     <string name="ml_external_storage_title">Nuova archiviazione esterna rilevata</string>
-    <string name="ml_external_storage_msg">Vuoi che HD XPlayer aggiunga il dispositivo %1$s alla tua raccolta multimediale?</string>
+    <string name="ml_external_storage_msg">Vuoi che Video Player aggiunga il dispositivo %1$s alla tua raccolta multimediale?</string>
     <string name="last_added_media">ultima aggiunta</string>
     <string name="no">No</string>
     <string name="loading_medialibrary">Caricamento raccolta multimediale...</string>
