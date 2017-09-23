@@ -28,6 +28,7 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
     public static final String KEY_RATE_SHOW_LAST = "rate_show_last";
     public static final String KEY_RATE_SHOW_NEXT = "rate_show_next";
     public static final String KEY_RATE_SHOW_COUNT = "rate_show_count";
+    public static final String KEY_RATE_LAST_VERSION = "rate_last_version";
 
     private static SharedPreferences sSettings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
 
@@ -127,6 +128,9 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
         }
         // 记录下次提示时间
         sSettings.edit().putLong(KEY_RATE_SHOW_NEXT, mNextTime).apply();
+        if (mNextTime == -1) {
+            sSettings.edit().putInt(KEY_RATE_LAST_VERSION, VLCApplication.getVersionCode()).apply();
+        }
 
         getActivity().finish();
     }

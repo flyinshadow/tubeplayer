@@ -23,6 +23,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Handler;
@@ -92,9 +94,7 @@ public class VLCApplication extends Application {
 
     private static int sDialogCounter = 0;
 
-
-    //google lijiazhi
-//    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+    private boolean mAppForeground = false;
 
     public static void setLocale(Context context){
         // Are we using advanced debugging - locale?
@@ -136,6 +136,20 @@ public class VLCApplication extends Application {
 
         setLocale(this);
 
+        //监听程序进入前台、后台
+        ForegroundCallbacks.init(this);
+        ForegroundCallbacks.get().addListener(new ForegroundCallbacks.Listener() {
+            @Override
+            public void onBecameForeground() {
+                mAppForeground = true;
+            }
+
+            @Override
+            public void onBecameBackground() {
+                mAppForeground = false;
+            }
+        });
+
         runBackground(new Runnable() {
             @Override
             public void run() {
@@ -169,16 +183,23 @@ public class VLCApplication extends Application {
         setLocale(this);
 
         // 切换到横屏时提示
-        if (!DialogActivity.sRateStarted && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (mAppForeground && !DialogActivity.sRateStarted && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             long lastTime = mSettings.getLong(RateFragment.KEY_RATE_SHOW_LAST, 0);
             long nextTime = mSettings.getLong(RateFragment.KEY_RATE_SHOW_NEXT, 0);
             int count = mSettings.getInt(RateFragment.KEY_RATE_SHOW_COUNT, 0);
+            int versionCode = mSettings.getInt(RateFragment.KEY_RATE_LAST_VERSION, 0);
             long currentTime = new Date().getTime();
             LogUtil.d(TAG, "rate tip, currentTime:" + currentTime + "(" + Util.millisToDate(currentTime) + ")" +
                     " lastTime:" + lastTime + "(" + Util.millisToDate(lastTime) + ")" +
                     " nextTime:" + nextTime + "(" + Util.millisToDate(nextTime) + ")" +
                     " count:" + count
                 );
+
+            // 版本更新重新提示
+            if (VLCApplication.getVersionCode() != versionCode && nextTime == -1) {
+                nextTime = 0;
+            }
+
             sWillShowRate = false;
             if (nextTime == -1) {
                 // 本版本不提示
@@ -322,5 +343,29 @@ public class VLCApplication extends Application {
             sMedialibraryInstance = Medialibrary.getInstance(instance);
         }
         return sMedialibraryInstance;
+    }
+
+    public static int getVersionCode() {
+        int versionCode = 0;
+        PackageManager packageManager = VLCApplication.getAppContext().getPackageManager();
+        try {
+            PackageInfo info = packageManager.getPackageInfo(VLCApplication.getAppContext().getPackageName(), 0);
+            versionCode = info.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionCode;
+    }
+
+    public static String getVersionString() {
+        String version = "";
+        PackageManager manager = VLCApplication.getAppContext().getPackageManager();
+        try {
+            PackageInfo info = manager.getPackageInfo(VLCApplication.getAppContext().getPackageName(), 0);
+            version = info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return version;
     }
 }

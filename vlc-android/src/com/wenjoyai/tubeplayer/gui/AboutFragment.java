@@ -75,20 +75,8 @@ public class AboutFragment extends Fragment {
 
         mVersion = (TextView) v.findViewById(R.id.version);
 
-        mVersion.setText(String.format(getString(R.string.about_version), getVersion()));
+        mVersion.setText(String.format(getString(R.string.about_version), VLCApplication.getVersionString()));
 
         return v;
-    }
-
-    private String getVersion() {
-        try {
-            PackageManager manager = VLCApplication.getAppContext().getPackageManager();
-            PackageInfo info = manager.getPackageInfo(VLCApplication.getAppContext().getPackageName(), 0);
-            String version = info.versionName;
-            return version;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
     }
 }
