@@ -2424,8 +2424,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     return true;
                 } else if (item.getItemId() == R.id.video_menu_subtitles_picker) {
 
-                    StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_SELECT,
-                            null, null);
+                    StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.ITEM_ID_VIDEO_SUBTITLE_SELECT);
 
                     if (mUri == null)
                         return false;
@@ -2435,8 +2434,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     return true;
                 } else if (item.getItemId() == R.id.video_menu_subtitles_download) {
 
-                    StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_DOWNLOAD,
-                            null, null);
+                    StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.ITEM_ID_VIDEO_SUBTITLE_DOWNLOAD);
 
                     if (mUri == null)
                         return false;
@@ -2495,7 +2493,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         switch (v.getId()) {
             case R.id.player_overlay_play:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_PAUSE, null, null);
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_PAUSE);
 
                 doPlayPause();
                 break;
@@ -2516,7 +2514,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 break;
             case R.id.lock_overlay_button:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_LOCK, null, null);
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_LOCK);
 
                 if (mIsLocked)
                     unlockScreen();
@@ -2553,7 +2551,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 break;
             case R.id.player_overlay_adv_function:
 
-                StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_EXTEND, null, null);
+                StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.ITEM_ID_VIDEO_EXTEND);
 
                 showAdvancedOptions();
                 break;
@@ -2562,7 +2560,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 break;
             case R.id.popup_toggle:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_POPUP, null, null);
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_POPUP);
 
                 if (VLCApplication.showTvUi()) {
                     enterPictureInPictureMode();
@@ -2807,37 +2805,37 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         switch (mCurrentSize) {
             case SURFACE_BEST_FIT:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_BEST_FIT, null);
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_RATIO_BEST_FIT);
 
                 showInfo(R.string.surface_best_fit, 1000);
                 break;
             case SURFACE_FIT_SCREEN:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_FIT_SCREEN, null);
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_RATIO_FIT_SCREEN);
 
                 showInfo(R.string.surface_fit_screen, 1000);
                 break;
             case SURFACE_FILL:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_FILL_SCREEN, null);
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_RATIO_FILL_SCREEN);
 
                 showInfo(R.string.surface_fill, 1000);
                 break;
             case SURFACE_16_9:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_16_9, null);
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_RATIO_16_9);
 
                 showInfo("16:9", 1000);
                 break;
             case SURFACE_4_3:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_4_3, null);
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_RATIO_4_3);
 
                 showInfo("4:3", 1000);
                 break;
             case SURFACE_ORIGINAL:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_CENTER, null);
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_RATIO_CENTER);
 
                 showInfo(R.string.surface_original, 1000);
                 break;

@@ -72,7 +72,7 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
         switch (view.getId()) {
             case R.id.rate_star:
 
-                StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_RATE, StatisticsManager.ITEM_RATE_STAR);
+                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_ID_RATE_STAR);
 
                 LogUtil.d(TAG, "rate_star time:" + time + "(" + Util.millisToDate(time) + ")");
                 mNextTime = -1;
@@ -81,7 +81,7 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
                 break;
             case R.id.rate_cancel:
 
-                StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_RATE, StatisticsManager.ITEM_RATE_CANCEL);
+                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_ID_RATE_CANCEL);
 
                 LogUtil.d(TAG, "rate_cancel last time:" + time + "(" + Util.millisToDate(time) + ")");
                 time = Util.getDateNext(1);
@@ -91,7 +91,7 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
                 break;
             case R.id.rate_dislike:
 
-                StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_RATE, StatisticsManager.ITEM_RATE_DISLIKE);
+                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_ID_RATE_DISLIKE);
 
                 LogUtil.d(TAG, "rate_dislike last time:" + time + "(" + Util.millisToDate(time) + ")");
                 time = Util.getDateNext(7);

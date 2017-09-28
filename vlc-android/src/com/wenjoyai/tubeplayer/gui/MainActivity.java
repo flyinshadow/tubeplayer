@@ -700,11 +700,26 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         // Current fragment loaded
         Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_placeholder);
 
+        switch (item.getItemId()) {
+            case R.id.ml_menu_sortby_name:
+                StatisticsManager.submitSortby(this, StatisticsManager.ITEM_ID_SORTBY_NAME);
+                break;
+            case R.id.ml_menu_sortby_length:
+                StatisticsManager.submitSortby(this, StatisticsManager.ITEM_ID_SORTBY_LENGTH);
+                break;
+            case R.id.ml_menu_sortby_date:
+                StatisticsManager.submitSortby(this, StatisticsManager.ITEM_ID_SORTBY_DATE);
+                break;
+        }
+
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.ml_menu_sortby_name:
             case R.id.ml_menu_sortby_length:
             case R.id.ml_menu_sortby_date:
+
+                StatisticsManager.submitHomeTab(this, StatisticsManager.ITEM_ID_SORTBY);
+
                 if (current == null)
                     break;
                 if (current instanceof ISortable) {
@@ -719,27 +734,27 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 break;
             case R.id.ml_menu_equalizer:
 
-                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_EQUALIZER, null);
+                StatisticsManager.submitHomeTab(this, StatisticsManager.ITEM_ID_EQUALIZER);
 
                 showSecondaryFragment(SecondaryActivity.EQUALIZER);
                 break;
             // Refresh
             case R.id.ml_menu_refresh:
 
-                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_REFRESH, null);
+                StatisticsManager.submitHomeTab(this, StatisticsManager.ITEM_ID_REFRESH);
 
                 forceRefresh(current);
                 break;
             case R.id.ml_menu_search:
 
-                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_SEARCH, null);
+                StatisticsManager.submitHomeTab(this, StatisticsManager.ITEM_ID_SEARCH);
 
                 startActivity(new Intent(Intent.ACTION_SEARCH, null, this, SearchActivity.class));
                 break;
             // Restore last playlist
             case R.id.ml_menu_last_playlist:
 
-                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_LAST_PLAYLIST, null);
+                StatisticsManager.submitHomeTab(this, StatisticsManager.ITEM_ID_LAST_PLAYLIST);
 
                 boolean audio = current instanceof AudioBrowserFragment;
                     Intent i = new Intent(audio ? PlaybackService.ACTION_REMOTE_LAST_PLAYLIST :
@@ -923,27 +938,27 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             // 统计上报
             switch (id) {
                 case R.id.nav_video:
-                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_VIDEO);
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.ITEM_ID_VIDEO);
                     break;
                 case R.id.nav_audio:
-                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_AUDIO);
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.ITEM_ID_AUDIO);
                     break;
                 case R.id.nav_directories:
-                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_DIRECT);
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.ITEM_ID_DIRECT);
                     break;
                 case R.id.nav_network:
-                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_LOCALNET);
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.ITEM_ID_LOCALNET);
                     break;
                 case R.id.nav_mrl:
-                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_STREAM);
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.ITEM_ID_STREAM);
                     break;
                 case R.id.nav_settings:
-                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_SETTING);
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.ITEM_ID_SETTING);
                 case R.id.nav_share_app:
-                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_SHARE);
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.ITEM_ID_SHARE);
                     break;
                 case R.id.nav_night_mode:
-                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_NIGHTMODE);
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.ITEM_ID_NIGHTMODE);
                     break;
             }
         }

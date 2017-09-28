@@ -53,6 +53,7 @@ import org.videolan.libvlc.util.AndroidUtil;
 import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.PlaybackServiceFragment;
 import com.wenjoyai.tubeplayer.gui.SecondaryActivity;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
@@ -449,6 +450,9 @@ public class AdvOptionsDialog extends DialogFragment implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case ID_SLEEP:
+
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_SLEEP);
+
                 if (VLCApplication.sPlayerSleepTime == null)
                     showFragment(ID_SLEEP);
                 else {
@@ -457,24 +461,38 @@ public class AdvOptionsDialog extends DialogFragment implements View.OnClickList
                 }
                 break;
             case ID_PLAYBACK_SPEED:
-                    showFragment(ID_PLAYBACK_SPEED);
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_PLAYBACK_SPEED);
+
+                showFragment(ID_PLAYBACK_SPEED);
                 break;
             case ID_CHAPTER_TITLE:
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_CHAPTER_TITLE);
+
                 showFragment(ID_CHAPTER_TITLE);
                 break;
             case ID_AUDIO_DELAY:
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_AUDIO_DELAY);
+
                 showValueControls(ACTION_AUDIO_DELAY);
                 break;
             case ID_SPU_DELAY:
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_SPU_DELAY);
+
                 showValueControls(ACTION_SPU_DELAY);
                 break;
             case ID_JUMP_TO:
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_JUMP_TO);
+
                 showFragment(ID_JUMP_TO);
                 break;
             case ID_PLAY_AS_AUDIO:
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_PLAY_AS_AUDIO);
+
                 ((VideoPlayerActivity)getActivity()).switchToAudioMode(true);
                 break;
             case ID_POPUP_VIDEO:
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_POPUP_VIDEO);
+
                 if (VLCApplication.showTvUi()) {
                     getActivity().enterPictureInPictureMode();
                 } else {
@@ -485,18 +503,26 @@ public class AdvOptionsDialog extends DialogFragment implements View.OnClickList
                 }
                 break;
             case ID_EQUALIZER:
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_EQUALIZER);
+
                 Intent i = new Intent(getActivity(), SecondaryActivity.class);
                 i.putExtra("fragment", SecondaryActivity.EQUALIZER);
                 startActivity(i);
                 dismiss();
                 break;
             case ID_SAVE_PLAYLIST:
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_SAVE_PLAYLIST);
+
                 showFragment(ID_SAVE_PLAYLIST);
                 break;
             case ID_REPEAT:
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_REPEAT);
+
                 setRepeatMode();
                 break;
             case ID_SHUFFLE:
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_SHUFFLE);
+
                 mService.shuffle();
                 initShuffle();
                 break;
