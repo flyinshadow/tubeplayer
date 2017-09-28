@@ -35,6 +35,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.util.SimpleArrayMap;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import org.videolan.libvlc.Dialog;
 import org.videolan.libvlc.util.AndroidUtil;
 import org.videolan.medialibrary.LogUtil;
@@ -133,6 +135,7 @@ public class VLCApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         instance = this;
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -199,11 +202,6 @@ public class VLCApplication extends Application {
                     " nextTime:" + nextTime + "(" + Util.millisToDate(nextTime) + ")" +
                     " count:" + count
                 );
-
-            // 版本更新重新提示
-            if (VLCApplication.getVersionCode() != versionCode && nextTime == -1) {
-                nextTime = 0;
-            }
 
             sWillShowRate = false;
             if (nextTime == -1) {

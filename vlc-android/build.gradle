@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
     packagingOptions {
@@ -159,6 +160,18 @@ android {
                 outputName += variant.productFlavors.get(0).name.toUpperCase() + "-"
             outputName += variant.versionName + "-" + variant.productFlavors.get(1).name + ".apk"
             output.outputFile = new File(output.outputFile.parentFile, outputName);
+
+            if (variant.getBuildType().isMinifyEnabled()) {
+                variant.assemble.doLast{
+                    copy {
+                        from variant.mappingFile
+                        into "${projectDir}/mappings"
+                        rename { String fileName ->
+                            "mapping-${variant.name}-${variant.versionName}.txt"
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -221,6 +234,9 @@ dependencies {
 //    compile('com.mopub:mopub-sdk:4.16.1@aar') {
 //        transitive = true
 //    }
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+        transitive = true;
+    }
 }
 
 static def buildTime() {

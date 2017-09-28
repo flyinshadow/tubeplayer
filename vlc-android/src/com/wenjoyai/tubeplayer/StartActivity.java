@@ -33,6 +33,7 @@ import android.provider.MediaStore;
 import org.videolan.libvlc.util.AndroidUtil;
 import com.wenjoyai.tubeplayer.gui.AudioPlayerContainerActivity;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
+import com.wenjoyai.tubeplayer.gui.RateFragment;
 import com.wenjoyai.tubeplayer.gui.SearchActivity;
 import com.wenjoyai.tubeplayer.gui.tv.MainTvActivity;
 import com.wenjoyai.tubeplayer.gui.tv.audioplayer.AudioPlayerActivity;
@@ -76,6 +77,13 @@ public class StartActivity extends Activity {
         boolean upgrade = firstRun || savedVersionNumber != currentVersionNumber;
         if (upgrade)
             settings.edit().putInt(PREF_FIRST_RUN, currentVersionNumber).apply();
+        // Rate dialog should come out
+        if (upgrade) {
+            settings.edit().putLong(RateFragment.KEY_RATE_SHOW_LAST, 0).apply();
+            settings.edit().putLong(RateFragment.KEY_RATE_SHOW_NEXT, 0).apply();
+            settings.edit().putInt(RateFragment.KEY_RATE_SHOW_COUNT, 0).apply();
+            settings.edit().putInt(RateFragment.KEY_RATE_LAST_VERSION, 0).apply();
+        }
         startMedialibrary(firstRun, upgrade);
         // Route search query
         if (Intent.ACTION_SEARCH.equals(action) || "com.google.android.gms.actions.SEARCH_ACTION".equals(action)) {

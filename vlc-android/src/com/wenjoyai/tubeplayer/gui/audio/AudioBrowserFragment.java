@@ -241,7 +241,7 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
             MediaLibraryItem mediaItem = adapter.getItem(position);
             if (pos == MODE_PLAYLIST )
                 item.setVisible(true);
-            else {
+            else if (mediaItem instanceof MediaWrapper) {
                 String location = ((MediaWrapper)mediaItem).getLocation();
                 item.setVisible(FileUtils.canWrite(location));
             }

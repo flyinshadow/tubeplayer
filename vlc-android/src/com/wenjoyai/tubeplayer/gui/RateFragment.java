@@ -26,10 +26,10 @@ import java.util.Date;
 public class RateFragment extends DialogFragment implements View.OnClickListener {
     private static final String TAG = "RateFragment";
 
-    public static final String KEY_RATE_SHOW_LAST = "rate_show_last";
-    public static final String KEY_RATE_SHOW_NEXT = "rate_show_next";
-    public static final String KEY_RATE_SHOW_COUNT = "rate_show_count";
-    public static final String KEY_RATE_LAST_VERSION = "rate_last_version";
+    public static final String KEY_RATE_SHOW_LAST = "rate_show_last";       // long
+    public static final String KEY_RATE_SHOW_NEXT = "rate_show_next";       // long
+    public static final String KEY_RATE_SHOW_COUNT = "rate_show_count";     // int
+    public static final String KEY_RATE_LAST_VERSION = "rate_last_version"; // int
 
     private static SharedPreferences sSettings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
 
