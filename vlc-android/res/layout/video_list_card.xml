@@ -186,5 +186,17 @@
             android:progress="@{progress}"
             android:progressDrawable="?attr/gridview_progressbar"
             android:visibility="@{progress &gt; 10 ? View.VISIBLE : View.INVISIBLE}" />
+        <com.google.android.gms.ads.NativeExpressAdView
+            android:id="@+id/adView"
+            android:gravity="center_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            vlc:adUnitId="ca-app-pub-1877164599441785/4251318706"
+            vlc:adSize="360x120"
+            android:visibility="gone"
+            vlc:layout_constraintTop_toTopOf="parent"
+            vlc:layout_constraintStart_toStartOf="parent"
+            vlc:layout_constraintStart_toEndOf="parent"
+            vlc:layout_constraintBottom_toBottomOf="parent" />
     </android.support.constraint.ConstraintLayout>
 </layout>
