@@ -75,8 +75,10 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
 
                 StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_RATE_STAR);
 
-                LogUtil.d(TAG, "rate_star time:" + time + "(" + Util.millisToDate(time) + ")");
-                mNextTime = -1;
+                LogUtil.d(TAG, "rate_star last time:" + time + "(" + Util.millisToDate(time) + ")");
+                time = Util.getDateNext(7);
+                LogUtil.d(TAG, "rate_star next time:" + time + "(" + Util.millisToDate(time) + ")");
+                mNextTime = time;
                 dismiss();
                 ShareUtils.launchAppDetail(getActivity(), getActivity().getPackageName());
                 break;

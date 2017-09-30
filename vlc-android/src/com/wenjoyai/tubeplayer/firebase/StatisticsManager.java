@@ -2,6 +2,7 @@ package com.wenjoyai.tubeplayer.firebase;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.wenjoyai.tubeplayer.util.LogUtil;
@@ -71,6 +72,8 @@ public class StatisticsManager {
     //音频播放
     public static final String EVENT_AUDIO_PLAY = "audioplay";
     public static final String TYPE_AUDIO_PLAY = "play";////格式
+
+    public static final String EVENT_VIDEO_PLAY_SUCCESS = "video_play_success";
 
     //主题
     public static final String EVENT_THEME = "theme";
@@ -152,8 +155,18 @@ public class StatisticsManager {
         FirebaseAnalytics.getInstance(context).logEvent(EVENT_VIDEO_PLAY, bundle);
     }
 
+    public static void submitVideoPlaySuccess(Context context, String itemId, String itemName) {
+        LogUtil.d(TAG, "submitVideoPlaySuccess, " + itemId + " " + itemName);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
+        if (!TextUtils.isEmpty(itemName)) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, itemName);
+        }
+        FirebaseAnalytics.getInstance(context).logEvent(EVENT_VIDEO_PLAY_SUCCESS, bundle);
+    }
+
     public static void submitPlayError(Context context, String itemId) {
-        LogUtil.d(TAG, "submitVideoPlay, " + itemId);
+        LogUtil.d(TAG, "submitPlayError, " + itemId);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
         FirebaseAnalytics.getInstance(context).logEvent(EVENT_PLAY_ERROR, bundle);
