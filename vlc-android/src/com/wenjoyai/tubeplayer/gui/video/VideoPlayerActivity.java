@@ -2297,17 +2297,21 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     }
 
     private void setAudioVolume(int vol) {
-        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, vol, 0);
+        try {
+            mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, vol, 0);
 
         /* Since android 4.3, the safe volume warning dialog is displayed only with the FLAG_SHOW_UI flag.
          * We don't want to always show the default UI volume, so show it only when volume is not set. */
-        int newVol = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        if (vol != newVol)
-            mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, vol, AudioManager.FLAG_SHOW_UI);
+            int newVol = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+            if (vol != newVol)
+                mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, vol, AudioManager.FLAG_SHOW_UI);
 
-        mTouchAction = TOUCH_VOLUME;
-        vol = vol * 100 / mAudioMax;
-        showInfoWithVerticalBar(getString(R.string.volume) + "\n" + Integer.toString(vol) + '%', 1000, vol);
+            mTouchAction = TOUCH_VOLUME;
+            vol = vol * 100 / mAudioMax;
+            showInfoWithVerticalBar(getString(R.string.volume) + "\n" + Integer.toString(vol) + '%', 1000, vol);
+        } catch (Exception e) {
+            LogUtil.e(TAG, "setAudioVolume got exception: ", e);
+        }
     }
 
     private void mute(boolean mute) {
@@ -2424,7 +2428,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     return true;
                 } else if (item.getItemId() == R.id.video_menu_subtitles_picker) {
 
-                    StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.ITEM_ID_VIDEO_SUBTITLE_SELECT);
+                    StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_SELECT, null, null);
 
                     if (mUri == null)
                         return false;
@@ -2434,7 +2438,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     return true;
                 } else if (item.getItemId() == R.id.video_menu_subtitles_download) {
 
-                    StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.ITEM_ID_VIDEO_SUBTITLE_DOWNLOAD);
+                    StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_DOWNLOAD, null, null);
 
                     if (mUri == null)
                         return false;
@@ -2493,7 +2497,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         switch (v.getId()) {
             case R.id.player_overlay_play:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_PAUSE);
+                StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_PAUSE, null, null);
 
                 doPlayPause();
                 break;
@@ -2514,7 +2518,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 break;
             case R.id.lock_overlay_button:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_LOCK);
+                StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_LOCK, null, null);
 
                 if (mIsLocked)
                     unlockScreen();
@@ -2551,7 +2555,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 break;
             case R.id.player_overlay_adv_function:
 
-                StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.ITEM_ID_VIDEO_EXTEND);
+                StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_EXTEND, null, null);
 
                 showAdvancedOptions();
                 break;
@@ -2560,16 +2564,12 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 break;
             case R.id.popup_toggle:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_POPUP);
+                StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_POPUP, null, null);
 
-                if (VLCApplication.showTvUi()) {
-                    enterPictureInPictureMode();
-                } else {
-                    if (Permissions.canDrawOverlays(this))
-                        switchToPopupMode();
-                    else
-                        Permissions.checkDrawOverlaysPermission(this);
-                }
+                if (Permissions.canDrawOverlays(this))
+                    switchToPopupMode();
+                else
+                    Permissions.checkDrawOverlaysPermission(this);
                 break;
             case R.id.player_goback:
                 exitOK();
@@ -2805,37 +2805,37 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         switch (mCurrentSize) {
             case SURFACE_BEST_FIT:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_RATIO_BEST_FIT);
+                StatisticsManager.submitSelectContent(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_BEST_FIT);
 
                 showInfo(R.string.surface_best_fit, 1000);
                 break;
             case SURFACE_FIT_SCREEN:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_RATIO_FIT_SCREEN);
+                StatisticsManager.submitSelectContent(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_FIT_SCREEN);
 
                 showInfo(R.string.surface_fit_screen, 1000);
                 break;
             case SURFACE_FILL:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_RATIO_FILL_SCREEN);
+                StatisticsManager.submitSelectContent(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_FILL_SCREEN);
 
                 showInfo(R.string.surface_fill, 1000);
                 break;
             case SURFACE_16_9:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_RATIO_16_9);
+                StatisticsManager.submitSelectContent(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_16_9);
 
                 showInfo("16:9", 1000);
                 break;
             case SURFACE_4_3:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_RATIO_4_3);
+                StatisticsManager.submitSelectContent(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_4_3);
 
                 showInfo("4:3", 1000);
                 break;
             case SURFACE_ORIGINAL:
 
-                StatisticsManager.submitVideoPlay(this, StatisticsManager.ITEM_ID_VIDEO_RATIO_CENTER);
+                StatisticsManager.submitSelectContent(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_RATIO, StatisticsManager.ITEM_VIDEO_RATIO_CENTER);
 
                 showInfo(R.string.surface_original, 1000);
                 break;

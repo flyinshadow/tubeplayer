@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
@@ -72,7 +73,7 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
         switch (view.getId()) {
             case R.id.rate_star:
 
-                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_ID_RATE_STAR);
+                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_RATE_STAR);
 
                 LogUtil.d(TAG, "rate_star time:" + time + "(" + Util.millisToDate(time) + ")");
                 mNextTime = -1;
@@ -81,7 +82,7 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
                 break;
             case R.id.rate_cancel:
 
-                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_ID_RATE_CANCEL);
+                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_RATE_CANCEL);
 
                 LogUtil.d(TAG, "rate_cancel last time:" + time + "(" + Util.millisToDate(time) + ")");
                 time = Util.getDateNext(1);
@@ -91,7 +92,7 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
                 break;
             case R.id.rate_dislike:
 
-                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_ID_RATE_DISLIKE);
+                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_RATE_DISLIKE);
 
                 LogUtil.d(TAG, "rate_dislike last time:" + time + "(" + Util.millisToDate(time) + ")");
                 time = Util.getDateNext(7);

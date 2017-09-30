@@ -116,7 +116,7 @@ public class ThemeFragment extends DialogFragment {
 //                getActivity().setTheme(mThemeStyles[i]);
 //                getActivity().getTheme().applyStyle(mThemeStyles[i], true);
 
-                StatisticsManager.submitTheme(getActivity(), i);
+                StatisticsManager.submitTheme(getActivity(), "theme_" + i);
 
                 if (sSettings.getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, 0) == i) {
                     return;

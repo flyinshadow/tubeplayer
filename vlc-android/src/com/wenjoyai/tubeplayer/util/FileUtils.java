@@ -416,7 +416,11 @@ public class FileUtils {
     public static String getFileExt(String filename) {
         String fileExt = "";
         if (!TextUtils.isEmpty(filename)) {
-            int index = filename.lastIndexOf(".");
+            int index = -1;
+            index = filename.indexOf('?');
+            if (index != -1)
+                filename = filename.substring(0, index);
+            index = filename.lastIndexOf(".");
             if (index != -1)
                 fileExt = filename.substring(index).toLowerCase(Locale.ENGLISH);
         }

@@ -688,19 +688,20 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 item.setIcon(R.drawable.ic_view_grid);
                 mGridView.removeItemDecoration(mDividerItemDecoration);
 
-                StatisticsManager.submitViewer(getActivity(), StatisticsManager.ITEM_ID_VIEWER_GRID);
+                StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER_GRID, null);
 
             } else if (targetViewMode == VideoListAdapter.VIEW_MODE_LIST) {
                 item.setIcon(R.drawable.ic_view_list);
                 mGridView.addItemDecoration(mDividerItemDecoration);
 
-                StatisticsManager.submitViewer(getActivity(), StatisticsManager.ITEM_ID_VIEWER_LIST);
+                StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER_LIST, null);
 
             } else if (targetViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
                 item.setIcon(R.drawable.ic_view_bigpic);
                 mGridView.removeItemDecoration(mDividerItemDecoration);
 
-                StatisticsManager.submitViewer(getActivity(), StatisticsManager.ITEM_ID_VIEWER_BIGPIC);
+                StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER_BIGPIC, null);
+
             }
             updateViewMode(targetViewMode);
             mVideoAdapter.toggleViewMode(targetViewMode);

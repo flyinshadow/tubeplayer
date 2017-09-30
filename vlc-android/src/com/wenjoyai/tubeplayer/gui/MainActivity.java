@@ -101,6 +101,7 @@ import com.wenjoyai.tubeplayer.interfaces.IRefreshable;
 import com.wenjoyai.tubeplayer.interfaces.ISortable;
 import com.wenjoyai.tubeplayer.media.MediaDatabase;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.Permissions;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
@@ -702,13 +703,13 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
         switch (item.getItemId()) {
             case R.id.ml_menu_sortby_name:
-                StatisticsManager.submitSortby(this, StatisticsManager.ITEM_ID_SORTBY_NAME);
+                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_SORTBY_NAME, null);
                 break;
             case R.id.ml_menu_sortby_length:
-                StatisticsManager.submitSortby(this, StatisticsManager.ITEM_ID_SORTBY_LENGTH);
+                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_SORTBY_LENGTH, null);
                 break;
             case R.id.ml_menu_sortby_date:
-                StatisticsManager.submitSortby(this, StatisticsManager.ITEM_ID_SORTBY_DATE);
+                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_SORTBY_DATE, null);
                 break;
         }
 
@@ -717,9 +718,6 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             case R.id.ml_menu_sortby_name:
             case R.id.ml_menu_sortby_length:
             case R.id.ml_menu_sortby_date:
-
-                StatisticsManager.submitHomeTab(this, StatisticsManager.ITEM_ID_SORTBY);
-
                 if (current == null)
                     break;
                 if (current instanceof ISortable) {
@@ -734,27 +732,27 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 break;
             case R.id.ml_menu_equalizer:
 
-                StatisticsManager.submitHomeTab(this, StatisticsManager.ITEM_ID_EQUALIZER);
+                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_EQUALIZER, null);
 
                 showSecondaryFragment(SecondaryActivity.EQUALIZER);
                 break;
             // Refresh
             case R.id.ml_menu_refresh:
 
-                StatisticsManager.submitHomeTab(this, StatisticsManager.ITEM_ID_REFRESH);
+                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_REFRESH, null);
 
                 forceRefresh(current);
                 break;
             case R.id.ml_menu_search:
 
-                StatisticsManager.submitHomeTab(this, StatisticsManager.ITEM_ID_SEARCH);
+                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_SEARCH, null);
 
                 startActivity(new Intent(Intent.ACTION_SEARCH, null, this, SearchActivity.class));
                 break;
             // Restore last playlist
             case R.id.ml_menu_last_playlist:
 
-                StatisticsManager.submitHomeTab(this, StatisticsManager.ITEM_ID_LAST_PLAYLIST);
+                StatisticsManager.submitHomeTab(this, StatisticsManager.TYPE_LAST_PLAYLIST, null);
 
                 boolean audio = current instanceof AudioBrowserFragment;
                     Intent i = new Intent(audio ? PlaybackService.ACTION_REMOTE_LAST_PLAYLIST :
@@ -938,27 +936,27 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             // 统计上报
             switch (id) {
                 case R.id.nav_video:
-                    StatisticsManager.submitDrawlayout(this, StatisticsManager.ITEM_ID_VIDEO);
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_VIDEO);
                     break;
                 case R.id.nav_audio:
-                    StatisticsManager.submitDrawlayout(this, StatisticsManager.ITEM_ID_AUDIO);
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_AUDIO);
                     break;
                 case R.id.nav_directories:
-                    StatisticsManager.submitDrawlayout(this, StatisticsManager.ITEM_ID_DIRECT);
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_DIRECT);
                     break;
                 case R.id.nav_network:
-                    StatisticsManager.submitDrawlayout(this, StatisticsManager.ITEM_ID_LOCALNET);
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_LOCALNET);
                     break;
                 case R.id.nav_mrl:
-                    StatisticsManager.submitDrawlayout(this, StatisticsManager.ITEM_ID_STREAM);
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_STREAM);
                     break;
                 case R.id.nav_settings:
-                    StatisticsManager.submitDrawlayout(this, StatisticsManager.ITEM_ID_SETTING);
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_SETTING);
                 case R.id.nav_share_app:
-                    StatisticsManager.submitDrawlayout(this, StatisticsManager.ITEM_ID_SHARE);
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_SHARE);
                     break;
                 case R.id.nav_night_mode:
-                    StatisticsManager.submitDrawlayout(this, StatisticsManager.ITEM_ID_NIGHTMODE);
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_NIGHTMODE);
                     break;
             }
         }
@@ -1109,13 +1107,18 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         preloadMap.put(MobVistaConstans.PRELOAD_RESULT_LISTENER, new PreloadListener() {
             @Override
             public void onPreloadSucceed() {
-                mRotateAD.setVisibility(View.VISIBLE);
-//                Log.e(TAG, "onPreloadSucceed");
+                LogUtil.d(TAG, "onPreloadSucceed");
+                VLCApplication.runOnMainThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRotateAD.setVisibility(View.VISIBLE);
+                    }
+                });
             }
 
             @Override
             public void onPreloadFaild(String s) {
-//                Log.e(TAG, "onPreloadFaild"+s);
+                LogUtil.d(TAG, "onPreloadFaild");
             }
         });
         sdk.preload(preloadMap);

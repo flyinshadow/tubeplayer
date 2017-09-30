@@ -93,7 +93,7 @@ public abstract class MediaBrowserFragment extends PlaybackServiceFragment imple
                 @Override
                 public void onClick(View v) {
 
-                    StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.ITEM_ID_PLAY_ALL_VIDEO);
+                    StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_PLAY_ALL_VIDEO, null);
 
                     onFabPlayClick(v);
                 }

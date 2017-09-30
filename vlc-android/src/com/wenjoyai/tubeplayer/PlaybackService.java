@@ -624,10 +624,10 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
                     changeAudioFocus(false);
                     break;
                 case MediaPlayer.Event.EncounteredError:
-                    StatisticsManager.submitPlayFailed(PlaybackService.this, getCurrentMediaLocation());
-                    showToast(getString(
-                            R.string.invalid_location,
-                            mMediaList.getMRL(mCurrentIndex)), Toast.LENGTH_SHORT);
+                    String url = getCurrentMediaLocation();
+                    StatisticsManager.submitPlayError(PlaybackService.this, FileUtils.getFileExt(url));
+                    StatisticsManager.submitPlayError(PlaybackService.this, getCurrentMediaLocation());
+                    showToast(getString(R.string.invalid_location, mMediaList.getMRL(mCurrentIndex)), Toast.LENGTH_SHORT);
                     executeUpdate();
                     executeUpdateProgress();
                     next();
@@ -1987,12 +1987,13 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
         media.release();
 
         if (mw.getType() == MediaWrapper.TYPE_VIDEO) {
-            StatisticsManager.submitVideoPlay(PlaybackService.this, StatisticsManager.ITEM_ID_VIDEO_SUCCESS);
-            StatisticsManager.submitVideoExt(PlaybackService.this, FileUtils.getFileExt(mrl));
-            StatisticsManager.submitVideoLength(PlaybackService.this, getCurrentMedia().getLength());
+            StatisticsManager.submitVideoPlay(PlaybackService.this, StatisticsManager.TYPE_VIDEO_SUCCESS,
+                    "(video)" + FileUtils.getFileExt(mrl), StatisticsManager.getVideoLengthType(getCurrentMedia() != null ? getCurrentMedia().getLength() : 0));
         } else if (mw.getType() == MediaWrapper.TYPE_AUDIO) {
-            StatisticsManager.submitAudioPlay(PlaybackService.this, "");
-            StatisticsManager.submitAudioExt(PlaybackService.this, FileUtils.getFileExt(mrl));
+            StatisticsManager.submitAudioPlay(PlaybackService.this, StatisticsManager.TYPE_AUDIO_PLAY, "(audio)" + FileUtils.getFileExt(mrl));
+        }
+        if (mw.getUri() != null && !TextUtils.equals(mw.getUri().getScheme(), "file")) {
+            StatisticsManager.submitVideoPlay(PlaybackService.this, null, getCurrentMediaLocation(), null);
         }
 
         if (mw.getType() != MediaWrapper.TYPE_VIDEO || isVideoPlaying || mw.hasFlag(MediaWrapper.MEDIA_FORCE_AUDIO)) {

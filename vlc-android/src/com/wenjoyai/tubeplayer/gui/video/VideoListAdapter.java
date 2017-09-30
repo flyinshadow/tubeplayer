@@ -432,7 +432,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
         public void onClick(View v) {
             int position = getLayoutPosition();
-            mEventsHandler.onClick(v, position, mVideos.get(position));
+            if (position >= 0 && position < mVideos.size()) {
+                mEventsHandler.onClick(v, position, mVideos.get(position));
+            }
         }
 
         public void onMoreClick(View v){
@@ -441,7 +443,10 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
         public boolean onLongClick(View v) {
             int position = getLayoutPosition();
-            return mEventsHandler.onLongClick(v, position, mVideos.get(position));
+            if (position >= 0 && position < mVideos.size()) {
+                return mEventsHandler.onLongClick(v, position, mVideos.get(position));
+            }
+            return false;
         }
 
 //        private void setOverlay(boolean selected) {

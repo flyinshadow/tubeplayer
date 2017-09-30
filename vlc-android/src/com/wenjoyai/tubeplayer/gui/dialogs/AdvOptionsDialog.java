@@ -451,7 +451,7 @@ public class AdvOptionsDialog extends DialogFragment implements View.OnClickList
         switch (v.getId()){
             case ID_SLEEP:
 
-                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_SLEEP);
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.TYPE_VIDEO_EXTEND, null, null);
 
                 if (VLCApplication.sPlayerSleepTime == null)
                     showFragment(ID_SLEEP);
@@ -461,37 +461,37 @@ public class AdvOptionsDialog extends DialogFragment implements View.OnClickList
                 }
                 break;
             case ID_PLAYBACK_SPEED:
-                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_PLAYBACK_SPEED);
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.TYPE_VIDEO_EXTEND_PLAYBACK_SPEED, null, null);
 
                 showFragment(ID_PLAYBACK_SPEED);
                 break;
             case ID_CHAPTER_TITLE:
-                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_CHAPTER_TITLE);
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.TYPE_VIDEO_EXTEND_CHAPTER_TITLE, null, null);
 
                 showFragment(ID_CHAPTER_TITLE);
                 break;
             case ID_AUDIO_DELAY:
-                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_AUDIO_DELAY);
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.TYPE_VIDEO_EXTEND_AUDIO_DELAY, null, null);
 
                 showValueControls(ACTION_AUDIO_DELAY);
                 break;
             case ID_SPU_DELAY:
-                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_SPU_DELAY);
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.TYPE_VIDEO_EXTEND_SPU_DELAY, null, null);
 
                 showValueControls(ACTION_SPU_DELAY);
                 break;
             case ID_JUMP_TO:
-                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_JUMP_TO);
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.TYPE_VIDEO_EXTEND_JUMP_TO, null, null);
 
                 showFragment(ID_JUMP_TO);
                 break;
             case ID_PLAY_AS_AUDIO:
-                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_PLAY_AS_AUDIO);
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.TYPE_VIDEO_EXTEND_PLAY_AS_AUDIO, null, null);
 
                 ((VideoPlayerActivity)getActivity()).switchToAudioMode(true);
                 break;
             case ID_POPUP_VIDEO:
-                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_POPUP_VIDEO);
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.TYPE_VIDEO_EXTEND_POPUP_VIDEO, null, null);
 
                 if (VLCApplication.showTvUi()) {
                     getActivity().enterPictureInPictureMode();
@@ -503,7 +503,7 @@ public class AdvOptionsDialog extends DialogFragment implements View.OnClickList
                 }
                 break;
             case ID_EQUALIZER:
-                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_EQUALIZER);
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.TYPE_VIDEO_EXTEND_EQUALIZER, null, null);
 
                 Intent i = new Intent(getActivity(), SecondaryActivity.class);
                 i.putExtra("fragment", SecondaryActivity.EQUALIZER);
@@ -511,17 +511,17 @@ public class AdvOptionsDialog extends DialogFragment implements View.OnClickList
                 dismiss();
                 break;
             case ID_SAVE_PLAYLIST:
-                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_SAVE_PLAYLIST);
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.TYPE_VIDEO_EXTEND_SAVE_PLAYLIST, null, null);
 
                 showFragment(ID_SAVE_PLAYLIST);
                 break;
             case ID_REPEAT:
-                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_REPEAT);
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.TYPE_VIDEO_EXTEND_REPEAT, null, null);
 
                 setRepeatMode();
                 break;
             case ID_SHUFFLE:
-                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.ITEM_ID_VIDEO_EXTEND_SHUFFLE);
+                StatisticsManager.submitVideoPlay(getActivity(), StatisticsManager.TYPE_VIDEO_EXTEND_SHUFFLE, null, null);
 
                 mService.shuffle();
                 initShuffle();
