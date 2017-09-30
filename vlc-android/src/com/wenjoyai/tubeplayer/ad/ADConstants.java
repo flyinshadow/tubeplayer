@@ -58,8 +58,6 @@ public class ADConstants {
     public static final String GOOGLE_FULLSCREEN_LIBARY = "ca-app-pub-1877164599441785/8681153348";
     public static final String google_video_back_interstitial = "ca-app-pub-1877164599441785/8440769750";
 
-    //列表-native
-    public static final String google_list_native ="ca-app-pub-1877164599441785/4251318706";
 
 
 }
