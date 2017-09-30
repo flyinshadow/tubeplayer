@@ -57,6 +57,8 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
 
+        multiDexEnabled true
+
         tasks.whenTaskAdded { task ->
             if (task.name.startsWith('merge')) {
                 task.dependsOn luaPlaylistCopy

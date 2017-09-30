@@ -3859,7 +3859,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
                 @Override
                 public void onAdClick() {
-                    StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_VIDEO_BACK);
+                    StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_BACK);
                 }
 
                 @Override

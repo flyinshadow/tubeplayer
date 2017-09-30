@@ -9,6 +9,8 @@
         android.support.v14.preference,
         android.support.v17.preference,
         com.alphab,
+        com.duapps.trigger,
+        com.facebook.ads,
         com.google.firebase,
         com.google.firebase.firebase_ads,
         com.google.firebase.firebase_core,
@@ -23,7 +25,9 @@
         com.google.android.gms.measurement,
         com.google.android.gms.measurement.impl,
         com.mobvista.msdk,
-        com.mobvista.msdk.appwall
+        com.mobvista.msdk.appwall,
+        com.mobvista.msdk.interstitial,
+        com.mobvista.msdk.mvjscommon
         "/>
 
     <uses-permission
