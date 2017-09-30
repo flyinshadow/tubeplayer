@@ -230,6 +230,8 @@ dependencies {
     compile(name: 'mobvista_alphab', ext: 'aar')
     compile(name: 'mobvista_appwall', ext: 'aar')
     compile(name: 'mobvista_common', ext: 'aar')
+    compile(name: 'mobvista_interstitial', ext: 'aar')
+    compile(name: 'mobvista_mvjscommon', ext: 'aar')
     //mopub
 //    compile('com.mopub:mopub-sdk:4.16.1@aar') {
 //        transitive = true
@@ -237,6 +239,11 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true;
     }
+    //facebook
+    compile 'com.facebook.android:audience-network-sdk:4.+'
+    //百度
+    compile(name: 'DuappsAd-CW-v1.0.9.8.1-release', ext: 'aar')
+    compile(name: 'DuappsAd-Trigger-1.0', ext: 'aar')
 }
 
 static def buildTime() {

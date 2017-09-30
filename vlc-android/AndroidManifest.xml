@@ -605,26 +605,58 @@
             android:configChanges="keyboard|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme2" />
-        <!--mopub-->
         <activity
-            android:name="com.mopub.mobileads.MoPubActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity
-            android:name="com.mopub.mobileads.MraidActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity
-            android:name="com.mopub.common.MoPubBrowser"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity
-            android:name="com.mopub.mobileads.MraidVideoPlayerActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity
-            android:name="com.mopub.mobileads.RewardedMraidActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+            android:name="com.mobvista.msdk.interstitial.view.MVInterstitialActivity"
+            android:screenOrientation="portrait" />
 
+
+        <!---->
+        <!--&lt;!&ndash;mopub&ndash;&gt;-->
+        <!--<activity-->
+            <!--android:name="com.mopub.mobileads.MoPubActivity"-->
+            <!--android:configChanges="keyboardHidden|orientation|screenSize" />-->
+        <!--<activity-->
+            <!--android:name="com.mopub.mobileads.MraidActivity"-->
+            <!--android:configChanges="keyboardHidden|orientation|screenSize" />-->
+        <!--<activity-->
+            <!--android:name="com.mopub.common.MoPubBrowser"-->
+            <!--android:configChanges="keyboardHidden|orientation|screenSize" />-->
+        <!--<activity-->
+            <!--android:name="com.mopub.mobileads.MraidVideoPlayerActivity"-->
+            <!--android:configChanges="keyboardHidden|orientation|screenSize" />-->
+        <!--<activity-->
+            <!--android:name="com.mopub.mobileads.RewardedMraidActivity"-->
+            <!--android:configChanges="keyboardHidden|orientation|screenSize" />-->
+
+        <!--<meta-data-->
+            <!--android:name="com.google.android.gms.version"-->
+            <!--android:value="@integer/google_play_services_version" />-->
+
+        <!--百度-->
         <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:name="app_license"
+            android:value="67abfc1ff831c072bcf81282c9d932fa" />
+
+        <provider
+            android:name="com.duapps.ad.stats.DuAdCacheProvider"
+            android:authorities="com.wenjoyai.tubeplayer.DuAdCacheProvider"
+            android:exported="false"/>
+
+        <receiver android:name="com.duapps.ad.base.PackageAddReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name="com.duapps.ad.offerwall.ui.OfferWallAct" />
+
+        <activity
+            android:name="com.trigger.ad.DuTriggerADActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:excludeFromRecents="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

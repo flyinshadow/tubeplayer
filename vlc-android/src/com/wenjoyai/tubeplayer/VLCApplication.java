@@ -42,6 +42,7 @@ import org.videolan.libvlc.util.AndroidUtil;
 import org.videolan.medialibrary.LogUtil;
 import org.videolan.medialibrary.Medialibrary;
 
+import com.duapps.ad.base.DuAdNetwork;
 import com.google.android.gms.ads.MobileAds;
 import com.mobvista.msdk.MobVistaSDK;
 import com.mobvista.msdk.out.MobVistaSDKFactory;
@@ -57,6 +58,10 @@ import com.wenjoyai.tubeplayer.util.Strings;
 import com.wenjoyai.tubeplayer.util.Util;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -177,7 +182,14 @@ public class VLCApplication extends Application {
                 sdk.init(map, VLCApplication.this);
 
                 //初始化google广告
-                MobileAds.initialize(instance, ADManager.GOOGLE_APP_ID);
+                MobileAds.initialize(instance, ADConstants.GOOGLE_APP_ID);
+
+                //百度广告
+
+                /**
+                 * the sdk initialization 初始化SDK
+                 */
+                DuAdNetwork.init(instance, getConfigJSON(getApplicationContext()));
                 Looper.loop();
             }
         });
@@ -370,5 +382,37 @@ public class VLCApplication extends Application {
             e.printStackTrace();
         }
         return version;
+    }
+    /**
+     * 从assets中读取txt
+     */
+    private String getConfigJSON(Context context) {
+        BufferedInputStream bis = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        try {
+            bis = new BufferedInputStream(context.getAssets().open("json.txt"));
+            byte[] buffer = new byte[4096];
+            int readLen = -1;
+            while ((readLen = bis.read(buffer)) > 0) {
+                bos.write(buffer, 0, readLen);
+            }
+        } catch (IOException e) {
+            Log.e("", "IOException :" + e.getMessage());
+        } finally {
+            closeQuietly(bis);
+        }
+
+        return bos.toString();
+    }
+
+    private void closeQuietly(Closeable closeable) {
+        if (closeable == null) {
+            return;
+        }
+        try {
+            closeable.close();
+        } catch (IOException e) {
+            // empty
+        }
     }
 }

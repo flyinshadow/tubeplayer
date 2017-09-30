@@ -55,6 +55,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ import com.mobvista.msdk.MobVistaConstans;
 import com.mobvista.msdk.MobVistaSDK;
 import com.mobvista.msdk.out.MobVistaSDKFactory;
 import com.mobvista.msdk.out.PreloadListener;
+import com.trigger.view.TriggerIconView;
 import com.wenjoyai.tubeplayer.BuildConfig;
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.PlaybackService;
@@ -233,6 +235,13 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         mMediaLibrary = VLCApplication.getMLInstance();
 
         preloadWall();
+        final TriggerIconView view = (TriggerIconView)findViewById(R.id.trigger_icon);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                view.setVisibility(View.GONE);
+            }
+        },4000);
     }
 
     private void setupNavigationView() {
@@ -422,6 +431,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                             mFirebaseRemoteConfig.activateFetched();
                         }
                         ADManager.isShowGoogleAD = mFirebaseRemoteConfig.getBoolean("is_google_ad_show");
+//                        ADManager.sType = mFirebaseRemoteConfig.getLong("ad_platform_type");
                     }
                 });
         // [END fetch_config_with_callback]
@@ -1103,7 +1113,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         MobVistaSDK sdk = MobVistaSDKFactory.getMobVistaSDK();
         Map<String, Object> preloadMap = new HashMap<String, Object>();
         preloadMap.put(MobVistaConstans.PROPERTIES_LAYOUT_TYPE, MobVistaConstans.LAYOUT_APPWALL);
-        preloadMap.put(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.library_roate_offer_wall);
+        preloadMap.put(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.mobvista_library_roate_offer_wall);
         preloadMap.put(MobVistaConstans.PRELOAD_RESULT_LISTENER, new PreloadListener() {
             @Override
             public void onPreloadSucceed() {
@@ -1130,7 +1140,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         try {
             Class<?> aClass = Class.forName("com.mobvista.msdk.shell.MVActivity");
             Intent intent = new Intent(this, aClass);
-            intent.putExtra(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.library_roate_offer_wall);
+            intent.putExtra(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.mobvista_library_roate_offer_wall);
             this.startActivity(intent);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
@@ -1150,7 +1160,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 //                    if (null!=mInterstitialAd) {
 //                        mInterstitialAd.show();
 //                        mRotateAD.setVisibility(View.INVISIBLE);
-//                        loadGoogle();
+//                        loadInterstitial();
 //                    }
 //                }
                 StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_LIBRARY_NAME);
