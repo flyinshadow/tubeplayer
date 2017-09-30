@@ -626,7 +626,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
                 case MediaPlayer.Event.EncounteredError:
                     String url = getCurrentMediaLocation();
                     StatisticsManager.submitPlayError(PlaybackService.this, FileUtils.getFileExt(url));
-                    StatisticsManager.submitPlayError(PlaybackService.this, getCurrentMediaLocation());
+                    StatisticsManager.submitPlayError(PlaybackService.this, url);
                     showToast(getString(R.string.invalid_location, mMediaList.getMRL(mCurrentIndex)), Toast.LENGTH_SHORT);
                     executeUpdate();
                     executeUpdateProgress();
@@ -1987,13 +1987,13 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
         media.release();
 
         if (mw.getType() == MediaWrapper.TYPE_VIDEO) {
-            StatisticsManager.submitVideoPlay(PlaybackService.this, StatisticsManager.TYPE_VIDEO_SUCCESS,
-                    "(video)" + FileUtils.getFileExt(mrl), StatisticsManager.getVideoLengthType(getCurrentMedia() != null ? getCurrentMedia().getLength() : 0));
+            StatisticsManager.submitVideoPlaySuccess(PlaybackService.this, FileUtils.getFileExt(mrl),
+                    StatisticsManager.getVideoLengthType(getCurrentMedia() != null ? getCurrentMedia().getLength() : 0));
         } else if (mw.getType() == MediaWrapper.TYPE_AUDIO) {
-            StatisticsManager.submitAudioPlay(PlaybackService.this, StatisticsManager.TYPE_AUDIO_PLAY, "(audio)" + FileUtils.getFileExt(mrl));
+            StatisticsManager.submitAudioPlay(PlaybackService.this, StatisticsManager.TYPE_AUDIO_PLAY, FileUtils.getFileExt(mrl));
         }
         if (mw.getUri() != null && !TextUtils.equals(mw.getUri().getScheme(), "file")) {
-            StatisticsManager.submitVideoPlay(PlaybackService.this, null, getCurrentMediaLocation(), null);
+            StatisticsManager.submitVideoPlaySuccess(PlaybackService.this, getCurrentMediaLocation(), null);
         }
 
         if (mw.getType() != MediaWrapper.TYPE_VIDEO || isVideoPlaying || mw.hasFlag(MediaWrapper.MEDIA_FORCE_AUDIO)) {
