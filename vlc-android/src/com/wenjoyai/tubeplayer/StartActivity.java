@@ -110,7 +110,7 @@ public class StartActivity extends BaseActivity {
 
         setContentView(R.layout.welcome);
 
-        loadInterstitial();
+//        loadInterstitial();
 
         mHandler.sendEmptyMessageDelayed(AD_SKIP, AD_DELAY);
 

@@ -36,6 +36,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.internal.NavigationMenuView;
@@ -55,14 +56,12 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FilterQueryProvider;
 
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
@@ -71,7 +70,6 @@ import com.mobvista.msdk.MobVistaConstans;
 import com.mobvista.msdk.MobVistaSDK;
 import com.mobvista.msdk.out.MobVistaSDKFactory;
 import com.mobvista.msdk.out.PreloadListener;
-import com.trigger.view.TriggerIconView;
 import com.wenjoyai.tubeplayer.BuildConfig;
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.PlaybackService;
@@ -80,6 +78,7 @@ import com.wenjoyai.tubeplayer.StartActivity;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.ad.ADManager;
+import com.wenjoyai.tubeplayer.ad.Interstitial;
 import com.wenjoyai.tubeplayer.ad.RotateAD;
 import com.wenjoyai.tubeplayer.extensions.ExtensionListing;
 import com.wenjoyai.tubeplayer.extensions.ExtensionManagerService;
@@ -149,9 +148,10 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private static final int PLUGIN_NAVIGATION_GROUP = 2;
     //广告view
     private RotateAD mRotateAD;
-//    private MoPubInterstitial mInterstitial;
-    private InterstitialAd mInterstitialAd;
-
+    private Interstitial mViewerInterstitialAd;
+    private Interstitial mFirstOpenInterstitialAd;
+    private static SharedPreferences sSettings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
+    public static final String KEY_OPEN_COUNT = "key_open_count";       // long启动次数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -234,14 +234,68 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
         mMediaLibrary = VLCApplication.getMLInstance();
 
+        loadAD();
+    }
+
+    private void  loadAD(){
+        //旋转广告墙
         preloadWall();
-        final TriggerIconView view = (TriggerIconView)findViewById(R.id.trigger_icon);
-        new Handler().postDelayed(new Runnable() {
+        loadViewAD();
+        loadFirstOpenAD();
+    }
+    //tab的view广告
+    private void loadViewAD(){
+        mViewerInterstitialAd = new Interstitial();
+        mViewerInterstitialAd.loadAD(this, ADManager.AD_Google, ADConstants.google_viewer_interstitial, new Interstitial.ADListener() {
             @Override
-            public void run() {
-                view.setVisibility(View.GONE);
+            public void onLoadedSuccess() {
             }
-        },4000);
+
+            @Override
+            public void onLoadedFailed() {
+
+            }
+
+            @Override
+            public void onAdClick() {
+                StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_VIEWER);
+            }
+
+            @Override
+            public void onAdClose() {
+
+            }
+        });
+    }
+    //第一次打开
+    private void loadFirstOpenAD(){
+        long openCount = sSettings.getLong(KEY_OPEN_COUNT, 0);
+        if (openCount%20==0){
+            mFirstOpenInterstitialAd = new Interstitial();
+            mFirstOpenInterstitialAd.loadAD(this, ADManager.AD_Google, ADConstants.google_first_open_interstitial, new Interstitial.ADListener() {
+                @Override
+                public void onLoadedSuccess() {
+                    mFirstOpenInterstitialAd.show();
+                }
+
+                @Override
+                public void onLoadedFailed() {
+
+                }
+
+                @Override
+                public void onAdClick() {
+                    StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN);
+                }
+
+                @Override
+                public void onAdClose() {
+
+                }
+            });
+        }
+        openCount++;
+        sSettings.edit().putLong(KEY_OPEN_COUNT, openCount).apply();
     }
 
     private void setupNavigationView() {
@@ -431,10 +485,10 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                             mFirebaseRemoteConfig.activateFetched();
                         }
                         ADManager.isShowGoogleAD = mFirebaseRemoteConfig.getBoolean("is_google_ad_show");
+                        ADManager.isShowGoogleVideoBanner= mFirebaseRemoteConfig.getBoolean("is_video_banner_show");
 //                        ADManager.sType = mFirebaseRemoteConfig.getLong("ad_platform_type");
                     }
                 });
-        // [END fetch_config_with_callback]
     }
 
     @Override
@@ -794,6 +848,10 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 ((VideoGridFragment)current).toggleViewMode(item);
                 mSettings.edit().putInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
                         ((VideoGridFragment)current).getCurrentViewMode()).apply();
+                if (null!=mViewerInterstitialAd) {
+                    mViewerInterstitialAd.show();
+                    loadViewAD();
+                }
                 break;
         }
         mDrawerLayout.closeDrawer(mNavigationView);
@@ -1155,14 +1213,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         mRotateAD.setOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    openWall();
-//                } else if (ADManager.isShowGoogleAD == ADManager.AD_Google) {
-//                    if (null!=mInterstitialAd) {
-//                        mInterstitialAd.show();
-//                        mRotateAD.setVisibility(View.INVISIBLE);
-//                        loadInterstitial();
-//                    }
-//                }
+                openWall();
                 StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_LIBRARY_NAME);
             }
         });

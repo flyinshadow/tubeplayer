@@ -57,10 +57,15 @@ import org.videolan.medialibrary.interfaces.MediaAddedCb;
 import org.videolan.medialibrary.interfaces.MediaUpdatedCb;
 import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.ad.ADManager;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
 import com.wenjoyai.tubeplayer.gui.RenameFileFragment;
@@ -144,6 +149,25 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         if (mVideoAdapter.getCurrentViewMode() == VideoListAdapter.VIEW_MODE_LIST)
             mGridView.addItemDecoration(mDividerItemDecoration);
         mGridView.setAdapter(mVideoAdapter);
+
+        if (ADManager.isShowGoogleVideoBanner) {
+            final AdView mAdView = (AdView) v.findViewById(R.id.adView);
+            mAdView.setAdListener(new AdListener(){
+                @Override
+                public void onAdLoaded() {
+                    super.onAdLoaded();
+                    mAdView.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAdClicked() {
+                    super.onAdClicked();
+                }
+            });
+
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }
         return v;
     }
 

@@ -21,7 +21,11 @@ public class StatisticsManager {
     public static final String TYPE_AD="rotate_ad";
     public static final String ITEM_AD_LIBRARY_NAME ="mobvista_library_roate_offer_wall";
     public static final String ITEM_AD_VIDEO_NAME ="mobvista_video_rotate_offer_wall";
+
     public static final String ITEM_AD_GOOGLE_BACK ="google_back_ad";
+    public static final String ITEM_AD_GOOGLE_VIEWER ="google_viewer_ad";
+    public static final String ITEM_AD_GOOGLE_FIRST_OPEN ="google_first_open_ad";
+    public static final String ITEM_AD_GOOGLE_PAUSE_NATIVE ="google_pause_native_ad";
 
 
     //视频播放

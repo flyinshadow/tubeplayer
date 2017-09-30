@@ -12,6 +12,7 @@ public class ADManager {
     public static final long AD_Facebook = 3;
     public static final long AD_Baidu = 4;
     public static long sType = AD_Google;
-    public static boolean isShowGoogleAD = false;//是否显示google广告
+    public static boolean isShowGoogleAD = true;//是否显示google广告
+    public static boolean isShowGoogleVideoBanner = true;//是否显示视频列表页的bannar
 
 }

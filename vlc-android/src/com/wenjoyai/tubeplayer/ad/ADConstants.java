@@ -55,8 +55,17 @@ public class ADConstants {
 
     /***************  google      *********************/
     public static final String GOOGLE_APP_ID = "ca-app-pub-1877164599441785~1893874403";
-    public static final String GOOGLE_FULLSCREEN_LIBARY = "ca-app-pub-1877164599441785/8681153348";
-    public static final String google_video_back_interstitial = "ca-app-pub-1877164599441785/8440769750";
+    //播放返回
+    public static final String google_video_back_interstitial = "ca-app-pub-1877164599441785/8681153348";
+    //首页第一次进入
+    public static final String google_first_open_interstitial = "ca-app-pub-1877164599441785/8440769750";
+    //viewer show
+    public static final String google_viewer_interstitial = "ca-app-pub-1877164599441785/2205230558";
+    //视频列表bannar
+    public static final String google_video_grid_bannar = "ca-app-pub-1877164599441785/5736275864";
+    //暂停-原生
+    public static final String google_video_pause_native = "ca-app-pub-1877164599441785/9970194023";
+
 
 
 

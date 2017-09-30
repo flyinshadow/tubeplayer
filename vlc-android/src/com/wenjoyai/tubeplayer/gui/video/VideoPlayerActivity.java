@@ -105,6 +105,11 @@ import org.videolan.medialibrary.Medialibrary;
 import org.videolan.medialibrary.Tools;
 import org.videolan.medialibrary.media.MediaWrapper;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.NativeExpressAdView;
+import com.google.android.gms.ads.VideoController;
+import com.google.android.gms.ads.VideoOptions;
 import com.mobvista.msdk.MobVistaConstans;
 import com.mobvista.msdk.MobVistaSDK;
 import com.mobvista.msdk.out.MobVistaSDKFactory;
@@ -381,6 +386,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private RotateAD mRotateAD;
     private boolean mIsAdLoadSuc = false;
     private Interstitial mInterstitial;
+    private boolean mIsNativeLoadSuc = false;
+    private NativeExpressAdView mNativePauseAD;
+    private FrameLayout mNativeFrameLayout;
 
     private static LibVLC LibVLC() {
         return VLCInstance.get();
@@ -526,6 +534,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         preloadWall();
         //返回广告
         loadInterstitial();
+        //pause 广告
+        loadPauseNative();
     }
 
     @Override
@@ -1676,6 +1686,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 if (mIsAdLoadSuc) {
                     mRotateAD.setVisibility(View.VISIBLE);
                 }
+                if (mIsNativeLoadSuc){
+                    mNativeFrameLayout.setVisibility(View.VISIBLE);
+                }
                 break;
             case MediaPlayer.Event.Stopped:
                 exitOK();
@@ -2134,6 +2147,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (mNativeFrameLayout.getVisibility()!=View.GONE){
+            mNativeFrameLayout.setVisibility(View.GONE);
+        }
         if (mService == null)
             return false;
         if (mDetector == null) {
@@ -2493,6 +2509,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     public void onClick(View v) {
+        if (mNativeFrameLayout.getVisibility()!=View.GONE){
+            mNativeFrameLayout.setVisibility(View.GONE);
+        }
         switch (v.getId()) {
             case R.id.player_overlay_play:
 
@@ -3836,18 +3855,18 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     }
 
     public void loadInterstitial() {
-        String adID = "";
-        ADManager.sType = ADManager.AD_Google;
-        if (ADManager.sType == ADManager.AD_MobVista) {
-            adID = ADConstants.mobvista_video_back_interstitial;
-        } else if (ADManager.sType == ADManager.AD_Google) {
-            adID = ADConstants.google_video_back_interstitial;
-        } else if (ADManager.sType == ADManager.AD_Facebook) {
-            adID = ADConstants.facebook_video_back_interstitial;
-        }
-        if (!TextUtils.isEmpty(adID)) {
+//        String adID = "";
+//        ADManager.sType = ADManager.AD_Google;
+//        if (ADManager.sType == ADManager.AD_MobVista) {
+//            adID = ADConstants.mobvista_video_back_interstitial;
+//        } else if (ADManager.sType == ADManager.AD_Google) {
+//            adID = ADConstants.google_video_back_interstitial;
+//        } else if (ADManager.sType == ADManager.AD_Facebook) {
+//            adID = ADConstants.facebook_video_back_interstitial;
+//        }
+//        if (!TextUtils.isEmpty(adID)) {
             mInterstitial = new Interstitial();
-            mInterstitial.loadAD(this, ADManager.sType, adID, new Interstitial.ADListener() {
+            mInterstitial.loadAD(this, ADManager.AD_Google, ADConstants.google_video_back_interstitial, new Interstitial.ADListener() {
                 @Override
                 public void onLoadedSuccess() {
                 }
@@ -3867,7 +3886,56 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     
                 }
             });
-        }
+//        }
+    }
+
+    private void loadPauseNative(){
+        mNativeFrameLayout = (FrameLayout)findViewById(R.id.ad_frame_layout);
+        findViewById(R.id.ad_close_iv).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mNativeFrameLayout.setVisibility(View.GONE);
+            }
+        });
+        mNativePauseAD = (NativeExpressAdView)findViewById(R.id.native_ad);
+        // Set its video options.
+        mNativePauseAD.setVideoOptions(new VideoOptions.Builder()
+                .setStartMuted(true)
+                .build());
+
+        // The VideoController can be used to get lifecycle events and info about an ad's video
+        // asset. One will always be returned by getVideoController, even if the ad has no video
+        // asset.
+        final VideoController mVideoController = mNativePauseAD.getVideoController();
+        mVideoController.setVideoLifecycleCallbacks(new VideoController.VideoLifecycleCallbacks() {
+            @Override
+            public void onVideoEnd() {
+                Log.d(TAG, "Video playback is finished.");
+                super.onVideoEnd();
+            }
+        });
+
+        // Set an AdListener for the AdView, so the Activity can take action when an ad has finished
+        // loading.
+        mNativePauseAD.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                if (mVideoController.hasVideoContent()) {
+                    Log.d(TAG, "Received an ad that contains a video asset.");
+                } else {
+                    Log.d(TAG, "Received an ad that does not contain a video asset.");
+                }
+                mIsNativeLoadSuc = true;
+            }
+
+            @Override
+            public void onAdClicked() {
+                super.onAdClicked();
+                StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_PAUSE_NATIVE);
+            }
+        });
+
+        mNativePauseAD.loadAd(new AdRequest.Builder().build());
     }
 
     /**
