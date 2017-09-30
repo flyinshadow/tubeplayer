@@ -77,6 +77,9 @@ public class Interstitial {
                 @Override
                 public void onInterstitialClosed() {
                     Log.e(TAG, "onInterstitialClosed");
+                    if (null!= listener){
+                        listener.onAdClose();
+                    }
                 }
 
                 /**
@@ -103,6 +106,9 @@ public class Interstitial {
                 public void onInterstitialDismissed(Ad ad) {
                     if (null != mFacebookAd){
                         mFacebookAd.destroy();
+                    }
+                    if (null!= listener){
+                        listener.onAdClose();
                     }
                 }
 
@@ -166,6 +172,9 @@ public class Interstitial {
                 public void onAdClosed() {
                     // Code to be executed when when the interstitial ad is closed.
                     Log.e(TAG, "onAdClosed");
+                    if (null!= listener){
+                        listener.onAdClose();
+                    }
                 }
             });
             AdRequest adRequest = new AdRequest.Builder()
@@ -202,5 +211,6 @@ public class Interstitial {
 
         void onLoadedFailed();
         void onAdClick();
+        void onAdClose();
     }
 }

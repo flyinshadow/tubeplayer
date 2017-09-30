@@ -3861,6 +3861,11 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 public void onAdClick() {
                     StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_VIDEO_BACK);
                 }
+
+                @Override
+                public void onAdClose() {
+                    
+                }
             });
         }
     }
