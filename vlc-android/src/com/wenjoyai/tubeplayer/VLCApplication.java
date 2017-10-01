@@ -31,6 +31,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Process;
 import android.preference.PreferenceManager;
+import android.support.multidex.MultiDexApplication;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.util.SimpleArrayMap;
 import android.util.Log;
@@ -71,7 +72,7 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class VLCApplication extends Application {
+public class VLCApplication extends MultiDexApplication {
     public final static String TAG = "VLC/VLCApplication";
 
     public final static String ACTION_MEDIALIBRARY_READY = "VLC/VLCApplication";

@@ -14,7 +14,7 @@ android {
 
     dexOptions {
         maxProcessCount 8
-        javaMaxHeapSize "1g"
+        javaMaxHeapSize "4g"
         preDexLibraries true
     }
 
@@ -246,6 +246,8 @@ dependencies {
     //百度
     compile(name: 'DuappsAd-CW-v1.0.9.8.1-release', ext: 'aar')
     compile(name: 'DuappsAd-Trigger-1.0', ext: 'aar')
+
+    compile 'com.android.support:multidex:1.0.1'
 }
 
 static def buildTime() {

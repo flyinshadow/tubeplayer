@@ -23,23 +23,13 @@
 
 package com.wenjoyai.tubeplayer;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
-import android.text.TextUtils;
+import android.util.Log;
 
-import org.videolan.libvlc.util.AndroidUtil;
-
-import com.wenjoyai.tubeplayer.ad.ADConstants;
-import com.wenjoyai.tubeplayer.ad.ADManager;
-import com.wenjoyai.tubeplayer.ad.Interstitial;
-import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.AudioPlayerContainerActivity;
 import com.wenjoyai.tubeplayer.gui.BaseActivity;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
@@ -51,6 +41,8 @@ import com.wenjoyai.tubeplayer.gui.video.VideoPlayerActivity;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.Permissions;
+
+import org.videolan.libvlc.util.AndroidUtil;
 
 public class StartActivity extends BaseActivity {
 
@@ -68,7 +60,7 @@ public class StartActivity extends BaseActivity {
 //
 //    public static final int AD_DELAY = 3000;
 //
-    private Interstitial mInterstitial;
+//    private Interstitial mInterstitial;
 //    private boolean mNormalStart = false;
 //
 //    private Handler mHandler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
