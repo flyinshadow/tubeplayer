@@ -117,7 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            ads:adUnitId="ca-app-pub-3940256099942544/2177258514"
+            ads:adUnitId="ca-app-pub-1877164599441785/9970194023"
             ads:adSize="320x300"/>
         <ImageView
             android:id="@+id/ad_close_iv"

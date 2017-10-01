@@ -3919,7 +3919,14 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         // loading.
         mNativePauseAD.setAdListener(new AdListener() {
             @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+                Log.d(TAG, "onAdFailedToLoad "+i);
+            }
+
+            @Override
             public void onAdLoaded() {
+                Log.d(TAG, "onAdLoaded ");
                 if (mVideoController.hasVideoContent()) {
                     Log.d(TAG, "Received an ad that contains a video asset.");
                 } else {
@@ -3931,6 +3938,13 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             @Override
             public void onAdClicked() {
                 super.onAdClicked();
+
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+                Log.d(TAG, "onAdOpened ");
                 StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_PAUSE_NATIVE);
             }
         });
