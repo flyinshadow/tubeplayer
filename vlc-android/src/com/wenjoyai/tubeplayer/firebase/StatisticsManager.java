@@ -27,6 +27,7 @@ public class StatisticsManager {
     public static final String ITEM_AD_GOOGLE_VIEWER ="google_viewer_ad";
     public static final String ITEM_AD_GOOGLE_FIRST_OPEN ="google_first_open_ad";
     public static final String ITEM_AD_GOOGLE_PAUSE_NATIVE ="google_pause_native_ad";
+    public static final String ITEM_AD_GOOGLE_VIDEO_BANNER ="google_video_banner";
 
 
     //视频播放

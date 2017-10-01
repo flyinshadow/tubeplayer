@@ -107,6 +107,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     private VideoListAdapter mVideoAdapter;
     private DividerItemDecoration mDividerItemDecoration;
 
+
+    //ad
+    private AdView mAdView;
+
     /* All subclasses of Fragment must include a public empty constructor. */
     public VideoGridFragment() { }
 
@@ -149,25 +153,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         if (mVideoAdapter.getCurrentViewMode() == VideoListAdapter.VIEW_MODE_LIST)
             mGridView.addItemDecoration(mDividerItemDecoration);
         mGridView.setAdapter(mVideoAdapter);
-
-        if (ADManager.isShowGoogleVideoBanner) {
-            final AdView mAdView = (AdView) v.findViewById(R.id.adView);
-            mAdView.setAdListener(new AdListener(){
-                @Override
-                public void onAdLoaded() {
-                    super.onAdLoaded();
-                    mAdView.setVisibility(View.VISIBLE);
-                }
-
-                @Override
-                public void onAdClicked() {
-                    super.onAdClicked();
-                }
-            });
-
-            AdRequest adRequest = new AdRequest.Builder().build();
-            mAdView.loadAd(adRequest);
-        }
+        mAdView = (AdView) v.findViewById(R.id.adView);
         return v;
     }
 
@@ -195,6 +181,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         super.onResume();
         setSearchVisibility(false);
         updateViewMode(mVideoAdapter.getCurrentViewMode());
+        loadBanner();
     }
 
     @Override
@@ -729,6 +716,49 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             }
             updateViewMode(targetViewMode);
             mVideoAdapter.toggleViewMode(targetViewMode);
+        }
+    }
+
+    private void loadBanner(){
+        if (ADManager.isShowGoogleVideoBanner) {
+            mAdView.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    // Code to be executed when an ad finishes loading.
+                    Log.i("Ads", "onAdLoaded");
+                    mAdView.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAdFailedToLoad(int errorCode) {
+                    // Code to be executed when an ad request fails.
+                    Log.i("Ads", "onAdFailedToLoad");
+                }
+
+                @Override
+                public void onAdOpened() {
+                    // Code to be executed when an ad opens an overlay that
+                    // covers the screen.
+                    Log.i("Ads", "onAdOpened");
+                    StatisticsManager.submitAd(getActivity(), StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_VIDEO_BANNER);
+                }
+
+                @Override
+                public void onAdLeftApplication() {
+                    // Code to be executed when the user has left the app.
+                    Log.i("Ads", "onAdLeftApplication");
+                }
+
+                @Override
+                public void onAdClosed() {
+                    // Code to be executed when when the user is about to return
+                    // to the app after tapping on an ad.
+                    Log.i("Ads", "onAdClosed");
+                }
+            });
+
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
         }
     }
 
