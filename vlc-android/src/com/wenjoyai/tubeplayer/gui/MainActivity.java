@@ -234,10 +234,14 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
         mMediaLibrary = VLCApplication.getMLInstance();
 
-        loadAD();
     }
 
+    private  boolean isloadAD =false;
     private void  loadAD(){
+        if (isloadAD){
+            return;
+        }
+        isloadAD = true;
         //旋转广告墙
         preloadWall();
         loadViewAD();
@@ -429,6 +433,12 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setCheckedItem(mCurrentFragmentId);
         mCurrentFragmentId = mSettings.getInt("fragment_id", R.id.nav_video);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadAD();
+            }
+        },500);
     }
     //google lijiazhi
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
