@@ -243,8 +243,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         }
         isloadAD = true;
         //旋转广告墙
-        preloadWall();
-//        loadViewAD();
+        if (ADManager.isShowMobvista) {
+            preloadWall();
+        }
         loadFirstOpenAD();
     }
     private  boolean isViewerloadAD =false;
@@ -503,6 +504,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                         }
                         ADManager.isShowGoogleAD = mFirebaseRemoteConfig.getBoolean("is_google_ad_show");
                         ADManager.isShowGoogleVideoBanner= mFirebaseRemoteConfig.getBoolean("is_video_banner_show");
+                        ADManager.isShowMobvista= mFirebaseRemoteConfig.getBoolean("is_mobvista_ad_open");
 //                        ADManager.sType = mFirebaseRemoteConfig.getLong("ad_platform_type");
                     }
                 });

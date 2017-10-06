@@ -13,6 +13,7 @@ public class ADManager {
     public static final long AD_Baidu = 4;
     public static long sType = AD_Google;
     public static boolean isShowGoogleAD = false;//是否显示google广告
-    public static boolean isShowGoogleVideoBanner = false;//是否显示视频列表页的bannar
+    public static boolean isShowGoogleVideoBanner = false;//是否显示视频列表页的banner
+    public static boolean isShowMobvista = false;//是否显示旋转动画的mobvista广告
 
 }

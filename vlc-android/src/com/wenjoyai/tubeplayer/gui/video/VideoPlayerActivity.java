@@ -531,7 +531,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mMedialibrary = VLCApplication.getMLInstance();
 
         initAD();
-        preloadWall();
+        if (ADManager.isShowMobvista) {
+            preloadWall();
+        }
         //返回广告
         loadInterstitial();
         initPauseNative();
