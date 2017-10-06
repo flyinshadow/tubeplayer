@@ -176,6 +176,18 @@ public class Interstitial {
                         listener.onAdClose();
                     }
                 }
+
+                @Override
+                public void onAdClicked() {
+                    Log.e(TAG, "onAdClicked");
+                    super.onAdClicked();
+                }
+
+                @Override
+                public void onAdImpression() {
+                    Log.e(TAG, "onAdImpression");
+                    super.onAdImpression();
+                }
             });
             AdRequest adRequest = new AdRequest.Builder()
 //                .addTestDevice("88EC935CF17E8EACA538F5A876BB5355")

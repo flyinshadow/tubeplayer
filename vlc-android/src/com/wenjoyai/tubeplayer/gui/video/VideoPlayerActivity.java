@@ -534,8 +534,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         preloadWall();
         //返回广告
         loadInterstitial();
-        //pause 广告
-        loadPauseNative();
+        initPauseNative();
     }
 
     @Override
@@ -1686,9 +1685,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 if (mIsAdLoadSuc) {
                     mRotateAD.setVisibility(View.VISIBLE);
                 }
-                if (mIsNativeLoadSuc){
-                    mNativeFrameLayout.setVisibility(View.VISIBLE);
-                }
+                //pause 广告
+                loadPauseNative();
                 break;
             case MediaPlayer.Event.Stopped:
                 exitOK();
@@ -3889,7 +3887,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 //        }
     }
 
-    private void loadPauseNative(){
+    private void initPauseNative(){
         mNativeFrameLayout = (FrameLayout)findViewById(R.id.ad_frame_layout);
         findViewById(R.id.ad_close_iv).setOnClickListener(new OnClickListener() {
             @Override
@@ -3932,6 +3930,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 } else {
                     Log.d(TAG, "Received an ad that does not contain a video asset.");
                 }
+                mNativeFrameLayout.setVisibility(View.VISIBLE);
                 mIsNativeLoadSuc = true;
             }
 
@@ -3947,8 +3946,19 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 Log.d(TAG, "onAdOpened ");
                 StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_PAUSE_NATIVE);
             }
-        });
 
+            @Override
+            public void onAdImpression() {
+                super.onAdImpression();
+                Log.d(TAG, "onAdImpression ");
+            }
+        });
+    }
+
+    private void loadPauseNative(){
+//        if (mIsNativeLoadSuc){
+//            return;
+//        }
         mNativePauseAD.loadAd(new AdRequest.Builder().build());
     }
 

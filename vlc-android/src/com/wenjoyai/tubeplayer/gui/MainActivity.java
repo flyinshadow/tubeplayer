@@ -244,15 +244,21 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         isloadAD = true;
         //旋转广告墙
         preloadWall();
-        loadViewAD();
+//        loadViewAD();
         loadFirstOpenAD();
     }
+    private  boolean isViewerloadAD =false;
     //tab的view广告
     private void loadViewAD(){
+        if (isViewerloadAD){
+            return;
+        }
         mViewerInterstitialAd = new Interstitial();
         mViewerInterstitialAd.loadAD(this, ADManager.AD_Google, ADConstants.google_viewer_interstitial, new Interstitial.ADListener() {
             @Override
             public void onLoadedSuccess() {
+                isViewerloadAD = true;
+                mViewerInterstitialAd.show();
             }
 
             @Override
@@ -269,6 +275,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             public void onAdClose() {
 
             }
+
         });
     }
     //第一次打开
@@ -858,10 +865,11 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 ((VideoGridFragment)current).toggleViewMode(item);
                 mSettings.edit().putInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
                         ((VideoGridFragment)current).getCurrentViewMode()).apply();
-                if (null!=mViewerInterstitialAd) {
-                    mViewerInterstitialAd.show();
-                    loadViewAD();
-                }
+//                if (null!=mViewerInterstitialAd) {
+//                    mViewerInterstitialAd.show();
+//                    loadViewAD();
+//                }
+                loadViewAD();
                 break;
         }
         mDrawerLayout.closeDrawer(mNavigationView);
