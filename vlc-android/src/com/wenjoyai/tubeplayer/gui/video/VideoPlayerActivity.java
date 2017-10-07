@@ -381,6 +381,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     protected boolean mIsBenchmark = false;
 
+    private boolean mFirstVideoInfoType = true;
 
     //广告
     private RotateAD mRotateAD;
@@ -1736,6 +1737,11 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             case MediaPlayer.Event.ESSelected:
                 if (event.getEsChangedType() == Media.VideoTrack.Type.Video) {
                     Media.VideoTrack vt = mService.getCurrentVideoTrack();
+                    if (mFirstVideoInfoType && vt != null) {
+                        StatisticsManager.submitVideoPlaySuccess(this, null,
+                                StatisticsManager.getVideoInfoType(mService.getCurrentMediaWrapper(), vt.width, vt.height));
+                        mFirstVideoInfoType = false;
+                    }
                     changeSurfaceLayout();
                     if (vt != null)
                         mFov = vt.projection == Media.VideoTrack.Projection.Rectangular ? 0f : DEFAULT_FOV;

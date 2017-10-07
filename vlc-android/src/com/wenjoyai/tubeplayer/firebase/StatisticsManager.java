@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 
+import org.videolan.medialibrary.media.MediaWrapper;
+
 /**
  * Created by LiJiaZhi on 2017/9/23.
  * <p>
@@ -62,6 +64,28 @@ public class StatisticsManager {
     public static final String ITEM_VIDEO_LENGTH_30_60 = "30-60";
     public static final String ITEM_VIDEO_LENGTH_60_120 = "60-120";
     public static final String ITEM_VIDEO_LENGTH_120_PLUS = "120+";
+
+    public static final String ITEM_VIDEO_SIZE_240P_MINUS = "240P-";
+    public static final String ITEM_VIDEO_SIZE_240P = "240P";   // 352x240
+    public static final String ITEM_VIDEO_SIZE_360P = "360P";   // 480x360
+    public static final String ITEM_VIDEO_SIZE_480P = "480P";   // 858x480
+    public static final String ITEM_VIDEO_SIZE_720P = "720P";   // 1280x720
+    public static final String ITEM_VIDEO_SIZE_1080P = "1080P"; // 1920x1080
+    public static final String ITEM_VIDEO_SIZE_2K = "2K";       // 2560x1440
+    public static final String ITEM_VIDEO_SIZE_4K = "4K";       // 3860x2160
+    public static final String ITEM_VIDEO_SIZE_4K_PLUS = "4K+";
+
+    public static final int VIDEO_SIZE_240P = 352 * 240;
+    public static final int VIDEO_SIZE_360P = 480 * 360;
+    public static final int VIDEO_SIZE_480P = 858 * 480;
+    public static final int VIDEO_SIZE_720P = 1280 * 720;
+    public static final int VIDEO_SIZE_1080P = 1920 * 1080;
+    public static final int VIDEO_SIZE_2K = 2560 * 1440;
+    public static final int VIDEO_SIZE_4K = 3860 * 2160;
+
+
+    public static final String ITEM_VIDEO_VERTICAL = "V";
+    public static final String ITEM_VIDEO_HORIZON = "H";
 
     public static final String ITEM_VIDEO_RATIO_BEST_FIT = "best_fit";
     public static final String ITEM_VIDEO_RATIO_FIT_SCREEN = "fit_screen";
@@ -159,7 +183,9 @@ public class StatisticsManager {
     public static void submitVideoPlaySuccess(Context context, String itemId, String itemName) {
         LogUtil.d(TAG, "submitVideoPlaySuccess, " + itemId + " " + itemName);
         Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
+        if (!TextUtils.isEmpty(itemId)) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
+        }
         if (!TextUtils.isEmpty(itemName)) {
             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, itemName);
         }
@@ -193,6 +219,44 @@ public class StatisticsManager {
             return ITEM_VIDEO_LENGTH_120_PLUS;
         }
         return "";
+    }
+
+    public static String getVideoSizeType(int width, int height) {
+        int size = width * height;
+        if (size >0 && size < VIDEO_SIZE_240P) {
+            return ITEM_VIDEO_SIZE_240P_MINUS;
+        } else if (size >= VIDEO_SIZE_240P && size < VIDEO_SIZE_360P) {
+            return ITEM_VIDEO_SIZE_240P;
+        } else if (size >= VIDEO_SIZE_360P && size < VIDEO_SIZE_480P) {
+            return ITEM_VIDEO_SIZE_360P;
+        } else if (size >= VIDEO_SIZE_480P && size < VIDEO_SIZE_720P) {
+            return ITEM_VIDEO_SIZE_480P;
+        } else if (size >= VIDEO_SIZE_720P && size < VIDEO_SIZE_1080P) {
+            return ITEM_VIDEO_SIZE_720P;
+        } else if (size >= VIDEO_SIZE_1080P && size < VIDEO_SIZE_2K) {
+            return ITEM_VIDEO_SIZE_1080P;
+        } else if (size >= VIDEO_SIZE_2K && size < VIDEO_SIZE_4K) {
+            return ITEM_VIDEO_SIZE_2K;
+        } else if (size >= VIDEO_SIZE_4K) {
+            return ITEM_VIDEO_SIZE_4K;
+        }
+        return "";
+    }
+
+    public static String getVideoVHType(int videoWidth, int videoHeight) {
+        if (videoWidth < videoHeight) {
+            return ITEM_VIDEO_VERTICAL;
+        }
+        return ITEM_VIDEO_HORIZON;
+    }
+
+    public static String getVideoInfoType(MediaWrapper media, int videoWidth, int videoHeight) {
+        String info = "";
+        if (media != null) {
+            info = getVideoLengthType(media.getLength()) + "_" + getVideoVHType(videoWidth, videoHeight) + "_" +
+                    getVideoSizeType(media.getWidth(), media.getHeight());
+        }
+        return info;
     }
 
     /**

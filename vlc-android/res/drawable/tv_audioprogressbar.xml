@@ -21,7 +21,7 @@
         android:end="2dp">
         <clip>
             <shape>
-                <solid android:color="?attr/theme_color" />
+                <solid android:color="?attr/colorAccent" />
             </shape>
         </clip>
     </item>
