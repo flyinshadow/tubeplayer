@@ -106,7 +106,8 @@ android {
         release {
             signingConfig signingConfigs.release
             minifyEnabled true
-            shrinkResources true
+            shrinkResources false
+            zipAlignEnabled true
             proguardFile 'proguard.cfg'
         }
         debug {
