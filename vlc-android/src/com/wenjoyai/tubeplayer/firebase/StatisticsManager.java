@@ -223,7 +223,7 @@ public class StatisticsManager {
 
     public static String getVideoSizeType(int width, int height) {
         int size = width * height;
-        if (size >0 && size < VIDEO_SIZE_240P) {
+        if (size > 0 && size < VIDEO_SIZE_240P) {
             return ITEM_VIDEO_SIZE_240P_MINUS;
         } else if (size >= VIDEO_SIZE_240P && size < VIDEO_SIZE_360P) {
             return ITEM_VIDEO_SIZE_240P;
@@ -244,10 +244,14 @@ public class StatisticsManager {
     }
 
     public static String getVideoVHType(int videoWidth, int videoHeight) {
-        if (videoWidth < videoHeight) {
-            return ITEM_VIDEO_VERTICAL;
+        if (videoWidth > 0 && videoHeight > 0) {
+            if (videoWidth < videoHeight) {
+                return ITEM_VIDEO_VERTICAL;
+            } else {
+                return ITEM_VIDEO_HORIZON;
+            }
         }
-        return ITEM_VIDEO_HORIZON;
+        return "";
     }
 
     public static String getVideoInfoType(MediaWrapper media, int videoWidth, int videoHeight) {

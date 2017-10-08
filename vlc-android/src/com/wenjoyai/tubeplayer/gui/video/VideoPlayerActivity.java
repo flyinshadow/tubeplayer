@@ -3897,12 +3897,15 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     private void initPauseNative(){
         mNativeFrameLayout = (FrameLayout)findViewById(R.id.ad_frame_layout);
-        findViewById(R.id.ad_close_iv).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mNativeFrameLayout.setVisibility(View.GONE);
-            }
-        });
+        ImageView adClose = (ImageView) findViewById(R.id.ad_close_iv);
+        if (adClose != null) {
+            adClose.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mNativeFrameLayout.setVisibility(View.GONE);
+                }
+            });
+        }
         mNativePauseAD = (NativeExpressAdView)findViewById(R.id.native_ad);
         // Set its video options.
         mNativePauseAD.setVideoOptions(new VideoOptions.Builder()
