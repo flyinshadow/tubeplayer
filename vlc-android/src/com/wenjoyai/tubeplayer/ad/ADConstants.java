@@ -37,6 +37,12 @@ public class ADConstants {
     //视频返回
     public static final String facebook_video_back_interstitial="19292";
 
+    //原生广告
+    //feed流
+    public static final String facebook_video_feed_native="236470546883809_236493373548193";
+    //pause
+    public static final String facebook_video_pause_native="236470546883809_236493373548193";
+
 
 
 

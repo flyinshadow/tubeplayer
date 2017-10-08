@@ -65,7 +65,9 @@ import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.ad.ADManager;
+import com.wenjoyai.tubeplayer.ad.NativeAD;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
 import com.wenjoyai.tubeplayer.gui.RenameFileFragment;
@@ -132,6 +134,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     VideoListAdapter.VIEW_MODE_DEFAULT);
         }
         mVideoAdapter = new VideoListAdapter(this, viewMode);
+        //加载feed流广告
+        loadFeedNative();
     }
 
     @Override
@@ -760,6 +764,25 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
         }
+    }
+    public void loadFeedNative(){
+        NativeAD mFeedNativeAD = new NativeAD();
+        mFeedNativeAD.loadAD(getActivity(), ADManager.AD_Facebook, ADConstants.facebook_video_feed_native, new NativeAD.ADListener() {
+            @Override
+            public void onLoadedSuccess(com.facebook.ads.NativeAd ad) {
+                // TODO: 2017/10/8
+            }
+
+            @Override
+            public void onLoadedFailed(String msg) {
+
+            }
+
+            @Override
+            public void onAdClick() {
+
+            }
+        });
     }
 
     public int getCurrentViewMode() {
