@@ -49,6 +49,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.videolan.libvlc.Media;
 import org.videolan.libvlc.util.AndroidUtil;
@@ -58,6 +59,10 @@ import org.videolan.medialibrary.interfaces.MediaUpdatedCb;
 import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
 
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdSettings;
+import com.facebook.ads.AdSize;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -134,8 +139,14 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     VideoListAdapter.VIEW_MODE_DEFAULT);
         }
         mVideoAdapter = new VideoListAdapter(this, viewMode);
-        //加载feed流广告
-        loadFeedNative();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //加载feed流广告
+                loadFeedNative();
+                showBanner();
+            }
+        },500);
     }
 
     @Override
@@ -724,7 +735,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     }
 
     private void loadBanner(){
-        if (ADManager.isShowGoogleVideoBanner) {
+        if (ADManager.isShowOpenAD&&ADManager.sLevel>ADManager.Level_Normal) {
             mAdView.setAdListener(new AdListener() {
                 @Override
                 public void onAdLoaded() {
@@ -767,7 +778,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     }
     public void loadFeedNative(){
         NativeAD mFeedNativeAD = new NativeAD();
-        mFeedNativeAD.loadAD(getActivity(), ADManager.AD_Facebook, ADConstants.facebook_video_feed_native, new NativeAD.ADListener() {
+        mFeedNativeAD.loadAD(getActivity(), ADManager.AD_Facebook, ADConstants.facebook_video_pause_native, new NativeAD.ADListener() {
             @Override
             public void onLoadedSuccess(com.facebook.ads.NativeAd ad) {
                 // TODO: 2017/10/8
@@ -783,6 +794,43 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
             }
         });
+    }
+    private com.facebook.ads.AdView adView;
+    public void showBanner() {
+        // Instantiate an AdView view
+        adView = new com.facebook.ads.AdView(getContext(), "236470546883809_236502986880565", AdSize.BANNER_HEIGHT_50);
+
+        // Find the Ad container
+//        LinearLayout adContainer = (LinearLayout) getView().findViewById(R.id.banner_container);
+
+        // Add the ad view to container
+//        adContainer.addView(adView);
+
+        adView.setAdListener(new com.facebook.ads.AdListener() {
+            @Override
+            public void onError(Ad ad, AdError adError) {
+                Toast.makeText(getActivity(), "Error: " + adError.getErrorMessage(), Toast
+                        .LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                Toast.makeText(getActivity(), "Ad loaded!", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+                Toast.makeText(getActivity(), "Ad clicked!", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+                Toast.makeText(getActivity(), "Impression logged!", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        // Request an ad
+        adView.loadAd();
     }
 
     public int getCurrentViewMode() {

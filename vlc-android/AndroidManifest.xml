@@ -685,6 +685,9 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="2301bcb79379a657c0cfe136cf70c72e70c5025b" />
+
+        <!--facebook ad-->
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="236470546883809"/>
     </application>
 
 </manifest>

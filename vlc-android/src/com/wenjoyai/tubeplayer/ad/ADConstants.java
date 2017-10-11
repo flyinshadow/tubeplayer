@@ -41,7 +41,7 @@ public class ADConstants {
     //feed流
     public static final String facebook_video_feed_native="236470546883809_236493373548193";
     //pause
-    public static final String facebook_video_pause_native="236470546883809_236493373548193";
+    public static final String facebook_video_pause_native="236470546883809_236494143548116";
 
 
 
@@ -67,7 +67,7 @@ public class ADConstants {
     public static final String google_first_open_interstitial = "ca-app-pub-1877164599441785/8440769750";
     //viewer show
     public static final String google_viewer_interstitial = "ca-app-pub-1877164599441785/2205230558";
-    //视频列表bannar
+    //视频列表banner
     public static final String google_video_grid_bannar = "ca-app-pub-1877164599441785/5736275864";
     //暂停-原生
     public static final String google_video_pause_native = "ca-app-pub-1877164599441785/9970194023";

@@ -111,6 +111,7 @@ android {
             proguardFile 'proguard.cfg'
         }
         debug {
+            signingConfig signingConfigs.release
 //            applicationIdSuffix ".debug"
             jniDebuggable true
         }

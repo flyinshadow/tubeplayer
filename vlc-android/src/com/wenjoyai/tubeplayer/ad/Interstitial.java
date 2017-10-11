@@ -28,6 +28,10 @@ public class Interstitial {
     MVInterstitialHandler mInterstitialHandler;
 
     public void loadAD(Context context, long type, String adId, final ADListener listener) {
+        //nomral级别以上才展示插屏
+        if (ADManager.sLevel<ADManager.Level_Normal){
+            return;
+        }
         if (type == ADManager.AD_MobVista) {
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             //设置广告位ID 必填

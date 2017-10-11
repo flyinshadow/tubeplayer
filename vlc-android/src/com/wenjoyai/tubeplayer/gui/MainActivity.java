@@ -151,7 +151,6 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private Interstitial mViewerInterstitialAd;
     private Interstitial mFirstOpenInterstitialAd;
     private static SharedPreferences sSettings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
-    public static final String KEY_OPEN_COUNT = "key_open_count";       // long启动次数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,7 +242,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         }
         isloadAD = true;
         //旋转广告墙
-        if (ADManager.isShowMobvista) {
+        if (ADManager.isShowOpenAD) {
             preloadWall();
         }
         loadFirstOpenAD();
@@ -280,9 +279,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         });
     }
     //第一次打开
-    private void loadFirstOpenAD(){
-        long openCount = sSettings.getLong(KEY_OPEN_COUNT, 0);
-        if (openCount%20==0){
+    private void loadFirstOpenAD() {
+        if (ADManager.isShowOpenAD) {
             mFirstOpenInterstitialAd = new Interstitial();
             mFirstOpenInterstitialAd.loadAD(this, ADManager.AD_Google, ADConstants.google_first_open_interstitial, new Interstitial.ADListener() {
                 @Override
@@ -306,8 +304,6 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 }
             });
         }
-        openCount++;
-        sSettings.edit().putLong(KEY_OPEN_COUNT, openCount).apply();
     }
 
     private void setupNavigationView() {
@@ -502,10 +498,12 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                             // values are returned.
                             mFirebaseRemoteConfig.activateFetched();
                         }
-                        ADManager.isShowGoogleAD = mFirebaseRemoteConfig.getBoolean("is_google_ad_show");
                         ADManager.isShowGoogleVideoBanner= mFirebaseRemoteConfig.getBoolean("is_video_banner_show");
                         ADManager.isShowMobvista= mFirebaseRemoteConfig.getBoolean("is_mobvista_ad_open");
-//                        ADManager.sType = mFirebaseRemoteConfig.getLong("ad_platform_type");
+
+                        ADManager.sPlatForm = mFirebaseRemoteConfig.getLong("ad_platform_type");
+                        ADManager.sLevel = mFirebaseRemoteConfig.getLong("ad_level_type");
+
                     }
                 });
     }
