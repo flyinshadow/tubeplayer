@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
@@ -52,14 +53,17 @@ import android.support.v7.view.ActionMode;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SubMenu;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FilterQueryProvider;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -106,8 +110,10 @@ import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.Permissions;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
+import org.videolan.libvlc.util.AndroidUtil;
 import org.videolan.medialibrary.Medialibrary;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -595,6 +601,27 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         finish();
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_placeholder);
+
+        LogUtil.d(TAG, "viewmode onConfigurationChanged: " + newConfig.orientation);
+        boolean visible = true;
+        int viewMode = mSettings.getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE, VideoListAdapter.VIEW_MODE_DEFAULT);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            visible = false;
+            viewMode = VideoListAdapter.VIEW_MODE_GRID;
+        }
+        if (fragment instanceof VideoGridFragment) {
+            if (mMenu != null)
+                mMenu.findItem(R.id.ml_menu_view_mode).setVisible(visible);
+            if (viewMode != ((VideoGridFragment) fragment).getCurrentViewMode()) {
+                ((VideoGridFragment) fragment).toggleVideoMode(viewMode);
+            }
+        }
+    }
+
     private Fragment getFragment(int id)
     {
         Fragment frag = getSupportFragmentManager().findFragmentByTag(getTag(id));
@@ -770,8 +797,42 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         boolean showLast = current instanceof AudioBrowserFragment || current instanceof VideoGridFragment;
         menu.findItem(R.id.ml_menu_last_playlist).setVisible(showLast);
         menu.findItem(R.id.ml_menu_filter).setVisible(current instanceof Filterable && ((Filterable)current).enableSearchOption());
-        menu.findItem(R.id.ml_menu_view_mode).setVisible(current instanceof VideoGridFragment);
+        LogUtil.d(TAG, "viewmode getScreenRotation:" + getScreenRotation());
+        menu.findItem(R.id.ml_menu_view_mode).setVisible(current instanceof VideoGridFragment &&
+                ((getScreenRotation() == Surface.ROTATION_0) || (getScreenRotation() == Surface.ROTATION_180)));
+//        if (viewModeMenu != null) {
+//            boolean screenVertical = (getScreenRotation() == Surface.ROTATION_0) || (getScreenRotation() == Surface.ROTATION_180);
+//            int currentViewMode = mSettings.getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE, VideoListAdapter.VIEW_MODE_DEFAULT);
+//            if (screenVertical) {
+//                if (currentViewMode == VideoListAdapter.VIEW_MODE_LIST) {
+//                    viewModeMenu.setIcon(R.drawable.ic_view_list);
+//                } else if (currentViewMode == VideoListAdapter.VIEW_MODE_GRID) {
+//                    viewModeMenu.setIcon(R.drawable.ic_view_grid);
+//                } else if (currentViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
+//                    viewModeMenu.setIcon(R.drawable.ic_view_bigpic);
+//                }
+//                if (current instanceof VideoGridFragment && currentViewMode != VideoListAdapter.VIEW_MODE_GRID) {
+//                    ((VideoGridFragment) current).toggleVideoMode(currentViewMode);
+//                }
+//            } else {
+//                if (current instanceof VideoGridFragment) {
+//                    ((VideoGridFragment) current).toggleVideoMode(VideoListAdapter.VIEW_MODE_GRID);
+//                }
+//            }
+//            viewModeMenu.setVisible(current instanceof VideoGridFragment && screenVertical);
+//        }
         return true;
+    }
+
+    private int getScreenRotation() {
+        WindowManager wm = (WindowManager) VLCApplication.getAppContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        try {
+            Method m = display.getClass().getDeclaredMethod("getRotation");
+            return (Integer) m.invoke(display);
+        } catch (Exception e) {
+            return Surface.ROTATION_0;
+        }
     }
 
     /**
@@ -865,12 +926,6 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 if (current == null)
                     break;
                 ((VideoGridFragment)current).toggleViewMode(item);
-                mSettings.edit().putInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
-                        ((VideoGridFragment)current).getCurrentViewMode()).apply();
-//                if (null!=mViewerInterstitialAd) {
-//                    mViewerInterstitialAd.show();
-//                    loadViewAD();
-//                }
                 loadViewAD();
                 break;
         }

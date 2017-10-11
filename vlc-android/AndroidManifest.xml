@@ -461,6 +461,7 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:theme="@style/Theme.VLC"
+            android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.app.searchable"
@@ -470,6 +471,7 @@
         <activity
             android:name="com.wenjoyai.tubeplayer.gui.SecondaryActivity"
             android:theme="@style/Theme.VLC"
+            android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.wenjoyai.tubeplayer.gui.PlaylistActivity"

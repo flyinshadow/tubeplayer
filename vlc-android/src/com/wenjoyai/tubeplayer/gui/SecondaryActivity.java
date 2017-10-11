@@ -24,6 +24,7 @@
 package com.wenjoyai.tubeplayer.gui;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -44,6 +45,7 @@ import com.wenjoyai.tubeplayer.gui.tv.TvUtil;
 import com.wenjoyai.tubeplayer.gui.video.VideoGridFragment;
 import com.wenjoyai.tubeplayer.gui.video.VideoListAdapter;
 import com.wenjoyai.tubeplayer.interfaces.ISortable;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 
 public class SecondaryActivity extends AudioPlayerContainerActivity {
     public final static String TAG = "VLC/SecondaryActivity";
@@ -62,6 +64,7 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
 
 
     Fragment mFragment;
+    private Menu mMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +106,27 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_placeholder);
+
+        LogUtil.d(TAG, "viewmode onConfigurationChanged: " + newConfig.orientation);
+        boolean visible = true;
+        int viewMode = mSettings.getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE, VideoListAdapter.VIEW_MODE_DEFAULT);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            visible = false;
+            viewMode = VideoListAdapter.VIEW_MODE_GRID;
+        }
+        if (fragment instanceof VideoGridFragment) {
+            if (mMenu != null)
+                mMenu.findItem(R.id.ml_menu_view_mode).setVisible(visible);
+            if (viewMode != ((VideoGridFragment) fragment).getCurrentViewMode()) {
+                ((VideoGridFragment) fragment).toggleVideoMode(viewMode);
+            }
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ACTIVITY_RESULT_SECONDARY) {
@@ -114,6 +138,7 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        mMenu = menu;
         if (mFragment instanceof VideoGridFragment) {
             getMenuInflater().inflate(R.menu.video_group, menu);
         }
@@ -144,8 +169,6 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
         switch (item.getItemId()) {
             case R.id.ml_menu_view_mode:
                 ((VideoGridFragment)mFragment).toggleViewMode(item);
-                mSettings.edit().putInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
-                        ((VideoGridFragment)mFragment).getCurrentViewMode()).apply();
                 break;
             case R.id.ml_menu_sortby_date:
                 ((ISortable) mFragment).sortBy(VideoListAdapter.SORT_BY_DATE);

@@ -3,7 +3,7 @@
     xmlns:vlc="http://schemas.android.com/apk/res-auto" >
     <item
         android:id="@+id/ml_menu_view_mode"
-        android:icon="@drawable/ic_view_bigpic"
+        android:icon="@drawable/ic_view_grid"
         android:title="@string/media_view_mode"
         vlc:showAsAction="always"
         />

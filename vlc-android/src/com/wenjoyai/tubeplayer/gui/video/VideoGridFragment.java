@@ -184,7 +184,15 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     public void onResume() {
         super.onResume();
         setSearchVisibility(false);
-        updateViewMode(mVideoAdapter.getCurrentViewMode());
+        int viewMode;
+        if (mFolderGroup != null) {
+            viewMode = VideoListAdapter.VIEW_MODE_FULL_TITLE;
+        } else {
+            viewMode = PreferenceManager.getDefaultSharedPreferences(
+                    VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
+                    VideoListAdapter.VIEW_MODE_DEFAULT);
+        }
+        toggleVideoMode(viewMode);
         loadBanner();
     }
 
@@ -254,6 +262,13 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             else
                 mGridView.removeItemDecoration(mDividerItemDecoration);
             mVideoAdapter.setListMode(listMode);
+        }
+        if (targetViewMode == VideoListAdapter.VIEW_MODE_GRID) {
+            mGridView.removeItemDecoration(mDividerItemDecoration);
+        } else if (targetViewMode == VideoListAdapter.VIEW_MODE_LIST) {
+            mGridView.addItemDecoration(mDividerItemDecoration);
+        } else if (targetViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
+            mGridView.removeItemDecoration(mDividerItemDecoration);
         }
     }
 
@@ -701,29 +716,31 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             int targetViewMode = (mVideoAdapter.getCurrentViewMode() + 1) % VideoListAdapter.VIEW_MODE_MAX;
             if (targetViewMode == VideoListAdapter.VIEW_MODE_GRID) {
                 item.setIcon(R.drawable.ic_view_grid);
-                mGridView.removeItemDecoration(mDividerItemDecoration);
 
                 StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER_GRID, null);
 
             } else if (targetViewMode == VideoListAdapter.VIEW_MODE_LIST) {
                 item.setIcon(R.drawable.ic_view_list);
-                mGridView.addItemDecoration(mDividerItemDecoration);
 
                 StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER_LIST, null);
 
             } else if (targetViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
                 item.setIcon(R.drawable.ic_view_bigpic);
-                mGridView.removeItemDecoration(mDividerItemDecoration);
 
                 StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER_BIGPIC, null);
 
             }
-            updateViewMode(targetViewMode);
-            mVideoAdapter.toggleViewMode(targetViewMode);
+            toggleVideoMode(targetViewMode);
+            PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).edit().putInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE, targetViewMode).apply();
         }
     }
 
-    private void loadBanner(){
+    public void toggleVideoMode(int targetViewMode) {
+        updateViewMode(targetViewMode);
+        mVideoAdapter.toggleViewMode(targetViewMode);
+    }
+
+    private void loadBanner() {
         if (ADManager.isShowGoogleVideoBanner) {
             mAdView.setAdListener(new AdListener() {
                 @Override
