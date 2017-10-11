@@ -53,7 +53,7 @@
         android:paddingStart="0dp"
         android:paddingEnd="0dp"
         android:layout_alignParentBottom="true"
-        android:progressDrawable="@drawable/po_seekbar"
+        android:progressDrawable="?attr/po_seekbar"
         android:visibility="gone"
         />
 

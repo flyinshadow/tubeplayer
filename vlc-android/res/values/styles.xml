@@ -74,8 +74,8 @@
         <item name="ic_trash_small_normal">@drawable/ic_trash_small_normal</item>
         <item name="shadow_top_9patch">@drawable/shadow_top</item>
         <item name="shadow_bottom_9patch">@drawable/shadow_bottom</item>
-        <item name="gridview_progressbar">@drawable/gridview_progressbar</item>
-        <item name="progress_mini_player">@drawable/progress_mini_player</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_black</item>
+        <item name="progress_mini_player">@drawable/progress_mini_player_black</item>
         <item name="advanced_options_style">@style/Theme.AppCompat.Light.Dialog</item>
         <item name="rounded_bg">@drawable/rounded_corners_light</item>
         <item name="ic_playasaudio_off">@drawable/ic_playasaudio_off</item>
@@ -89,6 +89,11 @@
         <item name="ic_equalizer_normal_style">@drawable/ic_equalizer</item>
         <item name="ic_audiodelay">@drawable/ic_audiodelay</item>
         <item name="ic_subtitledelay">@drawable/ic_subtitledelay</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_black</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_black</item>
+        <item name="po_seekbar">@drawable/po_seekbar_black</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_black</item>
+
     </style>
 
     <style name="Theme.VLC.PickerDialog" parent="Theme.AppCompat.Light.Dialog">
@@ -176,8 +181,8 @@
         <item name="ic_trash_small_normal">@drawable/ic_trash_small_normal_w</item>
         <item name="shadow_top_9patch">@drawable/shadow_top_dark</item>
         <item name="shadow_bottom_9patch">@drawable/shadow_bottom_dark</item>
-        <item name="gridview_progressbar">@drawable/gridview_progressbar_w</item>
-        <item name="progress_mini_player">@drawable/progress_mini_player_dark</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_black</item>
+        <item name="progress_mini_player">@drawable/progress_mini_player_dark_black</item>
         <item name="advanced_options_style">@style/Theme.AppCompat.Dialog</item>
         <item name="rounded_bg">@drawable/rounded_corners</item>
         <item name="ic_playasaudio_off">@drawable/ic_playasaudio_off_w</item>
@@ -191,6 +196,11 @@
         <item name="ic_equalizer_normal_style">@drawable/ic_equalizer_w</item>
         <item name="ic_audiodelay">@drawable/ic_audiodelay_w</item>
         <item name="ic_subtitledelay">@drawable/ic_subtitledelay_w</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_black</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_black</item>
+        <item name="po_seekbar">@drawable/po_seekbar_black</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_black</item>
+
     </style>
    <style name="Theme.VLC.TV" parent="Theme.Leanback">
        <item name="imageCardViewInfoAreaStyle">@style/VLCardViewInfoStyle</item>
@@ -391,8 +401,8 @@
         <item name="ic_trash_small_normal">@drawable/ic_trash_small_normal</item>
         <item name="shadow_top_9patch">@drawable/shadow_top</item>
         <item name="shadow_bottom_9patch">@drawable/shadow_bottom</item>
-        <item name="gridview_progressbar">@drawable/gridview_progressbar</item>
-        <item name="progress_mini_player">@drawable/progress_mini_player</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_black</item>
+        <item name="progress_mini_player">@drawable/progress_mini_player_black</item>
         <item name="advanced_options_style">@style/Theme.AppCompat.Light.Dialog</item>
         <item name="rounded_bg">@drawable/rounded_corners_light</item>
         <item name="ic_playasaudio_off">@drawable/ic_playasaudio_off</item>
@@ -406,6 +416,12 @@
         <item name="ic_equalizer_normal_style">@drawable/ic_equalizer</item>
         <item name="ic_audiodelay">@drawable/ic_audiodelay</item>
         <item name="ic_subtitledelay">@drawable/ic_subtitledelay</item>
+
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_black</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_black</item>
+        <item name="po_seekbar">@drawable/po_seekbar_black</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_black</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Red" parent="Theme.VLC.Apearance">
@@ -416,6 +432,14 @@
         <item name="colorPrimary">@color/theme_color_red</item>
         <item name="colorPrimaryDark">@color/theme_color_red_dark</item>
         <item name="colorAccent">@color/theme_color_red_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_red</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_red</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_red</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_red</item>
+        <item name="po_seekbar">@drawable/po_seekbar_red</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_red</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Pink" parent="Theme.VLC.Apearance">
@@ -426,6 +450,14 @@
         <item name="colorPrimary">@color/theme_color_pink</item>
         <item name="colorPrimaryDark">@color/theme_color_pink_dark</item>
         <item name="colorAccent">@color/theme_color_pink_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_pink</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_pink</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_pink</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_pink</item>
+        <item name="po_seekbar">@drawable/po_seekbar_pink</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_pink</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Purple" parent="Theme.VLC.Apearance">
@@ -436,6 +468,14 @@
         <item name="colorPrimary">@color/theme_color_purple</item>
         <item name="colorPrimaryDark">@color/theme_color_purple_dark</item>
         <item name="colorAccent">@color/theme_color_purple_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_purple</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_purple</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_purple</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_purple</item>
+        <item name="po_seekbar">@drawable/po_seekbar_purple</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_purple</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.DeepPurple" parent="Theme.VLC.Apearance">
@@ -446,6 +486,14 @@
         <item name="colorPrimary">@color/theme_color_deep_purple</item>
         <item name="colorPrimaryDark">@color/theme_color_deep_purple_dark</item>
         <item name="colorAccent">@color/theme_color_deep_purple_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_deep_purple</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_deep_purple</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_deep_purple</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_deep_purple</item>
+        <item name="po_seekbar">@drawable/po_seekbar_deep_purple</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_purple</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Indigo" parent="Theme.VLC.Apearance">
@@ -456,6 +504,14 @@
         <item name="colorPrimary">@color/theme_color_indigo</item>
         <item name="colorPrimaryDark">@color/theme_color_indigo_dark</item>
         <item name="colorAccent">@color/theme_color_indigo_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_indigo</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_indigo</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_indigo</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_indigo</item>
+        <item name="po_seekbar">@drawable/po_seekbar_indigo</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_indigo</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Blue" parent="Theme.VLC.Apearance">
@@ -466,6 +522,14 @@
         <item name="colorPrimary">@color/theme_color_blue</item>
         <item name="colorPrimaryDark">@color/theme_color_blue_dark</item>
         <item name="colorAccent">@color/theme_color_blue_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_blue</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_blue</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_blue</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_blue</item>
+        <item name="po_seekbar">@drawable/po_seekbar_blue</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_blue</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.LightBlue" parent="Theme.VLC.Apearance">
@@ -476,6 +540,14 @@
         <item name="colorPrimary">@color/theme_color_light_blue</item>
         <item name="colorPrimaryDark">@color/theme_color_light_blue_dark</item>
         <item name="colorAccent">@color/theme_color_light_blue_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_light_blue</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_light_blue</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_light_blue</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_light_blue</item>
+        <item name="po_seekbar">@drawable/po_seekbar_light_blue</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_light_blue</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Cyan" parent="Theme.VLC.Apearance">
@@ -486,6 +558,14 @@
         <item name="colorPrimary">@color/theme_color_cyan</item>
         <item name="colorPrimaryDark">@color/theme_color_cyan_dark</item>
         <item name="colorAccent">@color/theme_color_cyan_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_cyan</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_cyan</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_cyan</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_cyan</item>
+        <item name="po_seekbar">@drawable/po_seekbar_cyan</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_cyan</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Teal" parent="Theme.VLC.Apearance">
@@ -496,6 +576,14 @@
         <item name="colorPrimary">@color/theme_color_teal</item>
         <item name="colorPrimaryDark">@color/theme_color_teal_dark</item>
         <item name="colorAccent">@color/theme_color_teal_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_teal</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_teal</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_teal</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_teal</item>
+        <item name="po_seekbar">@drawable/po_seekbar_teal</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_teal</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Green" parent="Theme.VLC.Apearance">
@@ -506,6 +594,14 @@
         <item name="colorPrimary">@color/theme_color_green</item>
         <item name="colorPrimaryDark">@color/theme_color_green_dark</item>
         <item name="colorAccent">@color/theme_color_green_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_green</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_green</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_green</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_green</item>
+        <item name="po_seekbar">@drawable/po_seekbar_green</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_green</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.LightGreen" parent="Theme.VLC.Apearance">
@@ -516,6 +612,14 @@
         <item name="colorPrimary">@color/theme_color_light_green</item>
         <item name="colorPrimaryDark">@color/theme_color_light_green_dark</item>
         <item name="colorAccent">@color/theme_color_light_green_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_light_green</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_light_green</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_light_green</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_light_green</item>
+        <item name="po_seekbar">@drawable/po_seekbar_light_green</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_light_green</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Lime" parent="Theme.VLC.Apearance">
@@ -526,6 +630,14 @@
         <item name="colorPrimary">@color/theme_color_lime</item>
         <item name="colorPrimaryDark">@color/theme_color_lime_dark</item>
         <item name="colorAccent">@color/theme_color_lime_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_lime</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_lime</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_lime</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_lime</item>
+        <item name="po_seekbar">@drawable/po_seekbar_lime</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_lime</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Amber" parent="Theme.VLC.Apearance">
@@ -536,6 +648,14 @@
         <item name="colorPrimary">@color/theme_color_amber</item>
         <item name="colorPrimaryDark">@color/theme_color_amber_dark</item>
         <item name="colorAccent">@color/theme_color_amber_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_amber</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_amber</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_amber</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_amber</item>
+        <item name="po_seekbar">@drawable/po_seekbar_amber</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_amber</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Orange" parent="Theme.VLC.Apearance">
@@ -546,6 +666,14 @@
         <item name="colorPrimary">@color/theme_color_orange</item>
         <item name="colorPrimaryDark">@color/theme_color_orange_dark</item>
         <item name="colorAccent">@color/theme_color_orange_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_orange</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_orange</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_orange</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_orange</item>
+        <item name="po_seekbar">@drawable/po_seekbar_orange</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_orange</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.DeepOrange" parent="Theme.VLC.Apearance">
@@ -556,83 +684,212 @@
         <item name="colorPrimary">@color/theme_color_deep_orange</item>
         <item name="colorPrimaryDark">@color/theme_color_deep_orange_dark</item>
         <item name="colorAccent">@color/theme_color_deep_orange_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_deep_orange</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_deep_orange</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_deep_orange</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_deep_orange</item>
+        <item name="po_seekbar">@drawable/po_seekbar_deep_orange</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_orange</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Black.Night" parent="Theme.VLC.Apearance.Black">
+        <item name="progress_mini_player">@drawable/progress_mini_player_dark_black</item>
     </style>
     <style name="Theme.VideoPlayer.Apearance.Red.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_red_light</item>
         <item name="colorAccent">@color/theme_color_red_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_dark_red</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_red</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_red</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_red</item>
+        <item name="po_seekbar">@drawable/po_seekbar_red</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_red</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Pink.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_pink_light</item>
         <item name="colorAccent">@color/theme_color_pink_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_dark_pink</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_pink</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_pink</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_pink</item>
+        <item name="po_seekbar">@drawable/po_seekbar_pink</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_pink</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Purple.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_purple_light</item>
         <item name="colorAccent">@color/theme_color_purple_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_dark_purple</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_purple</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_purple</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_purple</item>
+        <item name="po_seekbar">@drawable/po_seekbar_purple</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_purple</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.DeepPurple.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_deep_purple_light</item>
         <item name="colorAccent">@color/theme_color_deep_purple_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_dark_deep_purple</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_deep_purple</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_deep_purple</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_deep_purple</item>
+        <item name="po_seekbar">@drawable/po_seekbar_deep_purple</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_purple</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Indigo.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_indigo_light</item>
         <item name="colorAccent">@color/theme_color_indigo_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_dark_indigo</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_indigo</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_indigo</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_indigo</item>
+        <item name="po_seekbar">@drawable/po_seekbar_indigo</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_indigo</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Blue.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_blue_light</item>
         <item name="colorAccent">@color/theme_color_blue_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_dark_blue</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_blue</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_blue</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_blue</item>
+        <item name="po_seekbar">@drawable/po_seekbar_blue</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_blue</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.LightBlue.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_light_blue_light</item>
         <item name="colorAccent">@color/theme_color_light_blue_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_dark_light_blue</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_light_blue</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_light_blue</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_light_blue</item>
+        <item name="po_seekbar">@drawable/po_seekbar_light_blue</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_light_blue</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Cyan.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_cyan_light</item>
         <item name="colorAccent">@color/theme_color_cyan_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_dark_cyan</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_cyan</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_cyan</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_cyan</item>
+        <item name="po_seekbar">@drawable/po_seekbar_cyan</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_cyan</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Teal.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_teal_light</item>
         <item name="colorAccent">@color/theme_color_teal_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_dark_teal</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_teal</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_teal</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_teal</item>
+        <item name="po_seekbar">@drawable/po_seekbar_teal</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_teal</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Green.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_green_light</item>
         <item name="colorAccent">@color/theme_color_green_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_dark_green</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_green</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_green</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_green</item>
+        <item name="po_seekbar">@drawable/po_seekbar_green</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_green</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.LightGreen.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_light_green_light</item>
         <item name="colorAccent">@color/theme_color_light_green_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_dark_light_green</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_light_green</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_light_green</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_light_green</item>
+        <item name="po_seekbar">@drawable/po_seekbar_light_green</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_light_green</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Lime.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_lime_light</item>
         <item name="colorAccent">@color/theme_color_lime_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_dark_lime</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_lime</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_lime</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_lime</item>
+        <item name="po_seekbar">@drawable/po_seekbar_lime</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_lime</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Amber.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_amber_light</item>
         <item name="colorAccent">@color/theme_color_amber_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_dark_amber</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_amber</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_amber</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_amber</item>
+        <item name="po_seekbar">@drawable/po_seekbar_amber</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_amber</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Orange.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_orange_light</item>
         <item name="colorAccent">@color/theme_color_orange_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_dark_orange</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_orange</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_orange</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_orange</item>
+        <item name="po_seekbar">@drawable/po_seekbar_orange</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_orange</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.DeepOrange.Night" parent="Theme.VLC.Apearance.Black">
         <item name="theme_color_light">@color/theme_color_deep_orange_light</item>
         <item name="colorAccent">@color/theme_color_deep_orange_accent</item>
+
+        <item name="progress_mini_player">@drawable/progress_mini_player_dark_deep_orange</item>
+        <item name="gridview_progressbar">@drawable/gridview_progressbar_deep_orange</item>
+        <item name="fastscroller_handle">@drawable/fastscroller_handle_deep_orange</item>
+        <item name="fastscroller_bubble">@drawable/fastscroller_bubble_deep_orange</item>
+        <item name="po_seekbar">@drawable/po_seekbar_deep_orange</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_orange</item>
+
     </style>
 
     <!-- for VideoPlayerActivity -->
@@ -654,6 +911,9 @@
         <item name="colorPrimary">@color/theme_color_black</item>
         <!--<item name="colorPrimaryDark">@color/theme_color_black_dark</item>-->
         <item name="colorAccent">@color/theme_color_black_accent</item>
+        <item name="po_seekbar">@drawable/po_seekbar_black</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_black</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Red.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
@@ -664,6 +924,9 @@
         <item name="colorPrimary">@color/theme_color_red</item>
         <!--<item name="colorPrimaryDark">@color/theme_color_red_dark</item>-->
         <item name="colorAccent">@color/theme_color_red_accent</item>
+        <item name="po_seekbar">@drawable/po_seekbar_red</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_red</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Pink.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
@@ -674,6 +937,9 @@
         <item name="colorPrimary">@color/theme_color_pink</item>
         <!--<item name="colorPrimaryDark">@color/theme_color_pink_dark</item>-->
         <item name="colorAccent">@color/theme_color_pink_accent</item>
+        <item name="po_seekbar">@drawable/po_seekbar_pink</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_pink</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Purple.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
@@ -684,6 +950,9 @@
         <item name="colorPrimary">@color/theme_color_purple</item>
         <!--<item name="colorPrimaryDark">@color/theme_color_purple_dark</item>-->
         <item name="colorAccent">@color/theme_color_purple_accent</item>
+        <item name="po_seekbar">@drawable/po_seekbar_purple</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_purple</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.DeepPurple.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
@@ -694,6 +963,9 @@
         <item name="colorPrimary">@color/theme_color_deep_purple</item>
         <!--<item name="colorPrimaryDark">@color/theme_color_deep_purple_dark</item>-->
         <item name="colorAccent">@color/theme_color_deep_purple_accent</item>
+        <item name="po_seekbar">@drawable/po_seekbar_deep_purple</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_purple</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Indigo.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
@@ -704,6 +976,9 @@
         <item name="colorPrimary">@color/theme_color_indigo</item>
         <!--<item name="colorPrimaryDark">@color/theme_color_indigo_dark</item>-->
         <item name="colorAccent">@color/theme_color_indigo_accent</item>
+        <item name="po_seekbar">@drawable/po_seekbar_indigo</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_indigo</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Blue.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
@@ -714,6 +989,9 @@
         <item name="colorPrimary">@color/theme_color_blue</item>
         <!--<item name="colorPrimaryDark">@color/theme_color_blue_dark</item>-->
         <item name="colorAccent">@color/theme_color_blue_accent</item>
+        <item name="po_seekbar">@drawable/po_seekbar_blue</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_blue</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.LightBlue.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
@@ -724,6 +1002,9 @@
         <item name="colorPrimary">@color/theme_color_light_blue</item>
         <!--<item name="colorPrimaryDark">@color/theme_color_light_blue_dark</item>-->
         <item name="colorAccent">@color/theme_color_light_blue_accent</item>
+        <item name="po_seekbar">@drawable/po_seekbar_light_blue</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_light_blue</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Cyan.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
@@ -734,6 +1015,9 @@
         <item name="colorPrimary">@color/theme_color_cyan</item>
         <!--<item name="colorPrimaryDark">@color/theme_color_cyan_dark</item>-->
         <item name="colorAccent">@color/theme_color_cyan_accent</item>
+        <item name="po_seekbar">@drawable/po_seekbar_cyan</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_cyan</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Teal.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
@@ -744,6 +1028,9 @@
         <item name="colorPrimary">@color/theme_color_teal</item>
         <!--<item name="colorPrimaryDark">@color/theme_color_teal_dark</item>-->
         <item name="colorAccent">@color/theme_color_teal_accent</item>
+        <item name="po_seekbar">@drawable/po_seekbar_teal</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_teal</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Green.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
@@ -754,6 +1041,9 @@
         <item name="colorPrimary">@color/theme_color_green</item>
         <!--<item name="colorPrimaryDark">@color/theme_color_green_dark</item>-->
         <item name="colorAccent">@color/theme_color_green_accent</item>
+        <item name="po_seekbar">@drawable/po_seekbar_green</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_green</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.LightGreen.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
@@ -764,6 +1054,9 @@
         <item name="colorPrimary">@color/theme_color_light_green</item>
         <!--<item name="colorPrimaryDark">@color/theme_color_light_green_dark</item>-->
         <item name="colorAccent">@color/theme_color_light_green_accent</item>
+        <item name="po_seekbar">@drawable/po_seekbar_light_green</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_light_green</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Lime.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
@@ -774,6 +1067,9 @@
         <item name="colorPrimary">@color/theme_color_lime</item>
         <!--<item name="colorPrimaryDark">@color/theme_color_lime_dark</item>-->
         <item name="colorAccent">@color/theme_color_lime_accent</item>
+        <item name="po_seekbar">@drawable/po_seekbar_lime</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_lime</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Amber.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
@@ -784,6 +1080,9 @@
         <item name="colorPrimary">@color/theme_color_amber</item>
         <!--<item name="colorPrimaryDark">@color/theme_color_amber_dark</item>-->
         <item name="colorAccent">@color/theme_color_amber_accent</item>
+        <item name="po_seekbar">@drawable/po_seekbar_amber</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_amber</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Orange.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
@@ -794,6 +1093,9 @@
         <item name="colorPrimary">@color/theme_color_orange</item>
         <!--<item name="colorPrimaryDark">@color/theme_color_orange_dark</item>-->
         <item name="colorAccent">@color/theme_color_orange_accent</item>
+        <item name="po_seekbar">@drawable/po_seekbar_orange</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_orange</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.DeepOrange.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
@@ -804,6 +1106,9 @@
         <item name="colorPrimary">@color/theme_color_deep_orange</item>
         <!--<item name="colorPrimaryDark">@color/theme_color_deep_orange_dark</item>-->
         <item name="colorAccent">@color/theme_color_deep_orange_accent</item>
+        <item name="po_seekbar">@drawable/po_seekbar_deep_orange</item>
+        <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_orange</item>
+
     </style>
 
 

@@ -145,6 +145,8 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
             sSettings.edit().putInt(KEY_RATE_LAST_VERSION, VLCApplication.getVersionCode()).apply();
         }
 
-        getActivity().finish();
+        if (getActivity() != null) {
+            getActivity().finish();
+        }
     }
 }

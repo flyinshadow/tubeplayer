@@ -57,7 +57,6 @@
         android:background="?attr/background_default_darker"
         android:layout_margin="@dimen/half_default_margin"
         >
-
         <!-- Image loading is handled by com.wenjoyai.tubeplayer.wenjoyai.videoplayer.gui.helpers.AsyncImageLoader.loadPicture() -->
         <android.support.constraint.ConstraintLayout
             android:id="@+id/ml_item_overlay_layout"

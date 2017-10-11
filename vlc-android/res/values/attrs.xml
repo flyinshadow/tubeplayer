@@ -51,6 +51,10 @@
     <attr name="gridview_progressbar" format="reference" />
     <attr name="toolbar_popup_style" format="reference" />
     <attr name="progress_mini_player" format="reference" />
+    <attr name="fastscroller_handle" format="reference" />
+    <attr name="fastscroller_bubble" format="reference" />
+    <attr name="po_seekbar" format="reference" />
+    <attr name="seekbar_thumb" format="reference" />
 
     <!--Advance Options Icons-->
     <attr name="ic_speed_normal_style" format="reference" />

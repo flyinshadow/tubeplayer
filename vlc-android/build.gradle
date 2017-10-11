@@ -66,6 +66,10 @@ android {
             }
         }
 
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
+
         //Set the build ABI according to build types only if not launched from compile.sh
 //        if (System.getenv('CLI') == null)
 //            tasks.whenTaskAdded { task ->
@@ -106,7 +110,7 @@ android {
         release {
             signingConfig signingConfigs.release
             minifyEnabled true
-            shrinkResources false
+            shrinkResources true
             zipAlignEnabled true
             proguardFile 'proguard.cfg'
         }

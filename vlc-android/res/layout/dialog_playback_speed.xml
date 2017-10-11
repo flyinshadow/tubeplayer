@@ -87,9 +87,9 @@
             android:nextFocusUp="@+id/playback_speed_icon"
             android:nextFocusDown="@+id/playback_speed_plus"
             android:progress="100"
-            android:progressDrawable="@drawable/po_seekbar"
+            android:progressDrawable="?attr/po_seekbar"
             android:splitTrack="false"
-            android:thumb="@drawable/seekbar_thumb" />
+            android:thumb="?attr/seekbar_thumb" />
 
     </LinearLayout>
 

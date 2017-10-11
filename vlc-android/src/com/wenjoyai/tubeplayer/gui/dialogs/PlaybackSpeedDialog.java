@@ -116,7 +116,8 @@ public class PlaybackSpeedDialog extends DialogFragment implements PlaybackServi
                 return;
             if (fromUser) {
                 float rate = (float) Math.pow(4, ((double) progress / (double) 100) - 1);
-                mService.setRate(rate, mService.getCurrentMediaWrapper().getType() == MediaWrapper.TYPE_AUDIO);
+                boolean save = (mService.getCurrentMediaWrapper() != null) && (mService.getCurrentMediaWrapper().getType() == MediaWrapper.TYPE_AUDIO);
+                mService.setRate(rate, save);
                 updateInterface();
             }
         }

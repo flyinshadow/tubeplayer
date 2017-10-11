@@ -2480,15 +2480,17 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
         int ret;
 
         if (ml.getCount() > 0) {
-            mMediaList.remove(mCurrentIndex);
-            for (int i = ml.getCount() - 1; i >= 0; --i) {
-                final Media child = ml.getMediaAt(i);
-                child.parse();
-                mMediaList.insert(mCurrentIndex, new MediaWrapper(child));
-                child.release();
+            if (isValidIndex(mCurrentIndex)) {
+                mMediaList.remove(mCurrentIndex);
+                for (int i = ml.getCount() - 1; i >= 0; --i) {
+                    final Media child = ml.getMediaAt(i);
+                    child.parse();
+                    mMediaList.insert(mCurrentIndex, new MediaWrapper(child));
+                    child.release();
+                }
+                if (updateHistory && ml.getCount() == 1)
+                    mMedialibrary.addToHistory(mrl, mMediaList.getMedia(mCurrentIndex).getTitle());
             }
-            if (updateHistory && ml.getCount() == 1)
-                mMedialibrary.addToHistory(mrl, mMediaList.getMedia(mCurrentIndex).getTitle());
             ret = 0;
         } else {
             ret = -1;
