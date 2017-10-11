@@ -42,7 +42,8 @@ public class ADConstants {
     public static final String facebook_video_feed_native="236470546883809_236493373548193";
     //pause
     public static final String facebook_video_pause_native="236470546883809_236494143548116";
-
+    //视频列表banner // TODO: 2017/10/11
+    public static final String facebook_video_grid_bannar = "ca-app-pub-1877164599441785/5736275864";
 
 
 
