@@ -23,40 +23,20 @@ public class ADConstants {
 
 
 
-
-
-
-
-
-
-
-
     /***************  facebook      *********************/
 
     //插屏广告
     //视频返回
-    public static final String facebook_video_back_interstitial="19292";
-
+    public static final String facebook_video_back_interstitial="236470546883809_236503240213873";
     //原生广告
     //feed流
     public static final String facebook_video_feed_native="236470546883809_236493373548193";
     //pause
     public static final String facebook_video_pause_native="236470546883809_236494143548116";
-    //视频列表banner // TODO: 2017/10/11
-    public static final String facebook_video_grid_bannar = "ca-app-pub-1877164599441785/5736275864";
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // 视频列表banner
+    public static final String facebook_video_grid_bannar = "236470546883809_236502986880565";
+    // 打开app
+    public static final String facebook_video_player_openapp_interstitial = "236470546883809_236502230213974";
 
 
 
