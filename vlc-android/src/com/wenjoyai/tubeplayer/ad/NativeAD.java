@@ -2,6 +2,7 @@ package com.wenjoyai.tubeplayer.ad;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
@@ -20,7 +21,7 @@ public class NativeAD {
     NativeAd mFacebookAd;
 //    com.google.android.gms.ads.InterstitialAd mGoogleAD;
 
-    public void loadAD(Context context, long type, String adId, final ADListener listener) {
+    public void loadAD(final Context context, long type, String adId, final ADListener listener) {
 //        if (type == ADManager.AD_MobVista) {
 //        } else if (type == ADManager.AD_Facebook) {
             mFacebookAd = new NativeAd(context, adId);
@@ -28,6 +29,7 @@ public class NativeAD {
                 @Override
                 public void onError(Ad ad, AdError error) {
                     // Ad error callback
+                    Toast.makeText(context,"onError "+error.getErrorCode()+error.getErrorMessage(),Toast.LENGTH_LONG).show();
                     Log.e(TAG, "onError "+error.getErrorCode()+error.getErrorMessage());
                     if (null!= listener){
                         listener.onLoadedFailed(error.getErrorCode()+error.getErrorMessage());
@@ -36,6 +38,7 @@ public class NativeAD {
 
                 @Override
                 public void onAdLoaded(Ad ad) {
+                    Toast.makeText(context,"onLoadedSuccess ",Toast.LENGTH_LONG).show();
                     Log.e(TAG, "onAdLoaded");
                     // Ad loaded callback
                     if (null != listener) {
@@ -60,8 +63,7 @@ public class NativeAD {
             });
 
             // Request an ad
-            AdSettings.addTestDevice("88EC935CF17E8EACA538F5A876BB5355");
-            mFacebookAd.loadAd();
+            mFacebookAd.loadAd(NativeAd.MediaCacheFlag.ALL);
 //        }
 //        else if (type == ADManager.AD_Google) {
 //        }

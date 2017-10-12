@@ -22,8 +22,11 @@ public class ADManager {
 
 
 
-    public static boolean isShowGoogleAD = false;//是否显示google广告
     public static boolean isShowGoogleVideoBanner = false;//是否显示视频列表页的banner
     public static boolean isShowMobvista = false;//是否显示旋转动画的mobvista广告
+
+
+    //进入前台 超过2分钟才会展示 open广告和第三方广告
+    public static boolean isShowOpenAD = true;
 
 }

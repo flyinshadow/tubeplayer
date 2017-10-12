@@ -3844,7 +3844,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         MobVistaSDK sdk = MobVistaSDKFactory.getMobVistaSDK();
         Map<String, Object> preloadMap = new HashMap<String, Object>();
         preloadMap.put(MobVistaConstans.PROPERTIES_LAYOUT_TYPE, MobVistaConstans.LAYOUT_APPWALL);
-        preloadMap.put(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.mobvista_video_rotate_offer_wall);
+        preloadMap.put(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.mobvista_library_roate_offer_wall);
         preloadMap.put(MobVistaConstans.PRELOAD_RESULT_LISTENER, new PreloadListener() {
             @Override
             public void onPreloadSucceed() {
@@ -3861,18 +3861,16 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     }
 
     public void loadInterstitial() {
-//        String adID = "";
-//        ADManager.sType = ADManager.AD_Google;
-//        if (ADManager.sType == ADManager.AD_MobVista) {
-//            adID = ADConstants.mobvista_video_back_interstitial;
-//        } else if (ADManager.sType == ADManager.AD_Google) {
-//            adID = ADConstants.google_video_back_interstitial;
-//        } else if (ADManager.sType == ADManager.AD_Facebook) {
-//            adID = ADConstants.facebook_video_back_interstitial;
-//        }
-//        if (!TextUtils.isEmpty(adID)) {
+        String adID = "";
+        if (ADManager.sPlatForm == ADManager.AD_MobVista) {
+        } else if (ADManager.sPlatForm == ADManager.AD_Google) {
+            adID = ADConstants.google_video_back_interstitial;
+        } else if (ADManager.sPlatForm == ADManager.AD_Facebook) {
+            adID = ADConstants.facebook_video_back_interstitial;
+        }
+        if (!TextUtils.isEmpty(adID)) {
             mInterstitial = new Interstitial();
-            mInterstitial.loadAD(this, ADManager.AD_Google, ADConstants.google_video_back_interstitial, new Interstitial.ADListener() {
+            mInterstitial.loadAD(this, ADManager.sPlatForm , ADConstants.google_video_back_interstitial, new Interstitial.ADListener() {
                 @Override
                 public void onLoadedSuccess() {
                 }
@@ -3892,7 +3890,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     
                 }
             });
-//        }
+        }
     }
 
     private void initPauseNative(){
@@ -3980,7 +3978,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         try {
             Class<?> aClass = Class.forName("com.mobvista.msdk.shell.MVActivity");
             Intent intent = new Intent(this, aClass);
-            intent.putExtra(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.mobvista_video_rotate_offer_wall);
+            intent.putExtra(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.mobvista_library_roate_offer_wall);
             this.startActivity(intent);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());

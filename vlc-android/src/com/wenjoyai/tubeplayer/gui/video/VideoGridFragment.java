@@ -47,8 +47,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.videolan.libvlc.Media;
 import org.videolan.libvlc.util.AndroidUtil;
@@ -58,15 +60,21 @@ import org.videolan.medialibrary.interfaces.MediaUpdatedCb;
 import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
 
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdSettings;
+import com.facebook.ads.AdSize;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.mobvista.msdk.base.adapter.AdmobAdapter;
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.ad.ADManager;
+import com.wenjoyai.tubeplayer.ad.BannerAD;
 import com.wenjoyai.tubeplayer.ad.NativeAD;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
@@ -111,7 +119,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
 
     //ad
-    private AdView mAdView;
+    private FrameLayout mAdContainer;
+    private BannerAD mBannerAD;
 
     /* All subclasses of Fragment must include a public empty constructor. */
     public VideoGridFragment() { }
@@ -134,8 +143,14 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     VideoListAdapter.VIEW_MODE_DEFAULT);
         }
         mVideoAdapter = new VideoListAdapter(this, viewMode);
-        //加载feed流广告
-        loadFeedNative();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //加载feed流广告
+                loadFeedNative();
+                showBanner();
+            }
+        },500);
     }
 
     @Override
@@ -157,7 +172,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         if (mVideoAdapter.getCurrentViewMode() == VideoListAdapter.VIEW_MODE_LIST)
             mGridView.addItemDecoration(mDividerItemDecoration);
         mGridView.setAdapter(mVideoAdapter);
-        mAdView = (AdView) v.findViewById(R.id.adView);
+        mAdContainer = (FrameLayout) v.findViewById(R.id.adContainer);
         return v;
     }
 
@@ -216,6 +231,9 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     public void onDestroy() {
         super.onDestroy();
         mVideoAdapter.clear();
+        if (null!=mBannerAD){
+            mBannerAD.destroy();
+        }
     }
 
     protected void onMedialibraryReady() {
@@ -740,46 +758,42 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         mVideoAdapter.toggleViewMode(targetViewMode);
     }
 
-    private void loadBanner() {
-        if (ADManager.isShowGoogleVideoBanner) {
-            mAdView.setAdListener(new AdListener() {
-                @Override
-                public void onAdLoaded() {
-                    // Code to be executed when an ad finishes loading.
-                    Log.i("Ads", "onAdLoaded");
-                    mAdView.setVisibility(View.VISIBLE);
-                }
+    private void loadBanner(){
+        if (ADManager.isShowOpenAD) {
+            String adID = "";
+            if (ADManager.sPlatForm == ADManager.AD_MobVista) {
+            } else if (ADManager.sPlatForm == ADManager.AD_Google) {
+                adID = ADConstants.google_video_grid_bannar;
+            } else if (ADManager.sPlatForm == ADManager.AD_Facebook) {
+                adID = ADConstants.facebook_video_grid_bannar;
+            }
+            if (!TextUtils.isEmpty(adID)) {
+                mBannerAD = new BannerAD();
+                View view = mBannerAD.loadAD(getActivity(), ADManager.sPlatForm, adID, new BannerAD.ADListener() {
+                    @Override
+                    public void onLoadedSuccess() {
+                        StatisticsManager.submitAd(getActivity(), StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_VIDEO_BANNER);
+                    }
 
-                @Override
-                public void onAdFailedToLoad(int errorCode) {
-                    // Code to be executed when an ad request fails.
-                    Log.i("Ads", "onAdFailedToLoad");
-                }
+                    @Override
+                    public void onLoadedFailed() {
 
-                @Override
-                public void onAdOpened() {
-                    // Code to be executed when an ad opens an overlay that
-                    // covers the screen.
-                    Log.i("Ads", "onAdOpened");
-                    StatisticsManager.submitAd(getActivity(), StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_VIDEO_BANNER);
-                }
+                    }
 
-                @Override
-                public void onAdLeftApplication() {
-                    // Code to be executed when the user has left the app.
-                    Log.i("Ads", "onAdLeftApplication");
-                }
+                    @Override
+                    public void onAdClick() {
 
-                @Override
-                public void onAdClosed() {
-                    // Code to be executed when when the user is about to return
-                    // to the app after tapping on an ad.
-                    Log.i("Ads", "onAdClosed");
-                }
-            });
+                    }
 
-            AdRequest adRequest = new AdRequest.Builder().build();
-            mAdView.loadAd(adRequest);
+                    @Override
+                    public void onAdClose() {
+
+                    }
+                });
+                if (null != view) {
+                    mAdContainer.addView(view);
+                }
+            }
         }
     }
     public void loadFeedNative(){
@@ -800,6 +814,43 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
             }
         });
+    }
+    private com.facebook.ads.AdView adView;
+    public void showBanner() {
+        // Instantiate an AdView view
+        adView = new com.facebook.ads.AdView(getContext(), "236470546883809_236502986880565", AdSize.BANNER_HEIGHT_50);
+
+        // Find the Ad container
+//        LinearLayout adContainer = (LinearLayout) getView().findViewById(R.id.banner_container);
+
+        // Add the ad view to container
+//        adContainer.addView(adView);
+
+        adView.setAdListener(new com.facebook.ads.AdListener() {
+            @Override
+            public void onError(Ad ad, AdError adError) {
+                Toast.makeText(getActivity(), "Error: " + adError.getErrorMessage(), Toast
+                        .LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                Toast.makeText(getActivity(), "Ad loaded!", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+                Toast.makeText(getActivity(), "Ad clicked!", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+                Toast.makeText(getActivity(), "Impression logged!", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        // Request an ad
+        adView.loadAd();
     }
 
     public int getCurrentViewMode() {
