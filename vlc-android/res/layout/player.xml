@@ -112,16 +112,22 @@
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <com.google.android.gms.ads.NativeExpressAdView
-            android:id="@+id/native_ad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            ads:adUnitId="ca-app-pub-1877164599441785/9970194023"
-            ads:adSize="320x300"/>
+        <!--<com.google.android.gms.ads.NativeExpressAdView-->
+            <!--android:id="@+id/native_ad"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="10dp"-->
+            <!--ads:adUnitId="ca-app-pub-1877164599441785/9970194023"-->
+            <!--ads:adSize="320x300"/>-->
+        <FrameLayout
+            android:id="@+id/ad_container"
+            android:layout_width="300dp"
+            android:layout_height="232dp"
+            android:layout_margin="10dp">
+        </FrameLayout>
         <ImageView
             android:id="@+id/ad_close_iv"
-            android:layout_gravity="bottom|left"
+            android:layout_gravity="top|right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_close"/>

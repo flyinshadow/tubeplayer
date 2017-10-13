@@ -19,7 +19,6 @@ public class NativeAD {
     private static final String TAG = "NativeAD";
     //facebook
     NativeAd mFacebookAd;
-//    com.google.android.gms.ads.InterstitialAd mGoogleAD;
 
     public void loadAD(final Context context, long type, String adId, final ADListener listener) {
 //        if (type == ADManager.AD_MobVista) {
@@ -29,7 +28,6 @@ public class NativeAD {
                 @Override
                 public void onError(Ad ad, AdError error) {
                     // Ad error callback
-                    Toast.makeText(context,"onError "+error.getErrorCode()+error.getErrorMessage(),Toast.LENGTH_LONG).show();
                     Log.e(TAG, "onError "+error.getErrorCode()+error.getErrorMessage());
                     if (null!= listener){
                         listener.onLoadedFailed(error.getErrorCode()+error.getErrorMessage());
@@ -38,7 +36,6 @@ public class NativeAD {
 
                 @Override
                 public void onAdLoaded(Ad ad) {
-                    Toast.makeText(context,"onLoadedSuccess ",Toast.LENGTH_LONG).show();
                     Log.e(TAG, "onAdLoaded");
                     // Ad loaded callback
                     if (null != listener) {

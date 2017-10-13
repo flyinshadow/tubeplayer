@@ -71,6 +71,7 @@ import android.view.Display;
 import android.view.GestureDetector;
 import android.view.InputDevice;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -87,6 +88,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -105,6 +107,9 @@ import org.videolan.medialibrary.Medialibrary;
 import org.videolan.medialibrary.Tools;
 import org.videolan.medialibrary.media.MediaWrapper;
 
+import com.facebook.ads.AdChoicesView;
+import com.facebook.ads.MediaView;
+import com.facebook.ads.NativeAd;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.NativeExpressAdView;
@@ -121,6 +126,7 @@ import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.ad.ADManager;
 import com.wenjoyai.tubeplayer.ad.Interstitial;
+import com.wenjoyai.tubeplayer.ad.NativeAD;
 import com.wenjoyai.tubeplayer.ad.RotateAD;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
@@ -156,8 +162,10 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.Callback, IVLCVout.OnNewVideoLayoutListener,
         IPlaybackSettingsController, PlaybackService.Client.Callback, PlaybackService.Callback,
@@ -387,9 +395,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private RotateAD mRotateAD;
     private boolean mIsAdLoadSuc = false;
     private Interstitial mInterstitial;
-    private boolean mIsNativeLoadSuc = false;
-    private NativeExpressAdView mNativePauseAD;
+
+    //包括关闭按钮
     private FrameLayout mNativeFrameLayout;
+    private FrameLayout mNativeContainer;
 
     private static LibVLC LibVLC() {
         return VLCInstance.get();
@@ -3864,13 +3873,21 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         String adID = "";
         if (ADManager.sPlatForm == ADManager.AD_MobVista) {
         } else if (ADManager.sPlatForm == ADManager.AD_Google) {
-            adID = ADConstants.google_video_back_interstitial;
+            Random random = new Random();
+            int i= random.nextInt(3)+1;
+            if (i%3==1){
+                adID = ADConstants.google_video_back_interstitial1;
+            } else  if (i%3==2){
+                adID = ADConstants.google_video_back_interstitial2;
+            } else {
+                adID = ADConstants.google_video_back_interstitial3;
+            }
         } else if (ADManager.sPlatForm == ADManager.AD_Facebook) {
             adID = ADConstants.facebook_video_back_interstitial;
         }
         if (!TextUtils.isEmpty(adID)) {
             mInterstitial = new Interstitial();
-            mInterstitial.loadAD(this, ADManager.sPlatForm , ADConstants.google_video_back_interstitial, new Interstitial.ADListener() {
+            mInterstitial.loadAD(this, ADManager.sPlatForm , adID, new Interstitial.ADListener() {
                 @Override
                 public void onLoadedSuccess() {
                 }
@@ -3895,6 +3912,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     private void initPauseNative(){
         mNativeFrameLayout = (FrameLayout)findViewById(R.id.ad_frame_layout);
+        mNativeContainer = (FrameLayout)findViewById(R.id.ad_container);
         ImageView adClose = (ImageView) findViewById(R.id.ad_close_iv);
         if (adClose != null) {
             adClose.setOnClickListener(new OnClickListener() {
@@ -3904,71 +3922,62 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 }
             });
         }
-        mNativePauseAD = (NativeExpressAdView)findViewById(R.id.native_ad);
-        // Set its video options.
-        mNativePauseAD.setVideoOptions(new VideoOptions.Builder()
-                .setStartMuted(true)
-                .build());
-
-        // The VideoController can be used to get lifecycle events and info about an ad's video
-        // asset. One will always be returned by getVideoController, even if the ad has no video
-        // asset.
-        final VideoController mVideoController = mNativePauseAD.getVideoController();
-        mVideoController.setVideoLifecycleCallbacks(new VideoController.VideoLifecycleCallbacks() {
-            @Override
-            public void onVideoEnd() {
-                Log.d(TAG, "Video playback is finished.");
-                super.onVideoEnd();
-            }
-        });
-
-        // Set an AdListener for the AdView, so the Activity can take action when an ad has finished
-        // loading.
-        mNativePauseAD.setAdListener(new AdListener() {
-            @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-                Log.d(TAG, "onAdFailedToLoad "+i);
-            }
-
-            @Override
-            public void onAdLoaded() {
-                Log.d(TAG, "onAdLoaded ");
-                if (mVideoController.hasVideoContent()) {
-                    Log.d(TAG, "Received an ad that contains a video asset.");
-                } else {
-                    Log.d(TAG, "Received an ad that does not contain a video asset.");
-                }
-                mNativeFrameLayout.setVisibility(View.VISIBLE);
-                mIsNativeLoadSuc = true;
-            }
-
-            @Override
-            public void onAdClicked() {
-                super.onAdClicked();
-
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-                Log.d(TAG, "onAdOpened ");
-                StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_PAUSE_NATIVE);
-            }
-
-            @Override
-            public void onAdImpression() {
-                super.onAdImpression();
-                Log.d(TAG, "onAdImpression ");
-            }
-        });
     }
 
     private void loadPauseNative(){
-//        if (mIsNativeLoadSuc){
-//            return;
-//        }
-        mNativePauseAD.loadAd(new AdRequest.Builder().build());
+        NativeAD mFeedNativeAD = new NativeAD();
+        mFeedNativeAD.loadAD(VideoPlayerActivity.this, ADManager.AD_Facebook, ADConstants.facebook_video_pause_native, new NativeAD.ADListener() {
+            @Override
+            public void onLoadedSuccess(com.facebook.ads.NativeAd nativeAd) {
+                mNativeFrameLayout.setVisibility(View.VISIBLE);
+                LayoutInflater inflater = LayoutInflater.from(VideoPlayerActivity.this);
+                RelativeLayout adView = (RelativeLayout) inflater.inflate(R.layout.layout_pause_native_ad, mNativeContainer, false);
+                mNativeContainer.removeAllViews();
+                mNativeContainer.addView(adView);
+
+                // Create native UI using the ad_front metadata.
+                ImageView nativeAdIcon = (ImageView) adView.findViewById(R.id.native_ad_icon);
+                TextView nativeAdTitle = (TextView) adView.findViewById(R.id.native_ad_title);
+                MediaView nativeAdMedia = (MediaView) adView.findViewById(R.id.native_ad_media);
+                // TextView nativeAdSocialContext = (TextView) adView.findViewById(R.id.native_ad_social_context);
+                TextView nativeAdBody = (TextView) adView.findViewById(R.id.native_ad_body);
+                Button nativeAdCallToAction = (Button) adView.findViewById(R.id.native_ad_call_to_action);
+
+                // Set the Text.
+                nativeAdTitle.setText(nativeAd.getAdTitle());
+                // nativeAdSocialContext.setText(nativeAd.getAdSocialContext());
+                nativeAdBody.setText(nativeAd.getAdBody());
+                nativeAdCallToAction.setText(nativeAd.getAdCallToAction());
+
+                // Download and display the ad_front icon.
+                NativeAd.Image adIcon = nativeAd.getAdIcon();
+                NativeAd.downloadAndDisplayImage(adIcon, nativeAdIcon);
+
+                // Download and display the cover image.
+                nativeAdMedia.setNativeAd(nativeAd);
+
+                // Add the AdChoices icon
+                LinearLayout adChoicesContainer = (LinearLayout) findViewById(R.id.ad_choices_container);
+                AdChoicesView adChoicesView = new AdChoicesView(VideoPlayerActivity.this, nativeAd, true);
+                adChoicesContainer.addView(adChoicesView);
+
+                // Register the Title and CTA button to listen for clicks.
+                List<View> clickableViews = new ArrayList<>();
+                clickableViews.add(nativeAdTitle);
+                clickableViews.add(nativeAdCallToAction);
+                nativeAd.registerViewForInteraction(mNativeContainer, clickableViews);
+            }
+
+            @Override
+            public void onLoadedFailed(String msg) {
+
+            }
+
+            @Override
+            public void onAdClick() {
+
+            }
+        });
     }
 
     /**

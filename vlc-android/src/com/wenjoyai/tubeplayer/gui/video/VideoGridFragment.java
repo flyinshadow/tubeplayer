@@ -759,7 +759,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     }
 
     private void loadBanner(){
-        if (ADManager.isShowOpenAD) {
+//        if (ADManager.isShowOpenAD) {
             String adID = "";
             if (ADManager.sPlatForm == ADManager.AD_MobVista) {
             } else if (ADManager.sPlatForm == ADManager.AD_Google) {
@@ -794,7 +794,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     mAdContainer.addView(view);
                 }
             }
-        }
+//        }
     }
     public void loadFeedNative(){
         NativeAD mFeedNativeAD = new NativeAD();

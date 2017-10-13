@@ -505,6 +505,7 @@
             android:launchMode="singleTop"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
+            android:hardwareAccelerated="true"
             android:theme="@style/Theme.VLC.Player" />
 
         <activity

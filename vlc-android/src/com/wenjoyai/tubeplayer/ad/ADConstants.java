@@ -36,7 +36,9 @@ public class ADConstants {
     // 视频列表banner
     public static final String facebook_video_grid_bannar = "236470546883809_236502986880565";
     // 打开app
-    public static final String facebook_video_player_openapp_interstitial = "236470546883809_236502230213974";
+    public static final String facebook_first_open_interstitial = "236470546883809_236502230213974";
+    //viewer show  // TODO: 2017/10/12  
+//    public static final String facebook_viewer_interstitial = "";
 
 
 
@@ -44,10 +46,13 @@ public class ADConstants {
     public static final String GOOGLE_APP_ID = "ca-app-pub-1877164599441785~1893874403";
     //播放返回
     public static final String google_video_back_interstitial = "ca-app-pub-1877164599441785/8681153348";
+    public static final String google_video_back_interstitial1 = "ca-app-pub-1877164599441785/3008616691";
+    public static final String google_video_back_interstitial2 = "ca-app-pub-1877164599441785/7589546451";
+    public static final String google_video_back_interstitial3 = "ca-app-pub-1877164599441785/9215944150";
     //首页第一次进入
     public static final String google_first_open_interstitial = "ca-app-pub-1877164599441785/8440769750";
     //viewer show
-    public static final String google_viewer_interstitial = "ca-app-pub-1877164599441785/2205230558";
+//    public static final String google_viewer_interstitial = "ca-app-pub-1877164599441785/2205230558";
     //视频列表banner
     public static final String google_video_grid_bannar = "ca-app-pub-1877164599441785/5736275864";
     //暂停-原生
