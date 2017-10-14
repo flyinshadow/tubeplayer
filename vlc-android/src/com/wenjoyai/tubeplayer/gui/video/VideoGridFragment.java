@@ -591,12 +591,14 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         LogUtil.d(TAG, "aaaa onParsingServiceStarted");
         mParsingStarted = true;
         mParsingFinished = false;
+        Log.e("NativeAD", "aaaa onParsingServiceStarted");
         mHandler.sendEmptyMessageDelayed(SET_REFRESHING, 300);
     }
 
     @Override
     protected void onParsingServiceFinished() {
         LogUtil.d(TAG, "aaaa onParsingServiceFinished");
+        Log.e("NativeAD", "aaaa onParsingServiceFinished");
         mParsingStarted = false;
         mParsingFinished = true;
         if (mAdLoaded && !mShowAd) {
@@ -848,6 +850,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         ADManager.getInstance().loadNumNativeAD(getActivity(), 3, new ADManager.ADNumListener() {
             @Override
             public void onLoadedSuccess(List<NativeAd> list) {
+                Log.e("NativeAD", "loadFeedNative qilin"+list.size());
                 LogUtil.d(TAG, "facebookAD onLoadedSuccess: mAdLoaded:" + mAdLoaded + ", mShowAd:" + mShowAd +
                         ", mParsingFinished:" + mParsingFinished + ", adSize:" + list.size());
                 mNativeAd = list;
@@ -855,6 +858,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 if (mParsingFinished || mGroup != null) {
                     mShowAd = true;
                     LogUtil.d(TAG, "aaaa facebookAD onLoadedSuccess UPDATE_LIST");
+                    Log.e("NativeAD", "sendEmptyMessage");
                     mHandler.sendEmptyMessage(UPDATE_LIST);
                 }
             }

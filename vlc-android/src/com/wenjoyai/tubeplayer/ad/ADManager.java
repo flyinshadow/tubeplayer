@@ -1,6 +1,7 @@
 package com.wenjoyai.tubeplayer.ad;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.facebook.ads.NativeAd;
 
@@ -86,7 +87,7 @@ public class ADManager {
             mFeedNativeAD.loadAD(context, ADManager.AD_Facebook, adUnit, new NativeAD.ADListener() {
                 @Override
                 public void onLoadedSuccess(com.facebook.ads.NativeAd ad) {
-                    done++;
+                    ++done;
                     if (null != ad) {
                         mNativeAdlist.add(ad);
                     }
@@ -96,6 +97,7 @@ public class ADManager {
                             tempList.add(mNativeAdlist.get(j));
                         }
                         if (tempList.size() > 0) {
+                            Log.e("NativeAD", "onLoadedSuccess "+tempList.size());
                             listener.onLoadedSuccess(tempList);
                         }
                     }
@@ -103,13 +105,14 @@ public class ADManager {
 
                 @Override
                 public void onLoadedFailed(String msg) {
-                    done++;
+                    ++done;
                     if (done == num && null != listener) {
                         List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
                         for (int j = 0; j < mNativeAdlist.size(); j++) {
                             tempList.add(mNativeAdlist.get(j));
                         }
                         if (tempList.size() > 0) {
+                            Log.e("NativeAD", "onLoadedSuccess "+tempList.size());
                             listener.onLoadedSuccess(mNativeAdlist);
                         }
                     }
