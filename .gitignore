@@ -69,3 +69,5 @@ libvlcpp.pc
 lib/
 
 *.apk
+
+keystore/

@@ -116,5 +116,5 @@
         </LinearLayout>
     </LinearLayout>
 
-    <include layout="@layout/shadow_top" />
+    <!--<include layout="@layout/shadow_top" />-->
 </RelativeLayout>

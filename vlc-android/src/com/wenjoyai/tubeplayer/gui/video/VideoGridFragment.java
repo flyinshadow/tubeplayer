@@ -59,6 +59,9 @@ import org.videolan.medialibrary.interfaces.MediaUpdatedCb;
 import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
 
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdSize;
 import com.facebook.ads.NativeAd;
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.PlaybackService;
@@ -112,6 +115,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     //ad
     private FrameLayout mAdContainer;
     private BannerAD mBannerAD;
+    private boolean mAdLoaded = false;
+    private boolean mShowAd = false;
+
+    private List<NativeAd> mNativeAd = null;
 
     /* All subclasses of Fragment must include a public empty constructor. */
     public VideoGridFragment() { }
@@ -124,16 +131,6 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             setGroup(savedInstanceState.getString(KEY_GROUP));
             setFolderGroup(savedInstanceState.getString(KEY_FOLDER_GROUP), savedInstanceState.getString(KEY_FOLDER_TITLE));
         }
-
-        int viewMode;
-        if (mFolderGroup != null) {
-            viewMode = VideoListAdapter.VIEW_MODE_FULL_TITLE;
-        } else {
-            viewMode = PreferenceManager.getDefaultSharedPreferences(
-                    VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
-                    VideoListAdapter.VIEW_MODE_DEFAULT);
-        }
-        mVideoAdapter = new VideoListAdapter(this, viewMode);
     }
 
     @Override
@@ -152,9 +149,26 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         mDividerItemDecoration = new DividerItemDecoration(v.getContext(), DividerItemDecoration.VERTICAL);
-        if (mVideoAdapter.getCurrentViewMode() == VideoListAdapter.VIEW_MODE_LIST)
+
+
+        int viewMode;
+        if (mFolderGroup != null) {
+            viewMode = VideoListAdapter.VIEW_MODE_FULL_TITLE;
+        } else {
+            viewMode = PreferenceManager.getDefaultSharedPreferences(
+                    VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
+                    VideoListAdapter.VIEW_MODE_DEFAULT);
+        }
+        mVideoAdapter = new VideoListAdapter(this, viewMode);
+
+        if (mVideoAdapter.getCurrentViewMode() == VideoListAdapter.VIEW_MODE_LIST) {
             mGridView.addItemDecoration(mDividerItemDecoration);
+        }
+
         mGridView.setAdapter(mVideoAdapter);
+
+        updateViewMode(viewMode);
+
         mAdContainer = (FrameLayout) v.findViewById(R.id.adContainer);
         return v;
     }
@@ -232,6 +246,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             mMediaLibrary.setMediaUpdatedCb(this, Medialibrary.FLAG_MEDIA_UPDATED_VIDEO);
             mMediaLibrary.setMediaAddedCb(this, Medialibrary.FLAG_MEDIA_ADDED_VIDEO);
         }
+        LogUtil.d(TAG, "onMedialibraryReady UPDATE_LIST");
         mHandler.sendEmptyMessage(UPDATE_LIST);
     }
 
@@ -256,6 +271,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         // Compute the left/right padding dynamically
         DisplayMetrics outMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
+
+        mGridView.removeItemDecoration(mDividerItemDecoration);
 
         // Select between grid or list
         if (!listMode) {
@@ -456,6 +473,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     @MainThread
     public void updateList() {
+        LogUtil.d(TAG, "aaaa updateList SET_REFRESHING");
         mHandler.sendEmptyMessageDelayed(SET_REFRESHING, 300);
 
         VLCApplication.runBackground(new Runnable() {
@@ -477,7 +495,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                             displayList.add(item);
                         }
                     }
-                } else if (mGroup != null || itemList.length <= 10) {
+                } else if (mGroup != null) {
                     for (MediaWrapper item : itemList) {
                         String title = item.getTitle().substring(item.getTitle().toLowerCase().startsWith("the") ? 4 : 0);
                         if (mGroup == null || title.toLowerCase().startsWith(mGroup.toLowerCase()))
@@ -490,9 +508,14 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 VLCApplication.runOnMainThread(new Runnable() {
                     @Override
                     public void run() {
+                        mVideoAdapter.setShowAds(mShowAd);
+                        if (mAdLoaded) {
+                            mVideoAdapter.setNativeAd(mNativeAd);
+                        }
                         mVideoAdapter.update(displayList, false);
                     }
                 });
+
                 mHandler.sendEmptyMessage(UNSET_REFRESHING);
             }
         });
@@ -527,6 +550,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     @Override
     public void onRefresh() {
+        LogUtil.d(TAG, "aaaa onRefresh");
+        mVideoAdapter.resetAdIndex();
         getActivity().startService(new Intent(MediaParsingService.ACTION_RELOAD, null, getActivity(), MediaParsingService.class));
     }
 
@@ -542,14 +567,21 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         super.setFabPlayVisibility(!mVideoAdapter.isEmpty() && enable);
     }
 
+    private boolean mParsingFinished = false;
     @Override
     protected void onParsingServiceStarted() {
+        LogUtil.d(TAG, "aaaa onParsingServiceStarted");
+        mParsingFinished = false;
         mHandler.sendEmptyMessageDelayed(SET_REFRESHING, 300);
     }
 
     @Override
     protected void onParsingServiceFinished() {
-        LogUtil.d(TAG, "xxxx onParsingServiceFinished");
+        LogUtil.d(TAG, "aaaa onParsingServiceFinished");
+        mParsingFinished = true;
+        if (mAdLoaded && !mShowAd) {
+            mShowAd = true;
+        }
         mHandler.sendEmptyMessage(UPDATE_LIST);
     }
 
@@ -645,18 +677,22 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     private static final int UPDATE_LIST = 14;
     private static final int SET_REFRESHING = 15;
     private static final int UNSET_REFRESHING = 16;
+    private static final int UPDATE_AD = 17;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case UPDATE_LIST:
+                    LogUtil.d(TAG, "aaaa handleMessage UPDATE_LIST");
                     removeMessages(UPDATE_LIST);
                     updateList();
                     break;
                 case SET_REFRESHING:
+                    LogUtil.d(TAG, "aaaa handleMessage SET_REFRESHING");
                     mSwipeRefreshLayout.setRefreshing(true);
                     break;
                 case UNSET_REFRESHING:
+                    LogUtil.d(TAG, "aaaa handleMessage UNSET_REFRESHING");
                     removeMessages(SET_REFRESHING);
                     mSwipeRefreshLayout.setRefreshing(false);
                     break;
@@ -712,11 +748,12 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     @Override
     public void onUpdateFinished(RecyclerView.Adapter adapter) {
-        LogUtil.d(TAG, "xxxx onUpdateFinished mMediaLibrary.isWorking() : " + mMediaLibrary.isWorking());
+        LogUtil.d(TAG, "aaaa onUpdateFinished mMediaLibrary.isWorking() : " + mMediaLibrary.isWorking());
         if (!mMediaLibrary.isWorking())
             mHandler.sendEmptyMessage(UNSET_REFRESHING);
         updateEmptyView();
         setFabPlayVisibility(true);
+        mVideoAdapter.setShowAds(false);
     }
 
     public void toggleViewMode(MenuItem item) {
@@ -786,11 +823,21 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             }
 //        }
     }
+
     public void loadFeedNative(){
         ADManager.getInstance().loadNumNativeAD(getActivity(), 3, new ADManager.ADNumListener() {
             @Override
             public void onLoadedSuccess(List<NativeAd> list) {
-
+                LogUtil.d(TAG, "facebookAD onLoadedSuccess: mAdLoaded:" + mAdLoaded + ", mShowAd:" + mShowAd +
+                        ", mParsingFinished:" + mParsingFinished + ", adSize:" + list.size());
+                // TODO: 2017/10/8
+                mNativeAd = list;
+                mAdLoaded = true;
+                if (mParsingFinished || mGroup != null) {
+                    mShowAd = true;
+                    LogUtil.d(TAG, "aaaa facebookAD onLoadedSuccess UPDATE_LIST");
+                    mHandler.sendEmptyMessage(UPDATE_LIST);
+                }
             }
         });
     }

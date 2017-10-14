@@ -50,6 +50,7 @@ public class MediaWrapper extends MediaLibraryItem implements Parcelable {
     public final static int TYPE_SUBTITLE = 4;
     public final static int TYPE_PLAYLIST = 5;
     public final static int TYPE_STREAM = 6;
+    public final static int TYPE_AD = 7;
 
     public final static int MEDIA_VIDEO = 0x01;
     public final static int MEDIA_NO_HWACCEL = 0x02;
