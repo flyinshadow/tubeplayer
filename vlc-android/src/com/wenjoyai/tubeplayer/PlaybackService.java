@@ -1986,15 +1986,6 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
         mMediaPlayer.setMedia(media);
         media.release();
 
-        if (mw.getType() == MediaWrapper.TYPE_VIDEO) {
-            StatisticsManager.submitVideoPlaySuccess(PlaybackService.this, FileUtils.getFileExt(mrl), null);
-        } else if (mw.getType() == MediaWrapper.TYPE_AUDIO) {
-            StatisticsManager.submitAudioPlay(PlaybackService.this, StatisticsManager.TYPE_AUDIO_PLAY, FileUtils.getFileExt(mrl));
-        }
-        if (mw.getUri() != null && !TextUtils.equals(mw.getUri().getScheme(), "file")) {
-            StatisticsManager.submitVideoPlaySuccess(PlaybackService.this, getCurrentMediaLocation(), null);
-        }
-
         if (mw.getType() != MediaWrapper.TYPE_VIDEO || isVideoPlaying || mw.hasFlag(MediaWrapper.MEDIA_FORCE_AUDIO)) {
             mMediaPlayer.setEqualizer(VLCOptions.getEqualizer(this));
             mMediaPlayer.setVideoTitleDisplay(MediaPlayer.Position.Disable, 0);
