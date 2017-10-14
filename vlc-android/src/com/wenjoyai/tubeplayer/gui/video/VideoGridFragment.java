@@ -100,6 +100,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     public final static String KEY_FOLDER_GROUP = "key_folder_group";
     public final static String KEY_FOLDER_TITLE = "key_folder_title";
 
+    public static final String KEY_STAT_VIDEO_COUNT = "stat_video_count";
+
     protected LinearLayout mLayoutFlipperLoading;
     protected AutoFitRecyclerView mGridView;
     protected TextView mTextViewNomedia;
@@ -508,7 +510,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     for (MediaGroup item : MediaGroup.group(itemList))
                         displayList.add(item.getMedia());
                 }
-                LogUtil.d(TAG, "dddd updateList displayList:" + displayList.size());
+                if (mGroup == null && mFolderGroup == null && mParsingFinished) {
+                    LogUtil.d(TAG, "updateList StatisticsManager displayList:" + displayList.size() + ", videoSize:" + itemList.length);
+                    submitVideoCount(displayList.size(), itemList.length);
+                }
                 VLCApplication.runOnMainThread(new Runnable() {
                     @Override
                     public void run() {
@@ -523,6 +528,22 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 mHandler.sendEmptyMessage(UNSET_REFRESHING);
             }
         });
+    }
+
+    private boolean bSubmitVideoCount = false;
+    private void submitVideoCount(int group, int video) {
+        if (group <= 0 || video <= 0 || bSubmitVideoCount) {
+            LogUtil.e(TAG, "submitVideoCount group:"+ group + ",video:" + video);
+            return;
+        }
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
+        boolean submitVideoCount = settings.getBoolean(KEY_STAT_VIDEO_COUNT, false);
+        if (!submitVideoCount) {
+            StatisticsManager.submitVideoCount(getActivity(), "group_" + StatisticsManager.getVideoCountRange(group));
+            StatisticsManager.submitVideoCount(getActivity(), "video_" + StatisticsManager.getVideoCountRange(video));
+            settings.edit().putBoolean(KEY_STAT_VIDEO_COUNT, true).apply();
+            bSubmitVideoCount = true;
+        }
     }
 
     void updateEmptyView() {
