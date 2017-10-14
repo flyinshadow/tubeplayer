@@ -151,6 +151,8 @@ public class StatisticsManager {
 
     public static final String EVENT_PLAY_ERROR = "play_error";
 
+    public static final String EVENT_VIDEO_COUNT = "video_count";
+
     /**
      * 上报广告
      *
@@ -344,5 +346,58 @@ public class StatisticsManager {
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType);
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
         FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+    }
+
+    public static String getVideoCountType(int group, int video) {
+        return "group_" + getVideoCountRange(group) + "_video_" + getVideoCountRange(video);
+    }
+
+    public static String getVideoCountRange(int count) {
+        String type = "";
+        if (0 <= count && count < 100) {
+            int t1 = count % 10;
+            int t2 = count / 10;
+
+            int min = t2 * 10 + (t1 < 5 ? 0 : 5);
+            int max = (t2+ (t1 < 5 ? 0: 1)) * 10 + (t1 < 5 ? 5: 0);
+
+            // 2  t1=2 t2=0 min=0+0 max=0+5
+            // 9  t1=9 t2=0 min=0+5 max=10+0
+            // 10 t1=0 t2=1 min=10+0 max=10+5
+            // 12 t1=2 t2=1 min=10+0 max=10+5
+            // 15 t1=5 t2=1 min=10+5 max=20+0
+            // 16 t1=6 t2=1 min=10+5 max=20+0
+            // 17 t1=7 t2=1 min=10+5 max=20+0
+            // 20 t1=0 t2=2 min=20+0 max=20+5
+            // 24 t1=4 t2=2 min=20+0 max=20+5
+            type = min + "-" + max;
+
+        } else if (100 <= count && count < 1000) {
+            int t2 = count / 10;
+            // 100 t2=10 t3=1 min=100+0 max=100+10
+            // 109 t2=10 t3=1 min=100+0 max=100+10
+            // 113 t2=11 t3=1 min=110+0 max=110+10
+            // 119 t2=11 t3=1 min=110+0 max=110+10
+            // 190 t2=19 t3=1 min=190+0 max=190+10
+            // 209 t2=20 t3=1 min=200+0 max=200+10
+            // 210 t2=21 t3=2 min=210+0 max=210+10
+            int min = t2 * 10;
+            int max = (t2+1) * 10;
+
+            type = min + "-" + max;
+
+        } else {
+            type = "1000+";
+        }
+
+        return type;
+    }
+
+    public static void submitVideoCount(Context context, String itemId) {
+        LogUtil.d(TAG, "submitVideoCount, " + itemId);
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
+        FirebaseAnalytics.getInstance(context).logEvent(EVENT_VIDEO_COUNT, bundle);
     }
 }

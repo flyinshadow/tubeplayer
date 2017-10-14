@@ -37,6 +37,7 @@ import com.wenjoyai.tubeplayer.gui.RateFragment;
 import com.wenjoyai.tubeplayer.gui.SearchActivity;
 import com.wenjoyai.tubeplayer.gui.tv.MainTvActivity;
 import com.wenjoyai.tubeplayer.gui.tv.audioplayer.AudioPlayerActivity;
+import com.wenjoyai.tubeplayer.gui.video.VideoGridFragment;
 import com.wenjoyai.tubeplayer.gui.video.VideoPlayerActivity;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
@@ -129,6 +130,9 @@ public class StartActivity extends BaseActivity {
             settings.edit().putLong(RateFragment.KEY_RATE_SHOW_NEXT, 0).apply();
             settings.edit().putInt(RateFragment.KEY_RATE_SHOW_COUNT, 0).apply();
             settings.edit().putInt(RateFragment.KEY_RATE_LAST_VERSION, 0).apply();
+
+            settings.edit().putBoolean(VideoGridFragment.KEY_STAT_VIDEO_COUNT, false).apply();
+            settings.edit().putBoolean(VideoGridFragment.KEY_PARSING_ONCE, false).apply();
         }
         startMedialibrary(firstRun, upgrade);
         // Route search query
