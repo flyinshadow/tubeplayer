@@ -27,7 +27,7 @@ public class Interstitial {
     com.google.android.gms.ads.InterstitialAd mGoogleAD;
     MVInterstitialHandler mInterstitialHandler;
 
-    public void loadAD(Context context, long type, String adId, final ADListener listener) {
+    public void loadAD(final Context context, long type, final String adId, final ADListener listener) {
         //nomral级别以上才展示插屏
         if (ADManager.sLevel<ADManager.Level_Normal){
             return;
@@ -119,6 +119,12 @@ public class Interstitial {
                 @Override
                 public void onError(Ad ad, AdError adError) {
                     Log.e(TAG, "onAdLoaded "+adError.getErrorCode()+"  "+adError.getErrorMessage());
+                    //如果facebook加载失败，尝试加载google ad
+                    if (adId==ADConstants.facebook_first_open_interstitial){
+                        loadAD(context, ADManager.AD_Google,ADConstants.google_first_open_interstitial,listener);
+                    } else if (adId ==ADConstants.facebook_video_back_interstitial){
+                        loadAD(context, ADManager.AD_Google,ADConstants.google_video_back_interstitial,listener);
+                    }
                 }
 
                 @Override

@@ -29,6 +29,10 @@ public class ADManager {
     public static long sLevel = Level_Normal;
 
 
+    //播放广告延迟加载时间
+    public static long back_ad_delay_time = 30;
+
+
 
 
     public static boolean isShowGoogleVideoBanner = false;//是否显示视频列表页的banner
@@ -56,13 +60,20 @@ public class ADManager {
 
 
     private List<com.facebook.ads.NativeAd> mNativeAdlist=new ArrayList<>();
+    private long mStartTime = 0;
     private int done = 0;
 
     /**
-     * 加载三个feed流广告
+     * 加载num个feed流广告
      * @param context
      */
     public  void loadNumNativeAD(Context context, final int num, final ADNumListener listener){
+        //大于15秒才会再次更新广告
+        if ((System.currentTimeMillis()-mStartTime)/1000<15){
+            return;
+        }
+        mStartTime=System.currentTimeMillis();
+        mNativeAdlist.clear();
         done = 0;
         for (int i =0;i<num;i++) {
             NativeAD mFeedNativeAD = new NativeAD();

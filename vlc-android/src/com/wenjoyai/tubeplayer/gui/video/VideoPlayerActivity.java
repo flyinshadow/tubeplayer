@@ -545,9 +545,21 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             preloadWall();
         }
         //返回广告
-        loadInterstitial();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        },ADManager.back_ad_delay_time*1000);
         initPauseNative();
     }
+
+    Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            loadInterstitial();
+        }
+    };
 
     @Override
     protected void onResume() {
@@ -798,6 +810,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (null != mInterstitial) {
             mInterstitial.show();
         }
+        mHandler.removeCallbacks(mRunnable);
         super.onDestroy();
         if (mReceiver != null)
             unregisterReceiver(mReceiver);

@@ -24,6 +24,7 @@ import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -82,6 +83,7 @@ import com.wenjoyai.tubeplayer.StartActivity;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.ad.ADManager;
+import com.wenjoyai.tubeplayer.ad.LoadingDialog;
 import com.wenjoyai.tubeplayer.ad.Interstitial;
 import com.wenjoyai.tubeplayer.ad.RotateAD;
 import com.wenjoyai.tubeplayer.extensions.ExtensionListing;
@@ -110,7 +112,6 @@ import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.Permissions;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
-import org.videolan.libvlc.util.AndroidUtil;
 import org.videolan.medialibrary.Medialibrary;
 
 import java.lang.reflect.Method;
@@ -253,46 +254,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         }
         loadFirstOpenAD();
     }
-//    private  boolean isViewerloadAD =false;
-//    //tab的view广告
-//    private void loadViewAD(){
-//        if (isViewerloadAD){
-//            return;
-//        }
-//        String adID = "";
-//        if (ADManager.sPlatForm == ADManager.AD_MobVista) {
-//        } else if (ADManager.sPlatForm == ADManager.AD_Google) {
-//            adID = ADConstants.google_viewer_interstitial;
-//        } else if (ADManager.sPlatForm == ADManager.AD_Facebook) {
-//            adID = ADConstants.facebook_video_back_interstitial;
-//        }
-//        if (!TextUtils.isEmpty(adID)) {
-//            mViewerInterstitialAd = new Interstitial();
-//            mViewerInterstitialAd.loadAD(this, ADManager.sPlatForm, adID, new Interstitial.ADListener() {
-//                @Override
-//                public void onLoadedSuccess() {
-//                    isViewerloadAD = true;
-//                    mViewerInterstitialAd.show();
-//                }
-//
-//                @Override
-//                public void onLoadedFailed() {
-//
-//                }
-//
-//                @Override
-//                public void onAdClick() {
-//                    StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_VIEWER);
-//                }
-//
-//                @Override
-//                public void onAdClose() {
-//
-//                }
-//
-//            });
-//        }
-//    }
+    private Handler mHandler = new Handler();
     //第一次打开
     private void loadFirstOpenAD() {
         if (ADManager.isShowOpenAD) {
@@ -308,7 +270,24 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 mFirstOpenInterstitialAd.loadAD(this, ADManager.sPlatForm, adID, new Interstitial.ADListener() {
                     @Override
                     public void onLoadedSuccess() {
-                        mFirstOpenInterstitialAd.show();
+//                        loading page
+                        final LoadingDialog dialog = new LoadingDialog(MainActivity.this,R.style.dialog);
+                        dialog.setCancelable(true);
+                        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                mFirstOpenInterstitialAd.show();
+                            }
+                        });
+                        dialog.show();
+                        mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (null !=dialog&& dialog.isShowing()){
+                                    dialog.dismiss();
+                                }
+                            }
+                        },1000);
                     }
 
                     @Override
@@ -467,6 +446,26 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 loadAD();
             }
         },500);
+
+
+//        final LoadingDialog dialog = new LoadingDialog(MainActivity.this,R.style.dialog);
+//        dialog.setCancelable(true);
+//        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//            @Override
+//            public void onDismiss(DialogInterface dialog) {
+//                int kk = 0;
+//            }
+//        });
+//        dialog.show();
+//        mHandler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (null !=dialog&& dialog.isShowing()){
+//                    dialog.dismiss();
+//                }
+//            }
+//        },1000);
+
     }
     //google lijiazhi
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
@@ -527,6 +526,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
                         ADManager.sPlatForm = mFirebaseRemoteConfig.getLong("ad_platform_type");
                         ADManager.sLevel = mFirebaseRemoteConfig.getLong("ad_level_type");
+                        ADManager.back_ad_delay_time= mFirebaseRemoteConfig.getLong("back_ad_delay_time");
+
                     }
                 });
     }
