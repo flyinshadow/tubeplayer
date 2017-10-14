@@ -446,26 +446,6 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 loadAD();
             }
         },500);
-
-//
-//        final LoadingDialog dialog = new LoadingDialog(MainActivity.this,R.style.dialog);
-//        dialog.setCancelable(true);
-//        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-//            @Override
-//            public void onDismiss(DialogInterface dialog) {
-//                int kk = 0;
-//            }
-//        });
-//        dialog.show();
-//        mHandler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                if (null !=dialog&& dialog.isShowing()){
-//                    dialog.dismiss();
-//                }
-//            }
-//        },1000);
-
     }
     //google lijiazhi
     private FirebaseRemoteConfig mFirebaseRemoteConfig;

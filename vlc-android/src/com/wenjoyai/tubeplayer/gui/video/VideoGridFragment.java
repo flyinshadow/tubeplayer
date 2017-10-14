@@ -205,14 +205,14 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     VideoListAdapter.VIEW_MODE_DEFAULT);
         }
         toggleVideoMode(viewMode);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
                 loadBanner();
                 //加载feed流广告
                 loadFeedNative();
-            }
-        },500);
+//            }
+//        },500);
     }
 
     @Override
