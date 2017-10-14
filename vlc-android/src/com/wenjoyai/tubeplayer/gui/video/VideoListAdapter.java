@@ -345,6 +345,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                     LogUtil.d(TAG, "xxxx insertOrUdpate 0 peekLast[" + i++ + "] " + media.getUri().getPath() + " " + media.getArtworkMrl());
                 }
                 Util.insertOrUdpate(list, items);
+                i = 0;
                 for (MediaWrapper media : list) {
                     LogUtil.d(TAG, "xxxx insertOrUdpate 1 peekLast[" + i++ + "] " + media.getUri().getPath() + " " + media.getArtworkMrl());
                 }
