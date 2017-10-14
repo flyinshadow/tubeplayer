@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="200dp"
-    android:layout_height="150dp"
+    android:layout_width="120dp"
+    android:layout_height="100dp"
     android:orientation="vertical"
     android:background="@drawable/bg_loading"
     android:gravity="center"
@@ -9,12 +9,13 @@
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Loading Ad……"
-        android:textColor="@color/grey800"
-        android:textSize="20sp" />
+        android:text="Showing ads…"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
 </LinearLayout>

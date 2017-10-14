@@ -830,7 +830,6 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             public void onLoadedSuccess(List<NativeAd> list) {
                 LogUtil.d(TAG, "facebookAD onLoadedSuccess: mAdLoaded:" + mAdLoaded + ", mShowAd:" + mShowAd +
                         ", mParsingFinished:" + mParsingFinished + ", adSize:" + list.size());
-                // TODO: 2017/10/8
                 mNativeAd = list;
                 mAdLoaded = true;
                 if (mParsingFinished || mGroup != null) {

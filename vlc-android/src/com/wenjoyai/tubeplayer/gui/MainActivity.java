@@ -447,7 +447,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             }
         },500);
 
-
+//
 //        final LoadingDialog dialog = new LoadingDialog(MainActivity.this,R.style.dialog);
 //        dialog.setCancelable(true);
 //        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -527,7 +527,6 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                         ADManager.sPlatForm = mFirebaseRemoteConfig.getLong("ad_platform_type");
                         ADManager.sLevel = mFirebaseRemoteConfig.getLong("ad_level_type");
                         ADManager.back_ad_delay_time= mFirebaseRemoteConfig.getLong("back_ad_delay_time");
-
                     }
                 });
     }

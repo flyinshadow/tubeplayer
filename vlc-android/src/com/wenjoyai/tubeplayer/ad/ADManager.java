@@ -1,8 +1,6 @@
 package com.wenjoyai.tubeplayer.ad;
 
 import android.content.Context;
-import android.util.SparseArray;
-import android.view.SurfaceView;
 
 import com.facebook.ads.NativeAd;
 
@@ -20,7 +18,7 @@ public class ADManager {
     public static final long AD_Facebook = 2;
     public static final long AD_MobVista = 3;
     public static final long AD_Baidu = 4;
-    public static long sPlatForm = AD_Google;
+    public static long sPlatForm = AD_Facebook;
 
     //广告级别
     public static final long Level_Little = 1;//只有feed流和pause的native
