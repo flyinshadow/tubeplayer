@@ -389,8 +389,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     protected boolean mIsBenchmark = false;
 
-    private boolean mFirstVideoInfoType = true;
-
     //广告
     private RotateAD mRotateAD;
     private boolean mIsAdLoadSuc = false;
@@ -1759,11 +1757,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             case MediaPlayer.Event.ESSelected:
                 if (event.getEsChangedType() == Media.VideoTrack.Type.Video) {
                     Media.VideoTrack vt = mService.getCurrentVideoTrack();
-                    if (mFirstVideoInfoType && vt != null) {
-                        StatisticsManager.submitVideoPlaySuccess(this, null,
-                                StatisticsManager.getVideoInfoType(mService.getCurrentMediaWrapper(), vt.width, vt.height));
-                        mFirstVideoInfoType = false;
-                    }
                     changeSurfaceLayout();
                     if (vt != null)
                         mFov = vt.projection == Media.VideoTrack.Projection.Rectangular ? 0f : DEFAULT_FOV;
@@ -1844,6 +1837,35 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     }
 
     private void onPlaying() {
+        if (!mIsPlaying) {
+            LogUtil.d(TAG, "first Playing");
+            MediaWrapper mw = mService.getCurrentMediaWrapper();
+            if (mw != null) {
+                String path = (mw.getUri() != null) ? mw.getUri().getPath() : "";
+
+                int width = mw.getWidth();
+                int height = mw.getHeight();
+                Media.VideoTrack vt = mService.getCurrentVideoTrack();
+                if (vt != null && vt.width > 0 && vt.height > 0) {
+                    width = vt.width;
+                    height = vt.height;
+                }
+                if (mVideoWidth > 0 && mVideoHeight > 0) {
+                    width = mVideoWidth;
+                    height = mVideoHeight;
+                }
+                LogUtil.d(TAG, "TubeStatisticsManager path=" + path +", width=" + width + ", height=" + height);
+                if (mw.getType() == MediaWrapper.TYPE_VIDEO) {
+                    String videoInfoType = StatisticsManager.getVideoInfoType(mService.getCurrentMediaWrapper(), width, height);
+                    StatisticsManager.submitVideoPlaySuccess(this, FileUtils.getFileExt(path), videoInfoType);
+                } else if (mw.getType() == MediaWrapper.TYPE_AUDIO) {
+                    StatisticsManager.submitAudioPlay(this, StatisticsManager.TYPE_AUDIO_PLAY, FileUtils.getFileExt(path));
+                }
+                if (mw.getUri() != null && !TextUtils.equals(mw.getUri().getScheme(), "file")) {
+                    StatisticsManager.submitVideoPlaySuccess(this, mw.getUri().getPath(), null);
+                }
+            }
+        }
         mIsPlaying = true;
         setPlaybackParameters();
         stopLoading();
