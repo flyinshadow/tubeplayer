@@ -31,6 +31,9 @@ public class ADConstants {
     //原生广告
     //feed流
     public static final String facebook_video_feed_native="236470546883809_236493373548193";
+    public static final String facebook_video_feed_native1="236470546883809_238572480006949";
+    public static final String facebook_video_feed_native2="236470546883809_238572650006932";
+
     //pause
     public static final String facebook_video_pause_native="236470546883809_236494143548116";
     // 视频列表banner

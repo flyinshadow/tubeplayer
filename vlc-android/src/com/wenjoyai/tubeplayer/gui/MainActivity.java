@@ -248,7 +248,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         }
         isloadAD = true;
         //旋转广告墙
-        if (ADManager.isShowOpenAD) {
+        if (ADManager.sLevel>=ADManager.Level_Big) {
             preloadWall();
         }
         loadFirstOpenAD();

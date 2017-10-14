@@ -1,5 +1,14 @@
 package com.wenjoyai.tubeplayer.ad;
 
+import android.content.Context;
+import android.util.SparseArray;
+import android.view.SurfaceView;
+
+import com.facebook.ads.NativeAd;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by LiJiaZhi on 2017/9/23.
  * 广告管理类
@@ -26,7 +35,73 @@ public class ADManager {
     public static boolean isShowMobvista = false;//是否显示旋转动画的mobvista广告
 
 
-    //进入前台 超过2分钟才会展示 open广告和第三方广告
+    //进入前台 超过2分钟才会展示 open广告
     public static boolean isShowOpenAD = true;
 
+    private static volatile ADManager instance;
+    public static ADManager getInstance() {
+        if (instance == null) {
+            synchronized (ADManager.class) {
+                if (instance == null) {
+                    instance = new ADManager();
+                }
+            }
+        }
+        return instance;
+    }
+
+    private ADManager() {
+    }
+
+
+
+    private List<com.facebook.ads.NativeAd> mNativeAdlist=new ArrayList<>();
+    private int done = 0;
+
+    /**
+     * 加载三个feed流广告
+     * @param context
+     */
+    public  void loadNumNativeAD(Context context, final int num, final ADNumListener listener){
+        done = 0;
+        for (int i =0;i<num;i++) {
+            NativeAD mFeedNativeAD = new NativeAD();
+            String adUnit="";
+            if (i%3==0){
+                adUnit = ADConstants.facebook_video_feed_native;
+            } else if (i%3==1){
+                adUnit = ADConstants.facebook_video_feed_native1;
+            } else {
+                adUnit = ADConstants.facebook_video_feed_native2;
+            }
+            mFeedNativeAD.loadAD(context, ADManager.AD_Facebook, adUnit, new NativeAD.ADListener() {
+                @Override
+                public void onLoadedSuccess(com.facebook.ads.NativeAd ad) {
+                    done++;
+                    mNativeAdlist.add(ad);
+                    if (done==num&&null != listener){
+                        listener.onLoadedSuccess(mNativeAdlist);
+                    }
+                }
+
+                @Override
+                public void onLoadedFailed(String msg) {
+                    done++;
+                    if (done==num&&null != listener){
+                        listener.onLoadedSuccess(mNativeAdlist);
+                    }
+                }
+
+                @Override
+                public void onAdClick() {
+
+                }
+            });
+        }
+    }
+
+
+    public interface ADNumListener {
+        void onLoadedSuccess(List<NativeAd> list);
+    }
 }

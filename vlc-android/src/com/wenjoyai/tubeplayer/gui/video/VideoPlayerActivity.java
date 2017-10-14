@@ -541,7 +541,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mMedialibrary = VLCApplication.getMLInstance();
 
         initAD();
-        if (ADManager.isShowMobvista) {
+        if (ADManager.sLevel>=ADManager.Level_Big) {
             preloadWall();
         }
         //返回广告
@@ -2162,9 +2162,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (mNativeFrameLayout.getVisibility()!=View.GONE){
-            mNativeFrameLayout.setVisibility(View.GONE);
-        }
         if (mService == null)
             return false;
         if (mDetector == null) {
@@ -2524,9 +2521,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     public void onClick(View v) {
-        if (mNativeFrameLayout.getVisibility()!=View.GONE){
-            mNativeFrameLayout.setVisibility(View.GONE);
-        }
         switch (v.getId()) {
             case R.id.player_overlay_play:
 

@@ -2,12 +2,10 @@ package com.wenjoyai.tubeplayer.ad;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.facebook.ads.AdListener;
-import com.facebook.ads.AdSettings;
 import com.facebook.ads.NativeAd;
 
 /**
