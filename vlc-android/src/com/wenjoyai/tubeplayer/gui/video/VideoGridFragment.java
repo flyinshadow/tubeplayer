@@ -101,6 +101,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     public final static String KEY_FOLDER_TITLE = "key_folder_title";
 
     public static final String KEY_STAT_VIDEO_COUNT = "stat_video_count";
+    public static final String KEY_PARSING_ONCE = "parsing_once";
 
     protected LinearLayout mLayoutFlipperLoading;
     protected AutoFitRecyclerView mGridView;
@@ -486,7 +487,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             public void run() {
                 final MediaWrapper[] itemList = mMediaLibrary.getVideos();
                 final ArrayList<MediaWrapper> displayList = new ArrayList<>();
-                int count = 0;
+//                int count = 0;
 //                for (MediaWrapper item : itemList) {
 //                    Log.d(TAG, "[" + count++ + "] uri_path: " + item.getUri().getPath() +
 //                            " dir: " + FileUtils.getParent(item.getUri().getPath()) +
@@ -623,6 +624,12 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         if (mAdLoaded && !mShowAd) {
             mShowAd = true;
         }
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
+        if (!settings.getBoolean(KEY_PARSING_ONCE, false)) {
+            settings.edit().putBoolean(KEY_PARSING_ONCE, true).apply();
+        }
+
         mHandler.sendEmptyMessage(UPDATE_LIST);
     }
 
@@ -873,7 +880,11 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                         ", mParsingFinished:" + mParsingFinished + ", adSize:" + list.size());
                 mNativeAd = list;
                 mAdLoaded = true;
-                if (mParsingFinished || mGroup != null) {
+
+                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
+                boolean parsed = settings.getBoolean(KEY_PARSING_ONCE, false);
+
+                if (mParsingFinished || mGroup != null || parsed) {
                     mShowAd = true;
                     LogUtil.d(TAG, "aaaa facebookAD onLoadedSuccess UPDATE_LIST");
                     mHandler.sendEmptyMessage(UPDATE_LIST);

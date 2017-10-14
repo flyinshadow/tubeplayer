@@ -132,6 +132,7 @@ public class StartActivity extends BaseActivity {
             settings.edit().putInt(RateFragment.KEY_RATE_LAST_VERSION, 0).apply();
 
             settings.edit().putBoolean(VideoGridFragment.KEY_STAT_VIDEO_COUNT, false).apply();
+            settings.edit().putBoolean(VideoGridFragment.KEY_PARSING_ONCE, false).apply();
         }
         startMedialibrary(firstRun, upgrade);
         // Route search query
