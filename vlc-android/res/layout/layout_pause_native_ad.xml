@@ -86,7 +86,7 @@
             android:layout_width="77dp"
             android:layout_height="36dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/bg_button_green"
+            android:background="?attr/button_oval"
             android:gravity="center"
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
