@@ -8,7 +8,6 @@ import com.facebook.ads.AdError;
 import com.facebook.ads.AdListener;
 import com.facebook.ads.NativeAd;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
-import com.wenjoyai.tubeplayer.gui.video.VideoPlayerActivity;
 
 /**
  * Created by LiJiaZhi on 2017/9/26.

@@ -99,6 +99,7 @@ public class Interstitial {
             });
             mInterstitialHandler.preload();
         } else if (type == ADManager.AD_Facebook) {
+            Log.e(TAG, "startloading ");
             mFacebookAd = new InterstitialAd(context, adId);
             mFacebookAd.setAdListener(new InterstitialAdListener() {
                 @Override
@@ -118,8 +119,9 @@ public class Interstitial {
 
                 @Override
                 public void onError(Ad ad, AdError adError) {
-                    Log.e(TAG, "onAdLoaded "+adError.getErrorCode()+"  "+adError.getErrorMessage());
+                    Log.e(TAG, "onError "+adError.getErrorCode()+"  "+adError.getErrorMessage());
                     //如果facebook加载失败，尝试加载google ad
+                    mFacebookAd = null;
                     if (adId==ADConstants.facebook_first_open_interstitial){
                         loadAD(context, ADManager.AD_Google,ADConstants.google_first_open_interstitial,listener);
                     } else if (adId ==ADConstants.facebook_video_back_interstitial){
@@ -129,6 +131,7 @@ public class Interstitial {
 
                 @Override
                 public void onAdLoaded(Ad ad) {
+                    Log.e(TAG, "onAdLoaded ");
                     listener.onLoadedSuccess();
                 }
 

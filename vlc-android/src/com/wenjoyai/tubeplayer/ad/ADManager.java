@@ -87,7 +87,9 @@ public class ADManager {
                 @Override
                 public void onLoadedSuccess(com.facebook.ads.NativeAd ad) {
                     done++;
-                    mNativeAdlist.add(ad);
+                    if (null!= ad) {
+                        mNativeAdlist.add(ad);
+                    }
                     if (done==num&&null != listener){
                         listener.onLoadedSuccess(mNativeAdlist);
                     }

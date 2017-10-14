@@ -543,12 +543,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             preloadWall();
         }
         //返回广告
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        },ADManager.back_ad_delay_time*1000);
+        mHandler.postDelayed(mRunnable,ADManager.back_ad_delay_time*1000);
         initPauseNative();
     }
 
