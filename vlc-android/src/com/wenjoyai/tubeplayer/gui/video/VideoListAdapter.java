@@ -163,10 +163,11 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         " " + media.getArtworkMrl());
 
         holder.binding.setVariable(BR.isAd, media.getItemType() == MediaWrapper.TYPE_AD);
+
         if (media.getItemType() == MediaWrapper.TYPE_AD) {
             NativeAd nativeAd = ((AdItem)media).getNativeAd();
             if (nativeAd != null) {
-                holder.adBody.setText(nativeAd.getAdBody());
+                holder.adBody.setText(TextUtils.isEmpty(nativeAd.getAdBody()) ? nativeAd.getAdTitle() : nativeAd.getAdBody());
                 holder.adCallToAction.setText(nativeAd.getAdCallToAction());
 
                 // Download and display the cover image.
@@ -178,21 +179,12 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                 holder.adChoicesContainer.addView(adChoicesView);
 
                 // Register the Title and CTA button to listen for clicks.
-//                List<View> clickableViews = new ArrayList<>();
-//                clickableViews.add(holder.adBody);
-//                clickableViews.add(holder.adCallToAction);
-//                clickableViews.add(holder.adMedia);
                 nativeAd.unregisterView();
                 nativeAd.registerViewForInteraction(holder.adContainer);
+            } else {
+                LogUtil.e(TAG, "facebookAD nativeAd == null media title:" + media.getTitle());
             }
-
             holder.binding.setVariable(BR.scaleType, ImageView.ScaleType.CENTER_CROP);
-////            NativeAd.Image adIcon = nativeAd.getAdIcon();
-////            NativeAd.downloadAndDisplayImage(adIcon, nativeAdIcon);
-////            nativeAdBody.setText(nativeAd.getAdBody()); // title
-////            nativeAdCallToAction.setText(nativeAd.getAdCallToAction()); // time
-//            holder.binding.setVariable(BR.media, media);
-//            holder.binding.setVariable(BR.selected, false);
         } else {
             holder.binding.setVariable(BR.scaleType, ImageView.ScaleType.CENTER_CROP);
             fillView(holder, media);
@@ -468,6 +460,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         private ImageView thumbView;
         private TextView fileSize;
 
+        private View videoContainer;
         private View adContainer;
         private LinearLayout adChoicesContainer;
         private TextView adCallToAction;
@@ -480,6 +473,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             thumbView = (ImageView) itemView.findViewById(R.id.ml_item_thumbnail);
             fileSize = (TextView) itemView.findViewById(R.id.ml_item_size);
 
+            videoContainer = itemView.findViewById(R.id.video_item);
             adContainer = itemView.findViewById(R.id.ad_item);
             adChoicesContainer = (LinearLayout) itemView.findViewById(R.id.ad_choices_container);
             adCallToAction = (TextView) itemView.findViewById(R.id.ad_call_to_action);
@@ -776,12 +770,12 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     private int getRandomIndex(int max) {
         Random random = new Random();
-        int index = random.nextInt(5);
+        int index = random.nextInt(4);
         if (index % 2 == 0) {
             index++;
         }
         if (index > max) {
-            index = (max % 2 == 0) ? (max - 1) : max;
+            index = (max % 2 == 0) ? (max + 1) : max;
         }
         return index < 0 ? 0 : index;
     }
@@ -793,11 +787,18 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     private int mStartIndex = -1;
     private void addAdItems(ArrayList<MediaWrapper> items) {
         int index = 0;
-        ListIterator it = items.listIterator();
         if (mStartIndex == -1) {
             mStartIndex = getRandomIndex(items.size() - 1);
         }
         LogUtil.d(TAG, "facebookAD startIndex:" + mStartIndex);
+        if (mStartIndex >= items.size()) {
+            MediaWrapper item = items.get(items.size()-1);
+            AdItem ad = new AdItem(item);
+            ad.setNativeAd(nextAd());
+            items.add(ad);
+            return;
+        }
+        ListIterator it = items.listIterator();
         while (it.hasNext()) {
             if (index < mStartIndex) {
                 it.next();
@@ -834,7 +835,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     private boolean mShowAds = false;
 
-    private List<NativeAd> mNativeAd;
+    private List<NativeAd> mNativeAd = new ArrayList<>();
 
     public void setShowAds(boolean showAds) {
         LogUtil.d(TAG, "facebookAD setShowAds : " + showAds);

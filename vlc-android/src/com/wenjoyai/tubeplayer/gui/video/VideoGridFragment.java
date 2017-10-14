@@ -234,6 +234,9 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+        }
         mVideoAdapter.clear();
         if (null!=mBannerAD){
             mBannerAD.destroy();
@@ -505,6 +508,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     for (MediaGroup item : MediaGroup.group(itemList))
                         displayList.add(item.getMedia());
                 }
+                LogUtil.d(TAG, "dddd updateList displayList:" + displayList.size());
                 VLCApplication.runOnMainThread(new Runnable() {
                     @Override
                     public void run() {
@@ -552,6 +556,19 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     public void onRefresh() {
         LogUtil.d(TAG, "aaaa onRefresh");
         mVideoAdapter.resetAdIndex();
+        if (mHandler != null) {
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    LogUtil.d(TAG, "aaaa onRefresh mParsingStarted:" + mParsingStarted + ", mParsingFinished:" +
+                            mParsingFinished + ", isRefreshing:" + mSwipeRefreshLayout.isRefreshing());
+                    if (mParsingFinished && mSwipeRefreshLayout.isRefreshing()) {
+                        LogUtil.d(TAG, "aaaa onRefresh setRefreshing false");
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+            }, 5000);
+        }
         getActivity().startService(new Intent(MediaParsingService.ACTION_RELOAD, null, getActivity(), MediaParsingService.class));
     }
 
@@ -567,10 +584,12 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         super.setFabPlayVisibility(!mVideoAdapter.isEmpty() && enable);
     }
 
+    private boolean mParsingStarted = false;
     private boolean mParsingFinished = false;
     @Override
     protected void onParsingServiceStarted() {
         LogUtil.d(TAG, "aaaa onParsingServiceStarted");
+        mParsingStarted = true;
         mParsingFinished = false;
         mHandler.sendEmptyMessageDelayed(SET_REFRESHING, 300);
     }
@@ -578,6 +597,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     @Override
     protected void onParsingServiceFinished() {
         LogUtil.d(TAG, "aaaa onParsingServiceFinished");
+        mParsingStarted = false;
         mParsingFinished = true;
         if (mAdLoaded && !mShowAd) {
             mShowAd = true;
