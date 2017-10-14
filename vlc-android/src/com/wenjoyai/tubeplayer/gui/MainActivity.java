@@ -751,7 +751,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 viewModeItem.setIcon(R.drawable.ic_view_list);
             } else if (currentViewMode == VideoListAdapter.VIEW_MODE_GRID) {
                 viewModeItem.setIcon(R.drawable.ic_view_grid);
-            } else {
+            } else if (currentViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
                 viewModeItem.setIcon(R.drawable.ic_view_bigpic);
             }
         }

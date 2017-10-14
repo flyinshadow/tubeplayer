@@ -93,6 +93,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_black</item>
         <item name="po_seekbar">@drawable/po_seekbar_black</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_black</item>
+        <item name="button_oval">@drawable/button_oval_black</item>
 
     </style>
 
@@ -200,6 +201,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_black</item>
         <item name="po_seekbar">@drawable/po_seekbar_black</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_black</item>
+        <item name="button_oval">@drawable/button_oval_black</item>
 
     </style>
    <style name="Theme.VLC.TV" parent="Theme.Leanback">
@@ -421,6 +423,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_black</item>
         <item name="po_seekbar">@drawable/po_seekbar_black</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_black</item>
+        <item name="button_oval">@drawable/button_oval_black</item>
 
     </style>
 
@@ -439,6 +442,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_red</item>
         <item name="po_seekbar">@drawable/po_seekbar_red</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_red</item>
+        <item name="button_oval">@drawable/button_oval_red</item>
 
     </style>
 
@@ -457,6 +461,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_pink</item>
         <item name="po_seekbar">@drawable/po_seekbar_pink</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_pink</item>
+        <item name="button_oval">@drawable/button_oval_pink</item>
 
     </style>
 
@@ -475,6 +480,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_purple</item>
         <item name="po_seekbar">@drawable/po_seekbar_purple</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_purple</item>
+        <item name="button_oval">@drawable/button_oval_purple</item>
 
     </style>
 
@@ -493,6 +499,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_deep_purple</item>
         <item name="po_seekbar">@drawable/po_seekbar_deep_purple</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_purple</item>
+        <item name="button_oval">@drawable/button_oval_deep_purple</item>
 
     </style>
 
@@ -511,6 +518,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_indigo</item>
         <item name="po_seekbar">@drawable/po_seekbar_indigo</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_indigo</item>
+        <item name="button_oval">@drawable/button_oval_indigo</item>
 
     </style>
 
@@ -529,6 +537,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_blue</item>
         <item name="po_seekbar">@drawable/po_seekbar_blue</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_blue</item>
+        <item name="button_oval">@drawable/button_oval_blue</item>
 
     </style>
 
@@ -547,6 +556,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_light_blue</item>
         <item name="po_seekbar">@drawable/po_seekbar_light_blue</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_light_blue</item>
+        <item name="button_oval">@drawable/button_oval_light_blue</item>
 
     </style>
 
@@ -565,6 +575,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_cyan</item>
         <item name="po_seekbar">@drawable/po_seekbar_cyan</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_cyan</item>
+        <item name="button_oval">@drawable/button_oval_cyan</item>
 
     </style>
 
@@ -583,6 +594,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_teal</item>
         <item name="po_seekbar">@drawable/po_seekbar_teal</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_teal</item>
+        <item name="button_oval">@drawable/button_oval_teal</item>
 
     </style>
 
@@ -601,6 +613,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_green</item>
         <item name="po_seekbar">@drawable/po_seekbar_green</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_green</item>
+        <item name="button_oval">@drawable/button_oval_green</item>
 
     </style>
 
@@ -619,6 +632,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_light_green</item>
         <item name="po_seekbar">@drawable/po_seekbar_light_green</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_light_green</item>
+        <item name="button_oval">@drawable/button_oval_light_green</item>
 
     </style>
 
@@ -637,6 +651,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_lime</item>
         <item name="po_seekbar">@drawable/po_seekbar_lime</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_lime</item>
+        <item name="button_oval">@drawable/button_oval_lime</item>
 
     </style>
 
@@ -655,6 +670,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_amber</item>
         <item name="po_seekbar">@drawable/po_seekbar_amber</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_amber</item>
+        <item name="button_oval">@drawable/button_oval_amber</item>
 
     </style>
 
@@ -673,6 +689,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_orange</item>
         <item name="po_seekbar">@drawable/po_seekbar_orange</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_orange</item>
+        <item name="button_oval">@drawable/button_oval_orange</item>
 
     </style>
 
@@ -691,6 +708,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_deep_orange</item>
         <item name="po_seekbar">@drawable/po_seekbar_deep_orange</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_orange</item>
+        <item name="button_oval">@drawable/button_oval_deep_orange</item>
 
     </style>
 
@@ -707,6 +725,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_red</item>
         <item name="po_seekbar">@drawable/po_seekbar_red</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_red</item>
+        <item name="button_oval">@drawable/button_oval_red</item>
 
     </style>
 
@@ -720,6 +739,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_pink</item>
         <item name="po_seekbar">@drawable/po_seekbar_pink</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_pink</item>
+        <item name="button_oval">@drawable/button_oval_pink</item>
 
     </style>
 
@@ -733,6 +753,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_purple</item>
         <item name="po_seekbar">@drawable/po_seekbar_purple</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_purple</item>
+        <item name="button_oval">@drawable/button_oval_purple</item>
 
     </style>
 
@@ -746,6 +767,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_deep_purple</item>
         <item name="po_seekbar">@drawable/po_seekbar_deep_purple</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_purple</item>
+        <item name="button_oval">@drawable/button_oval_deep_purple</item>
 
     </style>
 
@@ -759,6 +781,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_indigo</item>
         <item name="po_seekbar">@drawable/po_seekbar_indigo</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_indigo</item>
+        <item name="button_oval">@drawable/button_oval_indigo</item>
 
     </style>
 
@@ -772,6 +795,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_blue</item>
         <item name="po_seekbar">@drawable/po_seekbar_blue</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_blue</item>
+        <item name="button_oval">@drawable/button_oval_blue</item>
 
     </style>
 
@@ -785,6 +809,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_light_blue</item>
         <item name="po_seekbar">@drawable/po_seekbar_light_blue</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_light_blue</item>
+        <item name="button_oval">@drawable/button_oval_light_blue</item>
 
     </style>
 
@@ -798,6 +823,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_cyan</item>
         <item name="po_seekbar">@drawable/po_seekbar_cyan</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_cyan</item>
+        <item name="button_oval">@drawable/button_oval_cyan</item>
 
     </style>
 
@@ -811,6 +837,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_teal</item>
         <item name="po_seekbar">@drawable/po_seekbar_teal</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_teal</item>
+        <item name="button_oval">@drawable/button_oval_teal</item>
 
     </style>
 
@@ -824,6 +851,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_green</item>
         <item name="po_seekbar">@drawable/po_seekbar_green</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_green</item>
+        <item name="button_oval">@drawable/button_oval_green</item>
 
     </style>
 
@@ -837,6 +865,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_light_green</item>
         <item name="po_seekbar">@drawable/po_seekbar_light_green</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_light_green</item>
+        <item name="button_oval">@drawable/button_oval_light_green</item>
 
     </style>
 
@@ -850,6 +879,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_lime</item>
         <item name="po_seekbar">@drawable/po_seekbar_lime</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_lime</item>
+        <item name="button_oval">@drawable/button_oval_lime</item>
 
     </style>
 
@@ -863,6 +893,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_amber</item>
         <item name="po_seekbar">@drawable/po_seekbar_amber</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_amber</item>
+        <item name="button_oval">@drawable/button_oval_amber</item>
 
     </style>
 
@@ -876,6 +907,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_orange</item>
         <item name="po_seekbar">@drawable/po_seekbar_orange</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_orange</item>
+        <item name="button_oval">@drawable/button_oval_orange</item>
 
     </style>
 
@@ -889,6 +921,7 @@
         <item name="fastscroller_bubble">@drawable/fastscroller_bubble_deep_orange</item>
         <item name="po_seekbar">@drawable/po_seekbar_deep_orange</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_orange</item>
+        <item name="button_oval">@drawable/button_oval_deep_orange</item>
 
     </style>
 
@@ -913,6 +946,7 @@
         <item name="colorAccent">@color/theme_color_black_accent</item>
         <item name="po_seekbar">@drawable/po_seekbar_black</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_black</item>
+        <item name="button_oval">@drawable/button_oval_black</item>
 
     </style>
 
@@ -926,6 +960,7 @@
         <item name="colorAccent">@color/theme_color_red_accent</item>
         <item name="po_seekbar">@drawable/po_seekbar_red</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_red</item>
+        <item name="button_oval">@drawable/button_oval_red</item>
 
     </style>
 
@@ -939,6 +974,7 @@
         <item name="colorAccent">@color/theme_color_pink_accent</item>
         <item name="po_seekbar">@drawable/po_seekbar_pink</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_pink</item>
+        <item name="button_oval">@drawable/button_oval_pink</item>
 
     </style>
 
@@ -952,6 +988,7 @@
         <item name="colorAccent">@color/theme_color_purple_accent</item>
         <item name="po_seekbar">@drawable/po_seekbar_purple</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_purple</item>
+        <item name="button_oval">@drawable/button_oval_purple</item>
 
     </style>
 
@@ -965,6 +1002,7 @@
         <item name="colorAccent">@color/theme_color_deep_purple_accent</item>
         <item name="po_seekbar">@drawable/po_seekbar_deep_purple</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_purple</item>
+        <item name="button_oval">@drawable/button_oval_deep_purple</item>
 
     </style>
 
@@ -978,6 +1016,7 @@
         <item name="colorAccent">@color/theme_color_indigo_accent</item>
         <item name="po_seekbar">@drawable/po_seekbar_indigo</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_indigo</item>
+        <item name="button_oval">@drawable/button_oval_indigo</item>
 
     </style>
 
@@ -991,6 +1030,7 @@
         <item name="colorAccent">@color/theme_color_blue_accent</item>
         <item name="po_seekbar">@drawable/po_seekbar_blue</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_blue</item>
+        <item name="button_oval">@drawable/button_oval_blue</item>
 
     </style>
 
@@ -1004,6 +1044,7 @@
         <item name="colorAccent">@color/theme_color_light_blue_accent</item>
         <item name="po_seekbar">@drawable/po_seekbar_light_blue</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_light_blue</item>
+        <item name="button_oval">@drawable/button_oval_light_blue</item>
 
     </style>
 
@@ -1017,6 +1058,7 @@
         <item name="colorAccent">@color/theme_color_cyan_accent</item>
         <item name="po_seekbar">@drawable/po_seekbar_cyan</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_cyan</item>
+        <item name="button_oval">@drawable/button_oval_cyan</item>
 
     </style>
 
@@ -1030,6 +1072,7 @@
         <item name="colorAccent">@color/theme_color_teal_accent</item>
         <item name="po_seekbar">@drawable/po_seekbar_teal</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_teal</item>
+        <item name="button_oval">@drawable/button_oval_teal</item>
 
     </style>
 
@@ -1043,6 +1086,7 @@
         <item name="colorAccent">@color/theme_color_green_accent</item>
         <item name="po_seekbar">@drawable/po_seekbar_green</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_green</item>
+        <item name="button_oval">@drawable/button_oval_green</item>
 
     </style>
 
@@ -1056,6 +1100,7 @@
         <item name="colorAccent">@color/theme_color_light_green_accent</item>
         <item name="po_seekbar">@drawable/po_seekbar_light_green</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_light_green</item>
+        <item name="button_oval">@drawable/button_oval_light_green</item>
 
     </style>
 
@@ -1069,6 +1114,7 @@
         <item name="colorAccent">@color/theme_color_lime_accent</item>
         <item name="po_seekbar">@drawable/po_seekbar_lime</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_lime</item>
+        <item name="button_oval">@drawable/button_oval_lime</item>
 
     </style>
 
@@ -1082,6 +1128,7 @@
         <item name="colorAccent">@color/theme_color_amber_accent</item>
         <item name="po_seekbar">@drawable/po_seekbar_amber</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_amber</item>
+        <item name="button_oval">@drawable/button_oval_amber</item>
 
     </style>
 
@@ -1095,6 +1142,7 @@
         <item name="colorAccent">@color/theme_color_orange_accent</item>
         <item name="po_seekbar">@drawable/po_seekbar_orange</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_orange</item>
+        <item name="button_oval">@drawable/button_oval_orange</item>
 
     </style>
 
@@ -1108,6 +1156,7 @@
         <item name="colorAccent">@color/theme_color_deep_orange_accent</item>
         <item name="po_seekbar">@drawable/po_seekbar_deep_orange</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_orange</item>
+        <item name="button_oval">@drawable/button_oval_deep_orange</item>
 
     </style>
 

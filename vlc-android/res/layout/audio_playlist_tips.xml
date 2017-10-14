@@ -60,7 +60,7 @@
             android:id="@+id/okgotit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_oval"
+            android:background="?attr/button_oval"
             android:text="@string/ok_got_it"
             android:textColor="@color/white"
             android:textSize="22sp"

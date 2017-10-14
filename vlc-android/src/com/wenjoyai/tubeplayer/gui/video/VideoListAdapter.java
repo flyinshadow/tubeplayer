@@ -25,36 +25,36 @@ import android.content.SharedPreferences;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.media.Image;
 import android.preference.PreferenceManager;
 import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.util.DiffUtil;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.videolan.medialibrary.Tools;
 import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
+
+import com.facebook.ads.AdChoicesView;
+import com.facebook.ads.MediaView;
+import com.facebook.ads.NativeAd;
 import com.wenjoyai.tubeplayer.BR;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.gui.helpers.AsyncImageLoader;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
 import com.wenjoyai.tubeplayer.interfaces.IEventsHandler;
+import com.wenjoyai.tubeplayer.media.AdItem;
 import com.wenjoyai.tubeplayer.media.MediaGroup;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.MediaItemFilter;
@@ -68,7 +68,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Locale;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
@@ -90,14 +92,18 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     final static int UPDATE_THUMB = 1;
     final static int UPDATE_TIME = 2;
 
-    public final static int VIEW_MODE_BIGPIC = 2;
-    public final static int VIEW_MODE_LIST = 1;
     public final static int VIEW_MODE_GRID = 0;
+    public final static int VIEW_MODE_LIST = 1;
+    public final static int VIEW_MODE_BIGPIC = 2;
     public final static int VIEW_MODE_MAX = 3;
 
     public static final int VIEW_MODE_FULL_TITLE = 4;
 
     public final static int VIEW_MODE_DEFAULT = VIEW_MODE_GRID;
+
+    public static final int VIEW_TYPE_AD = 100;
+
+    public static final int AD_STEPS = 5;
 
     private boolean mListMode = false;
     private IEventsHandler mEventsHandler;
@@ -153,30 +159,68 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         if (media == null)
             return;
 
-        LogUtil.d(TAG, "xxxx onBindViewHolder position: " + position + " " + media.getUri().getPath() +
+        LogUtil.d(TAG, "xxxx onBindViewHolder position: " + position + " " + (media.getUri() != null ? media.getUri().getPath() : "") +
         " " + media.getArtworkMrl());
 
-        holder.binding.setVariable(BR.scaleType, ImageView.ScaleType.CENTER_CROP);
-        fillView(holder, media);
-        holder.binding.setVariable(BR.media, media);
-        boolean isSelected = media.hasStateFlags(MediaLibraryItem.FLAG_SELECTED);
-        holder.binding.setVariable(BR.selected, isSelected);
+        holder.binding.setVariable(BR.isAd, media.getItemType() == MediaWrapper.TYPE_AD);
+        if (media.getItemType() == MediaWrapper.TYPE_AD) {
+            NativeAd nativeAd = ((AdItem)media).getNativeAd();
+            if (nativeAd != null) {
+                holder.adBody.setText(nativeAd.getAdBody());
+                holder.adCallToAction.setText(nativeAd.getAdCallToAction());
 
-        if (holder.fileSize != null) {
-            holder.fileSize.setText(Strings.readableSize(media.getFileSize()));
+                // Download and display the cover image.
+                holder.adMedia.setNativeAd(nativeAd);
+
+                // Add the AdChoices icon
+                AdChoicesView adChoicesView = new AdChoicesView(holder.itemView.getContext(), nativeAd, true);
+                holder.adChoicesContainer.removeAllViews();
+                holder.adChoicesContainer.addView(adChoicesView);
+
+                // Register the Title and CTA button to listen for clicks.
+//                List<View> clickableViews = new ArrayList<>();
+//                clickableViews.add(holder.adBody);
+//                clickableViews.add(holder.adCallToAction);
+//                clickableViews.add(holder.adMedia);
+                nativeAd.unregisterView();
+                nativeAd.registerViewForInteraction(holder.adContainer);
+            }
+
+            holder.binding.setVariable(BR.scaleType, ImageView.ScaleType.CENTER_CROP);
+////            NativeAd.Image adIcon = nativeAd.getAdIcon();
+////            NativeAd.downloadAndDisplayImage(adIcon, nativeAdIcon);
+////            nativeAdBody.setText(nativeAd.getAdBody()); // title
+////            nativeAdCallToAction.setText(nativeAd.getAdCallToAction()); // time
+//            holder.binding.setVariable(BR.media, media);
+//            holder.binding.setVariable(BR.selected, false);
+        } else {
+            holder.binding.setVariable(BR.scaleType, ImageView.ScaleType.CENTER_CROP);
+            fillView(holder, media);
+            holder.binding.setVariable(BR.media, media);
+            boolean isSelected = media.hasStateFlags(MediaLibraryItem.FLAG_SELECTED);
+            holder.binding.setVariable(BR.selected, isSelected);
+
+            if (holder.fileSize != null) {
+                holder.fileSize.setText(Strings.readableSize(media.getFileSize()));
+            }
         }
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position, List<Object> payloads) {
+        MediaWrapper media = mVideos.get(position);
+        if (media.getItemType() == MediaWrapper.TYPE_AD) {
+            LogUtil.d(TAG, "adadad onBindViewHolder, position:" + position + " is AD");
+        }
+
         if (payloads.isEmpty())
             onBindViewHolder(holder, position);
         else {
-            MediaWrapper media = mVideos.get(position);
+//            MediaWrapper media = mVideos.get(position);
             for (Object data : payloads) {
                 switch ((int) data) {
                     case UPDATE_THUMB:
-                        LogUtil.d(TAG, "xxxx onBindViewHolder UPDATE_THUMB position: " + position + " " + media.getUri().getPath() +
+                        LogUtil.d(TAG, "xxxx onBindViewHolder UPDATE_THUMB position: " + position + " " + (media.getUri() != null ? media.getUri().getPath() : "") +
                                 " " + media.getArtworkMrl());
                         AsyncImageLoader.loadPicture(holder.thumbView, media);
                         break;
@@ -252,6 +296,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     private ArrayList<MediaWrapper> peekLast() {
         if (mPendingUpdates.isEmpty()) {
             LogUtil.d(TAG, "xxxx peekLast return mVideos");
+//            removeAdItems(mVideos);
             return mVideos;
         } else {
             LogUtil.d(TAG, "xxxx peekLast return mPendingUpdates peekLast");
@@ -398,14 +443,18 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         return mCurrentViewMode;
     }
 
-    int getListWithPosition(ArrayList<MediaWrapper>  list, int position) {
+    int getListWithPosition(ArrayList<MediaWrapper> list, int position) {
         MediaWrapper mw;
         int offset = 0;
         for (int i = 0; i < getItemCount(); ++i) {
             mw = mVideos.get(i);
+            if (mw.getItemType() == MediaWrapper.TYPE_AD)
+                continue;
             if (mw instanceof MediaGroup) {
-                for (MediaWrapper item : ((MediaGroup) mw).getAll())
-                    list.add(item);
+                for (MediaWrapper item : ((MediaGroup) mw).getAll()) {
+                    if (item.getItemType() != MediaWrapper.TYPE_AD)
+                        list.add(item);
+                }
                 if (i < position)
                     offset += ((MediaGroup)mw).size()-1;
             } else
@@ -419,11 +468,23 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         private ImageView thumbView;
         private TextView fileSize;
 
+        private View adContainer;
+        private LinearLayout adChoicesContainer;
+        private TextView adCallToAction;
+        private TextView adBody;
+        private MediaView adMedia;
+
         public ViewHolder(View itemView) {
             super(itemView);
             binding = DataBindingUtil.bind(itemView);
             thumbView = (ImageView) itemView.findViewById(R.id.ml_item_thumbnail);
             fileSize = (TextView) itemView.findViewById(R.id.ml_item_size);
+
+            adContainer = itemView.findViewById(R.id.ad_item);
+            adChoicesContainer = (LinearLayout) itemView.findViewById(R.id.ad_choices_container);
+            adCallToAction = (TextView) itemView.findViewById(R.id.ad_call_to_action);
+            adBody = (TextView) itemView.findViewById(R.id.ad_body);
+            adMedia = (MediaView) itemView.findViewById(R.id.ad_media);
 
             binding.setVariable(BR.holder, this);
             binding.setVariable(BR.cover, AsyncImageLoader.DEFAULT_COVER_VIDEO_DRAWABLE);
@@ -443,7 +504,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
         public boolean onLongClick(View v) {
             int position = getLayoutPosition();
-            if (position >= 0 && position < mVideos.size()) {
+            if (position >= 0 && position < mVideos.size() && mVideos.get(position).getItemType() != MediaWrapper.TYPE_AD) {
                 return mEventsHandler.onLongClick(v, position, mVideos.get(position));
             }
             return false;
@@ -574,8 +635,11 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         protected List<MediaWrapper> initData() {
             if (mOriginalData == null) {
                 mOriginalData = new ArrayList<>(mVideos.size());
-                for (int i = 0; i < mVideos.size(); ++i)
-                    mOriginalData.add(mVideos.get(i));
+                for (int i = 0; i < mVideos.size(); ++i) {
+                    if (mVideos.get(i).getItemType() != MediaWrapper.TYPE_AD) {
+                        mOriginalData.add(mVideos.get(i));
+                    }
+                }
             }
             return mOriginalData;
         }
@@ -618,6 +682,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                 @Override
                 public void run() {
                     Collections.sort(items, mVideoComparator);
+
+                    prepareAdItems(items);
+
                     final DiffUtil.DiffResult result = DiffUtil.calculateDiff(new VideoItemDiffCallback(mVideos, items), detectMoves);
                     int i = 0;
                     for (MediaWrapper media : mVideos) {
@@ -630,21 +697,21 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
                             int cnt = 0;
                             for (MediaWrapper media : mVideos) {
-                                LogUtil.d(TAG, "xxxx internalUpdate 1 mVideos[" + cnt++ + "] " + media.getUri().getPath() + " " +
+                                LogUtil.d(TAG, "xxxx internalUpdate 1 mVideos[" + cnt++ + "] " + (media.getUri() != null ? media.getUri().getPath() : "") + " " +
                                         media.getArtworkMrl());
                             }
                             mVideos = items;
                             cnt = 0;
                             for (MediaWrapper media : mVideos) {
-                                LogUtil.d(TAG, "xxxx internalUpdate 2 mVideos[" + cnt++ + "] " + media.getUri().getPath() + " " +
+                                LogUtil.d(TAG, "xxxx internalUpdate 2 mVideos[" + cnt++ + "] " + (media.getUri() != null ? media.getUri().getPath() : "") + " " +
                                         media.getArtworkMrl());
                             }
                             result.dispatchUpdatesTo(VideoListAdapter.this);
 
                             mPendingUpdates.remove();
-                            if (mPendingUpdates.isEmpty())
-                                mEventsHandler.onUpdateFinished(null);
-                            else {
+                            if (mPendingUpdates.isEmpty()) {
+                                mEventsHandler.onUpdateFinished(VideoListAdapter.this);
+                            } else {
                                 ArrayList<MediaWrapper> lastList = mPendingUpdates.peekLast();
                                 if (!mPendingUpdates.isEmpty()) {
                                     mPendingUpdates.clear();
@@ -706,4 +773,89 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             }
         }
     }
+
+    private int getRandomIndex(int max) {
+        Random random = new Random();
+        int index = random.nextInt(5);
+        if (index % 2 == 0) {
+            index++;
+        }
+        if (index > max) {
+            index = (max % 2 == 0) ? (max - 1) : max;
+        }
+        return index < 0 ? 0 : index;
+    }
+
+    public void resetAdIndex() {
+        mStartIndex = -1;
+    }
+
+    private int mStartIndex = -1;
+    private void addAdItems(ArrayList<MediaWrapper> items) {
+        int index = 0;
+        ListIterator it = items.listIterator();
+        if (mStartIndex == -1) {
+            mStartIndex = getRandomIndex(items.size() - 1);
+        }
+        LogUtil.d(TAG, "facebookAD startIndex:" + mStartIndex);
+        while (it.hasNext()) {
+            if (index < mStartIndex) {
+                it.next();
+                index++;
+                continue;
+            }
+            MediaWrapper item = (MediaWrapper) it.next();
+            if ((index - mStartIndex) % AD_STEPS == 0) {
+                AdItem ad = new AdItem(item);
+                ad.setNativeAd(nextAd());
+                it.previous();
+                it.add(ad);
+                it.next();
+            }
+            index++;
+        }
+    }
+
+    private void removeAdItems(ArrayList<MediaWrapper> items) {
+        for (ListIterator it = items.listIterator(); it.hasNext();) {
+            MediaWrapper item = (MediaWrapper) it.next();
+            if (item.getItemType() == MediaWrapper.TYPE_AD) {
+                it.remove();
+            }
+        }
+    }
+
+    private void prepareAdItems(ArrayList<MediaWrapper> items) {
+        if (mShowAds) {
+            removeAdItems(items);
+            addAdItems(items);
+        }
+    }
+
+    private boolean mShowAds = false;
+
+    private List<NativeAd> mNativeAd;
+
+    public void setShowAds(boolean showAds) {
+        LogUtil.d(TAG, "facebookAD setShowAds : " + showAds);
+        mShowAds = showAds;
+    }
+
+    public void setNativeAd(List<NativeAd> nativeAd) {
+        mNativeAd = nativeAd;
+    }
+
+    private int mNextAdIndex = 0;
+    private NativeAd nextAd() {
+        if (mNativeAd.size() <= 0) {
+            return null;
+        }
+        if (mNextAdIndex >= mNativeAd.size()) {
+            mNextAdIndex = 0;
+        }
+        NativeAd ad = mNativeAd.get(mNextAdIndex);
+        mNextAdIndex++;
+        return ad;
+    }
+
 }

@@ -40,9 +40,12 @@ import android.widget.TextView;
 
 import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
+
+import com.facebook.ads.NativeAd;
 import com.wenjoyai.tubeplayer.BR;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.media.AdItem;
 import com.wenjoyai.tubeplayer.media.MediaGroup;
 import com.wenjoyai.tubeplayer.util.HttpImageLoader;
 import com.wenjoyai.tubeplayer.util.ImageComposer;
@@ -87,6 +90,10 @@ public class AsyncImageLoader {
 
     @BindingAdapter({"media"})
     public static void loadPicture(View v, MediaLibraryItem item) {
+        if (item instanceof AdItem && ((AdItem) item).getNativeAd() != null) {
+            NativeAd.downloadAndDisplayImage(((AdItem) item).getNativeAd().getAdIcon(), (ImageView)v);
+            return;
+        }
         if (v == null || item == null || TextUtils.isEmpty(item.getArtworkMrl())
                 || item.getItemType() == MediaLibraryItem.TYPE_GENRE
                 || item.getItemType() == MediaLibraryItem.TYPE_PLAYLIST)

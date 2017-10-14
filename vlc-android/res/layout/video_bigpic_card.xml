@@ -45,6 +45,10 @@
         <variable
             name="selected"
             type="boolean" />
+
+        <variable
+            name="isAd"
+            type="boolean" />
     </data>
 
     <android.support.v7.widget.CardView
@@ -57,7 +61,74 @@
         vlc:useCompatPadding="true"
         >
 
+        <!--ad item-->
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/ad_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{isAd ? View.VISIBLE : View.GONE}"
+            >
+
+            <com.facebook.ads.MediaView
+                android:id="@+id/ad_media"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                vlc:layout_constraintDimensionRatio="H,16:10"
+                vlc:layout_constraintStart_toStartOf="parent"
+                vlc:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center"
+                />
+
+            <LinearLayout
+                android:id="@+id/ad_choices_container"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:gravity="start"
+                android:orientation="horizontal"
+                vlc:layout_constraintStart_toStartOf="@+id/ad_media"
+                vlc:layout_constraintTop_toTopOf="@+id/ad_media"
+                />
+
+            <TextView
+                android:id="@+id/ad_body"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                vlc:layout_constraintStart_toStartOf="@+id/ad_media"
+                vlc:layout_constraintTop_toBottomOf="@+id/ad_media"
+                vlc:layout_constraintEnd_toStartOf="@+id/ad_call_to_action"
+                vlc:layout_constraintBottom_toBottomOf="parent"
+                android:padding="@dimen/info_default_margin"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center_vertical"
+                android:maxLines="2"
+                android:textColor="?attr/list_title"
+                android:textSize="@dimen/grid_card_title_text_size"
+                tools:targetApi="jelly_bean" />
+
+            <TextView
+                android:id="@+id/ad_call_to_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                vlc:layout_constraintStart_toEndOf="@+id/ad_body"
+                vlc:layout_constraintEnd_toEndOf="parent"
+                vlc:layout_constraintTop_toBottomOf="@+id/ad_media"
+                vlc:layout_constraintBottom_toBottomOf="@+id/ad_body"
+                android:background="?attr/button_oval"
+                android:layout_marginRight="@dimen/default_margin"
+                android:paddingLeft="@dimen/info_default_margin"
+                android:paddingRight="@dimen/info_default_margin"
+                android:paddingTop="@dimen/half_default_margin"
+                android:paddingBottom="@dimen/half_default_margin"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <!--video item-->
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/video_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -65,6 +136,7 @@
             android:onClick="@{holder::onClick}"
             android:onLongClick="@{holder::onLongClick}"
             android:longClickable="true"
+            android:visibility="@{isAd ? View.GONE : View.VISIBLE}"
             >
             <!-- Image loading is handled by com.wenjoyai.tubeplayer.wenjoyai.videoplayer.gui.helpers.AsyncImageLoader.loadPicture() -->
 
@@ -145,23 +217,6 @@
                 android:textSize="14sp"
                 android:background="@color/greytransparent"
                 tools:targetApi="jelly_bean" />
-
-            <!--<TextView-->
-            <!--android:id="@+id/ml_item_resolution"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--vlc:layout_constraintBottom_toTopOf="@+id/ml_item_progress"-->
-            <!--vlc:layout_constraintStart_toEndOf="@+id/ml_item_time"-->
-            <!--vlc:layout_constraintEnd_toEndOf="parent"-->
-            <!--android:paddingRight="@dimen/half_default_margin"-->
-            <!--android:paddingEnd="@dimen/half_default_margin"-->
-            <!--android:layout_alignWithParentIfMissing="true"-->
-            <!--android:fontFamily="sans-serif-light"-->
-            <!--android:gravity="end"-->
-            <!--android:text="@{resolution}"-->
-            <!--android:textColor="?attr/list_subtitle"-->
-            <!--android:textSize="14sp"-->
-            <!--tools:targetApi="jelly_bean" />-->
 
             <ProgressBar
                 android:id="@+id/ml_item_progress"
