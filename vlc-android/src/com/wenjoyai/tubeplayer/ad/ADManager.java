@@ -113,7 +113,7 @@ public class ADManager {
                         }
                         if (tempList.size() > 0) {
                             Log.e("NativeAD", "onLoadedSuccess "+tempList.size());
-                            listener.onLoadedSuccess(mNativeAdlist);
+                            listener.onLoadedSuccess(tempList);
                         }
                     }
                 }

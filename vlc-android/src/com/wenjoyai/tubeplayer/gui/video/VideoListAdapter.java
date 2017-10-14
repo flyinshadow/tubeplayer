@@ -843,7 +843,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     }
 
     public void setNativeAd(List<NativeAd> nativeAd) {
-        mNativeAd = nativeAd;
+        mNativeAd.clear();
+        mNativeAd.addAll(nativeAd);
     }
 
     private int mNextAdIndex = 0;
