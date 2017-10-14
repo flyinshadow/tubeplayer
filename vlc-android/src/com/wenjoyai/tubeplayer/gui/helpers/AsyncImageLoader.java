@@ -90,10 +90,6 @@ public class AsyncImageLoader {
 
     @BindingAdapter({"media"})
     public static void loadPicture(View v, MediaLibraryItem item) {
-        if (item instanceof AdItem && ((AdItem) item).getNativeAd() != null) {
-            NativeAd.downloadAndDisplayImage(((AdItem) item).getNativeAd().getAdIcon(), (ImageView)v);
-            return;
-        }
         if (v == null || item == null || TextUtils.isEmpty(item.getArtworkMrl())
                 || item.getItemType() == MediaLibraryItem.TYPE_GENRE
                 || item.getItemType() == MediaLibraryItem.TYPE_PLAYLIST)
