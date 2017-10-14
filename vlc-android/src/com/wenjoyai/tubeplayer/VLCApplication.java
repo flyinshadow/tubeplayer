@@ -106,9 +106,6 @@ public class VLCApplication extends MultiDexApplication {
 
     private boolean mAppForeground = false;
 
-    //进入前台的时间戳
-    public static final String KEY_FROE_GROUND_TIME = "key_fore_ground_time";
-
     public static void setLocale(Context context){
         // Are we using advanced debugging - locale?
         String p = mSettings.getString("set_locale", "");
@@ -156,13 +153,6 @@ public class VLCApplication extends MultiDexApplication {
             @Override
             public void onBecameForeground() {
                 mAppForeground = true;
-                long second = mSettings.getLong(KEY_FROE_GROUND_TIME, 0);
-                if (second==0||(System.currentTimeMillis()/1000-second)/60>=2){
-                    ADManager.isShowOpenAD =true;
-                } else {
-                    ADManager.isShowOpenAD =false;
-                }
-                mSettings.edit().putLong(KEY_FROE_GROUND_TIME, System.currentTimeMillis()/1000).apply();
             }
 
             @Override

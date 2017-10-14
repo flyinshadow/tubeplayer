@@ -13,6 +13,7 @@ import java.util.List;
  */
 
 public class ADManager {
+
     //广告平台   1：MobVista   2：google   3:facebook  4:百度
     public static final long AD_Google = 1;
     public static final long AD_Facebook = 2;
@@ -31,8 +32,6 @@ public class ADManager {
     public static long back_ad_delay_time = 30;
 
 
-
-
     public static boolean isShowGoogleVideoBanner = false;//是否显示视频列表页的banner
     public static boolean isShowMobvista = false;//是否显示旋转动画的mobvista广告
 
@@ -41,6 +40,7 @@ public class ADManager {
     public static boolean isShowOpenAD = true;
 
     private static volatile ADManager instance;
+
     public static ADManager getInstance() {
         if (instance == null) {
             synchronized (ADManager.class) {
@@ -56,29 +56,29 @@ public class ADManager {
     }
 
 
-
-    private List<com.facebook.ads.NativeAd> mNativeAdlist=new ArrayList<>();
+    private List<com.facebook.ads.NativeAd> mNativeAdlist = new ArrayList<>();
     private long mStartTime = 0;
     private int done = 0;
 
     /**
      * 加载num个feed流广告
+     *
      * @param context
      */
-    public  void loadNumNativeAD(Context context, final int num, final ADNumListener listener){
+    public void loadNumNativeAD(Context context, final int num, final ADNumListener listener) {
         //大于15秒才会再次更新广告
-        if ((System.currentTimeMillis()-mStartTime)/1000<15){
+        if ((System.currentTimeMillis() - mStartTime) / 1000 < 15) {
             return;
         }
-        mStartTime=System.currentTimeMillis();
+        mStartTime = System.currentTimeMillis();
         mNativeAdlist.clear();
         done = 0;
-        for (int i =0;i<num;i++) {
-            NativeAD mFeedNativeAD = new NativeAD();
-            String adUnit="";
-            if (i%3==0){
+        for (int i = 0; i < num; i++) {
+            final NativeAD mFeedNativeAD = new NativeAD();
+            String adUnit = "";
+            if (i % 3 == 0) {
                 adUnit = ADConstants.facebook_video_feed_native;
-            } else if (i%3==1){
+            } else if (i % 3 == 1) {
                 adUnit = ADConstants.facebook_video_feed_native1;
             } else {
                 adUnit = ADConstants.facebook_video_feed_native2;
@@ -87,19 +87,31 @@ public class ADManager {
                 @Override
                 public void onLoadedSuccess(com.facebook.ads.NativeAd ad) {
                     done++;
-                    if (null!= ad) {
+                    if (null != ad) {
                         mNativeAdlist.add(ad);
                     }
-                    if (done==num&&null != listener){
-                        listener.onLoadedSuccess(mNativeAdlist);
+                    if (done == num && null != listener) {
+                        List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
+                        for (int j = 0; j < mNativeAdlist.size(); j++) {
+                            tempList.add(mNativeAdlist.get(j));
+                        }
+                        if (tempList.size() > 0) {
+                            listener.onLoadedSuccess(tempList);
+                        }
                     }
                 }
 
                 @Override
                 public void onLoadedFailed(String msg) {
                     done++;
-                    if (done==num&&null != listener){
-                        listener.onLoadedSuccess(mNativeAdlist);
+                    if (done == num && null != listener) {
+                        List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
+                        for (int j = 0; j < mNativeAdlist.size(); j++) {
+                            tempList.add(mNativeAdlist.get(j));
+                        }
+                        if (tempList.size() > 0) {
+                            listener.onLoadedSuccess(mNativeAdlist);
+                        }
                     }
                 }
 

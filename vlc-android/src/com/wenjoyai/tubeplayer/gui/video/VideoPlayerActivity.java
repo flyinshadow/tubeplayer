@@ -816,6 +816,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         }
 
         mAudioManager = null;
+//        mHandler.removeCallbacks(mRunnable);
     }
 
     /**
