@@ -543,8 +543,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
         boolean submitVideoCount = settings.getBoolean(KEY_STAT_VIDEO_COUNT, false);
         if (!submitVideoCount) {
-            StatisticsManager.submitVideoCount(getActivity(), "group_" + StatisticsManager.getVideoCountRange(group));
-            StatisticsManager.submitVideoCount(getActivity(), "video_" + StatisticsManager.getVideoCountRange(video));
+            StatisticsManager.submitVideoCount(VLCApplication.getAppContext(), "group_" + StatisticsManager.getVideoCountRange(group));
+            StatisticsManager.submitVideoCount(VLCApplication.getAppContext(), "video_" + StatisticsManager.getVideoCountRange(video));
             settings.edit().putBoolean(KEY_STAT_VIDEO_COUNT, true).apply();
             bSubmitVideoCount = true;
         }

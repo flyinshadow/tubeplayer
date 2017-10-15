@@ -164,23 +164,33 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
         holder.binding.setVariable(BR.isAd, media.getItemType() == MediaWrapper.TYPE_AD);
 
-        if (media.getItemType() == MediaWrapper.TYPE_AD) {
+        if (media.getItemType() == MediaWrapper.TYPE_AD && holder.adContainer != null) {
             NativeAd nativeAd = ((AdItem)media).getNativeAd();
             if (nativeAd != null) {
-                holder.adBody.setText(TextUtils.isEmpty(nativeAd.getAdBody()) ? nativeAd.getAdTitle() : nativeAd.getAdBody());
-                holder.adCallToAction.setText(nativeAd.getAdCallToAction());
+                if (holder.adBody != null) {
+                    holder.adBody.setText(TextUtils.isEmpty(nativeAd.getAdBody()) ? nativeAd.getAdTitle() : nativeAd.getAdBody());
+                }
+                if (holder.adCallToAction != null) {
+                    holder.adCallToAction.setText(nativeAd.getAdCallToAction());
+                }
 
                 // Download and display the cover image.
-                holder.adMedia.setNativeAd(nativeAd);
+                if (holder.adMedia != null) {
+                    holder.adMedia.setNativeAd(nativeAd);
+                }
 
                 // Add the AdChoices icon
-                AdChoicesView adChoicesView = new AdChoicesView(holder.itemView.getContext(), nativeAd, true);
-                holder.adChoicesContainer.removeAllViews();
-                holder.adChoicesContainer.addView(adChoicesView);
+                if (holder.adChoicesContainer != null) {
+                    AdChoicesView adChoicesView = new AdChoicesView(holder.itemView.getContext(), nativeAd, true);
+                    holder.adChoicesContainer.removeAllViews();
+                    holder.adChoicesContainer.addView(adChoicesView);
+                }
 
                 // Register the Title and CTA button to listen for clicks.
-                nativeAd.unregisterView();
-                nativeAd.registerViewForInteraction(holder.adContainer);
+                if (holder.adContainer != null) {
+                    nativeAd.unregisterView();
+                    nativeAd.registerViewForInteraction(holder.adContainer);
+                }
             } else {
                 LogUtil.e(TAG, "facebookAD nativeAd == null media title:" + media.getTitle());
             }
@@ -708,11 +718,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                                 mEventsHandler.onUpdateFinished(VideoListAdapter.this);
                             } else {
                                 ArrayList<MediaWrapper> lastList = mPendingUpdates.peekLast();
-                                if (!mPendingUpdates.isEmpty()) {
-                                    mPendingUpdates.clear();
-                                    mPendingUpdates.add(lastList);
+                                if (lastList.size() > 0) {
+                                    if (!mPendingUpdates.isEmpty()) {
+                                        mPendingUpdates.clear();
+                                        mPendingUpdates.add(lastList);
+                                    }
+                                    internalUpdate(lastList, false);
                                 }
-                                internalUpdate(lastList, false);
                             }
                         }
                     });
@@ -788,6 +800,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     private int mStartIndex = -1;
     private void addAdItems(ArrayList<MediaWrapper> items) {
         int index = 0;
+        if (items.size() <= 0)
+            return;
         if (mStartIndex == -1) {
             mStartIndex = getRandomIndex(items.size() - 1);
         }
@@ -828,7 +842,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     }
 
     private void prepareAdItems(ArrayList<MediaWrapper> items) {
-        if (mShowAds) {
+        if (mShowAds && items.size() > 0) {
             removeAdItems(items);
             addAdItems(items);
         }
