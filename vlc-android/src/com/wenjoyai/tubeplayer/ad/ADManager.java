@@ -58,7 +58,7 @@ public class ADManager {
 
 
     private List<com.facebook.ads.NativeAd> mNativeAdlist = new ArrayList<>();
-    private long mStartTime = 0;
+    public long mStartTime = 0;
     private int done = 0;
 
     /**
@@ -113,7 +113,7 @@ public class ADManager {
                         }
                         if (tempList.size() > 0) {
                             Log.e("NativeAD", "onLoadedSuccess "+tempList.size());
-                            listener.onLoadedSuccess(mNativeAdlist);
+                            listener.onLoadedSuccess(tempList);
                         }
                     }
                 }

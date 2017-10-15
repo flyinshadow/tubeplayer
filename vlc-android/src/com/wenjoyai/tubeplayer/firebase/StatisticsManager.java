@@ -394,8 +394,10 @@ public class StatisticsManager {
     }
 
     public static void submitVideoCount(Context context, String itemId) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitVideoCount, " + itemId);
-
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
         FirebaseAnalytics.getInstance(context).logEvent(EVENT_VIDEO_COUNT, bundle);
