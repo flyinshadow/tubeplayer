@@ -143,7 +143,12 @@ public class Medialibrary {
     }
 
     public MediaWrapper[] getAudio() {
-        return mIsInitiated ? nativeGetAudio() : new MediaWrapper[0];
+        try {
+            return mIsInitiated ? nativeGetAudio() : new MediaWrapper[0];
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new MediaWrapper[0];
     }
 
     public MediaWrapper[] getRecentAudio() {
