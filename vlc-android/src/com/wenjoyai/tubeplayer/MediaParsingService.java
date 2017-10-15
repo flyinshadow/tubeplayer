@@ -25,6 +25,7 @@ import org.videolan.medialibrary.interfaces.DevicesDiscoveryCb;
 import com.wenjoyai.tubeplayer.gui.DialogActivity;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.FileUtils;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.Strings;
 
 import java.io.File;
@@ -146,6 +147,7 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
                 exitCommand();
                 return START_NOT_STICKY;
         }
+        LogUtil.d(TAG, "aaaa MediaParsingService onStartCommand sendBroadcast ACTION_SERVICE_STARTED");
         mLocalBroadcastManager.sendBroadcast(new Intent(ACTION_SERVICE_STARTED));
         return START_NOT_STICKY;
     }

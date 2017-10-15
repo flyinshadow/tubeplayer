@@ -345,6 +345,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                     LogUtil.d(TAG, "xxxx insertOrUdpate 0 peekLast[" + i++ + "] " + media.getUri().getPath() + " " + media.getArtworkMrl());
                 }
                 Util.insertOrUdpate(list, items);
+                i = 0;
                 for (MediaWrapper media : list) {
                     LogUtil.d(TAG, "xxxx insertOrUdpate 1 peekLast[" + i++ + "] " + media.getUri().getPath() + " " + media.getArtworkMrl());
                 }
@@ -843,7 +844,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     }
 
     public void setNativeAd(List<NativeAd> nativeAd) {
-        mNativeAd = nativeAd;
+        mNativeAd.clear();
+        mNativeAd.addAll(nativeAd);
     }
 
     private int mNextAdIndex = 0;

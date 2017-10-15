@@ -94,7 +94,7 @@ import java.util.List;
 
 public class VideoGridFragment extends MediaBrowserFragment implements MediaUpdatedCb, ISortable, SwipeRefreshLayout.OnRefreshListener, MediaAddedCb, Filterable, IEventsHandler {
 
-    public final static String TAG = "VLC/VideoListFragment";
+    public final static String TAG = "VLC/VideoGridFragment";
 
     public final static String KEY_GROUP = "key_group";
     public final static String KEY_FOLDER_GROUP = "key_folder_group";
@@ -186,10 +186,13 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
 
     public void onStart() {
-        if (mMediaLibrary.isInitiated())
+        if (mMediaLibrary.isInitiated()) {
+            LogUtil.d(TAG, "aaaa onStart mMediaLibrary isInitiated");
             onMedialibraryReady();
-        else if (mGroup == null)
+        } else if (mGroup == null) {
+            LogUtil.d(TAG, "aaaa onStart setupMediaLibraryReceiver");
             setupMediaLibraryReceiver();
+        }
         super.onStart();
         mFabPlay.setImageResource(R.drawable.ic_fab_play);
         registerForContextMenu(mGridView);
@@ -252,7 +255,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             mMediaLibrary.setMediaUpdatedCb(this, Medialibrary.FLAG_MEDIA_UPDATED_VIDEO);
             mMediaLibrary.setMediaAddedCb(this, Medialibrary.FLAG_MEDIA_ADDED_VIDEO);
         }
-        LogUtil.d(TAG, "onMedialibraryReady UPDATE_LIST");
+        LogUtil.d(TAG, "aaaa onMedialibraryReady UPDATE_LIST");
         mHandler.sendEmptyMessage(UPDATE_LIST);
     }
 
@@ -518,7 +521,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 VLCApplication.runOnMainThread(new Runnable() {
                     @Override
                     public void run() {
-                        mVideoAdapter.setShowAds(mShowAd);
+                        mVideoAdapter.setShowAds(mFolderGroup == null && mShowAd);
                         if (mAdLoaded) {
                             mVideoAdapter.setNativeAd(mNativeAd);
                         }

@@ -52,6 +52,7 @@ import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
 import com.wenjoyai.tubeplayer.gui.view.ContextMenuRecyclerView;
 import com.wenjoyai.tubeplayer.gui.view.SwipeRefreshLayout;
 import com.wenjoyai.tubeplayer.util.FileUtils;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 
 import java.util.LinkedList;
 
@@ -242,6 +243,7 @@ public abstract class MediaBrowserFragment extends PlaybackServiceFragment imple
     }
 
     protected void onMedialibraryReady() {
+        LogUtil.d(TAG, "aaaa MediaBrowserFragment onMedialibraryReady");
         IntentFilter parsingServiceFilter = new IntentFilter(MediaParsingService.ACTION_SERVICE_ENDED);
         parsingServiceFilter.addAction(MediaParsingService.ACTION_SERVICE_STARTED);
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mParsingServiceReceiver, parsingServiceFilter);

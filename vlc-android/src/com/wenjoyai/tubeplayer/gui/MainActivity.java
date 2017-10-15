@@ -279,7 +279,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                     @Override
                     public void onLoadedSuccess() {
                         // create alert dialog
-                        if (dialog == null || !dialog.isShowing()){
+                        if (dialog == null){
                             dialog = new LoadingDialog(MainActivity.this, R.style.dialog);
                             dialog.setCancelable(true);
                             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -289,7 +289,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                                 }
                             });
                         }
-                        if (null!=dialog && !isFinishing())
+                        if (null!=dialog && !isFinishing()&&!dialog.isShowing())
                             dialog.show();
                         mHandler.postDelayed(new Runnable() {
                             @Override
