@@ -528,6 +528,10 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                         ADManager.sLevel = mFirebaseRemoteConfig.getLong("ad_level_type");
                         ADManager.back_ad_delay_time = mFirebaseRemoteConfig.getLong("back_ad_delay_time");
                         sSettings.edit().putLong(PLATFOM, ADManager.sPlatForm).apply();
+
+
+                        ADManager.REQUEST_FEED_NTIVE_INTERVAL = mFirebaseRemoteConfig.getLong("request_feed_native_interval");
+
                     }
                 });
     }

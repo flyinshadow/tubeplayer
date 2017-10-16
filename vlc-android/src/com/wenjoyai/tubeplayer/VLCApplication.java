@@ -19,7 +19,6 @@
  *****************************************************************************/
 package com.wenjoyai.tubeplayer;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,18 +36,10 @@ import android.support.v4.util.SimpleArrayMap;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
-import io.fabric.sdk.android.Fabric;
-import org.videolan.libvlc.Dialog;
-import org.videolan.libvlc.util.AndroidUtil;
-import org.videolan.medialibrary.LogUtil;
-import org.videolan.medialibrary.Medialibrary;
-
-import com.duapps.ad.base.DuAdNetwork;
 import com.google.android.gms.ads.MobileAds;
 import com.mobvista.msdk.MobVistaSDK;
 import com.mobvista.msdk.out.MobVistaSDKFactory;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
-import com.wenjoyai.tubeplayer.ad.ADManager;
 import com.wenjoyai.tubeplayer.gui.DialogActivity;
 import com.wenjoyai.tubeplayer.gui.RateFragment;
 import com.wenjoyai.tubeplayer.gui.dialogs.VlcProgressDialog;
@@ -58,6 +49,11 @@ import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.Strings;
 import com.wenjoyai.tubeplayer.util.Util;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
+
+import org.videolan.libvlc.Dialog;
+import org.videolan.libvlc.util.AndroidUtil;
+import org.videolan.medialibrary.LogUtil;
+import org.videolan.medialibrary.Medialibrary;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -71,6 +67,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
+import io.fabric.sdk.android.Fabric;
 
 public class VLCApplication extends MultiDexApplication {
     public final static String TAG = "VLC/VLCApplication";
@@ -190,7 +188,7 @@ public class VLCApplication extends MultiDexApplication {
                 /**
                  * the sdk initialization 初始化SDK
                  */
-                DuAdNetwork.init(instance, getConfigJSON(getApplicationContext()));
+//                DuAdNetwork.init(instance, getConfigJSON(getApplicationContext()));
                 Looper.loop();
             }
         });

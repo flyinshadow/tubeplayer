@@ -7,6 +7,8 @@ import com.facebook.ads.NativeAd;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by LiJiaZhi on 2017/9/23.
@@ -60,6 +62,11 @@ public class ADManager {
     private List<com.facebook.ads.NativeAd> mNativeAdlist = new ArrayList<>();
     public long mStartTime = 0;
     private int done = 0;
+    //请求广告时间间隔默认10分钟
+    public static long REQUEST_FEED_NTIVE_INTERVAL = 10 * 60;
+    protected Timer UPDATE_PROGRESS_TIMER;// 更新进度条的定时器
+    protected MyTimerTask mProgressTimerTask;
+    private ADNumListener mListener;
 
     /**
      * 加载num个feed流广告
@@ -67,10 +74,13 @@ public class ADManager {
      * @param context
      */
     public void loadNumNativeAD(Context context, final int num, final ADNumListener listener) {
-        //大于15秒才会再次更新广告
-        if ((System.currentTimeMillis() - mStartTime) / 1000 < 15) {
+        mListener = listener;
+        //大于10分钟才会再次更新广告
+        if ((System.currentTimeMillis() - mStartTime) / 1000 < REQUEST_FEED_NTIVE_INTERVAL&&mNativeAdlist.size()==3) {
+            callbackAD();
             return;
         }
+        startProgressTimer();
         mStartTime = System.currentTimeMillis();
         mNativeAdlist.clear();
         done = 0;
@@ -91,30 +101,18 @@ public class ADManager {
                     if (null != ad) {
                         mNativeAdlist.add(ad);
                     }
-                    if (done == num && null != listener) {
-                        List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
-                        for (int j = 0; j < mNativeAdlist.size(); j++) {
-                            tempList.add(mNativeAdlist.get(j));
-                        }
-                        if (tempList.size() > 0) {
-                            Log.e("NativeAD", "onLoadedSuccess "+tempList.size());
-                            listener.onLoadedSuccess(tempList);
-                        }
+                    if (done == num) {
+                        callbackAD();
+                        cancelProgressTimer();
                     }
                 }
 
                 @Override
                 public void onLoadedFailed(String msg) {
                     ++done;
-                    if (done == num && null != listener) {
-                        List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
-                        for (int j = 0; j < mNativeAdlist.size(); j++) {
-                            tempList.add(mNativeAdlist.get(j));
-                        }
-                        if (tempList.size() > 0) {
-                            Log.e("NativeAD", "onLoadedSuccess "+tempList.size());
-                            listener.onLoadedSuccess(tempList);
-                        }
+                    if (done == num) {
+                        callbackAD();
+                        cancelProgressTimer();
                     }
                 }
 
@@ -123,6 +121,47 @@ public class ADManager {
 
                 }
             });
+        }
+    }
+
+    protected void startProgressTimer() {
+        cancelProgressTimer();
+        UPDATE_PROGRESS_TIMER = new Timer();
+        mProgressTimerTask = new MyTimerTask();
+        UPDATE_PROGRESS_TIMER.schedule(mProgressTimerTask, 10 * 1000, 10 * 1000);//10秒
+    }
+
+    protected void cancelProgressTimer() {
+        if (UPDATE_PROGRESS_TIMER != null) {
+            UPDATE_PROGRESS_TIMER.cancel();
+        }
+        if (mProgressTimerTask != null) {
+            mProgressTimerTask.cancel();
+        }
+
+    }
+
+    //回调给上层广告数组
+    protected void callbackAD() {
+        Log.e("NativeAD", "callbackAD " );
+        if (null != mListener) {
+            List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
+            tempList.addAll(mNativeAdlist);
+            if (tempList.size() > 0) {
+                Log.e("NativeAD", "onLoadedSuccess " + tempList.size());
+                mListener.onLoadedSuccess(tempList);
+                mListener = null;
+            }
+        }
+    }
+
+    protected class MyTimerTask extends TimerTask {
+        @Override
+        public void run() {
+            cancelProgressTimer();
+            if (null != mListener) {
+                callbackAD();
+            }
         }
     }
 

@@ -8,6 +8,7 @@ import com.facebook.ads.AdError;
 import com.facebook.ads.AdListener;
 import com.facebook.ads.NativeAd;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
+import com.wenjoyai.tubeplayer.gui.video.VideoPlayerActivity;
 
 /**
  * Created by LiJiaZhi on 2017/9/26.
@@ -20,12 +21,11 @@ public class NativeAD {
     NativeAd mFacebookAd;
 
     public void loadAD(final Context context, long type, final String adId, final ADListener listener) {
-//        if (type == ADManager.AD_MobVista) {
-//        } else if (type == ADManager.AD_Facebook) {
             mFacebookAd = new NativeAd(context, adId);
             mFacebookAd.setAdListener(new AdListener() {
                 @Override
                 public void onError(Ad ad, AdError error) {
+                    StatisticsManager.submitAd(context, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_FACEBOOK_FAILED);
                     // Ad error callback
                     Log.e(TAG, "onError "+error.getErrorCode()+error.getErrorMessage());
                     if (null!= listener){
@@ -67,9 +67,6 @@ public class NativeAD {
 
             // Request an ad
             mFacebookAd.loadAd(NativeAd.MediaCacheFlag.ALL);
-//        }
-//        else if (type == ADManager.AD_Google) {
-//        }
     }
 
     public interface ADListener {

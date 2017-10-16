@@ -660,30 +660,30 @@
             <!--android:value="@integer/google_play_services_version" />-->
 
         <!--百度-->
-        <meta-data
-            android:name="app_license"
-            android:value="67abfc1ff831c072bcf81282c9d932fa" />
+        <!--<meta-data-->
+            <!--android:name="app_license"-->
+            <!--android:value="67abfc1ff831c072bcf81282c9d932fa" />-->
 
-        <provider
-            android:name="com.duapps.ad.stats.DuAdCacheProvider"
-            android:authorities="com.wenjoyai.tubeplayer.DuAdCacheProvider"
-            android:exported="false"/>
+        <!--<provider-->
+            <!--android:name="com.duapps.ad.stats.DuAdCacheProvider"-->
+            <!--android:authorities="com.wenjoyai.tubeplayer.DuAdCacheProvider"-->
+            <!--android:exported="false"/>-->
 
-        <receiver android:name="com.duapps.ad.base.PackageAddReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
+        <!--<receiver android:name="com.duapps.ad.base.PackageAddReceiver">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.PACKAGE_ADDED" />-->
+                <!--<data android:scheme="package" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
-        <activity android:name="com.duapps.ad.offerwall.ui.OfferWallAct" />
+        <!--<activity android:name="com.duapps.ad.offerwall.ui.OfferWallAct" />-->
 
-        <activity
-            android:name="com.trigger.ad.DuTriggerADActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:excludeFromRecents="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--<activity-->
+            <!--android:name="com.trigger.ad.DuTriggerADActivity"-->
+            <!--android:configChanges="keyboard|keyboardHidden|orientation|screenSize"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:excludeFromRecents="true"-->
+            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
 
         <meta-data
             android:name="io.fabric.ApiKey"
