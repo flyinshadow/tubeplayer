@@ -635,7 +635,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             settings.edit().putBoolean(KEY_PARSING_ONCE, true).apply();
         }
 
-        mHandler.sendEmptyMessageDelayed(UPDATE_LIST, 500);
+        mHandler.sendEmptyMessageDelayed(UPDATE_LIST, 1000);
     }
 
     @Override
