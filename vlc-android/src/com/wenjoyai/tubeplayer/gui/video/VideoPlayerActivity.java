@@ -3954,7 +3954,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mFeedNativeAD.loadAD(VideoPlayerActivity.this, ADManager.AD_Facebook, ADConstants.facebook_video_pause_native, new NativeAD.ADListener() {
             @Override
             public void onLoadedSuccess(com.facebook.ads.NativeAd nativeAd) {
-                if(null ==mNativeFrameLayout){
+                if(null ==mNativeFrameLayout|| null==nativeAd){
                     //异步过程，可能当前页面已经销毁了
                     return;
                 }
