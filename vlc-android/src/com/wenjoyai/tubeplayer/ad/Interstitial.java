@@ -104,6 +104,10 @@ public class Interstitial {
             mFacebookAd.setAdListener(new InterstitialAdListener() {
                 @Override
                 public void onInterstitialDisplayed(Ad ad) {
+                    Log.e(TAG, "onInterstitialDisplayed ");
+                    if (null != listener){
+                        listener.onAdClick();
+                    }
 
                 }
 
@@ -137,9 +141,7 @@ public class Interstitial {
 
                 @Override
                 public void onAdClicked(Ad ad) {
-                    if (null != listener){
-                        listener.onAdClick();
-                    }
+                    Log.e(TAG, "onAdClicked ");
                 }
 
                 @Override
