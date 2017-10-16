@@ -115,7 +115,7 @@ public class FileUtils {
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
                 return "";
         } finally {
             if (cursor != null && !cursor.isClosed())

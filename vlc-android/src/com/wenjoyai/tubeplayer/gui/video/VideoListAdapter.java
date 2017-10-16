@@ -350,15 +350,19 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         VLCApplication.runBackground(new Runnable() {
             @Override
             public void run() {
-                int i = 0;
-                for (MediaWrapper media : list) {
-                    LogUtil.d(TAG, "xxxx insertOrUdpate 0 peekLast[" + i++ + "] " + media.getUri().getPath() + " " + media.getArtworkMrl());
-                }
+//                int i = 0;
+//                for (MediaWrapper media : list) {
+//                    LogUtil.d(TAG, "xxxx insertOrUdpate 0 peekLast[" + i++ + "] " + media.getUri().getPath() + " " + media.getArtworkMrl());
+//                }
+                LogUtil.d(TAG, "xxxx insertOrUdpate 0 peekLast size=" + list.size());
+
                 Util.insertOrUdpate(list, items);
-                i = 0;
-                for (MediaWrapper media : list) {
-                    LogUtil.d(TAG, "xxxx insertOrUdpate 1 peekLast[" + i++ + "] " + media.getUri().getPath() + " " + media.getArtworkMrl());
-                }
+//                i = 0;
+//                for (MediaWrapper media : list) {
+//                    LogUtil.d(TAG, "xxxx insertOrUdpate 1 peekLast[" + i++ + "] " + media.getUri().getPath() + " " + media.getArtworkMrl());
+//                }
+                LogUtil.d(TAG, "xxxx insertOrUdpate 1 peekLast size=" + list.size());
+
                 VLCApplication.runOnMainThread(new Runnable() {
                     @Override
                     public void run() {
@@ -667,6 +671,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     @MainThread
     void update(final ArrayList<MediaWrapper> items, final boolean detectMoves) {
+        LogUtil.d(TAG, "xxxx mainthread update mPendingUpdates.size()=" + mPendingUpdates.size() + ", items.size()=" + items.size());
         mPendingUpdates.add(items);
         if (mPendingUpdates.size() == 1) {
             internalUpdate(items, detectMoves);
@@ -677,47 +682,63 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     private void internalUpdate(final ArrayList<MediaWrapper> items, final boolean detectMoves) {
         int cnt = 0;
-        for (MediaWrapper media : items) {
-            LogUtil.d(TAG, "xxxx internalUpdate items[" + cnt++ + "] " + media.getUri().getPath() + " " +
-                    media.getArtworkMrl());
-        }
+//        for (MediaWrapper media : items) {
+//            LogUtil.d(TAG, "xxxx internalUpdate items[" + cnt++ + "] " + media.getUri().getPath() + " " +
+//                    media.getArtworkMrl());
+//        }
+        LogUtil.d(TAG, "xxxx internalUpdate 0 items.size()=" + items.size());
 
         try {
             mUpdateExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    Collections.sort(items, mVideoComparator);
+                    if (PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getBoolean(VideoGridFragment.KEY_PARSING_ONCE, false)) {
+                        Collections.sort(items, mVideoComparator);
+                    }
+
+                    LogUtil.d(TAG, "xxxx internalUpdate 1 items.size()=" + items.size());
 
                     prepareAdItems(items);
 
+                    LogUtil.d(TAG, "xxxx internalUpdate 2 items.size()=" + items.size());
+
+
                     final DiffUtil.DiffResult result = DiffUtil.calculateDiff(new VideoItemDiffCallback(mVideos, items), detectMoves);
                     int i = 0;
-                    for (MediaWrapper media : mVideos) {
-                        LogUtil.d(TAG, "xxxx internalUpdate 0 mVideos[" + i++ + "] " + media.getUri().getPath() + " " +
-                                media.getArtworkMrl());
-                    }
+//                    for (MediaWrapper media : mVideos) {
+//                        LogUtil.d(TAG, "xxxx internalUpdate 0 mVideos[" + i++ + "] " + media.getUri().getPath() + " " + media.getArtworkMrl());
+//                    }
+                    LogUtil.d(TAG, "xxxx internalUpdate 0 mVideos.size()=" + mVideos.size());
+
                     VLCApplication.runOnMainThread(new Runnable() {
                         @Override
                         public void run() {
 
                             int cnt = 0;
-                            for (MediaWrapper media : mVideos) {
-                                LogUtil.d(TAG, "xxxx internalUpdate 1 mVideos[" + cnt++ + "] " + (media.getUri() != null ? media.getUri().getPath() : "") + " " +
-                                        media.getArtworkMrl());
-                            }
+//                            for (MediaWrapper media : mVideos) {
+//                                LogUtil.d(TAG, "xxxx internalUpdate 1 mVideos[" + cnt++ + "] " + (media.getUri() != null ? media.getUri().getPath() : "") + " " + media.getArtworkMrl());
+//                            }
+                            LogUtil.d(TAG, "xxxx internalUpdate 1 mVideos.size()=" + mVideos.size());
+
                             mVideos = items;
                             cnt = 0;
-                            for (MediaWrapper media : mVideos) {
-                                LogUtil.d(TAG, "xxxx internalUpdate 2 mVideos[" + cnt++ + "] " + (media.getUri() != null ? media.getUri().getPath() : "") + " " +
-                                        media.getArtworkMrl());
-                            }
+//                            for (MediaWrapper media : mVideos) {
+//                                LogUtil.d(TAG, "xxxx internalUpdate 2 mVideos[" + cnt++ + "] " + (media.getUri() != null ? media.getUri().getPath() : "") + " " + media.getArtworkMrl());
+//                            }
+                            LogUtil.d(TAG, "xxxx internalUpdate 2 mVideos.size()=" + mVideos.size());
+
                             result.dispatchUpdatesTo(VideoListAdapter.this);
+
+                            LogUtil.d(TAG, "xxxx internalUpdate mPendingUpdates.size()=" + mPendingUpdates.size());
 
                             mPendingUpdates.remove();
                             if (mPendingUpdates.isEmpty()) {
                                 mEventsHandler.onUpdateFinished(VideoListAdapter.this);
                             } else {
                                 ArrayList<MediaWrapper> lastList = mPendingUpdates.peekLast();
+
+                                LogUtil.d(TAG, "xxxx internalUpdate mPendingUpdates lastList size=" + lastList.size());
+
                                 if (lastList.size() > 0) {
                                     if (!mPendingUpdates.isEmpty()) {
                                         mPendingUpdates.clear();

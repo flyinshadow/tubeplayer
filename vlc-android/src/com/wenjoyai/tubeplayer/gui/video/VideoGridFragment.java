@@ -515,7 +515,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                         displayList.add(item.getMedia());
                 }
                 if (mGroup == null && mFolderGroup == null && mParsingFinished) {
-                    LogUtil.d(TAG, "updateList StatisticsManager displayList:" + displayList.size() + ", videoSize:" + itemList.length);
+                    LogUtil.d(TAG, "xxxx updateList StatisticsManager displayList:" + displayList.size() + ", videoSize:" + itemList.length);
                     submitVideoCount(displayList.size(), itemList.length);
                 }
                 VLCApplication.runOnMainThread(new Runnable() {
@@ -635,7 +635,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             settings.edit().putBoolean(KEY_PARSING_ONCE, true).apply();
         }
 
-        mHandler.sendEmptyMessage(UPDATE_LIST);
+        mHandler.sendEmptyMessageDelayed(UPDATE_LIST, 500);
     }
 
     @Override
