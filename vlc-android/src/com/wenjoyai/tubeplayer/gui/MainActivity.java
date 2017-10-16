@@ -258,7 +258,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
     private Handler mHandler = new Handler();
     public static final String KEY_LAST_OPEN_TIME = "key_last_open_time";
-
+    LoadingDialog dialog;
     //第一次打开
     private void loadFirstOpenAD() {
 
@@ -278,20 +278,23 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 mFirstOpenInterstitialAd.loadAD(this, ADManager.sPlatForm, adID, new Interstitial.ADListener() {
                     @Override
                     public void onLoadedSuccess() {
-//                        loading page
-                        final LoadingDialog dialog = new LoadingDialog(MainActivity.this, R.style.dialog);
-                        dialog.setCancelable(true);
-                        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialog) {
-                                mFirstOpenInterstitialAd.show();
-                            }
-                        });
-                        dialog.show();
+                        // create alert dialog
+                        if (dialog == null){
+                            dialog = new LoadingDialog(MainActivity.this, R.style.dialog);
+                            dialog.setCancelable(true);
+                            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                @Override
+                                public void onDismiss(DialogInterface dialog) {
+                                    mFirstOpenInterstitialAd.show();
+                                }
+                            });
+                        }
+                        if (null!=dialog && !isFinishing()&&!dialog.isShowing())
+                            dialog.show();
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                if (null != dialog && dialog.isShowing()) {
+                                if (null != dialog && dialog.isShowing()&& !isFinishing()) {
                                     dialog.dismiss();
                                 }
                             }
@@ -525,6 +528,10 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                         ADManager.sLevel = mFirebaseRemoteConfig.getLong("ad_level_type");
                         ADManager.back_ad_delay_time = mFirebaseRemoteConfig.getLong("back_ad_delay_time");
                         sSettings.edit().putLong(PLATFOM, ADManager.sPlatForm).apply();
+
+
+                        ADManager.REQUEST_FEED_NTIVE_INTERVAL = mFirebaseRemoteConfig.getLong("request_feed_native_interval");
+
                     }
                 });
     }
@@ -587,6 +594,13 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         super.onRestart();
         /* Reload the latest preferences */
         reloadPreferences();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //重置广告15秒计时
+        ADManager.getInstance().mStartTime=0;
     }
 
     @Override

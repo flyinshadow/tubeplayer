@@ -31,6 +31,8 @@ public class StatisticsManager {
     public static final String ITEM_AD_GOOGLE_PAUSE_NATIVE ="google_pause_native_ad";
     public static final String ITEM_AD_GOOGLE_VIDEO_BANNER ="google_video_banner";
 
+    public static final String ITEM_AD_FEED_NATIVE_FACEBOOK_FAILED ="feed_facebook_failed";
+
     public static final String ITEM_AD_FEED_NATIVE_1 ="feed_native_1";
     public static final String ITEM_AD_FEED_NATIVE_2 ="feed_native_2";
     public static final String ITEM_AD_FEED_NATIVE_3 ="feed_native_3";
@@ -394,8 +396,10 @@ public class StatisticsManager {
     }
 
     public static void submitVideoCount(Context context, String itemId) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitVideoCount, " + itemId);
-
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
         FirebaseAnalytics.getInstance(context).logEvent(EVENT_VIDEO_COUNT, bundle);
