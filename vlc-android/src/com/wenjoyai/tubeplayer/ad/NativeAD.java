@@ -25,7 +25,7 @@ public class NativeAD {
             mFacebookAd.setAdListener(new AdListener() {
                 @Override
                 public void onError(Ad ad, AdError error) {
-                    StatisticsManager.submitAd(context, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_FACEBOOK_FAILED);
+                    StatisticsManager.submitAd(context, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_FACEBOOK_FAILED+" "+error.getErrorCode());
                     // Ad error callback
                     Log.e(TAG, "onError "+error.getErrorCode()+error.getErrorMessage());
                     if (null!= listener){
