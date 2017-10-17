@@ -18,6 +18,9 @@
 
     <dimen name="default_text_size">14sp</dimen>
 
+    <dimen name="ad_body_text_size">14sp</dimen>
+    <dimen name="ad_call_to_action_text_size">12sp</dimen>
+
 
     <!-- Video Player -->
     <dimen name="overlay_padding_bottom">8dip</dimen>
