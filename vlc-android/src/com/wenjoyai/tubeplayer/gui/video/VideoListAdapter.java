@@ -201,6 +201,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             holder.binding.setVariable(BR.media, media);
             boolean isSelected = media.hasStateFlags(MediaLibraryItem.FLAG_SELECTED);
             holder.binding.setVariable(BR.selected, isSelected);
+            if (holder.itemCheck != null) {
+                holder.itemCheck.setVisibility(isSelected ? View.VISIBLE : View.GONE);
+            }
 
             if (holder.fileSize != null) {
                 holder.fileSize.setText(Strings.readableSize(media.getFileSize()));
@@ -411,6 +414,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         holder.binding.setVariable(BR.time, text);
         holder.binding.setVariable(BR.max, max);
         holder.binding.setVariable(BR.progress, progress);
+        if (holder.itemProgress != null) {
+            holder.itemProgress.setVisibility(progress > 10 ? View.VISIBLE : View.INVISIBLE);
+        }
     }
 
     public void setListMode(boolean value) {
@@ -472,10 +478,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnFocusChangeListener {
         public ViewDataBinding binding;
-        private ImageView thumbView;
-        private TextView fileSize;
 
         private View videoContainer;
+        private ImageView thumbView;
+        private TextView fileSize;
+        private View itemCheck;
+        private View itemProgress;
+
         private View adContainer;
         private LinearLayout adChoicesContainer;
         private TextView adCallToAction;
@@ -485,10 +494,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         public ViewHolder(View itemView) {
             super(itemView);
             binding = DataBindingUtil.bind(itemView);
-            thumbView = (ImageView) itemView.findViewById(R.id.ml_item_thumbnail);
-            fileSize = (TextView) itemView.findViewById(R.id.ml_item_size);
 
             videoContainer = itemView.findViewById(R.id.video_item);
+            thumbView = (ImageView) itemView.findViewById(R.id.ml_item_thumbnail);
+            fileSize = (TextView) itemView.findViewById(R.id.ml_item_size);
+            itemCheck = itemView.findViewById(R.id.ml_item_check);
+            itemProgress = itemView.findViewById(R.id.ml_item_progress);
+
             adContainer = itemView.findViewById(R.id.ad_item);
             adChoicesContainer = (LinearLayout) itemView.findViewById(R.id.ad_choices_container);
             adCallToAction = (TextView) itemView.findViewById(R.id.ad_call_to_action);
