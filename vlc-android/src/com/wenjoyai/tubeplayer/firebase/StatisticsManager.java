@@ -266,7 +266,7 @@ public class StatisticsManager {
         String info = "";
         if (media != null) {
             info = getVideoLengthType(media.getLength()) + "_" + getVideoVHType(videoWidth, videoHeight) + "_" +
-                    getVideoSizeType(media.getWidth(), media.getHeight());
+                    getVideoSizeType(videoWidth, videoHeight);
         }
         return info;
     }

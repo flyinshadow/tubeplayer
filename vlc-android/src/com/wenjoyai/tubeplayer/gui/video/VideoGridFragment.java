@@ -515,7 +515,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                         displayList.add(item.getMedia());
                 }
                 if (mGroup == null && mFolderGroup == null && mParsingFinished) {
-                    LogUtil.d(TAG, "updateList StatisticsManager displayList:" + displayList.size() + ", videoSize:" + itemList.length);
+                    LogUtil.d(TAG, "xxxx updateList StatisticsManager displayList:" + displayList.size() + ", videoSize:" + itemList.length);
                     submitVideoCount(displayList.size(), itemList.length);
                 }
                 VLCApplication.runOnMainThread(new Runnable() {
@@ -543,8 +543,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
         boolean submitVideoCount = settings.getBoolean(KEY_STAT_VIDEO_COUNT, false);
         if (!submitVideoCount) {
-            StatisticsManager.submitVideoCount(getActivity(), "group_" + StatisticsManager.getVideoCountRange(group));
-            StatisticsManager.submitVideoCount(getActivity(), "video_" + StatisticsManager.getVideoCountRange(video));
+            StatisticsManager.submitVideoCount(VLCApplication.getAppContext(), "group_" + StatisticsManager.getVideoCountRange(group));
+            StatisticsManager.submitVideoCount(VLCApplication.getAppContext(), "video_" + StatisticsManager.getVideoCountRange(video));
             settings.edit().putBoolean(KEY_STAT_VIDEO_COUNT, true).apply();
             bSubmitVideoCount = true;
         }
@@ -635,7 +635,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             settings.edit().putBoolean(KEY_PARSING_ONCE, true).apply();
         }
 
-        mHandler.sendEmptyMessage(UPDATE_LIST);
+        mHandler.sendEmptyMessageDelayed(UPDATE_LIST, 1000);
     }
 
     @Override

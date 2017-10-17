@@ -144,6 +144,7 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
                 discoverStorage(intent.getStringExtra(EXTRA_PATH));
                 break;
             default:
+                LogUtil.d(TAG, "aaaa onStartCommand exitCommand");
                 exitCommand();
                 return START_NOT_STICKY;
         }
@@ -215,6 +216,7 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
     private void setupMedialibrary(final boolean upgrade) {
         if (mMedialibrary.isInitiated()) {
             mMedialibrary.resumeBackgroundOperations();
+            LogUtil.d(TAG, "aaaa setupMedialibrary exitCommand");
             exitCommand();
         } else
             mCallsExecutor.execute(new Runnable() {
@@ -349,9 +351,10 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
     @Override
     public void onParsingStatsUpdated(int percent) {
         if (!mStartFullScan) {
+            if (BuildConfig.DEBUG) Log.d(TAG, "aaaa onParsingStatsUpdated mStartFullScan:" + mStartFullScan);
             return;
         }
-        if (BuildConfig.DEBUG) Log.d(TAG, "onParsingStatsUpdated: "+percent);
+        if (BuildConfig.DEBUG) Log.d(TAG, "aaaa onParsingStatsUpdated: "+percent);
         mParsing = percent;
         if (mParsing != 100)
             showNotification();
@@ -359,14 +362,14 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
 
     @Override
     public void onReloadStarted(String entryPoint) {
-        if (BuildConfig.DEBUG) Log.d(TAG, "onReloadStarted: "+entryPoint);
+        if (BuildConfig.DEBUG) Log.d(TAG, "aaaa onReloadStarted: "+entryPoint);
         if (TextUtils.isEmpty(entryPoint))
             ++mReload;
     }
 
     @Override
     public void onReloadCompleted(String entryPoint) {
-        if (BuildConfig.DEBUG) Log.d(TAG, "onReloadCompleted "+entryPoint);
+        if (BuildConfig.DEBUG) Log.d(TAG, "aaaa onReloadCompleted "+entryPoint);
         if (TextUtils.isEmpty(entryPoint))
             --mReload;
     }
@@ -378,6 +381,7 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
 
     @Override
     public void onDestroy() {
+        LogUtil.d(TAG, "aaaa onDestroy sendBroadcast ACTION_SERVICE_ENDED");
         mLocalBroadcastManager.sendBroadcast(new Intent(ACTION_SERVICE_ENDED));
         hideNotification();
         mMedialibrary.removeDeviceDiscoveryCb(this);

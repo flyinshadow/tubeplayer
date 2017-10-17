@@ -451,6 +451,7 @@ public class AudioPlayerContainerActivity extends BaseActivity implements Playba
                 case ACTION_MEDIA_UNMOUNTED:
                     uuid = ((Uri) msg.obj).getLastPathSegment();
                     VLCApplication.getMLInstance().removeDevice(uuid);
+                    LogUtil.d(TAG, "aaaa ACTION_MEDIA_UNMOUNTED sendBroadcast ACTION_SERVICE_ENDED");
                     LocalBroadcastManager.getInstance(owner).sendBroadcast(new Intent(MediaParsingService.ACTION_SERVICE_ENDED));
                     break;
                 case ACTION_DISPLAY_PROGRESSBAR:
