@@ -114,40 +114,41 @@ public class ADManager {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case CODE_REFRESH:
-                    Log.e("NativeAD", "bigggggggggggggggggggg ");
-                    mFailed = 0;
-                    mNativeAdlist.clear();
-                    for (int i = 0; i < mNum; i++) {
-                        final NativeAD mFeedNativeAD = new NativeAD();
-                        String adUnit = "";
-                        if (i % 3 == 0) {
-                            adUnit = ADConstants.facebook_video_feed_native;
-                        } else if (i % 3 == 1) {
-                            adUnit = ADConstants.facebook_video_feed_native1;
-                        } else {
-                            adUnit = ADConstants.facebook_video_feed_native2;
+                    if (VLCApplication.getAppContext().mAppForeground) {
+                        mFailed = 0;
+                        mNativeAdlist.clear();
+                        for (int i = 0; i < mNum; i++) {
+                            final NativeAD mFeedNativeAD = new NativeAD();
+                            String adUnit = "";
+                            if (i % 3 == 0) {
+                                adUnit = ADConstants.facebook_video_feed_native;
+                            } else if (i % 3 == 1) {
+                                adUnit = ADConstants.facebook_video_feed_native1;
+                            } else {
+                                adUnit = ADConstants.facebook_video_feed_native2;
+                            }
+                            mFeedNativeAD.loadAD(mContext, ADManager.AD_Facebook, adUnit, new NativeAD.ADListener() {
+                                @Override
+                                public void onLoadedSuccess(com.facebook.ads.NativeAd ad, String adId) {
+                                    if (null != ad) {
+                                        mNativeAdlist.add(ad);
+                                    }
+                                }
+
+                                @Override
+                                public void onLoadedFailed(String msg, String adId) {
+                                    mFailed++;
+                                    if (mFailed == mNum) {
+                                        StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_FACEBOOK_FAILED + " all ");
+                                    }
+                                }
+
+                                @Override
+                                public void onAdClick() {
+
+                                }
+                            });
                         }
-                        mFeedNativeAD.loadAD(mContext, ADManager.AD_Facebook, adUnit, new NativeAD.ADListener() {
-                            @Override
-                            public void onLoadedSuccess(com.facebook.ads.NativeAd ad,String adId) {
-                                if (null != ad) {
-                                    mNativeAdlist.add(ad);
-                                }
-                            }
-
-                            @Override
-                            public void onLoadedFailed(String msg,String adId) {
-                                mFailed++;
-                                if (mFailed ==mNum) {
-                                    StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_FACEBOOK_FAILED + " all ");
-                                }
-                            }
-
-                            @Override
-                            public void onAdClick() {
-
-                            }
-                        });
                     }
                     break;
             }

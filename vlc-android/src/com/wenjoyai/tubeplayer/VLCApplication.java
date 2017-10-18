@@ -102,7 +102,7 @@ public class VLCApplication extends MultiDexApplication {
 
     private static int sDialogCounter = 0;
 
-    private boolean mAppForeground = false;
+    public boolean mAppForeground = false;
 
     public static void setLocale(Context context){
         // Are we using advanced debugging - locale?
@@ -263,7 +263,7 @@ public class VLCApplication extends MultiDexApplication {
     /**
      * @return the main context of the Application
      */
-    public static Context getAppContext() {
+    public static VLCApplication getAppContext() {
         return instance;
     }
 
