@@ -626,7 +626,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             ((ExtensionBrowser) fragment).goBack();
             return;
         }
-        UiTools.confirmExit(this);
+//        UiTools.confirmExit(this);
+        finish();
     }
 
     @Override
