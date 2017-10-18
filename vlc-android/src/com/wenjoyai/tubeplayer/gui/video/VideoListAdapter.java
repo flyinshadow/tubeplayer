@@ -201,6 +201,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             holder.binding.setVariable(BR.media, media);
             boolean isSelected = media.hasStateFlags(MediaLibraryItem.FLAG_SELECTED);
             holder.binding.setVariable(BR.selected, isSelected);
+            if (holder.itemCheck != null) {
+                holder.itemCheck.setVisibility(isSelected ? View.VISIBLE : View.GONE);
+            }
 
             if (holder.fileSize != null) {
                 holder.fileSize.setText(Strings.readableSize(media.getFileSize()));
@@ -411,6 +414,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         holder.binding.setVariable(BR.time, text);
         holder.binding.setVariable(BR.max, max);
         holder.binding.setVariable(BR.progress, progress);
+        if (holder.itemProgress != null) {
+            holder.itemProgress.setVisibility(progress > 10 ? View.VISIBLE : View.INVISIBLE);
+        }
     }
 
     public void setListMode(boolean value) {
@@ -472,10 +478,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnFocusChangeListener {
         public ViewDataBinding binding;
-        private ImageView thumbView;
-        private TextView fileSize;
 
         private View videoContainer;
+        private ImageView thumbView;
+        private TextView fileSize;
+        private View itemCheck;
+        private View itemProgress;
+
         private View adContainer;
         private LinearLayout adChoicesContainer;
         private TextView adCallToAction;
@@ -485,10 +494,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         public ViewHolder(View itemView) {
             super(itemView);
             binding = DataBindingUtil.bind(itemView);
-            thumbView = (ImageView) itemView.findViewById(R.id.ml_item_thumbnail);
-            fileSize = (TextView) itemView.findViewById(R.id.ml_item_size);
 
             videoContainer = itemView.findViewById(R.id.video_item);
+            thumbView = (ImageView) itemView.findViewById(R.id.ml_item_thumbnail);
+            fileSize = (TextView) itemView.findViewById(R.id.ml_item_size);
+            itemCheck = itemView.findViewById(R.id.ml_item_check);
+            itemProgress = itemView.findViewById(R.id.ml_item_progress);
+
             adContainer = itemView.findViewById(R.id.ad_item);
             adChoicesContainer = (LinearLayout) itemView.findViewById(R.id.ad_choices_container);
             adCallToAction = (TextView) itemView.findViewById(R.id.ad_call_to_action);
@@ -804,14 +816,15 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     private int getRandomIndex(int max) {
         Random random = new Random();
-        int index = random.nextInt(4);
-        if (index % 2 == 0) {
-            index++;
-        }
-        if (index > max) {
-            index = (max % 2 == 0) ? (max + 1) : max;
-        }
-        return index < 0 ? 0 : index;
+        int index = random.nextInt(5);
+//        if (index % 2 == 0) {
+//            index++;
+//        }
+//        if (index > max) {
+//            index = (max % 2 == 0) ? (max + 1) : max;
+//        }
+//        return index < 0 ? 0 : index;
+        return index < max ? index : max;
     }
 
     public void resetAdIndex() {
@@ -827,13 +840,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             mStartIndex = getRandomIndex(items.size() - 1);
         }
         LogUtil.d(TAG, "facebookAD startIndex:" + mStartIndex);
-        if (mStartIndex >= items.size()) {
-            MediaWrapper item = items.get(items.size()-1);
-            AdItem ad = new AdItem(item);
-            ad.setNativeAd(nextAd());
-            items.add(ad);
-            return;
-        }
+
+        int added = 0;
         ListIterator it = items.listIterator();
         while (it.hasNext()) {
             if (index < mStartIndex) {
@@ -843,13 +851,27 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             }
             MediaWrapper item = (MediaWrapper) it.next();
             if ((index - mStartIndex) % AD_STEPS == 0) {
-                AdItem ad = new AdItem(item);
-                ad.setNativeAd(nextAd());
-                it.previous();
-                it.add(ad);
-                it.next();
+                NativeAd nativeAd = nextAd();
+                if (nativeAd != null) {
+                    AdItem ad = new AdItem(item);
+                    ad.setNativeAd(nativeAd);
+                    it.previous();
+                    it.add(ad);
+                    it.next();
+                    added++;
+                }
             }
             index++;
+        }
+
+        // append all left ads
+        if (added < mNativeAd.size()) {
+            while (mNextAdIndex < mNativeAd.size()) {
+                MediaWrapper media = items.get(items.size() - 1);
+                AdItem ad = new AdItem(media);
+                ad.setNativeAd(nextAd());
+                items.add(ad);
+            }
         }
     }
 
