@@ -177,6 +177,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         setContentView(R.layout.main);
         initConfig();
         initAD();
+        //开始广告缓存
+        ADManager.getInstance().startLoadAD(this);
         mDrawerLayout = (HackyDrawerLayout) findViewById(R.id.root_container);
         setupNavigationView();
 
@@ -599,8 +601,6 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //重置广告15秒计时
-        ADManager.getInstance().mStartTime=0;
     }
 
     @Override

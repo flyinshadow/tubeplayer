@@ -1,9 +1,14 @@
 package com.wenjoyai.tubeplayer.ad;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 
 import com.facebook.ads.NativeAd;
+import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +44,6 @@ public class ADManager {
     public static boolean isShowMobvista = false;//是否显示旋转动画的mobvista广告
 
 
-    //进入前台 超过2分钟才会展示 open广告
-    public static boolean isShowOpenAD = true;
-
     private static volatile ADManager instance;
 
     public static ADManager getInstance() {
@@ -58,115 +60,107 @@ public class ADManager {
     private ADManager() {
     }
 
-
-    private List<com.facebook.ads.NativeAd> mNativeAdlist = new ArrayList<>();
-    public long mStartTime = 0;
-    private int done = 0;
+    //缓存广告数组
+    private List<NativeAd> mNativeAdlist = new ArrayList<>();
+    private int mNum = 3;
     //请求广告时间间隔默认10分钟
     public static long REQUEST_FEED_NTIVE_INTERVAL = 10 * 60;
-    protected Timer UPDATE_PROGRESS_TIMER;// 更新进度条的定时器
+    protected Timer UPDATE_PROGRESS_TIMER;
     protected MyTimerTask mProgressTimerTask;
-    private ADNumListener mListener;
+    private Context mContext;
+    //失败个数
+    private int mFailed = 0;
 
     /**
-     * 加载num个feed流广告
-     *
-     * @param context
+     * 开始加载广告
      */
-    public void loadNumNativeAD(Context context, final int num, final ADNumListener listener) {
-        mListener = listener;
-        //大于10分钟才会再次更新广告
-        if ((System.currentTimeMillis() - mStartTime) / 1000 < REQUEST_FEED_NTIVE_INTERVAL&&mNativeAdlist.size()==3) {
-            callbackAD();
-            return;
-        }
+    public void startLoadAD(Context context){
+        mContext = context;
         startProgressTimer();
-        mStartTime = System.currentTimeMillis();
-        mNativeAdlist.clear();
-        done = 0;
-        for (int i = 0; i < num; i++) {
-            final NativeAD mFeedNativeAD = new NativeAD();
-            String adUnit = "";
-            if (i % 3 == 0) {
-                adUnit = ADConstants.facebook_video_feed_native;
-            } else if (i % 3 == 1) {
-                adUnit = ADConstants.facebook_video_feed_native1;
-            } else {
-                adUnit = ADConstants.facebook_video_feed_native2;
-            }
-            mFeedNativeAD.loadAD(context, ADManager.AD_Facebook, adUnit, new NativeAD.ADListener() {
-                @Override
-                public void onLoadedSuccess(com.facebook.ads.NativeAd ad) {
-                    ++done;
-                    if (null != ad) {
-                        mNativeAdlist.add(ad);
-                    }
-                    if (done == num) {
-                        callbackAD();
-                        cancelProgressTimer();
-                    }
-                }
+    }
 
-                @Override
-                public void onLoadedFailed(String msg) {
-                    ++done;
-                    if (done == num) {
-                        callbackAD();
-                        cancelProgressTimer();
-                    }
-                }
-
-                @Override
-                public void onAdClick() {
-
-                }
-            });
-        }
+    /**
+     * 获取广告
+     * @return
+     */
+    public List<com.facebook.ads.NativeAd> getNativeAdlist(){
+        List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
+        tempList.addAll(mNativeAdlist);
+        return tempList;
     }
 
     protected void startProgressTimer() {
-        cancelProgressTimer();
-        UPDATE_PROGRESS_TIMER = new Timer();
-        mProgressTimerTask = new MyTimerTask();
-        UPDATE_PROGRESS_TIMER.schedule(mProgressTimerTask, 10 * 1000, 10 * 1000);//10秒
+        try {
+            UPDATE_PROGRESS_TIMER = new Timer();
+            mProgressTimerTask = new MyTimerTask();
+            UPDATE_PROGRESS_TIMER.schedule(mProgressTimerTask, 0, REQUEST_FEED_NTIVE_INTERVAL*1000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
-    protected void cancelProgressTimer() {
+    public void cancelProgressTimer() {
         if (UPDATE_PROGRESS_TIMER != null) {
             UPDATE_PROGRESS_TIMER.cancel();
         }
         if (mProgressTimerTask != null) {
             mProgressTimerTask.cancel();
         }
-
     }
+    public final  int CODE_REFRESH = 1;
 
-    //回调给上层广告数组
-    protected void callbackAD() {
-        Log.e("NativeAD", "callbackAD " );
-        if (null != mListener) {
-            List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
-            tempList.addAll(mNativeAdlist);
-            if (tempList.size() > 0) {
-                Log.e("NativeAD", "onLoadedSuccess " + tempList.size());
-                mListener.onLoadedSuccess(tempList);
-                mListener = null;
+    Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case CODE_REFRESH:
+                    Log.e("NativeAD", "bigggggggggggggggggggg ");
+                    mFailed = 0;
+                    mNativeAdlist.clear();
+                    for (int i = 0; i < mNum; i++) {
+                        final NativeAD mFeedNativeAD = new NativeAD();
+                        String adUnit = "";
+                        if (i % 3 == 0) {
+                            adUnit = ADConstants.facebook_video_feed_native;
+                        } else if (i % 3 == 1) {
+                            adUnit = ADConstants.facebook_video_feed_native1;
+                        } else {
+                            adUnit = ADConstants.facebook_video_feed_native2;
+                        }
+                        mFeedNativeAD.loadAD(mContext, ADManager.AD_Facebook, adUnit, new NativeAD.ADListener() {
+                            @Override
+                            public void onLoadedSuccess(com.facebook.ads.NativeAd ad,String adId) {
+                                if (null != ad) {
+                                    mNativeAdlist.add(ad);
+                                }
+                            }
+
+                            @Override
+                            public void onLoadedFailed(String msg,String adId) {
+                                mFailed++;
+                                if (mFailed ==mNum) {
+                                    StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_FACEBOOK_FAILED + " all ");
+                                }
+                            }
+
+                            @Override
+                            public void onAdClick() {
+
+                            }
+                        });
+                    }
+                    break;
             }
         }
-    }
+    };
+
 
     protected class MyTimerTask extends TimerTask {
         @Override
         public void run() {
-            cancelProgressTimer();
-            if (null != mListener) {
-                callbackAD();
-            }
+            Message msg= mHandler.obtainMessage();
+            msg.what = CODE_REFRESH;
+            mHandler.sendMessage(msg);
         }
-    }
-
-
-    public interface ADNumListener {
-        void onLoadedSuccess(List<NativeAd> list);
     }
 }

@@ -59,9 +59,6 @@ import org.videolan.medialibrary.interfaces.MediaUpdatedCb;
 import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
 
-import com.facebook.ads.Ad;
-import com.facebook.ads.AdError;
-import com.facebook.ads.AdSize;
 import com.facebook.ads.NativeAd;
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.PlaybackService;
@@ -121,7 +118,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     private boolean mAdLoaded = false;
     private boolean mShowAd = false;
 
-    private List<NativeAd> mNativeAd = null;
+    private List<NativeAd> mNativeAdList = null;
 
     /* All subclasses of Fragment must include a public empty constructor. */
     public VideoGridFragment() { }
@@ -523,7 +520,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     public void run() {
                         mVideoAdapter.setShowAds(mFolderGroup == null && mShowAd);
                         if (mAdLoaded) {
-                            mVideoAdapter.setNativeAd(mNativeAd);
+                            mVideoAdapter.setNativeAd(mNativeAdList);
                         }
                         mVideoAdapter.update(displayList, false);
                     }
@@ -878,26 +875,19 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     }
 
     public void loadFeedNative(){
-        ADManager.getInstance().loadNumNativeAD(getActivity(), 3, new ADManager.ADNumListener() {
-            @Override
-            public void onLoadedSuccess(List<NativeAd> list) {
-                Log.e("NativeAD", "loadFeedNative qilin"+list.size());
-                LogUtil.d(TAG, "facebookAD onLoadedSuccess: mAdLoaded:" + mAdLoaded + ", mShowAd:" + mShowAd +
-                        ", mParsingFinished:" + mParsingFinished + ", adSize:" + list.size());
-                mNativeAd = list;
-                mAdLoaded = true;
+        mNativeAdList = ADManager.getInstance().getNativeAdlist();
+        // TODO: 2017/10/18 如果size==0怎么处理
+        mAdLoaded = true;
 
-                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
-                boolean parsed = settings.getBoolean(KEY_PARSING_ONCE, false);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
+        boolean parsed = settings.getBoolean(KEY_PARSING_ONCE, false);
 
-                if (mParsingFinished || mGroup != null || parsed) {
-                    mShowAd = true;
-                    LogUtil.d(TAG, "aaaa facebookAD onLoadedSuccess UPDATE_LIST");
-                    Log.e("NativeAD", "sendEmptyMessage");
-                    mHandler.sendEmptyMessage(UPDATE_LIST);
-                }
-            }
-        });
+        if (mParsingFinished || mGroup != null || parsed) {
+            mShowAd = true;
+            LogUtil.d(TAG, "aaaa facebookAD onLoadedSuccess UPDATE_LIST");
+            Log.e("NativeAD", "sendEmptyMessage");
+            mHandler.sendEmptyMessage(UPDATE_LIST);
+        }
     }
 
     public int getCurrentViewMode() {
