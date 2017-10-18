@@ -601,6 +601,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ADManager.getInstance().cancelProgressTimer();
     }
 
     @Override
