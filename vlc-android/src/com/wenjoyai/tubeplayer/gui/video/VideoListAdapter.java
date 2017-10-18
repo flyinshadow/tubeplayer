@@ -816,14 +816,15 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     private int getRandomIndex(int max) {
         Random random = new Random();
-        int index = random.nextInt(4);
-        if (index % 2 == 0) {
-            index++;
-        }
-        if (index > max) {
-            index = (max % 2 == 0) ? (max + 1) : max;
-        }
-        return index < 0 ? 0 : index;
+        int index = random.nextInt(5);
+//        if (index % 2 == 0) {
+//            index++;
+//        }
+//        if (index > max) {
+//            index = (max % 2 == 0) ? (max + 1) : max;
+//        }
+//        return index < 0 ? 0 : index;
+        return index < max ? index : max;
     }
 
     public void resetAdIndex() {
@@ -839,13 +840,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             mStartIndex = getRandomIndex(items.size() - 1);
         }
         LogUtil.d(TAG, "facebookAD startIndex:" + mStartIndex);
-        if (mStartIndex >= items.size()) {
-            MediaWrapper item = items.get(items.size()-1);
-            AdItem ad = new AdItem(item);
-            ad.setNativeAd(nextAd());
-            items.add(ad);
-            return;
-        }
+
+        int added = 0;
         ListIterator it = items.listIterator();
         while (it.hasNext()) {
             if (index < mStartIndex) {
@@ -855,13 +851,27 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             }
             MediaWrapper item = (MediaWrapper) it.next();
             if ((index - mStartIndex) % AD_STEPS == 0) {
-                AdItem ad = new AdItem(item);
-                ad.setNativeAd(nextAd());
-                it.previous();
-                it.add(ad);
-                it.next();
+                NativeAd nativeAd = nextAd();
+                if (nativeAd != null) {
+                    AdItem ad = new AdItem(item);
+                    ad.setNativeAd(nativeAd);
+                    it.previous();
+                    it.add(ad);
+                    it.next();
+                    added++;
+                }
             }
             index++;
+        }
+
+        // append all left ads
+        if (added < mNativeAd.size()) {
+            while (mNextAdIndex < mNativeAd.size()) {
+                MediaWrapper media = items.get(items.size() - 1);
+                AdItem ad = new AdItem(media);
+                ad.setNativeAd(nextAd());
+                items.add(ad);
+            }
         }
     }
 

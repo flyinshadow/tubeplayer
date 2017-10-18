@@ -59,9 +59,6 @@ import org.videolan.medialibrary.interfaces.MediaUpdatedCb;
 import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
 
-import com.facebook.ads.Ad;
-import com.facebook.ads.AdError;
-import com.facebook.ads.AdSize;
 import com.facebook.ads.NativeAd;
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.PlaybackService;
@@ -514,7 +511,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     for (MediaGroup item : MediaGroup.group(itemList))
                         displayList.add(item.getMedia());
                 }
-                if (mGroup == null && mFolderGroup == null && mParsingFinished) {
+                if (mGroup == null && mFolderGroup == null && mParsingFinished && !mSubmitVideoCount) {
                     LogUtil.d(TAG, "xxxx updateList StatisticsManager displayList:" + displayList.size() + ", videoSize:" + itemList.length);
                     submitVideoCount(displayList.size(), itemList.length);
                 }
@@ -534,19 +531,19 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         });
     }
 
-    private boolean bSubmitVideoCount = false;
+    private boolean mSubmitVideoCount = false;
     private void submitVideoCount(int group, int video) {
-        if (group <= 0 || video <= 0 || bSubmitVideoCount) {
+        if (group <= 0 || video <= 0) {
             LogUtil.e(TAG, "submitVideoCount group:"+ group + ",video:" + video);
             return;
         }
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
-        boolean submitVideoCount = settings.getBoolean(KEY_STAT_VIDEO_COUNT, false);
-        if (!submitVideoCount) {
+        mSubmitVideoCount = settings.getBoolean(KEY_STAT_VIDEO_COUNT, false);
+        if (!mSubmitVideoCount) {
             StatisticsManager.submitVideoCount(VLCApplication.getAppContext(), "group_" + StatisticsManager.getVideoCountRange(group));
             StatisticsManager.submitVideoCount(VLCApplication.getAppContext(), "video_" + StatisticsManager.getVideoCountRange(video));
             settings.edit().putBoolean(KEY_STAT_VIDEO_COUNT, true).apply();
-            bSubmitVideoCount = true;
+            mSubmitVideoCount = true;
         }
     }
 
