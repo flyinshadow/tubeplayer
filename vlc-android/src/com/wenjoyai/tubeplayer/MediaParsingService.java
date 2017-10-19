@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static com.wenjoyai.tubeplayer.gui.video.VideoGridFragment.KEY_PARSING_ONCE;
+
 public class MediaParsingService extends Service implements DevicesDiscoveryCb {
     public final static String TAG = "VLC/MediaParsingService";
 
@@ -244,6 +246,7 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
 
                         }
                         mMedialibrary.start();
+                        Log.e("yNativeAD", "setupMedialibrary sendBroadcast ACTION_MEDIALIBRARY_READY");
                         mLocalBroadcastManager.sendBroadcast(new Intent(VLCApplication.ACTION_MEDIALIBRARY_READY));
                         if (shouldInit) {
                             for (String folder : Medialibrary.getBlackList())
@@ -356,8 +359,18 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
         }
         if (BuildConfig.DEBUG) Log.d(TAG, "aaaa onParsingStatsUpdated: "+percent);
         mParsing = percent;
+        Log.e("yNativeAD", "onParsingStatsUpdated percent:" + percent);
         if (mParsing != 100)
             showNotification();
+        if (mParsing == 100 && mLocalBroadcastManager != null &&
+                !PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getBoolean(KEY_PARSING_ONCE, false)) {
+            Log.e("yNativeAD", "onParsingStatsUpdated sendBroadcast ACTION_SERVICE_ENDED");
+            mLocalBroadcastManager.sendBroadcast(new Intent(ACTION_SERVICE_ENDED));
+        }
+    }
+
+    public int getParsingPercent() {
+        return mParsing;
     }
 
     @Override
@@ -382,6 +395,7 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
     @Override
     public void onDestroy() {
         LogUtil.d(TAG, "aaaa onDestroy sendBroadcast ACTION_SERVICE_ENDED");
+        Log.e("yNativeAD", "aaaa onDestroy sendBroadcast ACTION_SERVICE_ENDED");
         mLocalBroadcastManager.sendBroadcast(new Intent(ACTION_SERVICE_ENDED));
         hideNotification();
         mMedialibrary.removeDeviceDiscoveryCb(this);

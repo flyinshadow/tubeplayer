@@ -32,6 +32,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -788,7 +789,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             MediaWrapper oldItem = oldList.get(oldItemPosition);
             MediaWrapper newItem = newList.get(newItemPosition);
             return oldItem == newItem ||
-                    (oldList != null && newList != null && oldItem.getType() == newItem.getType() && oldItem.equals(newItem));
+                    (oldList != null && newList != null && oldItem.getType() == newItem.getType() && oldItem.equals(newItem)) ||
+                    (oldItem.getItemType() == MediaWrapper.TYPE_AD && newItem.getItemType() == MediaWrapper.TYPE_AD);
         }
 
         @Override
@@ -796,7 +798,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             MediaWrapper oldItem = oldList.get(oldItemPosition);
             MediaWrapper newItem = newList.get(newItemPosition);
             return oldItem == newItem ||
-                    (oldItem.getTime() == newItem.getTime() && TextUtils.equals(oldItem.getArtworkMrl(), newItem.getArtworkMrl()));
+                    (oldItem.getTime() == newItem.getTime() && TextUtils.equals(oldItem.getArtworkMrl(), newItem.getArtworkMrl())) ||
+                    (oldItem.getItemType() == MediaWrapper.TYPE_AD && newItem.getItemType() == MediaWrapper.TYPE_AD);
         }
 
         @Nullable
@@ -878,16 +881,18 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     private void removeAdItems(ArrayList<MediaWrapper> items) {
         for (ListIterator it = items.listIterator(); it.hasNext();) {
             MediaWrapper item = (MediaWrapper) it.next();
-            if (item.getItemType() == MediaWrapper.TYPE_AD) {
+            if (item != null && item.getItemType() == MediaWrapper.TYPE_AD) {
                 it.remove();
             }
         }
     }
 
     private void prepareAdItems(ArrayList<MediaWrapper> items) {
-        if (mShowAds && items.size() > 0) {
-            removeAdItems(items);
-            addAdItems(items);
+        synchronized (mNativeAd) {
+            if (mNativeAd.size() > 0 && items.size() > 0) {
+                removeAdItems(items);
+                addAdItems(items);
+            }
         }
     }
 
@@ -897,12 +902,15 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     public void setShowAds(boolean showAds) {
         LogUtil.d(TAG, "facebookAD setShowAds : " + showAds);
+        Log.e("yNativeAD", "facebookAD setShowAds : " + showAds);
         mShowAds = showAds;
     }
 
     public void setNativeAd(List<NativeAd> nativeAd) {
-        mNativeAd.clear();
-        mNativeAd.addAll(nativeAd);
+        synchronized (mNativeAd) {
+            mNativeAd.clear();
+            mNativeAd.addAll(nativeAd);
+        }
     }
 
     private int mNextAdIndex = 0;

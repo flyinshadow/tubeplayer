@@ -44,6 +44,7 @@ import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.ViewStubCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -452,6 +453,7 @@ public class AudioPlayerContainerActivity extends BaseActivity implements Playba
                     uuid = ((Uri) msg.obj).getLastPathSegment();
                     VLCApplication.getMLInstance().removeDevice(uuid);
                     LogUtil.d(TAG, "aaaa ACTION_MEDIA_UNMOUNTED sendBroadcast ACTION_SERVICE_ENDED");
+                    Log.e("yNativeAD", "aaaa ACTION_MEDIA_UNMOUNTED sendBroadcast ACTION_SERVICE_ENDED");
                     LocalBroadcastManager.getInstance(owner).sendBroadcast(new Intent(MediaParsingService.ACTION_SERVICE_ENDED));
                     break;
                 case ACTION_DISPLAY_PROGRESSBAR:

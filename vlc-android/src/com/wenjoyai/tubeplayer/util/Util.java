@@ -26,6 +26,8 @@ import android.content.pm.ResolveInfo;
 import android.support.annotation.Nullable;
 
 import org.videolan.medialibrary.Tools;
+import org.videolan.medialibrary.media.MediaWrapper;
+
 import com.wenjoyai.tubeplayer.VLCApplication;
 
 import java.io.BufferedReader;
@@ -138,12 +140,12 @@ public class Util {
         return calendar.getTimeInMillis();
     }
 
-    public static <T> void insertOrUdpate(List<T> dataset, T[] items) {
-        ArrayList<T> newItems = new ArrayList<>();
+    public static void insertOrUdpate(ArrayList<MediaWrapper> dataset, MediaWrapper[] items) {
+        ArrayList<MediaWrapper> newItems = new ArrayList<>();
         outer:
-        for (T newItem : items) {
+        for (MediaWrapper newItem : items) {
             for (ListIterator it = dataset.listIterator(); it.hasNext();) {
-                T oldItem = (T) it.next();
+                MediaWrapper oldItem = (MediaWrapper) it.next();
                 if (newItem.equals(oldItem)) {
                     it.set(newItem);
                     continue outer;
