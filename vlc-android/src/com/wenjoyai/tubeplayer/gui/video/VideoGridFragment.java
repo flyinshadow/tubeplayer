@@ -115,7 +115,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     //ad
     private FrameLayout mAdContainer;
     private BannerAD mBannerAD;
-    private boolean mAdLoaded = false;
+//    private boolean mAdLoaded = false;
     private boolean mShowAd = false;
 
     private List<NativeAd> mNativeAdList = null;
@@ -519,7 +519,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     @Override
                     public void run() {
                         mVideoAdapter.setShowAds(mFolderGroup == null && mShowAd);
-                        if (mAdLoaded) {
+                        if (checkAds()) {
                             mVideoAdapter.setNativeAd(mNativeAdList);
                         }
                         mVideoAdapter.update(displayList, false);
@@ -613,23 +613,23 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         LogUtil.d(TAG, "aaaa onParsingServiceStarted");
         mParsingStarted = true;
         mParsingFinished = false;
-        Log.e("NativeAD", "aaaa onParsingServiceStarted");
+//        Log.e("NativeAD", "aaaa onParsingServiceStarted");
         mHandler.sendEmptyMessageDelayed(SET_REFRESHING, 300);
     }
 
     @Override
     protected void onParsingServiceFinished() {
         LogUtil.d(TAG, "aaaa onParsingServiceFinished");
-        Log.e("NativeAD", "aaaa onParsingServiceFinished");
+//        Log.e("NativeAD", "aaaa onParsingServiceFinished");
         mParsingStarted = false;
         mParsingFinished = true;
-        if (mAdLoaded && !mShowAd) {
+        if (checkAds() && !mShowAd) {
             mShowAd = true;
         }
 
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
-        if (!settings.getBoolean(KEY_PARSING_ONCE, false)) {
-            settings.edit().putBoolean(KEY_PARSING_ONCE, true).apply();
+        if (!mParsed) {
+            PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).edit().putBoolean(KEY_PARSING_ONCE, true).apply();
+            mParsed = true;
         }
 
         mHandler.sendEmptyMessageDelayed(UPDATE_LIST, 1000);
@@ -874,20 +874,24 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 //        }
     }
 
+    private boolean checkAds() {
+        return mNativeAdList != null && mNativeAdList.size() > 0;
+    }
+
+    private boolean mParsed = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getBoolean(KEY_PARSING_ONCE, false);
+
     public void loadFeedNative(){
-        mNativeAdList = ADManager.getInstance().getNativeAdlist();
-        // TODO: 2017/10/18 如果size==0怎么处理
-        mAdLoaded = true;
-
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
-        boolean parsed = settings.getBoolean(KEY_PARSING_ONCE, false);
-
-        if (mParsingFinished || mGroup != null || parsed) {
-            mShowAd = true;
-            LogUtil.d(TAG, "aaaa facebookAD onLoadedSuccess UPDATE_LIST");
-            Log.e("NativeAD", "sendEmptyMessage");
-            mHandler.sendEmptyMessage(UPDATE_LIST);
-        }
+        ADManager.getInstance().getNativeAdlist(new ADManager.ADNumListener() {
+            @Override
+            public void onLoadedSuccess(List<NativeAd> list) {
+                mNativeAdList = list;
+                if (checkAds() && mParsingFinished || mGroup != null || mParsed) {
+                    mShowAd = true;
+                    LogUtil.d(TAG, "aaaa facebookAD onLoadedSuccess UPDATE_LIST");
+                    mHandler.sendEmptyMessage(UPDATE_LIST);
+                }
+            }
+        });
     }
 
     public int getCurrentViewMode() {

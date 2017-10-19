@@ -77,6 +77,7 @@ public class ADManager {
      */
     public void startLoadAD(Context context) {
         mContext = context;
+        mNativeAdlist.clear();
         startProgressTimer();
     }
 
