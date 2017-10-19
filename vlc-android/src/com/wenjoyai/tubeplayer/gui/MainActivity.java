@@ -460,7 +460,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             public void run() {
                 loadAD();
             }
-        }, 500);
+        }, 15000);
     }
 
     //google lijiazhi
