@@ -885,7 +885,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             @Override
             public void onLoadedSuccess(List<NativeAd> list) {
                 mNativeAdList = list;
-                if (checkAds() && mParsingFinished || mGroup != null || mParsed) {
+                if (checkAds() && (mParsingFinished || mParsed)) {
                     mShowAd = true;
                     LogUtil.d(TAG, "aaaa facebookAD onLoadedSuccess UPDATE_LIST");
                     mHandler.sendEmptyMessage(UPDATE_LIST);
