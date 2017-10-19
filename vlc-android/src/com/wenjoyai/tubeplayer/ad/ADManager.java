@@ -70,31 +70,44 @@ public class ADManager {
     private Context mContext;
     //失败个数
     private int mFailed = 0;
+    private ADNumListener mListener;
 
     /**
      * 开始加载广告
      */
-    public void startLoadAD(Context context){
+    public void startLoadAD(Context context) {
         mContext = context;
         startProgressTimer();
     }
 
     /**
      * 获取广告
+     *
      * @return
      */
-    public List<com.facebook.ads.NativeAd> getNativeAdlist(){
-        List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
-        tempList.addAll(mNativeAdlist);
-        return tempList;
+    public void getNativeAdlist(ADNumListener listener) {
+        mListener = listener;
+        callbackAD();
+    }
+
+    //回调给上层广告数组
+    protected void callbackAD() {
+        Log.e("NativeAD", "callbackAD ");
+        if (null != mListener) {
+            List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
+            tempList.addAll(mNativeAdlist);
+            if (tempList.size() > 0) {
+                mListener.onLoadedSuccess(tempList);
+            }
+        }
     }
 
     protected void startProgressTimer() {
         try {
             UPDATE_PROGRESS_TIMER = new Timer();
             mProgressTimerTask = new MyTimerTask();
-            UPDATE_PROGRESS_TIMER.schedule(mProgressTimerTask, 0, REQUEST_FEED_NTIVE_INTERVAL*1000);
-        }catch (Exception e){
+            UPDATE_PROGRESS_TIMER.schedule(mProgressTimerTask, 0, REQUEST_FEED_NTIVE_INTERVAL * 1000);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -107,12 +120,13 @@ public class ADManager {
             mProgressTimerTask.cancel();
         }
     }
-    public final  int CODE_REFRESH = 1;
 
-    Handler mHandler = new Handler(){
+    public final int CODE_REFRESH = 1;
+
+    Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case CODE_REFRESH:
                     if (VLCApplication.getAppContext().mAppForeground) {
                         mFailed = 0;
@@ -132,6 +146,9 @@ public class ADManager {
                                 public void onLoadedSuccess(com.facebook.ads.NativeAd ad, String adId) {
                                     if (null != ad) {
                                         mNativeAdlist.add(ad);
+                                        if (mNativeAdlist.size()==1){//只要有了一个广告成功就通知上层展示
+                                            callbackAD();
+                                        }
                                     }
                                 }
 
@@ -159,9 +176,14 @@ public class ADManager {
     protected class MyTimerTask extends TimerTask {
         @Override
         public void run() {
-            Message msg= mHandler.obtainMessage();
+            Message msg = mHandler.obtainMessage();
             msg.what = CODE_REFRESH;
             mHandler.sendMessage(msg);
         }
     }
+
+    public interface ADNumListener {
+        void onLoadedSuccess(List<NativeAd> list);
+    }
+
 }
