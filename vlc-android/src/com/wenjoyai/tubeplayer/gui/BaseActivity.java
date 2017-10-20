@@ -8,16 +8,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 
 import java.util.Calendar;
+
+import static com.wenjoyai.tubeplayer.gui.ThemeFragment.DEFAULT_THEME_INDEX;
 
 
 public class BaseActivity extends AppCompatActivity {
     //firebase统计  https://firebase.google.com/docs/analytics/android/start/
     protected FirebaseAnalytics mFirebaseAnalytics;
+
+    private static final String TAG = "BaseActivity";
 
     static {
         AppCompatDelegate.setDefaultNightMode(PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getBoolean("daynight", false) ? AppCompatDelegate.MODE_NIGHT_AUTO : AppCompatDelegate.MODE_NIGHT_NO);
@@ -33,12 +37,13 @@ public class BaseActivity extends AppCompatActivity {
         applyTheme();
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         super.onCreate(savedInstanceState);
+        LogUtil.d(TAG, "onCreate: " + getClass().getSimpleName());
     }
 
     private void applyTheme() {
         boolean enableBlackTheme = mSettings.getBoolean(PreferencesActivity.KEY_ENABLE_NIGHT_THEME, false);
         int themeIndex = PreferenceManager.getDefaultSharedPreferences(
-                VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, 0);
+                VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, DEFAULT_THEME_INDEX); //blue
         boolean autoDayNight = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getBoolean("daynight", false);
         int hourOfDay = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         boolean night = (hourOfDay <= 6) || (hourOfDay >= 18);

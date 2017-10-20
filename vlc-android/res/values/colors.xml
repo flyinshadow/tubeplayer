@@ -157,5 +157,6 @@
     <color name="ripple_color">#eeeeee</color>
 
     <color name="video_cover_background">#bdbdbd</color>
+    <color name="video_folder_list_grey">#8b000000</color>
 
 </resources>

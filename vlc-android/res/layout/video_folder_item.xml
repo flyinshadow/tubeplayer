@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/folder_list_item"
-              android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center_vertical"
+              android:orientation="horizontal"
     >
 
     <ImageView
@@ -13,14 +13,29 @@
         android:src="@drawable/ic_browser_folder"
         />
 
-    <TextView
-        android:id="@+id/item_folder_name"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_marginLeft="@dimen/default_margin"
-        android:textSize="@dimen/default_text_size"
-        android:textColor="?attr/list_title"
-        />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/item_folder_name"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textColor="?attr/list_title"
+            android:textSize="@dimen/full_title_text_size"
+            android:lineSpacingExtra="8sp"
+            />
+        <TextView
+            android:id="@+id/item_video_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/default_text_size"
+            android:textColor="@color/video_folder_list_grey"
+            android:lineSpacingExtra="6sp"
+            />
+    </LinearLayout>
 
 </LinearLayout>

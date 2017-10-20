@@ -94,8 +94,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     public final static int VIEW_MODE_GRID = 0;
     public final static int VIEW_MODE_LIST = 1;
-    public final static int VIEW_MODE_BIGPIC = 2;
-    public final static int VIEW_MODE_MAX = 3;
+//    public final static int VIEW_MODE_BIGPIC = 2;
+    public final static int VIEW_MODE_MAX = 2;
 
     public static final int VIEW_MODE_FULL_TITLE = 4;
 
@@ -137,8 +137,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             video_layout = R.layout.video_grid_card;
         } else if (mCurrentViewMode == VIEW_MODE_LIST) {
             video_layout = R.layout.video_list_card;
-        } else if (mCurrentViewMode == VIEW_MODE_BIGPIC) {
-            video_layout = R.layout.video_bigpic_card;
+//        } else if (mCurrentViewMode == VIEW_MODE_BIGPIC) {
+//            video_layout = R.layout.video_bigpic_card;
         } else if (mCurrentViewMode == VIEW_MODE_FULL_TITLE) {
             video_layout = R.layout.video_full_title;
         }

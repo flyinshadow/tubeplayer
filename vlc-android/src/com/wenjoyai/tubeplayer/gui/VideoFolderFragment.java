@@ -94,7 +94,7 @@ public class VideoFolderFragment extends MediaBrowserFragment implements MediaAd
 
     @Override
     protected String getTitle() {
-        return getString(R.string.directories);
+        return getString(R.string.video);
     }
 
     @Override
@@ -247,9 +247,10 @@ public class VideoFolderFragment extends MediaBrowserFragment implements MediaAd
             if (folderPath.equals(AndroidDevices.EXTERNAL_PUBLIC_DIRECTORY)) {
                 folderName = getString(R.string.internal_memory);
             }
-            folderName = folderName + "(" + mFolders.get(position).size() + ")";
+//            folderName = folderName + "(" + mFolders.get(position).size() + ")";
             holder.mFolderName.setText(folderName);
-//            holder.mVideoCount.setText(String.valueOf(mFolders.get(position).size()));
+            String sVideoCount = mFolders.get(position).size() + " " + getResources().getString(R.string.videos);
+            holder.mVideoCount.setText(sVideoCount);
         }
 
         @Override
@@ -289,13 +290,13 @@ public class VideoFolderFragment extends MediaBrowserFragment implements MediaAd
 
             private View mList;
             private TextView mFolderName;
-//            private TextView mVideoCount;
+            private TextView mVideoCount;
 
             public VideoFolderViewHolder(View itemView) {
                 super(itemView);
                 mList = itemView.findViewById(R.id.folder_list_item);
                 mFolderName = (TextView) itemView.findViewById(R.id.item_folder_name);
-//                mVideoCount = (TextView) itemView.findViewById(R.id.item_video_count);
+                mVideoCount = (TextView) itemView.findViewById(R.id.item_video_count);
                 mList.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

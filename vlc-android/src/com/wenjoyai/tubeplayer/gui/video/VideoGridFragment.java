@@ -155,13 +155,13 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
 
         int viewMode;
-        if (mFolderGroup != null) {
-            viewMode = VideoListAdapter.VIEW_MODE_FULL_TITLE;
-        } else {
+//        if (mFolderGroup != null) {
+//            viewMode = VideoListAdapter.VIEW_MODE_FULL_TITLE;
+//        } else {
             viewMode = PreferenceManager.getDefaultSharedPreferences(
                     VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
                     VideoListAdapter.VIEW_MODE_DEFAULT);
-        }
+//        }
         mVideoAdapter = new VideoListAdapter(this, viewMode);
 
         if (mVideoAdapter.getCurrentViewMode() == VideoListAdapter.VIEW_MODE_LIST) {
@@ -179,9 +179,9 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        if (mFolderGroup != null) {
-            menu.findItem(R.id.ml_menu_view_mode).setVisible(false);
-        }
+//        if (mFolderGroup != null) {
+//            menu.findItem(R.id.ml_menu_view_mode).setVisible(false);
+//        }
     }
 
 
@@ -203,13 +203,13 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         super.onResume();
         setSearchVisibility(false);
         int viewMode;
-        if (mFolderGroup != null) {
-            viewMode = VideoListAdapter.VIEW_MODE_FULL_TITLE;
-        } else {
+//        if (mFolderGroup != null) {
+//            viewMode = VideoListAdapter.VIEW_MODE_FULL_TITLE;
+//        } else {
             viewMode = PreferenceManager.getDefaultSharedPreferences(
                     VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
                     VideoListAdapter.VIEW_MODE_DEFAULT);
-        }
+//        }
         toggleVideoMode(viewMode);
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
@@ -291,7 +291,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         }
         mGridView.setNumColumns(listMode ? 1 : -1);
         if (mVideoAdapter.isListMode() != listMode) {
-            if (listMode && targetViewMode != VideoListAdapter.VIEW_MODE_BIGPIC && targetViewMode != VideoListAdapter.VIEW_MODE_FULL_TITLE)
+            if (/*listMode && targetViewMode != VideoListAdapter.VIEW_MODE_BIGPIC && */targetViewMode != VideoListAdapter.VIEW_MODE_FULL_TITLE)
                 mGridView.addItemDecoration(mDividerItemDecoration);
             else
                 mGridView.removeItemDecoration(mDividerItemDecoration);
@@ -301,8 +301,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             mGridView.removeItemDecoration(mDividerItemDecoration);
         } else if (targetViewMode == VideoListAdapter.VIEW_MODE_LIST) {
             mGridView.addItemDecoration(mDividerItemDecoration);
-        } else if (targetViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
-            mGridView.removeItemDecoration(mDividerItemDecoration);
+//        } else if (targetViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
+//            mGridView.removeItemDecoration(mDividerItemDecoration);
         }
     }
 
@@ -822,10 +822,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
                 StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER_LIST, null);
 
-            } else if (targetViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
-                item.setIcon(R.drawable.ic_view_bigpic);
-
-                StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER_BIGPIC, null);
+//            } else if (targetViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
+//                item.setIcon(R.drawable.ic_view_bigpic);
+//
+//                StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER_BIGPIC, null);
 
             }
             toggleVideoMode(targetViewMode);

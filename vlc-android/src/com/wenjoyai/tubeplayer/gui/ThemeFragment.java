@@ -36,6 +36,7 @@ public class ThemeFragment extends DialogFragment {
 
     private GridView mGridView;
     private ThemeAdapter mThemeAdapter;
+    public static final int DEFAULT_THEME_INDEX = 6;
 
     public static final int[] sThemeStyles = {
             R.style.Theme_VideoPlayer_Apearance_Black,
@@ -188,7 +189,7 @@ public class ThemeFragment extends DialogFragment {
             ImageView theme = (ImageView) view.findViewById(R.id.theme_selector_image);
             ImageView indicator = (ImageView) view.findViewById(R.id.theme_selector_indicator);
             theme.setBackgroundColor(getResources().getColor(mThemeColors[i]));
-            indicator.setVisibility(sSettings.getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, 0) == i ? View.VISIBLE : View.GONE);
+            indicator.setVisibility(sSettings.getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, DEFAULT_THEME_INDEX) == i ? View.VISIBLE : View.GONE);
             return view;
         }
     }

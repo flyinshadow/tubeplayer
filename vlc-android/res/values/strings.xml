@@ -3,7 +3,7 @@
 
     <!-- Main Video Player Interface -->
     <!--<string name="app_name" translatable="false">Video Player</string>-->
-    <string name="app_name" translatable="false">Video Player</string>
+    <string name="app_name" translatable="false">MX Player</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="other">Other</string>

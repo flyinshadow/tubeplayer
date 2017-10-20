@@ -93,6 +93,7 @@ import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.audio.AudioBrowserFragment;
 import com.wenjoyai.tubeplayer.gui.browser.BaseBrowserFragment;
 import com.wenjoyai.tubeplayer.gui.browser.ExtensionBrowser;
+import com.wenjoyai.tubeplayer.gui.browser.FileBrowserFragment;
 import com.wenjoyai.tubeplayer.gui.browser.MediaBrowserFragment;
 import com.wenjoyai.tubeplayer.gui.browser.NetworkBrowserFragment;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
@@ -659,12 +660,14 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 return new AudioBrowserFragment();
             case R.id.nav_directories:
                 return new VideoFolderFragment();
+//                return new FileBrowserFragment();
             case R.id.nav_history:
                 return new HistoryFragment();
             case R.id.nav_network:
                 return new NetworkBrowserFragment();
             default:
-                return new VideoGridFragment();
+//                return new VideoGridFragment();
+                return new VideoFolderFragment();
         }
     }
 
@@ -758,8 +761,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 viewModeItem.setIcon(R.drawable.ic_view_list);
             } else if (currentViewMode == VideoListAdapter.VIEW_MODE_GRID) {
                 viewModeItem.setIcon(R.drawable.ic_view_grid);
-            } else if (currentViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
-                viewModeItem.setIcon(R.drawable.ic_view_bigpic);
+//            } else if (currentViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
+//                viewModeItem.setIcon(R.drawable.ic_view_bigpic);
             }
         }
         return super.onCreateOptionsMenu(menu);
@@ -1092,10 +1095,11 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         if (item == null)
             return false;
 
-        getSupportActionBar().setTitle(null); //clear title
-        getSupportActionBar().setSubtitle(null); //clear subtitle
-
         int id = item.getItemId();
+        if (mCurrentFragmentId != id) {
+            getSupportActionBar().setTitle(null); //clear title
+            getSupportActionBar().setSubtitle(null); //clear subtitle
+        }
 
         {
             // 统计上报
