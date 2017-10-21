@@ -194,6 +194,9 @@ public abstract class MediaBrowserFragment extends PlaybackServiceFragment imple
     }
 
     protected void deleteMedia(final MediaLibraryItem mw, final boolean refresh) {
+        if (mw == null) {
+            return;
+        }
         VLCApplication.runBackground(new Runnable() {
             @Override
             public void run() {

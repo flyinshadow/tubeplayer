@@ -789,8 +789,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             MediaWrapper oldItem = oldList.get(oldItemPosition);
             MediaWrapper newItem = newList.get(newItemPosition);
             return oldItem == newItem ||
-                    (oldList != null && newList != null && oldItem.getType() == newItem.getType() && oldItem.equals(newItem)) ||
-                    (oldItem.getItemType() == MediaWrapper.TYPE_AD && newItem.getItemType() == MediaWrapper.TYPE_AD);
+                    ((oldItem != null && newItem != null) && ((oldItem.getType() == newItem.getType() && oldItem.equals(newItem)) ||
+                    (oldItem.getItemType() == MediaWrapper.TYPE_AD && newItem.getItemType() == MediaWrapper.TYPE_AD)));
         }
 
         @Override
@@ -798,8 +798,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             MediaWrapper oldItem = oldList.get(oldItemPosition);
             MediaWrapper newItem = newList.get(newItemPosition);
             return oldItem == newItem ||
-                    (oldItem.getTime() == newItem.getTime() && TextUtils.equals(oldItem.getArtworkMrl(), newItem.getArtworkMrl())) ||
-                    (oldItem.getItemType() == MediaWrapper.TYPE_AD && newItem.getItemType() == MediaWrapper.TYPE_AD);
+                    ((oldItem != null && newItem != null) && ((oldItem.getTime() == newItem.getTime() && TextUtils.equals(oldItem.getArtworkMrl(), newItem.getArtworkMrl())) ||
+                    (oldItem.getItemType() == MediaWrapper.TYPE_AD && newItem.getItemType() == MediaWrapper.TYPE_AD)));
         }
 
         @Nullable
@@ -807,11 +807,10 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         public Object getChangePayload(int oldItemPosition, int newItemPosition) {
             MediaWrapper oldItem = oldList.get(oldItemPosition);
             MediaWrapper newItem = newList.get(newItemPosition);
-            if (oldItem.getTime() != newItem.getTime())
+            if (oldItem != null && newItem != null && oldItem.getTime() != newItem.getTime())
                 return UPDATE_TIME;
             else {
-                LogUtil.d(TAG, "xxxx getChangePayload UPDATE_THUMB oldItem:" + oldItemPosition +
-                        " newItem:" + newItemPosition);
+                LogUtil.d(TAG, "xxxx getChangePayload UPDATE_THUMB oldItem:" + oldItemPosition + " newItem:" + newItemPosition);
                 return UPDATE_THUMB;
             }
         }
@@ -852,7 +851,11 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                 index++;
                 continue;
             }
+
             MediaWrapper item = (MediaWrapper) it.next();
+            if (item == null)
+                continue;
+
             if ((index - mStartIndex) % AD_STEPS == 0) {
                 NativeAd nativeAd = nextAd();
                 if (nativeAd != null) {
@@ -871,9 +874,11 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         if (added < mNativeAd.size()) {
             while (mNextAdIndex < mNativeAd.size()) {
                 MediaWrapper media = items.get(items.size() - 1);
-                AdItem ad = new AdItem(media);
-                ad.setNativeAd(nextAd());
-                items.add(ad);
+                if (media != null) {
+                    AdItem ad = new AdItem(media);
+                    ad.setNativeAd(nextAd());
+                    items.add(ad);
+                }
             }
         }
     }
