@@ -62,6 +62,9 @@ public class StatisticsManager {
     public static final String TYPE_VIDEO_EXTEND_SHUFFLE = "extend_shuffle";
     public static final String TYPE_VIDEO_RATIO = "ratio";
 
+    public static final String TYPE_NETWORK = "net";
+
+
     public static final String ITEM_VIDEO_LENGTH_0_1 = "0-1";
     public static final String ITEM_VIDEO_LENGTH_1_3 = "1-3";
     public static final String ITEM_VIDEO_LENGTH_3_5 = "3-5";

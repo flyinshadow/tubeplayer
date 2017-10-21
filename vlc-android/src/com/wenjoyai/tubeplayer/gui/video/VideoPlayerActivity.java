@@ -4036,13 +4036,15 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
      */
     private void initAD() {
         mRotateAD = (RotateAD) findViewById(R.id.player_roate_ad);
-        mRotateAD.setOnClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openWall();
-                StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_VIDEO_NAME);
-            }
-        });
+        if (null != mRotateAD) {
+            mRotateAD.setOnClick(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openWall();
+                    StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_VIDEO_NAME);
+                }
+            });
+        }
     }
 
 

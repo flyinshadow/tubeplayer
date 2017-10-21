@@ -85,6 +85,7 @@ import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.ad.ADManager;
 import com.wenjoyai.tubeplayer.ad.LoadingDialog;
 import com.wenjoyai.tubeplayer.ad.Interstitial;
+import com.wenjoyai.tubeplayer.ad.NetWorkUtil;
 import com.wenjoyai.tubeplayer.ad.RotateAD;
 import com.wenjoyai.tubeplayer.extensions.ExtensionListing;
 import com.wenjoyai.tubeplayer.extensions.ExtensionManagerService;
@@ -101,6 +102,7 @@ import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
 import com.wenjoyai.tubeplayer.gui.preferences.PreferencesFragment;
 import com.wenjoyai.tubeplayer.gui.video.VideoGridFragment;
 import com.wenjoyai.tubeplayer.gui.video.VideoListAdapter;
+import com.wenjoyai.tubeplayer.gui.video.VideoPlayerActivity;
 import com.wenjoyai.tubeplayer.gui.view.HackyDrawerLayout;
 import com.wenjoyai.tubeplayer.interfaces.Filterable;
 import com.wenjoyai.tubeplayer.interfaces.IHistory;
@@ -241,7 +243,13 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         mScanNeeded = savedInstanceState == null && mSettings.getBoolean("auto_rescan", true);
 
         mMediaLibrary = VLCApplication.getMLInstance();
+        submitNetwork();
+    }
 
+    private void submitNetwork(){
+        String str = NetWorkUtil.getCurrentNetworkType();
+        Log.e(TAG,str);
+        StatisticsManager.submitSelectContent(MainActivity.this, StatisticsManager.TYPE_NETWORK, str);
     }
 
     private boolean isloadAD = false;

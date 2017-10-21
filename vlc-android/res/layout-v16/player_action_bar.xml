@@ -71,11 +71,11 @@
         android:focusable="true"
         android:visibility="gone" />
     <!-- Useless views to fix Chrome OS build -->
-    <Space
+    <TextView
         android:id="@+id/player_overlay_systime"
         android:layout_width="0dp"
         android:layout_height="0dp" />
-    <Space
+    <TextView
         android:id="@+id/player_overlay_battery"
         android:layout_width="0dp"
         android:layout_height="0dp" />
