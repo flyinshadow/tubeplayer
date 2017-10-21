@@ -82,8 +82,8 @@
         <item name="ic_playasaudio_on">@drawable/ic_playasaudio_on</item>
         <item name="ic_popup_expand">@drawable/ic_popup_expand</item>
         <item name="ic_popup_dim">@drawable/ic_popup_dim</item>
-        <item name="ic_speed_normal_style">@drawable/ic_speed</item>
-        <item name="ic_sleep_normal_style">@drawable/ic_sleep</item>
+        <item name="ic_speed_normal_style">@drawable/ic_speed_w</item>
+        <item name="ic_sleep_normal_style">@drawable/ic_sleep_w</item>
         <item name="ic_jumpto_normal_style">@drawable/ic_jumpto</item>
         <item name="ic_chapter_normal_style">@drawable/ic_chapter</item>
         <item name="ic_equalizer_normal_style">@drawable/ic_equalizer</item>
@@ -411,8 +411,8 @@
         <item name="ic_playasaudio_on">@drawable/ic_playasaudio_on</item>
         <item name="ic_popup_expand">@drawable/ic_popup_expand</item>
         <item name="ic_popup_dim">@drawable/ic_popup_dim</item>
-        <item name="ic_speed_normal_style">@drawable/ic_speed</item>
-        <item name="ic_sleep_normal_style">@drawable/ic_sleep</item>
+        <item name="ic_speed_normal_style">@drawable/ic_speed_w</item>
+        <item name="ic_sleep_normal_style">@drawable/ic_sleep_w</item>
         <item name="ic_jumpto_normal_style">@drawable/ic_jumpto</item>
         <item name="ic_chapter_normal_style">@drawable/ic_chapter</item>
         <item name="ic_equalizer_normal_style">@drawable/ic_equalizer</item>
