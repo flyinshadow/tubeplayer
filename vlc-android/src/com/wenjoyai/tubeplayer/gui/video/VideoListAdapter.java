@@ -76,6 +76,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
 
+import static com.wenjoyai.tubeplayer.gui.video.VideoGridFragment.KEY_PARSING_ONCE;
+
 public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.ViewHolder> implements Filterable {
 
     public final static String TAG = "VLC/VideoListAdapter";
@@ -709,7 +711,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             mUpdateExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    if (PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getBoolean(VideoGridFragment.KEY_PARSING_ONCE, false)) {
+                    if (PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getBoolean(KEY_PARSING_ONCE, false)) {
                         Collections.sort(items, mVideoComparator);
                     }
 
@@ -802,7 +804,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             MediaWrapper oldItem = oldList.get(oldItemPosition);
             MediaWrapper newItem = newList.get(newItemPosition);
             if (oldItem != null && newItem != null && oldItem.getItemType() == MediaWrapper.TYPE_AD && newItem.getItemType() == MediaWrapper.TYPE_AD) {
-                return ((AdItem)oldItem).getNativeAd() == ((AdItem)newItem).getNativeAd();
+                String ad1 = ((AdItem)oldItem).getNativeAd().getAdBody();
+                String ad2 = ((AdItem)newItem).getNativeAd().getAdBody();
+                return ad1.equals(ad2);
             } else {
                 return oldItem == newItem ||
                         ((oldItem != null && newItem != null) && ((oldItem.getTime() == newItem.getTime() && TextUtils.equals(oldItem.getArtworkMrl(), newItem.getArtworkMrl()))));
@@ -855,6 +859,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
         int added = 0;
         ListIterator it = items.listIterator();
+        mNextAdIndex = 0;
         while (it.hasNext()) {
             if (index < mStartIndex) {
                 it.next();
@@ -933,6 +938,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         if (mNativeAd.size() <= 0) {
             return null;
         }
+
         if (mNextAdIndex >= mNativeAd.size()) {
             mNextAdIndex = 0;
         }
