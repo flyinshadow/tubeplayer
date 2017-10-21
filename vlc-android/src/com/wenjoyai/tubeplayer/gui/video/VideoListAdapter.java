@@ -237,6 +237,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                     case UPDATE_SELECTION:
                         boolean isSelected = media.hasStateFlags(MediaLibraryItem.FLAG_SELECTED);
                         holder.binding.setVariable(BR.selected, isSelected);
+                        if (holder.itemCheck != null) {
+                            holder.itemCheck.setVisibility(isSelected ? View.VISIBLE : View.GONE);
+                        }
                         holder.binding.setVariable(BR.bgColor, ContextCompat.getColor(holder.itemView.getContext(), mListMode && isSelected ? R.color.orange200transparent : R.color.transparent));
                         break;
                     case UPDATE_AD:

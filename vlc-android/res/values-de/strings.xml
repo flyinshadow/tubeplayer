@@ -459,5 +459,5 @@
     <string name="rename">Umbenennen</string>
     <string name="theme">Thema</string>
     <string name="night_mode">Nacht-Modus</string>
-    <string name="share_app">Freigeben</string>
+    <string name="share">Freigeben</string>
 </resources>

@@ -450,5 +450,5 @@
     <string name="loading_medialibrary">Caricamento raccolta multimediale...</string>
     <string name="rename">Rinominare</string>
     <string name="night_mode">Modalità notte</string>
-    <string name="share_app">Condividi</string>
+    <string name="share">Condividi</string>
 </resources>

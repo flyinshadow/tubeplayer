@@ -420,5 +420,5 @@
     <string name="rename">تغییر نام دهید</string>
     <string name="theme">تم</string>
     <string name="night_mode">حالت شب</string>
-    <string name="share_app">سهم</string>
+    <string name="share">سهم</string>
 </resources>

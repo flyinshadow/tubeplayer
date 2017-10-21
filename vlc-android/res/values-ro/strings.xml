@@ -221,7 +221,7 @@
     <string name="rename">Redenumiți</string>
     <string name="theme">Tematica</string>
     <string name="night_mode">Mod noapte</string>
-    <string name="share_app">Cota</string>
+    <string name="share">Cota</string>
     <!--Accessibility-->
     <!--Widget-->
 </resources>

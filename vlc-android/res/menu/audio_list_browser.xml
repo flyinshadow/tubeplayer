@@ -29,5 +29,8 @@
             android:id="@+id/audio_list_browser_set_song"
             android:title="@string/set_song"/>
     </group>
+    <item
+        android:id="@+id/audio_share"
+        android:title="@string/share"/>
 
 </menu>

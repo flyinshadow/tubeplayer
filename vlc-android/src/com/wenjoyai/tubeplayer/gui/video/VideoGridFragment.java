@@ -84,10 +84,10 @@ import com.wenjoyai.tubeplayer.media.MediaGroup;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
 import com.wenjoyai.tubeplayer.util.FileUtils;
 import com.wenjoyai.tubeplayer.util.LogUtil;
+import com.wenjoyai.tubeplayer.util.ShareUtils;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class VideoGridFragment extends MediaBrowserFragment implements MediaUpdatedCb, ISortable, SwipeRefreshLayout.OnRefreshListener, MediaAddedCb, Filterable, IEventsHandler {
@@ -337,7 +337,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         final MediaWrapper media = mVideoAdapter.getItem(position);
         if (media == null)
             return false;
-        switch (menu.getItemId()){
+        switch (menu.getItemId()) {
             case R.id.video_list_play_from_start:
                 playVideo(media, true);
                 return true;
@@ -368,6 +368,9 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 return true;
             case R.id.video_download_subtitles:
                 MediaUtils.getSubs(getActivity(), media);
+                return true;
+            case R.id.video_share:
+                ShareUtils.shareMedia(getActivity() != null ? getActivity() : VLCApplication.getAppContext(), media);
                 return true;
         }
         return false;
@@ -426,7 +429,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         if (media == null)
             return;
         MenuInflater inflater = getActivity().getMenuInflater();
-        inflater.inflate(media instanceof MediaGroup ? R.menu.video_group_contextual : R.menu.video_list, menu);
+        inflater.inflate(media instanceof MediaGroup ? R.menu.video_group_contextual : R.menu.video_list_contextual, menu);
         if (media instanceof MediaGroup) {
             if (!AndroidUtil.isHoneycombOrLater) {
                 menu.findItem(R.id.video_list_append).setVisible(false);

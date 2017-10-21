@@ -241,7 +241,7 @@
     <string name="preferences">Settings</string>
     <string name="theme">Theme</string>
     <string name="night_mode">Night mode</string>
-    <string name="share_app">Share app</string>
+    <string name="share">Share</string>
 
     <string name="general_prefs_category">General</string>
     <string name="directories_summary">Select directories to include in the media library</string>

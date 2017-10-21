@@ -421,5 +421,5 @@
     <string name="rename">Rebautizar</string>
     <string name="theme">Tema</string>
     <string name="night_mode">Modo nocturno</string>
-    <string name="share_app">Compartir</string>
+    <string name="share">Compartir</string>
 </resources>
