@@ -92,6 +92,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     final static int UPDATE_SELECTION = 0;
     final static int UPDATE_THUMB = 1;
     final static int UPDATE_TIME = 2;
+    final static int UPDATE_AD = 3;
 
     public final static int VIEW_MODE_GRID = 0;
     public final static int VIEW_MODE_LIST = 1;
@@ -154,6 +155,36 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         return new ViewHolder(v);
     }
 
+    private void bindAd(ViewHolder holder, AdItem adItem) {
+        if (adItem == null || adItem.getNativeAd() == null)
+            return;
+        NativeAd nativeAd = adItem.getNativeAd();
+        if (holder.adBody != null) {
+            holder.adBody.setText(TextUtils.isEmpty(nativeAd.getAdBody()) ? nativeAd.getAdTitle() : nativeAd.getAdBody());
+        }
+        if (holder.adCallToAction != null) {
+            holder.adCallToAction.setText(nativeAd.getAdCallToAction());
+        }
+
+        // Download and display the cover image.
+        if (holder.adMedia != null) {
+            holder.adMedia.setNativeAd(nativeAd);
+        }
+
+        // Add the AdChoices icon
+        if (holder.adChoicesContainer != null) {
+            AdChoicesView adChoicesView = new AdChoicesView(holder.itemView.getContext(), nativeAd, true);
+            holder.adChoicesContainer.removeAllViews();
+            holder.adChoicesContainer.addView(adChoicesView);
+        }
+
+        // Register the Title and CTA button to listen for clicks.
+        if (holder.adContainer != null) {
+            nativeAd.unregisterView();
+            nativeAd.registerViewForInteraction(holder.adContainer);
+        }
+    }
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         MediaWrapper media = mVideos.get(position);
@@ -166,35 +197,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         holder.binding.setVariable(BR.isAd, media.getItemType() == MediaWrapper.TYPE_AD);
 
         if (media.getItemType() == MediaWrapper.TYPE_AD && holder.adContainer != null) {
-            NativeAd nativeAd = ((AdItem)media).getNativeAd();
-            if (nativeAd != null) {
-                if (holder.adBody != null) {
-                    holder.adBody.setText(TextUtils.isEmpty(nativeAd.getAdBody()) ? nativeAd.getAdTitle() : nativeAd.getAdBody());
-                }
-                if (holder.adCallToAction != null) {
-                    holder.adCallToAction.setText(nativeAd.getAdCallToAction());
-                }
-
-                // Download and display the cover image.
-                if (holder.adMedia != null) {
-                    holder.adMedia.setNativeAd(nativeAd);
-                }
-
-                // Add the AdChoices icon
-                if (holder.adChoicesContainer != null) {
-                    AdChoicesView adChoicesView = new AdChoicesView(holder.itemView.getContext(), nativeAd, true);
-                    holder.adChoicesContainer.removeAllViews();
-                    holder.adChoicesContainer.addView(adChoicesView);
-                }
-
-                // Register the Title and CTA button to listen for clicks.
-                if (holder.adContainer != null) {
-                    nativeAd.unregisterView();
-                    nativeAd.registerViewForInteraction(holder.adContainer);
-                }
-            } else {
-                LogUtil.e(TAG, "facebookAD nativeAd == null media title:" + media.getTitle());
-            }
+            bindAd(holder, (AdItem)media);
             holder.binding.setVariable(BR.scaleType, ImageView.ScaleType.CENTER_CROP);
         } else {
             holder.binding.setVariable(BR.scaleType, ImageView.ScaleType.CENTER_CROP);
@@ -215,10 +218,6 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position, List<Object> payloads) {
         MediaWrapper media = mVideos.get(position);
-        if (media.getItemType() == MediaWrapper.TYPE_AD) {
-            LogUtil.d(TAG, "adadad onBindViewHolder, position:" + position + " is AD");
-        }
-
         if (payloads.isEmpty())
             onBindViewHolder(holder, position);
         else {
@@ -237,6 +236,11 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                         boolean isSelected = media.hasStateFlags(MediaLibraryItem.FLAG_SELECTED);
                         holder.binding.setVariable(BR.selected, isSelected);
                         holder.binding.setVariable(BR.bgColor, ContextCompat.getColor(holder.itemView.getContext(), mListMode && isSelected ? R.color.orange200transparent : R.color.transparent));
+                        break;
+                    case UPDATE_AD:
+                        if (media != null && media.getItemType() == MediaWrapper.TYPE_AD) {
+                            bindAd(holder, ((AdItem)media));
+                        }
                         break;
                 }
             }
@@ -797,9 +801,12 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
             MediaWrapper oldItem = oldList.get(oldItemPosition);
             MediaWrapper newItem = newList.get(newItemPosition);
-            return oldItem == newItem ||
-                    ((oldItem != null && newItem != null) && ((oldItem.getTime() == newItem.getTime() && TextUtils.equals(oldItem.getArtworkMrl(), newItem.getArtworkMrl())) ||
-                    (oldItem.getItemType() == MediaWrapper.TYPE_AD && newItem.getItemType() == MediaWrapper.TYPE_AD)));
+            if (oldItem != null && newItem != null && oldItem.getItemType() == MediaWrapper.TYPE_AD && newItem.getItemType() == MediaWrapper.TYPE_AD) {
+                return ((AdItem)oldItem).getNativeAd() == ((AdItem)newItem).getNativeAd();
+            } else {
+                return oldItem == newItem ||
+                        ((oldItem != null && newItem != null) && ((oldItem.getTime() == newItem.getTime() && TextUtils.equals(oldItem.getArtworkMrl(), newItem.getArtworkMrl()))));
+            }
         }
 
         @Nullable
@@ -809,7 +816,10 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             MediaWrapper newItem = newList.get(newItemPosition);
             if (oldItem != null && newItem != null && oldItem.getTime() != newItem.getTime())
                 return UPDATE_TIME;
-            else {
+            else if (oldItem != null && newItem != null && oldItem.getItemType() == MediaWrapper.TYPE_AD && newItem.getItemType() == MediaWrapper.TYPE_AD) {
+                LogUtil.d(TAG, "xxxx getChangePayload UPDATE_AD oldItem:" + oldItemPosition + " newItem:" + newItemPosition);
+                return UPDATE_AD;
+            } else {
                 LogUtil.d(TAG, "xxxx getChangePayload UPDATE_THUMB oldItem:" + oldItemPosition + " newItem:" + newItemPosition);
                 return UPDATE_THUMB;
             }
