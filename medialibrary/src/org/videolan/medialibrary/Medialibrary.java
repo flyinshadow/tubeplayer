@@ -374,7 +374,7 @@ public class Medialibrary {
     }
 
     public void onParsingStatsUpdated(int percent) {
-        LogUtil.d(TAG, "onParsingStatsUpdated percent=" + percent);
+        LogUtil.d(TAG, "aaaa onParsingStatsUpdated percent=" + percent);
         synchronized (devicesDiscoveryCbList) {
             if (!devicesDiscoveryCbList.isEmpty())
                 for (DevicesDiscoveryCb cb : devicesDiscoveryCbList)
@@ -383,6 +383,7 @@ public class Medialibrary {
     }
 
     public void onBackgroundTasksIdleChanged(boolean isIdle) {
+        LogUtil.d(TAG, "aaaa onBackgroundTasksIdleChanged sendBroadcast ACTION_IDLE");
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent(ACTION_IDLE).putExtra(STATE_IDLE, isIdle));
         mIsWorking = !isIdle;
     }

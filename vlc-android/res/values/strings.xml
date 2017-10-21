@@ -463,6 +463,7 @@
     <string name="allow_sdraw_overlays_description">Video Player needs you to grant this permission display your video in a popup over other applications.</string>
     <string name="permission_ask_again">Grant permission</string>
     <string name="exit_app">Close Video Player</string>
+    <string name="exit_app_msg">Are you sure you want to quit Video Player?</string>
 
     <!-- fast scroller -->
     <string name="fastscroller_track">FastScroller track</string>

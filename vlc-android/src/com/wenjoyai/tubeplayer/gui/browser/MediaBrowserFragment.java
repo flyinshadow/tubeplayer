@@ -34,6 +34,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -103,9 +104,19 @@ public abstract class MediaBrowserFragment extends PlaybackServiceFragment imple
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (mMediaLibraryReady) {
+            Log.e("yNativeAD", "onResume onMedialibraryReady");
+            onMedialibraryReady();
+        }
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         stopActionMode();
+        Log.e("yNativeAD", "onPause unregisterReceiver");
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mParsingServiceReceiver);
     }
 
@@ -242,10 +253,13 @@ public abstract class MediaBrowserFragment extends PlaybackServiceFragment imple
         return false;
     }
 
+    private boolean mMediaLibraryReady = false;
     protected void onMedialibraryReady() {
+        mMediaLibraryReady = true;
         LogUtil.d(TAG, "aaaa MediaBrowserFragment onMedialibraryReady");
         IntentFilter parsingServiceFilter = new IntentFilter(MediaParsingService.ACTION_SERVICE_ENDED);
         parsingServiceFilter.addAction(MediaParsingService.ACTION_SERVICE_STARTED);
+        Log.e("yNativeAD", "onMedialibraryReady registerReceiver mParsingServiceReceiver");
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mParsingServiceReceiver, parsingServiceFilter);
     }
 
@@ -254,9 +268,11 @@ public abstract class MediaBrowserFragment extends PlaybackServiceFragment imple
             @Override
             public void onReceive(Context context, Intent intent) {
                 LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(this);
+                Log.e("yNativeAD", "setupMediaLibraryReceiver libraryReadyReceiver onMedialibraryReady");
                 onMedialibraryReady();
             }
         };
+        Log.e("yNativeAD", "setupMediaLibraryReceiver registerReceiver ACTION_MEDIALIBRARY_READY");
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(libraryReadyReceiver, new IntentFilter(VLCApplication.ACTION_MEDIALIBRARY_READY));
     }
 

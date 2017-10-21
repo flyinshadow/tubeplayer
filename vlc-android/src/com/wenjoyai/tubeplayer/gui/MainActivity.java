@@ -178,6 +178,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         setContentView(R.layout.main);
         initConfig();
         initAD();
+        //开始广告缓存
+        ADManager.getInstance().startLoadAD(this);
         mDrawerLayout = (HackyDrawerLayout) findViewById(R.id.root_container);
         setupNavigationView();
 
@@ -459,7 +461,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             public void run() {
                 loadAD();
             }
-        }, 500);
+        }, 15000);
     }
 
     //google lijiazhi
@@ -529,6 +531,10 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                         ADManager.sLevel = mFirebaseRemoteConfig.getLong("ad_level_type");
                         ADManager.back_ad_delay_time = mFirebaseRemoteConfig.getLong("back_ad_delay_time");
                         sSettings.edit().putLong(PLATFOM, ADManager.sPlatForm).apply();
+
+
+                        ADManager.REQUEST_FEED_NTIVE_INTERVAL = mFirebaseRemoteConfig.getLong("request_feed_native_interval");
+
                     }
                 });
     }
@@ -596,8 +602,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //重置广告15秒计时
-        ADManager.getInstance().mStartTime=0;
+        ADManager.getInstance().cancelProgressTimer();
     }
 
     @Override
@@ -622,6 +627,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             ((ExtensionBrowser) fragment).goBack();
             return;
         }
+//        UiTools.confirmExit(this);
         finish();
     }
 

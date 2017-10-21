@@ -31,6 +31,8 @@ public class StatisticsManager {
     public static final String ITEM_AD_GOOGLE_PAUSE_NATIVE ="google_pause_native_ad";
     public static final String ITEM_AD_GOOGLE_VIDEO_BANNER ="google_video_banner";
 
+    public static final String ITEM_AD_FEED_NATIVE_FACEBOOK_FAILED ="feed_facebook_failed";
+
     public static final String ITEM_AD_FEED_NATIVE_1 ="feed_native_1";
     public static final String ITEM_AD_FEED_NATIVE_2 ="feed_native_2";
     public static final String ITEM_AD_FEED_NATIVE_3 ="feed_native_3";
@@ -264,7 +266,7 @@ public class StatisticsManager {
         String info = "";
         if (media != null) {
             info = getVideoLengthType(media.getLength()) + "_" + getVideoVHType(videoWidth, videoHeight) + "_" +
-                    getVideoSizeType(media.getWidth(), media.getHeight());
+                    getVideoSizeType(videoWidth, videoHeight);
         }
         return info;
     }

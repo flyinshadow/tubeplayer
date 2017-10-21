@@ -166,7 +166,7 @@ public class AudioBrowserAdapter extends BaseQueuedAdapter<MediaLibraryItem[], A
     }
 
     private boolean isPositionValid(int position) {
-        return position >= 0 || position < mDataList.length;
+        return position >= 0 && position < mDataList.length;
     }
 
     public MediaLibraryItem[] getAll() {

@@ -101,7 +101,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="2"
                 android:textColor="?attr/list_title"
-                android:textSize="@dimen/grid_card_title_text_size"
+                android:textSize="@dimen/ad_body_text_size"
                 tools:targetApi="jelly_bean" />
 
             <TextView
@@ -120,7 +120,7 @@
                 android:paddingBottom="@dimen/half_default_margin"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/ad_call_to_action_text_size"/>
 
         </android.support.constraint.ConstraintLayout>
 
@@ -163,7 +163,7 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_action_mode_select_1610"
                     android:scaleType="@{scaleType}"
-                    android:visibility="@{selected ? View.VISIBLE : View.GONE}"
+                    android:visibility="gone"
                     />
             </android.support.constraint.ConstraintLayout>
 
@@ -249,7 +249,7 @@
                 android:minHeight="@dimen/progress_bar_height"
                 android:progress="@{progress}"
                 android:progressDrawable="?attr/gridview_progressbar"
-                android:visibility="@{progress &gt; 10 ? View.VISIBLE : View.INVISIBLE}" />
+                android:visibility="invisible" />
         </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>

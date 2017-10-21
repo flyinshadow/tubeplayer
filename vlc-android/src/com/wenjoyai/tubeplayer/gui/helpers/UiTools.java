@@ -25,6 +25,7 @@ package com.wenjoyai.tubeplayer.gui.helpers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.databinding.BindingAdapter;
@@ -45,6 +46,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -306,4 +308,20 @@ public class UiTools {
 
 		return outBitmap;
 	}
+
+    public static void confirmExit(final Activity activity) {
+        new AlertDialog.Builder(activity)
+                .setMessage(R.string.exit_app_msg)
+                .setTitle(R.string.exit_app)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        activity.finish();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                }).create().show();
+    }
 }

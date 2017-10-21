@@ -1698,6 +1698,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             case MediaPlayer.Event.Playing:
                 onPlaying();
                 mRotateAD.setVisibility(View.INVISIBLE);
+                mNativeFrameLayout.setVisibility(View.GONE);
                 break;
             case MediaPlayer.Event.Paused:
                 updateOverlayPausePlay();
@@ -3953,8 +3954,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         NativeAD mFeedNativeAD = new NativeAD();
         mFeedNativeAD.loadAD(VideoPlayerActivity.this, ADManager.AD_Facebook, ADConstants.facebook_video_pause_native, new NativeAD.ADListener() {
             @Override
-            public void onLoadedSuccess(com.facebook.ads.NativeAd nativeAd) {
-                if(null ==mNativeFrameLayout){
+            public void onLoadedSuccess(com.facebook.ads.NativeAd nativeAd,String adId) {
+                if(null ==mNativeFrameLayout|| null==nativeAd){
                     //异步过程，可能当前页面已经销毁了
                     return;
                 }
@@ -3998,7 +3999,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             }
 
             @Override
-            public void onLoadedFailed(String msg) {
+            public void onLoadedFailed(String msg,String adId) {
 
             }
 
