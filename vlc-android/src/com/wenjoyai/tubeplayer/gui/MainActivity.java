@@ -155,8 +155,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private static final int PLUGIN_NAVIGATION_GROUP = 2;
     //广告view
     private RotateAD mRotateAD;
-    private Interstitial mViewerInterstitialAd;
     private Interstitial mFirstOpenInterstitialAd;
+    private boolean mIsResumed = true;//当前页面是否在前台
     private static SharedPreferences sSettings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
 
     @Override
@@ -280,27 +280,29 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 mFirstOpenInterstitialAd.loadAD(this, ADManager.sPlatForm, adID, new Interstitial.ADListener() {
                     @Override
                     public void onLoadedSuccess() {
-                        // create alert dialog
-                        if (dialog == null){
-                            dialog = new LoadingDialog(MainActivity.this, R.style.dialog);
-                            dialog.setCancelable(true);
-                            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialog) {
-                                    mFirstOpenInterstitialAd.show();
-                                }
-                            });
-                        }
-                        if (null!=dialog && !isFinishing()&&!dialog.isShowing())
-                            dialog.show();
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (null != dialog && dialog.isShowing()&& !isFinishing()) {
-                                    dialog.dismiss();
-                                }
+                        if (mIsResumed) {
+                            // create alert dialog
+                            if (dialog == null) {
+                                dialog = new LoadingDialog(MainActivity.this, R.style.dialog);
+                                dialog.setCancelable(true);
+                                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss(DialogInterface dialog) {
+                                        mFirstOpenInterstitialAd.show();
+                                    }
+                                });
                             }
-                        }, 1000);
+                            if (null != dialog && !isFinishing() && !dialog.isShowing())
+                                dialog.show();
+                            mHandler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (null != dialog && dialog.isShowing() && !isFinishing()) {
+                                        dialog.dismiss();
+                                    }
+                                }
+                            }, 1000);
+                        }
                     }
 
                     @Override
@@ -379,6 +381,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     @Override
     protected void onStop() {
         super.onStop();
+        //准备新广告
+//        ADManager.getInstance().startLoadAD(this);
         if (mExtensionServiceConnection != null) {
             unbindService(mExtensionServiceConnection);
             mExtensionServiceConnection = null;
@@ -445,6 +449,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     @Override
     protected void onResume() {
         super.onResume();
+        mIsResumed = true;
         if (mMediaLibrary.isInitiated()) {
             /* Load media items from database and storage */
             if (mScanNeeded && Permissions.canReadStorage())
@@ -531,8 +536,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                         ADManager.back_ad_delay_time = mFirebaseRemoteConfig.getLong("back_ad_delay_time");
                         sSettings.edit().putLong(PLATFOM, ADManager.sPlatForm).apply();
 
-
-                        ADManager.REQUEST_FEED_NTIVE_INTERVAL = mFirebaseRemoteConfig.getLong("request_feed_native_interval");
+//                        ADManager.REQUEST_FEED_NTIVE_INTERVAL = mFirebaseRemoteConfig.getLong("request_feed_native_interval");
 
                     }
                 });
@@ -575,6 +579,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     @Override
     protected void onPause() {
         super.onPause();
+        mIsResumed = false;
         mNavigationView.setNavigationItemSelectedListener(null);
         if (getChangingConfigurations() == 0) {
             /* Check for an ongoing scan that needs to be resumed during onResume */
@@ -601,7 +606,6 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ADManager.getInstance().cancelProgressTimer();
     }
 
     @Override

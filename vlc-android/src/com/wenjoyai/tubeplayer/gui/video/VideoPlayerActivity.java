@@ -4007,6 +4007,11 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             public void onAdClick() {
 
             }
+
+            @Override
+            public void onAdImpression(NativeAd ad, String adId) {
+
+            }
         });
     }
 

@@ -31,11 +31,11 @@ public class StatisticsManager {
     public static final String ITEM_AD_GOOGLE_PAUSE_NATIVE ="google_pause_native_ad";
     public static final String ITEM_AD_GOOGLE_VIDEO_BANNER ="google_video_banner";
 
-    public static final String ITEM_AD_FEED_NATIVE_FACEBOOK_FAILED ="feed_facebook_failed";
-
-    public static final String ITEM_AD_FEED_NATIVE_1 ="feed_native_1";
-    public static final String ITEM_AD_FEED_NATIVE_2 ="feed_native_2";
-    public static final String ITEM_AD_FEED_NATIVE_3 ="feed_native_3";
+    public static final String ITEM_AD_FEED_NATIVE_FAILED ="feed_failed_";
+    public static final String ITEM_AD_FEED_NATIVE_IMPRESSION ="feed_impression_";
+    public static final String ITEM_AD_FEED_NATIVE_LOADED ="feed_loaded_";
+    public static final String ITEM_AD_FEED_NATIVE_REQUEST ="feed_request_";
+    public static final String ITEM_AD_FEED_NATIVE_CLICK ="feed_click_";
 
 
     //视频播放
