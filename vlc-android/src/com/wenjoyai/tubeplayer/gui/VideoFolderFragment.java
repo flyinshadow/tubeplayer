@@ -94,7 +94,7 @@ public class VideoFolderFragment extends MediaBrowserFragment implements MediaAd
 
     @Override
     protected String getTitle() {
-        return getString(R.string.video);
+        return getString(R.string.directories);
     }
 
     @Override

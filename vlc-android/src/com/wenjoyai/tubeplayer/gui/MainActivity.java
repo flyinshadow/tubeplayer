@@ -672,8 +672,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             case R.id.nav_network:
                 return new NetworkBrowserFragment();
             default:
-//                return new VideoGridFragment();
-                return new VideoFolderFragment();
+                return new VideoGridFragment();
+//                return new VideoFolderFragment();
         }
     }
 
