@@ -875,6 +875,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     @Override
                     public void onLoadedSuccess(View view) {
                         if (null != view) {
+                            mAdContainer.removeAllViews();
                             mAdContainer.addView(view);
                         }
                         StatisticsManager.submitAd(getActivity(), StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_VIDEO_BANNER);

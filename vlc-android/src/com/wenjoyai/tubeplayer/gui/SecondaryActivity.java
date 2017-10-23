@@ -118,8 +118,9 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
             viewMode = VideoListAdapter.VIEW_MODE_GRID;
         }
         if (fragment instanceof VideoGridFragment) {
-            if (mMenu != null)
+            if (mMenu != null && null!= mMenu.findItem(R.id.ml_menu_view_mode)) {
                 mMenu.findItem(R.id.ml_menu_view_mode).setVisible(visible);
+            }
             if (viewMode != ((VideoGridFragment) fragment).getCurrentViewMode()) {
                 ((VideoGridFragment) fragment).toggleVideoMode(viewMode);
             }
