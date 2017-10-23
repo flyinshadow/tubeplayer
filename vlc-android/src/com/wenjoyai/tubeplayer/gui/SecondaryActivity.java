@@ -76,8 +76,13 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
 
         if (getSupportFragmentManager().getFragments() == null) {
             String fragmentId = getIntent().getStringExtra(KEY_FRAGMENT);
-            fetchSecondaryFragment(fragmentId);
-            if (mFragment == null){
+            try {
+                fetchSecondaryFragment(fragmentId);
+            } catch (Exception e) {
+                mFragment = null;
+                LogUtil.e(TAG, "fetchSecondaryFragment e:" + e);
+            }
+            if (mFragment == null) {
                 finish();
                 return;
             }

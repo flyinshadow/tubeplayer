@@ -100,7 +100,7 @@ public class PlaylistActivity extends AudioPlayerContainerActivity implements IE
         final int fabVisibility =  savedInstanceState != null
             ? savedInstanceState.getInt(TAG_FAB_VISIBILITY) : -1;
 
-        if (!TextUtils.isEmpty(mPlaylist.getArtworkMrl())) {
+        if (mPlaylist != null && !TextUtils.isEmpty(mPlaylist.getArtworkMrl())) {
             VLCApplication.runBackground(new Runnable() {
                 @Override
                 public void run() {

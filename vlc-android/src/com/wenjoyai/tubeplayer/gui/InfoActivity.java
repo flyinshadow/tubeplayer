@@ -28,6 +28,7 @@ import com.wenjoyai.tubeplayer.gui.helpers.AudioUtil;
 import com.wenjoyai.tubeplayer.gui.helpers.FloatingActionButtonBehavior;
 import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
 import com.wenjoyai.tubeplayer.gui.video.MediaInfoAdapter;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.Strings;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 import com.wenjoyai.tubeplayer.util.WeakHandler;
@@ -60,6 +61,10 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
         mItem = (MediaWrapper) (savedInstanceState != null ?
                 savedInstanceState.getParcelable(TAG_ITEM) :
                 getIntent().getParcelableExtra(TAG_ITEM));
+        if (mItem == null) {
+            LogUtil.e(TAG, "onCreate mItem == null");
+            return;
+        }
         if (mItem.getId() == 0L) {
             MediaWrapper mediaWrapper = VLCApplication.getMLInstance().getMedia(mItem.getUri());
             if (mediaWrapper != null)
@@ -129,7 +134,9 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
 
     @Override
     public void onClick(View v) {
-        mService.load(mItem.getTracks(VLCApplication.getMLInstance()), 0);
+        if (mItem != null) {
+            mService.load(mItem.getTracks(VLCApplication.getMLInstance()), 0);
+        }
         finish();
     }
 
@@ -187,10 +194,13 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
 
         @Override
         protected File doInBackground(Void... params) {
-            File itemFile = new File(Uri.decode(mItem.getLocation().substring(5)));
+            File itemFile = null;
+            if (mItem != null) {
+                itemFile = new File(Uri.decode(mItem.getLocation().substring(5)));
 
-            if (mItem.getType() == MediaWrapper.TYPE_VIDEO)
-                checkSubtitles(itemFile);
+                if (mItem.getType() == MediaWrapper.TYPE_VIDEO)
+                    checkSubtitles(itemFile);
+            }
             return itemFile;
         }
 
@@ -212,7 +222,7 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
         protected Media doInBackground(Void... params) {
 
             final LibVLC libVlc = VLCInstance.get();
-            if (libVlc == null || isCancelled())
+            if (mItem == null || libVlc == null || isCancelled())
                 return null;
 
             Media media = new Media(libVlc, mItem.getUri());

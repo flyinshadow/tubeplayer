@@ -292,7 +292,6 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
     private void stopPlayback() {
         long time = mService.getTime();
         long length = mService.getLength();
-        Uri uri = mService.getCurrentMediaWrapper().getUri();
         //remove saved position if in the last 5 seconds
         if (length - time < 5000)
             time = 0;

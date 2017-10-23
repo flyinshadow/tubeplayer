@@ -1697,7 +1697,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 break;
             case MediaPlayer.Event.Playing:
                 onPlaying();
-                mRotateAD.setVisibility(View.INVISIBLE);
+                if (mRotateAD != null) {
+                    mRotateAD.setVisibility(View.INVISIBLE);
+                }
                 if (mNativeFrameLayout != null) {
                     mNativeFrameLayout.setVisibility(View.GONE);
                 }
