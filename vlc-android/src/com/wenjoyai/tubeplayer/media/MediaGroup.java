@@ -21,6 +21,7 @@
 package com.wenjoyai.tubeplayer.media;
 
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 
 import org.videolan.medialibrary.media.MediaWrapper;
@@ -30,83 +31,26 @@ import com.wenjoyai.tubeplayer.gui.helpers.BitmapUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MediaGroup extends MediaWrapper {
+public class MediaGroup extends Group {
 
     public final static String TAG = "VLC/MediaGroup";
 
-    private ArrayList<MediaWrapper> mMedias;
-
     public MediaGroup(MediaWrapper media) {
-        super(media.getUri(),
-                media.getTime(),
-                media.getLength(),
-                MediaWrapper.TYPE_GROUP,
-                BitmapUtil.getPicture(media),
-                media.getTitle(),
-                media.getArtist(),
-                media.getGenre(),
-                media.getAlbum(),
-                media.getAlbumArtist(),
-                media.getWidth(),
-                media.getHeight(),
-                media.getArtworkURL(),
-                media.getAudioTrack(),
-                media.getSpuTrack(),
-                media.getTrackNumber(),
-                media.getDiscNumber(),
-                media.getLastModified());
-        mMedias = new ArrayList<MediaWrapper>();
-        mMedias.add(media);
+        super(media);
     }
 
-    public String getDisplayTitle() {
-        return getTitle() + "\u2026";
-    }
-    public void add(MediaWrapper media) {
-        mMedias.add(media);
+    public MediaGroup(Uri uri) {
+        super(uri);
     }
 
-    public MediaWrapper getMedia() {
-        return mMedias.size() == 1 ? mMedias.get(0) : this;
+    public static MediaGroup getDummy() {
+        return new MediaGroup(Uri.parse("file://dummy"));
     }
 
-    public MediaWrapper getFirstMedia() {
-        return mMedias.get(0);
-    }
-
-    public ArrayList<MediaWrapper> getAll() {
-        return mMedias;
-    }
-
-    public int size() {
-        return mMedias.size();
-    }
-
-    public void merge(MediaWrapper media, String title) {
-        mMedias.add(media);
-        this.mTitle = title;
-    }
-
-    public static List<MediaGroup> group(MediaWrapper[] mediaList) {
-        ArrayList<MediaGroup> groups = new ArrayList<>();
-        for (MediaWrapper media : mediaList)
-            if (media != null)
-                insertInto(groups, media);
-        return groups;
-    }
-
-    public static List<MediaGroup> group(List<MediaWrapper> mediaList) {
-        ArrayList<MediaGroup> groups = new ArrayList<>();
-        for (MediaWrapper media : mediaList)
-            if (media != null)
-                insertInto(groups, media);
-        return groups;
-    }
-
-    private static void insertInto(ArrayList<MediaGroup> groups, MediaWrapper media) {
+    public void insertInto(List<Group> groups, MediaWrapper media) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
         int minGroupLengthValue = Integer.valueOf(preferences.getString("video_min_group_length", "6"));
-        for (MediaGroup mediaGroup : groups) {
+        for (Group mediaGroup : groups) {
             String group = mediaGroup.getTitle();
             String title = media.getTitle();
 

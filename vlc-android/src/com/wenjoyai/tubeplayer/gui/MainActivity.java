@@ -661,18 +661,23 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
     @NonNull
     private Fragment getNewFragment(int id) {
+        VideoGridFragment fragment;
         switch (id) {
             case R.id.nav_audio:
                 return new AudioBrowserFragment();
             case R.id.nav_directories:
-                return new VideoFolderFragment();
+                fragment = new VideoGridFragment();
+                fragment.setFolder(null, true);
+                return fragment;
 //                return new FileBrowserFragment();
             case R.id.nav_history:
                 return new HistoryFragment();
             case R.id.nav_network:
                 return new NetworkBrowserFragment();
             default:
-                return new VideoGridFragment();
+                fragment = new VideoGridFragment();
+                fragment.setFolder(null, false);
+                return fragment;
 //                return new VideoFolderFragment();
         }
     }
@@ -722,12 +727,12 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         slideDownAudioPlayer();
     }
 
-    public void showSecondaryFragment2(String fragmentTag, String param, String param2) {
+    public void showSecondaryFragment2(String fragmentTag, String param, boolean param2) {
         Intent i = new Intent(this, SecondaryActivity.class);
         i.putExtra("fragment", fragmentTag);
         if (param != null)
             i.putExtra("param", param);
-        if (param2 != null)
+        if (param2)
             i.putExtra("param2", param2);
         startActivityForResult(i, ACTIVITY_RESULT_SECONDARY);
         // Slide down the audio player if needed.

@@ -1,5 +1,6 @@
 package com.wenjoyai.tubeplayer.media;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -20,45 +21,54 @@ import java.util.List;
  * Created by yuqilin on 2017/9/6.
  */
 
-public class FolderGroup extends MediaWrapper implements Parcelable {
+public class FolderGroup extends Group implements Parcelable {
 
     private String mFolderPath;
-    private ArrayList<MediaWrapper> mMedias = new ArrayList<>();
+//    private ArrayList<MediaWrapper> mMedias = new ArrayList<>();
 
     public FolderGroup(MediaWrapper media) {
-        super(media.getUri(),
-                media.getTime(),
-                media.getLength(),
-                MediaWrapper.TYPE_GROUP,
-                null,
-                media.getTitle(),
-                media.getArtist(),
-                media.getGenre(),
-                media.getAlbum(),
-                media.getAlbumArtist(),
-                media.getWidth(),
-                media.getHeight(),
-                media.getArtworkURL(),
-                media.getAudioTrack(),
-                media.getSpuTrack(),
-                media.getTrackNumber(),
-                media.getDiscNumber(),
-                0l);
-        mMedias.add(media);
+//        super(media.getUri(),
+//                media.getTime(),
+//                media.getLength(),
+//                MediaWrapper.TYPE_GROUP,
+//                null,
+//                media.getTitle(),
+//                media.getArtist(),
+//                media.getGenre(),
+//                media.getAlbum(),
+//                media.getAlbumArtist(),
+//                media.getWidth(),
+//                media.getHeight(),
+//                media.getArtworkURL(),
+//                media.getAudioTrack(),
+//                media.getSpuTrack(),
+//                media.getTrackNumber(),
+//                media.getDiscNumber(),
+//                0l);
+        super(media);
+//        mMedias.add(media);
         mFolderPath = FileUtils.getParent(media.getUri().getPath());
     }
 
     protected FolderGroup(Parcel in) {
         super(in);
         mFolderPath = in.readString();
-        mMedias = in.createTypedArrayList(MediaWrapper.CREATOR);
+//        mMedias = in.createTypedArrayList(MediaWrapper.CREATOR);
+    }
+
+    public FolderGroup(Uri uri) {
+        super(uri);
+    }
+
+    public static FolderGroup getDummy() {
+        return new FolderGroup(Uri.parse("file://dummy"));
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(mFolderPath);
-        dest.writeTypedList(mMedias);
+//        dest.writeTypedList(mMedias);
     }
 
     @Override
@@ -82,18 +92,18 @@ public class FolderGroup extends MediaWrapper implements Parcelable {
         return mFolderPath;
     }
 
-    public void add(MediaWrapper media) {
-        mMedias.add(media);
-    }
+//    public void add(MediaWrapper media) {
+//        mMedias.add(media);
+//    }
+//
+//    public int size() {
+//        return mMedias.size();
+//    }
 
-    public int size() {
-        return mMedias.size();
-    }
-
-    @Override
-    public MediaWrapper[] getTracks(Medialibrary ml) {
-        return mMedias.toArray(new MediaWrapper[mMedias.size()]);
-    }
+//    @Override
+//    public MediaWrapper[] getTracks(Medialibrary ml) {
+//        return mMedias.toArray(new MediaWrapper[mMedias.size()]);
+//    }
 
     @Override
     public int getItemType() {
@@ -122,21 +132,13 @@ public class FolderGroup extends MediaWrapper implements Parcelable {
         });
     }
 
-    public static List<FolderGroup> group(MediaWrapper[] mediaList) {
-        ArrayList<FolderGroup> groups = new ArrayList<>();
-        for (MediaWrapper media : mediaList)
-            if (media != null)
-                insertInto(groups, media);
-        return groups;
-    }
-
-    public static void insertInto(List<FolderGroup> groups, MediaWrapper media) {
-        for (FolderGroup group : groups) {
-            String groupFolderPath = group.getFolderPath();
+    public void insertInto(List<Group> groups, MediaWrapper media) {
+        for (Group folderGroup : groups) {
+            String groupFolderPath = ((FolderGroup)folderGroup).getFolderPath();
             String mediaFolderPath = FileUtils.getParent(media.getUri().getPath());
 
             if (mediaFolderPath.equals(groupFolderPath)) {
-                group.add(media);
+                folderGroup.add(media);
                 return;
             }
         }

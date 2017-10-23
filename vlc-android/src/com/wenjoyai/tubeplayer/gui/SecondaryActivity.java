@@ -203,7 +203,7 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
             ((VideoGridFragment) mFragment).setGroup(getIntent().getStringExtra("param"));
         } else if (id.equals(VIDEO_FOLDER_GROUP)) {
             mFragment = new VideoGridFragment();
-            ((VideoGridFragment) mFragment).setFolderGroup(getIntent().getStringExtra("param"), getIntent().getStringExtra("param2"));
+            ((VideoGridFragment) mFragment).setFolder(getIntent().getStringExtra("param"), false);
         } else if (id.equals(STORAGE_BROWSER)){
             mFragment = new StorageBrowserFragment();
         } else if (id.equals(FILE_BROWSER)) {

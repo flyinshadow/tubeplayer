@@ -42,10 +42,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.videolan.medialibrary.Tools;
-import org.videolan.medialibrary.media.MediaLibraryItem;
-import org.videolan.medialibrary.media.MediaWrapper;
-
 import com.facebook.ads.AdChoicesView;
 import com.facebook.ads.MediaView;
 import com.facebook.ads.NativeAd;
@@ -56,11 +52,16 @@ import com.wenjoyai.tubeplayer.gui.helpers.AsyncImageLoader;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
 import com.wenjoyai.tubeplayer.interfaces.IEventsHandler;
 import com.wenjoyai.tubeplayer.media.AdItem;
-import com.wenjoyai.tubeplayer.media.MediaGroup;
+import com.wenjoyai.tubeplayer.media.FolderGroup;
+import com.wenjoyai.tubeplayer.media.Group;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.MediaItemFilter;
 import com.wenjoyai.tubeplayer.util.Strings;
 import com.wenjoyai.tubeplayer.util.Util;
+
+import org.videolan.medialibrary.Tools;
+import org.videolan.medialibrary.media.MediaLibraryItem;
+import org.videolan.medialibrary.media.MediaWrapper;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -95,9 +96,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     public final static int VIEW_MODE_GRID = 0;
     public final static int VIEW_MODE_LIST = 1;
-//    public final static int VIEW_MODE_BIGPIC = 2;
     public final static int VIEW_MODE_MAX = 2;
 
+    public final static int VIEW_MODE_FOLDER = 3;
     public static final int VIEW_MODE_FULL_TITLE = 4;
 
     public final static int VIEW_MODE_DEFAULT = VIEW_MODE_GRID;
@@ -138,8 +139,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             video_layout = R.layout.video_grid_card;
         } else if (mCurrentViewMode == VIEW_MODE_LIST) {
             video_layout = R.layout.video_list_card;
-//        } else if (mCurrentViewMode == VIEW_MODE_BIGPIC) {
-//            video_layout = R.layout.video_bigpic_card;
+        } else if (mCurrentViewMode == VIEW_MODE_FOLDER) {
+//            video_layout = R.layout.video_folder_item;
+            video_layout = R.layout.video_grid_card;
         } else if (mCurrentViewMode == VIEW_MODE_FULL_TITLE) {
             video_layout = R.layout.video_full_title;
         }
@@ -323,8 +325,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         for (int i = 0; i < mVideos.size(); ++i) {
             MediaWrapper mw = mVideos.get(i);
             if (mw.hasStateFlags(MediaLibraryItem.FLAG_SELECTED)) {
-                if (mw instanceof MediaGroup)
-                    selection.addAll(((MediaGroup) mw).getAll());
+                if (mw instanceof Group)
+                    selection.addAll(((Group) mw).getAll());
                 else
                     selection.add(mw);
             }
@@ -390,9 +392,14 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         int max = 0;
         int progress = 0;
 
-        if (media.getType() == MediaWrapper.TYPE_GROUP) {
-            MediaGroup mediaGroup = (MediaGroup) media;
-            int size = mediaGroup.size();
+        if (mCurrentViewMode == VIEW_MODE_FOLDER) {
+            FolderGroup folderGroup = (FolderGroup) media;
+            int size = folderGroup.size();
+            text = VLCApplication.getAppResources().getQuantityString(R.plurals.videos_quantity, size, size);
+        }
+        else if (media.getType() == MediaWrapper.TYPE_GROUP) {
+            Group group = (Group) media;
+            int size = group.size();
             text = VLCApplication.getAppResources().getQuantityString(R.plurals.videos_quantity, size, size);
         } else {
             /* Time / Duration */
@@ -464,13 +471,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             mw = mVideos.get(i);
             if (mw.getItemType() == MediaWrapper.TYPE_AD)
                 continue;
-            if (mw instanceof MediaGroup) {
-                for (MediaWrapper item : ((MediaGroup) mw).getAll()) {
+            if (mw instanceof Group) {
+                for (MediaWrapper item : ((Group) mw).getAll()) {
                     if (item.getItemType() != MediaWrapper.TYPE_AD)
                         list.add(item);
                 }
                 if (i < position)
-                    offset += ((MediaGroup)mw).size()-1;
+                    offset += ((Group)mw).size()-1;
             } else
                 list.add(mw);
         }
