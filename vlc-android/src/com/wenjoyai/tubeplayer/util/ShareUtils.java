@@ -10,8 +10,12 @@ import android.text.TextUtils;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 
+import org.videolan.medialibrary.media.MediaWrapper;
+
 import java.io.File;
 import java.util.ArrayList;
+
+import static org.videolan.medialibrary.media.MediaWrapper.TYPE_AUDIO;
 
 /**
  * Created by LiJiaZhi on 16/12/18. share
@@ -57,7 +61,7 @@ public class ShareUtils {
         act.startActivity(Intent.createChooser(shareIntent, "Share To"));
     }
 
-    public static void shareFile(Activity act, Uri uri) {
+    public static void shareMedia(Context context, MediaWrapper media) {
         // intent.setType("text/plain"); //纯文本
         /*
          * 图片分享 it.setType("image/png"); //添加图片 File f = new
@@ -65,15 +69,22 @@ public class ShareUtils {
          *
          * Uri uri = Uri.fromFile(f); intent.putExtra(Intent.EXTRA_STREAM, uri);
          */
+        if (media == null || media.getUri() == null) {
+            return;
+        }
+        String mimeType = "*/*";
+//        if (media.getType() == TYPE_AUDIO) {
+//            mimeType = "audio/*";
+//        }
         Intent intent = new Intent(Intent.ACTION_SEND);
         // intent.setType("image/*");
         // intent.setType("audio/*");//此处可发送多种文件
-        intent.setType("audio/mp3");
+        intent.setType(mimeType);
         intent.putExtra(Intent.EXTRA_SUBJECT, "Share");
-        intent.putExtra(Intent.EXTRA_STREAM, uri);
-        intent.putExtra(Intent.EXTRA_TEXT, "I have successfully share my message through my app");
+        intent.putExtra(Intent.EXTRA_STREAM, media.getUri());
+        intent.putExtra(Intent.EXTRA_TEXT, "I have successfully share my message through my Video Player app");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        act.startActivity(Intent.createChooser(intent, "Share To"));
+        context.startActivity(Intent.createChooser(intent, "Share To"));
     }
 
     public static void adviceEmail(Activity act) {

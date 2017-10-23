@@ -452,5 +452,5 @@
     <string name="rename">名前を変更する</string>
     <string name="theme">テーマ</string>
     <string name="night_mode">夜モード</string>
-    <string name="share_app">分かち合う</string>
+    <string name="share">分かち合う</string>
 </resources>

@@ -473,5 +473,5 @@
     <string name="rename">Przemianować</string>
     <string name="theme">Tematu</string>
     <string name="night_mode">Tryb nocny</string>
-    <string name="share_app">Udostępnij</string>
+    <string name="share">Udostępnij</string>
 </resources>

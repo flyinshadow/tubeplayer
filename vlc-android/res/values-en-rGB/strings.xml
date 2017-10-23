@@ -309,7 +309,7 @@
     <string name="rename">Rename</string>
     <string name="theme">Theme</string>
     <string name="night_mode">Theme</string>
-    <string name="share_app">Share app</string>
+    <string name="share">Share app</string>
     <!--fast scroller-->
     <!--Plugins-->
 </resources>

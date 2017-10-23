@@ -217,7 +217,7 @@
     <string name="rename">Canviar el nom</string>
     <string name="theme">Tema</string>
     <string name="night_mode">Mode de nit</string>
-    <string name="share_app">Compartir</string>
+    <string name="share">Compartir</string>
     <!--Accessibility-->
     <!--Widget-->
 </resources>

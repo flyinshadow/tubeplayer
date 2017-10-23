@@ -386,5 +386,5 @@
     <string name="connecting">Yhdistetään...</string>
     <string name="rename">Nimeä uudelleen</string>
     <string name="night_mode">Yökuvaus</string>
-    <string name="share_app">Osuus</string>
+    <string name="share">Osuus</string>
 </resources>

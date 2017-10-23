@@ -292,7 +292,7 @@
     <string name="rename">Ganti nama</string>
     <string name="theme">Tema</string>
     <string name="night_mode">Modus malam</string>
-    <string name="share_app">Berbagi</string>
+    <string name="share">Berbagi</string>
     <!--fast scroller-->
     <!--Plugins-->
 </resources>

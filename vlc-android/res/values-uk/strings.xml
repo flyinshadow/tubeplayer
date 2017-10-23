@@ -466,5 +466,5 @@
     <string name="rename">Перейменувати</string>
     <string name="theme">Тема</string>
     <string name="night_mode">Нічний режим</string>
-    <string name="share_app">Частка</string>
+    <string name="share">Частка</string>
 </resources>
