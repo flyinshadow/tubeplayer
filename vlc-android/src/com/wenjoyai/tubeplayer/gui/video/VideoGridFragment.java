@@ -859,7 +859,6 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     }
 
     private void loadBanner(){
-//        if (ADManager.isShowOpenAD) {
             String adID = "";
             if (ADManager.sPlatForm == ADManager.AD_MobVista) {
             } else if (ADManager.sPlatForm == ADManager.AD_Google) {
@@ -869,9 +868,12 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             }
             if (!TextUtils.isEmpty(adID)) {
                 mBannerAD = new BannerAD();
-                View view = mBannerAD.loadAD(getActivity(), ADManager.sPlatForm, adID, new BannerAD.ADListener() {
+                mBannerAD.loadAD(getActivity(), ADManager.sPlatForm, adID, new BannerAD.ADListener() {
                     @Override
-                    public void onLoadedSuccess() {
+                    public void onLoadedSuccess(View view) {
+                        if (null != view) {
+                            mAdContainer.addView(view);
+                        }
                         StatisticsManager.submitAd(getActivity(), StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_VIDEO_BANNER);
                     }
 
@@ -890,11 +892,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
                     }
                 });
-                if (null != view) {
-                    mAdContainer.addView(view);
-                }
             }
-//        }
     }
 
     private boolean checkAds() {

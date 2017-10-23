@@ -45,6 +45,12 @@ public class NativeAD {
             @Override
             public void onError(Ad ad, AdError error) {
                 submitError(mAdId, error);
+                if (error.getErrorCode()==1001){//1001尽量少，
+                    if (null != mListener) {
+                        mListener.onLoadedFailed("1001", mAdId,1001);
+                    }
+                    return;
+                }
                 startProgressTimer();
             }
 
@@ -83,7 +89,7 @@ public class NativeAD {
     public interface ADListener {
         void onLoadedSuccess(NativeAd ad, String adId);
 
-        void onLoadedFailed(String msg, String adId);
+        void onLoadedFailed(String msg, String adId, int errorcode);
 
         void onAdClick();
 
@@ -119,7 +125,7 @@ public class NativeAD {
                     if (mRetryCount > 2) {
                         Log.e(TAG, "retry all still failed" + mRetryCount);
                         if (null != mListener) {
-                            mListener.onLoadedFailed("retry all still failed", mAdId);
+                            mListener.onLoadedFailed("retry all still failed", mAdId, 0);
                         }
                     } else {
                         loadAD(mContext, mType, mAdId, mListener);

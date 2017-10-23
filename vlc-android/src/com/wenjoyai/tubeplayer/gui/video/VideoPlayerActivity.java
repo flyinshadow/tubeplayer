@@ -4001,7 +4001,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             }
 
             @Override
-            public void onLoadedFailed(String msg,String adId) {
+            public void onLoadedFailed(String msg,String adId, int errorcode) {
 
             }
 
