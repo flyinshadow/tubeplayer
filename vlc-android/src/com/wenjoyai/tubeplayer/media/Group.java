@@ -37,7 +37,7 @@ public abstract class Group extends MediaWrapper {
 
     public final static String TAG = "VLC/Group";
 
-    private ArrayList<MediaWrapper> mMedias;
+    protected ArrayList<MediaWrapper> mMedias;
 
     public Group(MediaWrapper media) {
         super(media.getUri(),

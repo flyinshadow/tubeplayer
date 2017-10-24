@@ -51,14 +51,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.videolan.libvlc.Media;
-import org.videolan.libvlc.util.AndroidUtil;
-import org.videolan.medialibrary.Medialibrary;
-import org.videolan.medialibrary.interfaces.MediaAddedCb;
-import org.videolan.medialibrary.interfaces.MediaUpdatedCb;
-import org.videolan.medialibrary.media.MediaLibraryItem;
-import org.videolan.medialibrary.media.MediaWrapper;
-
 import com.facebook.ads.NativeAd;
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.PlaybackService;
@@ -84,10 +76,17 @@ import com.wenjoyai.tubeplayer.media.FolderGroup;
 import com.wenjoyai.tubeplayer.media.Group;
 import com.wenjoyai.tubeplayer.media.MediaGroup;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
-import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.FileUtils;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
+
+import org.videolan.libvlc.Media;
+import org.videolan.libvlc.util.AndroidUtil;
+import org.videolan.medialibrary.Medialibrary;
+import org.videolan.medialibrary.interfaces.MediaAddedCb;
+import org.videolan.medialibrary.interfaces.MediaUpdatedCb;
+import org.videolan.medialibrary.media.MediaLibraryItem;
+import org.videolan.medialibrary.media.MediaWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -282,16 +281,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         if (mGroup != null)
             return mGroup + "\u2026";
         else
-            return getFolderTitle(mFolderGroup);
-
-    }
-
-    private String getFolderTitle(String folderPath) {
-        String folderName = FileUtils.getFileNameFromPath(folderPath);
-        if (folderPath.equals(AndroidDevices.EXTERNAL_PUBLIC_DIRECTORY)) {
-            folderName = getResources().getString(R.string.internal_memory);
-        }
-        return folderName;
+            return FolderGroup.getFolderTitle(mFolderGroup);
     }
 
     private void updateViewMode(int targetViewMode) {
@@ -301,13 +291,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         }
         Resources res = getResources();
         boolean listMode = targetViewMode != VideoListAdapter.VIEW_MODE_GRID;
-//        listMode |= res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT &&
-//                PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("force_list_portrait", false);
+
         // Compute the left/right padding dynamically
         DisplayMetrics outMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
-
-        mGridView.removeItemDecoration(mDividerItemDecoration);
 
         // Select between grid or list
         if (!listMode) {
@@ -316,19 +303,11 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             mVideoAdapter.setGridCardWidth(mGridView.getColumnWidth());
         }
         mGridView.setNumColumns(listMode ? 1 : -1);
-        if (mVideoAdapter.isListMode() != listMode) {
-            if (/*listMode && targetViewMode != VideoListAdapter.VIEW_MODE_BIGPIC && */targetViewMode != VideoListAdapter.VIEW_MODE_FULL_TITLE)
-                mGridView.addItemDecoration(mDividerItemDecoration);
-            else
-                mGridView.removeItemDecoration(mDividerItemDecoration);
-            mVideoAdapter.setListMode(listMode);
-        }
-        if (targetViewMode == VideoListAdapter.VIEW_MODE_GRID) {
-            mGridView.removeItemDecoration(mDividerItemDecoration);
-        } else if (targetViewMode == VideoListAdapter.VIEW_MODE_LIST) {
+        mVideoAdapter.setListMode(listMode);
+
+        mGridView.removeItemDecoration(mDividerItemDecoration);
+        if (targetViewMode == VideoListAdapter.VIEW_MODE_LIST) {
             mGridView.addItemDecoration(mDividerItemDecoration);
-//        } else if (targetViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
-//            mGridView.removeItemDecoration(mDividerItemDecoration);
         }
     }
 
@@ -617,6 +596,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     public String getFolderGroup() {
         return mFolderGroup;
+    }
+
+    public boolean getFolderMain() {
+        return mFolderMain;
     }
 
     private Runnable mSwipeRefreshRunnable = new Runnable() {

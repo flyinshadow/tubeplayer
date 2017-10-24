@@ -643,7 +643,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             visible = false;
             viewMode = VideoListAdapter.VIEW_MODE_GRID;
         }
-        if (fragment instanceof VideoGridFragment) {
+        if (fragment instanceof VideoGridFragment && !((VideoGridFragment)fragment).getFolderMain()) {
             if (mMenu != null)
                 mMenu.findItem(R.id.ml_menu_view_mode).setVisible(visible);
             if (viewMode != ((VideoGridFragment) fragment).getCurrentViewMode()) {
@@ -835,29 +835,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         menu.findItem(R.id.ml_menu_last_playlist).setVisible(showLast);
         menu.findItem(R.id.ml_menu_filter).setVisible(current instanceof Filterable && ((Filterable) current).enableSearchOption());
         LogUtil.d(TAG, "viewmode getScreenRotation:" + getScreenRotation());
-        menu.findItem(R.id.ml_menu_view_mode).setVisible(current instanceof VideoGridFragment &&
+        menu.findItem(R.id.ml_menu_view_mode).setVisible(current instanceof VideoGridFragment && !((VideoGridFragment)current).getFolderMain() &&
                 ((getScreenRotation() == Surface.ROTATION_0) || (getScreenRotation() == Surface.ROTATION_180)));
-//        if (viewModeMenu != null) {
-//            boolean screenVertical = (getScreenRotation() == Surface.ROTATION_0) || (getScreenRotation() == Surface.ROTATION_180);
-//            int currentViewMode = mSettings.getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE, VideoListAdapter.VIEW_MODE_DEFAULT);
-//            if (screenVertical) {
-//                if (currentViewMode == VideoListAdapter.VIEW_MODE_LIST) {
-//                    viewModeMenu.setIcon(R.drawable.ic_view_list);
-//                } else if (currentViewMode == VideoListAdapter.VIEW_MODE_GRID) {
-//                    viewModeMenu.setIcon(R.drawable.ic_view_grid);
-//                } else if (currentViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
-//                    viewModeMenu.setIcon(R.drawable.ic_view_bigpic);
-//                }
-//                if (current instanceof VideoGridFragment && currentViewMode != VideoListAdapter.VIEW_MODE_GRID) {
-//                    ((VideoGridFragment) current).toggleVideoMode(currentViewMode);
-//                }
-//            } else {
-//                if (current instanceof VideoGridFragment) {
-//                    ((VideoGridFragment) current).toggleVideoMode(VideoListAdapter.VIEW_MODE_GRID);
-//                }
-//            }
-//            viewModeMenu.setVisible(current instanceof VideoGridFragment && screenVertical);
-//        }
         return true;
     }
 

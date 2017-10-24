@@ -140,8 +140,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         } else if (mCurrentViewMode == VIEW_MODE_LIST) {
             video_layout = R.layout.video_list_card;
         } else if (mCurrentViewMode == VIEW_MODE_FOLDER) {
-//            video_layout = R.layout.video_folder_item;
-            video_layout = R.layout.video_grid_card;
+            video_layout = R.layout.video_folder_item;
         } else if (mCurrentViewMode == VIEW_MODE_FULL_TITLE) {
             video_layout = R.layout.video_full_title;
         }

@@ -4,6 +4,8 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.wenjoyai.tubeplayer.R;
+import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.gui.helpers.BitmapUtil;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.FileUtils;
@@ -48,12 +50,21 @@ public class FolderGroup extends Group implements Parcelable {
         super(media);
 //        mMedias.add(media);
         mFolderPath = FileUtils.getParent(media.getUri().getPath());
+        mTitle = getFolderTitle(mFolderPath);
+    }
+
+    public static String getFolderTitle(String folderPath) {
+        String folderName = FileUtils.getFileNameFromPath(folderPath);
+        if (folderPath.equals(AndroidDevices.EXTERNAL_PUBLIC_DIRECTORY)) {
+            folderName = VLCApplication.getAppResources().getString(R.string.internal_memory);
+        }
+        return folderName;
     }
 
     protected FolderGroup(Parcel in) {
         super(in);
         mFolderPath = in.readString();
-//        mMedias = in.createTypedArrayList(MediaWrapper.CREATOR);
+        mMedias = in.createTypedArrayList(MediaWrapper.CREATOR);
     }
 
     public FolderGroup(Uri uri) {
@@ -68,7 +79,7 @@ public class FolderGroup extends Group implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(mFolderPath);
-//        dest.writeTypedList(mMedias);
+        dest.writeTypedList(mMedias);
     }
 
     @Override
@@ -92,18 +103,10 @@ public class FolderGroup extends Group implements Parcelable {
         return mFolderPath;
     }
 
-//    public void add(MediaWrapper media) {
-//        mMedias.add(media);
-//    }
-//
-//    public int size() {
-//        return mMedias.size();
-//    }
-
-//    @Override
-//    public MediaWrapper[] getTracks(Medialibrary ml) {
-//        return mMedias.toArray(new MediaWrapper[mMedias.size()]);
-//    }
+    @Override
+    public MediaWrapper[] getTracks(Medialibrary ml) {
+        return mMedias.toArray(new MediaWrapper[mMedias.size()]);
+    }
 
     @Override
     public int getItemType() {
@@ -146,7 +149,4 @@ public class FolderGroup extends Group implements Parcelable {
         groups.add(new FolderGroup(media));
     }
 
-//    public static String getFolderName(String path) {
-//        return FileUtils.getFileNameFromPath(path);
-//    }
 }
