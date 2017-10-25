@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.support.v17.leanback.widget.SpeechRecognitionCallback;
 
 import com.wenjoyai.tubeplayer.R;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 public class SearchActivity extends Activity {
@@ -51,7 +52,11 @@ public class SearchActivity extends Activity {
 
                 @Override
                 public void recognizeSpeech() {
-                    startActivityForResult(mFragment.getRecognizerIntent(), REQUEST_SPEECH);
+                    try {
+                        startActivityForResult(mFragment.getRecognizerIntent(), REQUEST_SPEECH);
+                    } catch (Exception e) {
+                        LogUtil.e("tv/SearchActivity", "recognizeSpeech exception:"  + e);
+                    }
                 }
             };
             mFragment.setSpeechRecognitionCallback(speechRecognitionCallback);
