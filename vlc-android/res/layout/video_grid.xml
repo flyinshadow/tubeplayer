@@ -1,44 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <include layout="@layout/button_search" />
+    <include layout="@layout/button_search"/>
 
     <!--<com.google.android.gms.ads.AdView-->
-        <!--xmlns:ads="http://schemas.android.com/apk/res-auto"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--ads:adSize="SMART_BANNER"-->
-        <!--android:layout_below="@+id/searchButton"-->
-        <!--android:id="@+id/adView"-->
-        <!--ads:adUnitId="ca-app-pub-1877164599441785/5736275864"/>-->
+    <!--xmlns:ads="http://schemas.android.com/apk/res-auto"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--ads:adSize="SMART_BANNER"-->
+    <!--android:layout_below="@+id/searchButton"-->
+    <!--android:id="@+id/adView"-->
+    <!--ads:adUnitId="ca-app-pub-1877164599441785/5736275864"/>-->
     <FrameLayout
+        android:id="@+id/adContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/searchButton"
-        android:id="@+id/adContainer">
+        android:layout_below="@+id/searchButton">
     </FrameLayout>
 
 
     <com.wenjoyai.tubeplayer.gui.view.SwipeRefreshLayout
-                android:id="@+id/swipeLayout"
+        android:id="@+id/swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/adContainer">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.wenjoyai.tubeplayer.gui.view.AutoFitRecyclerView
+                android:id="@id/android:list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/adContainer">
-        <com.wenjoyai.tubeplayer.gui.view.AutoFitRecyclerView
-            android:id="@id/android:list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/default_margin"
-            android:clipToPadding="false"
-            android:scrollbarStyle="outsideOverlay"
-            android:numColumns="auto_fit"
-            android:fastScrollEnabled="true"
-            android:scrollbars="vertical"
-            android:fadingEdge="none"
-            android:stretchMode="none"
-            android:gravity="center" />
+                android:clipToPadding="false"
+                android:fadingEdge="none"
+                android:fastScrollEnabled="true"
+                android:gravity="center"
+                android:numColumns="auto_fit"
+                android:padding="@dimen/default_margin"
+                android:scrollbarStyle="outsideOverlay"
+                android:scrollbars="vertical"
+                android:stretchMode="none"/>
+
+            <com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="#d8d8d8"
+                android:visibility="gone"
+                android:layout_gravity="center_horizontal|top">
+
+                <TextView
+                    android:id="@+id/header_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/default_text_size"
+                    android:fontFamily="sans-serif"
+                    android:layout_marginStart="@dimen/header_info_margin"
+                    android:layout_marginLeft="@dimen/header_info_margin"
+                    android:textStyle="normal"
+                    android:textColor="#4a4a4a"
+                    />
+
+            </com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader>
+        </FrameLayout>
     </com.wenjoyai.tubeplayer.gui.view.SwipeRefreshLayout>
 
     <LinearLayout
@@ -46,8 +74,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="gone"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/textview_nomedia"
@@ -60,14 +88,14 @@
             android:maxWidth="600dp"
             android:text="@string/nomedia"
             android:textSize="20sp"
-            android:visibility="visible" />
+            android:visibility="visible"/>
 
         <LinearLayout
             android:id="@+id/layout_flipper_loading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="invisible" >
+            android:visibility="invisible">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -75,43 +103,43 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="@string/loading"
-                android:textSize="20sp" />
+                android:textSize="20sp"/>
 
             <ViewFlipper
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_gravity="left"
+                android:layout_weight="1"
                 android:autoStart="true"
-                android:flipInterval="1000" >
+                android:flipInterval="1000">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:text="@string/empty"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:text="@string/load_1_period"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:text="@string/load_2_period"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:text="@string/load_3_period"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"/>
             </ViewFlipper>
         </LinearLayout>
     </LinearLayout>

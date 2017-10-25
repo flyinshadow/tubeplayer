@@ -51,6 +51,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 import com.facebook.ads.NativeAd;
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.PlaybackService;
@@ -78,6 +79,7 @@ import com.wenjoyai.tubeplayer.media.MediaGroup;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
 import com.wenjoyai.tubeplayer.util.FileUtils;
 import com.wenjoyai.tubeplayer.util.LogUtil;
+import com.wenjoyai.tubeplayer.util.Strings;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
 import org.videolan.libvlc.Media;
@@ -122,6 +124,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     private List<NativeAd> mNativeAdList = null;
 
+    RecyclerViewHeader mHeader;
+
     /* All subclasses of Fragment must include a public empty constructor. */
     public VideoGridFragment() {
     }
@@ -153,6 +157,11 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
         mDividerItemDecoration = new DividerItemDecoration(v.getContext(), DividerItemDecoration.VERTICAL);
 
+        if (mGroup != null || mFolderGroup != null) {
+            mHeader = (RecyclerViewHeader) v.findViewById(R.id.header);
+            mHeader.attachTo(mGridView);
+            mHeader.setVisibility(View.VISIBLE);
+        }
 
         int viewMode;
         if (mFolderMain) {
@@ -527,7 +536,6 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     if (mFolderMain) {
                         for (Group item : FolderGroup.getDummy().group(itemList))
                             displayList.add(item);
-//                        FolderGroup.sort(mFolders);
                     } else {
                         for (Group item : MediaGroup.getDummy().group(itemList))
                             displayList.add(item.getMedia());
@@ -545,6 +553,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                             mVideoAdapter.setNativeAd(mNativeAdList);
                         }
                         LogUtil.d(TAG, "aaaa updateList displayList size:" + displayList.size());
+                        if (mHeader != null) {
+                            TextView text = (TextView) mHeader.findViewById(R.id.header_text);
+                            text.setText(getHeaderInfo(displayList));
+                        }
                         mVideoAdapter.update(displayList, false);
                     }
                 });
@@ -552,6 +564,18 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 mHandler.sendEmptyMessage(UNSET_REFRESHING);
             }
         });
+    }
+
+    private String getHeaderInfo(ArrayList<MediaWrapper> videoList) {
+        long totalSize = 0;
+        int totalCount = 0;
+        for (MediaWrapper video : videoList) {
+            if (video.getItemType() == MediaWrapper.TYPE_MEDIA) {
+                totalSize += video.getFileSize();
+                totalCount++;
+            }
+        }
+        return VLCApplication.getAppResources().getQuantityString(R.plurals.videos_quantity, totalCount, totalCount) + "  " + Strings.readableSize(totalSize);
     }
 
     private boolean mSubmitVideoCount = false;

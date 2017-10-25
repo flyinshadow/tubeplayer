@@ -275,9 +275,8 @@ public class AudioBrowserAdapter extends BaseQueuedAdapter<MediaLibraryItem[], A
                     FolderGroup.getDummy().insertInto(mFolders, (MediaWrapper)item);
                 }
             }
-//            FolderGroup.sort(mFolders);
+            FolderGroup.sort(mFolders);
             for (Group folderGroup : mFolders) {
-//                folderGroup.setTitle(FileUtils.getFileNameFromPath(((FolderGroup)folderGroup).getFolderPath()));
                 datalist.add(folderGroup);
             }
             return datalist.toArray(new MediaLibraryItem[datalist.size()]);

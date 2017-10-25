@@ -54,6 +54,7 @@
     <dimen name="file_picker_height">-1px</dimen>
 
     <dimen name="playlist_width">0dp</dimen>
+    <dimen name="header_info_margin">12dp</dimen>
 
 
     <!-- Default -->

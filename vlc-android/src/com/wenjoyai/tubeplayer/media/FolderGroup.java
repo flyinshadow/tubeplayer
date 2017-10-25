@@ -113,10 +113,15 @@ public class FolderGroup extends Group implements Parcelable {
         return MediaLibraryItem.TYPE_FOLDER;
     }
 
-    public static void sort(List<FolderGroup> folders) {
-        Collections.sort(folders, new Comparator<FolderGroup>() {
+    public static <T extends MediaWrapper> void sort(List<T> folders) {
+        Collections.sort(folders, new Comparator<T>() {
             @Override
-            public int compare(FolderGroup item1, FolderGroup item2) {
+            public int compare(T item1, T item2) {
+                FolderGroup itemX = (FolderGroup) item1;
+                FolderGroup itemY = (FolderGroup) item2;
+                return compareInternal(itemX, itemY);
+            }
+            private int compareInternal(FolderGroup item1, FolderGroup item2) {
                 if (item1 == null)
                     return item2 == null ? 0 : -1;
                 else if (item2 == null)
