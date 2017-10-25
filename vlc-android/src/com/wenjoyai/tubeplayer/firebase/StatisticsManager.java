@@ -27,7 +27,7 @@ public class StatisticsManager {
 
     public static final String ITEM_AD_GOOGLE_BACK ="google_back_ad";
     public static final String ITEM_AD_GOOGLE_VIEWER ="google_viewer_ad";
-    public static final String ITEM_AD_GOOGLE_FIRST_OPEN ="google_first_open_ad";
+    public static final String ITEM_AD_GOOGLE_FIRST_OPEN ="open_ad_";
     public static final String ITEM_AD_GOOGLE_PAUSE_NATIVE ="google_pause_native_ad";
     public static final String ITEM_AD_GOOGLE_VIDEO_BANNER ="google_video_banner";
 
@@ -166,6 +166,9 @@ public class StatisticsManager {
      * @param itemName
      */
     public static void submitAd(Context context, String type, String itemName) {
+        if (null == context){
+            return;
+        }
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemName);
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, itemName);
@@ -183,6 +186,9 @@ public class StatisticsManager {
      * @param itemName 文件时长
      */
     public static void submitVideoPlay(Context context, String type, String itemId, String itemName) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitVideoPlay, " + type + " " + itemId + " " + itemName);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
@@ -192,6 +198,9 @@ public class StatisticsManager {
     }
 
     public static void submitVideoPlaySuccess(Context context, String itemId, String itemName) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitVideoPlaySuccess, " + itemId + " " + itemName);
         Bundle bundle = new Bundle();
         if (!TextUtils.isEmpty(itemId)) {
@@ -204,6 +213,9 @@ public class StatisticsManager {
     }
 
     public static void submitPlayError(Context context, String itemId) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitPlayError, " + itemId);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
@@ -282,6 +294,9 @@ public class StatisticsManager {
      * @param itemName
      */
     public static void submitAudioPlay(Context context, String type, String itemName) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitAudioPlay, " + type + " " + itemName);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemName);
@@ -297,6 +312,9 @@ public class StatisticsManager {
      * @param itemId
      */
     public static void submitTheme(Context context, String itemId) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitTheme, " + itemId);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
@@ -309,6 +327,9 @@ public class StatisticsManager {
      * @param context
      */
     public static void submitDrawlayout(Context context, String type) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitDrawlayout, " + type);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, type);
@@ -321,6 +342,9 @@ public class StatisticsManager {
      * @param context
      */
     public static void submitHomeTab(Context context, String type, String itemName) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitHomeTab, " + type + " " + itemName);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemName);
@@ -334,6 +358,9 @@ public class StatisticsManager {
      * @param itemId
      */
     public static void submitRate(Context context, String itemId) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitRate, " + itemId);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
@@ -346,6 +373,9 @@ public class StatisticsManager {
      * @param itemId
      */
     public static void submitSelectContent(Context context, String contentType, String itemId) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitSelectContent, " + contentType + " " + itemId);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType);

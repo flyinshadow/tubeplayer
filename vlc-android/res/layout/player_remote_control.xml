@@ -94,15 +94,15 @@
             android:layout_marginLeft="@dimen/overlay_margin"
             android:layout_alignParentBottom="true" />
         <!--旋转广告-->
-        <com.wenjoyai.tubeplayer.ad.RotateAD
-            android:id="@+id/player_roate_ad"
-            android:layout_width="72dp"
-            android:visibility="invisible"
-            android:layout_marginBottom="120dp"
-            android:layout_above="@+id/player_hud_stub"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_height="72dp"/>
+        <!--<com.wenjoyai.tubeplayer.ad.RotateAD-->
+            <!--android:id="@+id/player_roate_ad"-->
+            <!--android:layout_width="72dp"-->
+            <!--android:visibility="invisible"-->
+            <!--android:layout_marginBottom="120dp"-->
+            <!--android:layout_above="@+id/player_hud_stub"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_height="72dp"/>-->
 
     </RelativeLayout>
 

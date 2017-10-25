@@ -50,7 +50,6 @@ public class BannerAD {
                 @Override
                 public void onError(Ad ad, AdError adError) {
                     Log.e(TAG, "onAdLoaded "+adError.getErrorCode()+"  "+adError.getErrorMessage());
-                    mFacebookAd.destroy();
                     mFacebookAd = null;
                     loadAD(context,ADManager.AD_Google, ADConstants.google_video_grid_bannar,listener);
                 }

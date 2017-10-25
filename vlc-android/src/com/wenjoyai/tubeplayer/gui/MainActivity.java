@@ -67,14 +67,15 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FilterQueryProvider;
 
+import com.facebook.ads.AdError;
+import com.facebook.ads.NativeAd;
+import com.facebook.ads.NativeAdScrollView;
+import com.facebook.ads.NativeAdView;
+import com.facebook.ads.NativeAdsManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
-import com.mobvista.msdk.MobVistaConstans;
-import com.mobvista.msdk.MobVistaSDK;
-import com.mobvista.msdk.out.MobVistaSDKFactory;
-import com.mobvista.msdk.out.PreloadListener;
 import com.wenjoyai.tubeplayer.BuildConfig;
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.PlaybackService;
@@ -83,8 +84,9 @@ import com.wenjoyai.tubeplayer.StartActivity;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.ad.ADManager;
-import com.wenjoyai.tubeplayer.ad.LoadingDialog;
+import com.wenjoyai.tubeplayer.ad.ExitDialog;
 import com.wenjoyai.tubeplayer.ad.Interstitial;
+import com.wenjoyai.tubeplayer.ad.LoadingDialog;
 import com.wenjoyai.tubeplayer.ad.NetWorkUtil;
 import com.wenjoyai.tubeplayer.ad.RotateAD;
 import com.wenjoyai.tubeplayer.extensions.ExtensionListing;
@@ -102,7 +104,6 @@ import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
 import com.wenjoyai.tubeplayer.gui.preferences.PreferencesFragment;
 import com.wenjoyai.tubeplayer.gui.video.VideoGridFragment;
 import com.wenjoyai.tubeplayer.gui.video.VideoListAdapter;
-import com.wenjoyai.tubeplayer.gui.video.VideoPlayerActivity;
 import com.wenjoyai.tubeplayer.gui.view.HackyDrawerLayout;
 import com.wenjoyai.tubeplayer.interfaces.Filterable;
 import com.wenjoyai.tubeplayer.interfaces.IHistory;
@@ -118,9 +119,7 @@ import org.videolan.medialibrary.Medialibrary;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity.RESULT_RESTART;
 
@@ -156,7 +155,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private ExtensionManagerService mExtensionManagerService;
     private static final int PLUGIN_NAVIGATION_GROUP = 2;
     //广告view
-    private RotateAD mRotateAD;
+//    private RotateAD mRotateAD;
     private Interstitial mFirstOpenInterstitialAd;
     private boolean mIsResumed = true;//当前页面是否在前台
     private static SharedPreferences sSettings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
@@ -178,7 +177,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
         setContentView(R.layout.main);
         initConfig();
-        initAD();
+//        initAD();
         //开始广告缓存
         ADManager.getInstance().startLoadAD(this);
         mDrawerLayout = (HackyDrawerLayout) findViewById(R.id.root_container);
@@ -263,14 +262,16 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         if (ADManager.sLevel >= ADManager.Level_Big) {
             preloadWall();
         }
-        loadFirstOpenAD();
+        loadOpenAD();
+        loadExitAD();
     }
 
     private Handler mHandler = new Handler();
     public static final String KEY_LAST_OPEN_TIME = "key_last_open_time";
     LoadingDialog dialog;
+    ExitDialog mExitDialog;
     //第一次打开
-    private void loadFirstOpenAD() {
+    private void loadOpenAD() {
 
         long second = mSettings.getLong(KEY_LAST_OPEN_TIME, 0);
         if (second == 0 || (System.currentTimeMillis() / 1000 - second) / 60 >= 2) {
@@ -285,9 +286,11 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             }
             if (!TextUtils.isEmpty(adID)) {
                 mFirstOpenInterstitialAd = new Interstitial();
+                StatisticsManager.submitAd(this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "request");
                 mFirstOpenInterstitialAd.loadAD(this, ADManager.sPlatForm, adID, new Interstitial.ADListener() {
                     @Override
                     public void onLoadedSuccess() {
+                        StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "loaded");
                         if (mIsResumed) {
                             // create alert dialog
                             if (dialog == null) {
@@ -297,6 +300,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                                     @Override
                                     public void onDismiss(DialogInterface dialog) {
                                         mFirstOpenInterstitialAd.show();
+                                        StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN+"show");
                                     }
                                 });
                             }
@@ -320,7 +324,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
                     @Override
                     public void onAdClick() {
-                        StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN);
+                        StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN+"click");
                     }
 
                     @Override
@@ -330,6 +334,10 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 });
             }
         }
+    }
+
+    private void loadExitAD(){
+        ADManager.getInstance().loadExitAD(this);
     }
 
     private void setupNavigationView() {
@@ -638,8 +646,20 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             ((ExtensionBrowser) fragment).goBack();
             return;
         }
-//        UiTools.confirmExit(this);
-        finish();
+        if (ADManager.getInstance().mAdsLoaded) {
+            showExitDialog();
+        } else {
+            finish();
+        }
+    }
+
+    private void showExitDialog(){
+        if (mExitDialog == null) {
+            mExitDialog = new ExitDialog(MainActivity.this, R.style.dialog);
+            mExitDialog.setCancelable(true);
+        }
+        if (null != mExitDialog && !isFinishing() && !mExitDialog.isShowing())
+            mExitDialog.show();
     }
 
     @Override
@@ -1283,56 +1303,56 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
      * 对appwall做预加载，建议开发者使用，会提高收入
      */
     public void preloadWall() {
-        MobVistaSDK sdk = MobVistaSDKFactory.getMobVistaSDK();
-        Map<String, Object> preloadMap = new HashMap<String, Object>();
-        preloadMap.put(MobVistaConstans.PROPERTIES_LAYOUT_TYPE, MobVistaConstans.LAYOUT_APPWALL);
-        preloadMap.put(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.mobvista_library_roate_offer_wall);
-        preloadMap.put(MobVistaConstans.PRELOAD_RESULT_LISTENER, new PreloadListener() {
-            @Override
-            public void onPreloadSucceed() {
-                LogUtil.d(TAG, "onPreloadSucceed");
-                VLCApplication.runOnMainThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mRotateAD.setVisibility(View.VISIBLE);
-                    }
-                });
-            }
-
-            @Override
-            public void onPreloadFaild(String s) {
-                LogUtil.d(TAG, "onPreloadFaild");
-            }
-        });
-        sdk.preload(preloadMap);
+//        MobVistaSDK sdk = MobVistaSDKFactory.getMobVistaSDK();
+//        Map<String, Object> preloadMap = new HashMap<String, Object>();
+//        preloadMap.put(MobVistaConstans.PROPERTIES_LAYOUT_TYPE, MobVistaConstans.LAYOUT_APPWALL);
+//        preloadMap.put(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.mobvista_library_roate_offer_wall);
+//        preloadMap.put(MobVistaConstans.PRELOAD_RESULT_LISTENER, new PreloadListener() {
+//            @Override
+//            public void onPreloadSucceed() {
+//                LogUtil.d(TAG, "onPreloadSucceed");
+//                VLCApplication.runOnMainThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mRotateAD.setVisibility(View.VISIBLE);
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onPreloadFaild(String s) {
+//                LogUtil.d(TAG, "onPreloadFaild");
+//            }
+//        });
+//        sdk.preload(preloadMap);
     }
 
     /**
      * 通过intent打开appwall
      */
     public void openWall() {
-        try {
-            Class<?> aClass = Class.forName("com.mobvista.msdk.shell.MVActivity");
-            Intent intent = new Intent(this, aClass);
-            intent.putExtra(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.mobvista_library_roate_offer_wall);
-            this.startActivity(intent);
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-        }
+//        try {
+//            Class<?> aClass = Class.forName("com.mobvista.msdk.shell.MVActivity");
+//            Intent intent = new Intent(this, aClass);
+//            intent.putExtra(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.mobvista_library_roate_offer_wall);
+//            this.startActivity(intent);
+//        } catch (Exception e) {
+//            Log.e(TAG, e.getMessage());
+//        }
     }
 
     /**
      * 初始化广告view
      */
     private void initAD() {
-        mRotateAD = (RotateAD) findViewById(R.id.act_main_roate_ad);
-        mRotateAD.setOnClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openWall();
-                StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_LIBRARY_NAME);
-            }
-        });
+//        mRotateAD = (RotateAD) findViewById(R.id.act_main_roate_ad);
+//        mRotateAD.setOnClick(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                openWall();
+//                StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_LIBRARY_NAME);
+//            }
+//        });
     }
 
 }

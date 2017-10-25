@@ -4,7 +4,13 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.facebook.ads.AdError;
 import com.facebook.ads.NativeAd;
+import com.facebook.ads.NativeAdScrollView;
+import com.facebook.ads.NativeAdView;
+import com.facebook.ads.NativeAdsManager;
+import com.wenjoyai.tubeplayer.R;
+import com.wenjoyai.tubeplayer.gui.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,12 +59,12 @@ public class ADManager {
 
     private ADManager() {
         mAdIdList.clear();
-//        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native1));
-//        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native2));
-//        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native3));
-        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native4));
-        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native5));
-        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native6));
+        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native1));
+        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native2));
+        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native3));
+//        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native4));
+//        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native5));
+//        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native6));
     }
 
     //缓存广告数组
@@ -74,6 +80,7 @@ public class ADManager {
     private LimitQueue<NativeAd> mReadyQueue = new LimitQueue<>(mNum);
     public List<AdID> mAdIdList = new ArrayList<>();
     private int mIndex = 0;
+    private int mFinished = 0;
 
     class AdID {
         public String adId;
@@ -100,11 +107,10 @@ public class ADManager {
      * 开始加载广告
      */
     public void startLoadAD(Context context) {
-        Log.e("ADManager", "startLoadAD " + mAdIdList.size());
         mContext = context;
         mReadyQueue.clear();
-        mIndex = 0;
         //初始化加载三个
+        mFinished = 0;
         for (int i = 0; i < mNum; i++) {
             loadAD();
         }
@@ -112,16 +118,19 @@ public class ADManager {
 
 
     private void loadAD() {
-        Log.e("ADManager", "loadAD " + mIndex + " ");
         String adId = getNextAdId();
         if (!TextUtils.isEmpty(adId)) {
             new NativeAD().loadAD(mContext, ADManager.AD_Facebook, adId, new NativeAD.ADListener() {
                 @Override
                 public void onLoadedSuccess(com.facebook.ads.NativeAd ad, String adId) {
+                    mFinished++;
                     Log.e("ADManager", "onLoadedSuccess " + adId);
                     if (null != ad) {
                         mReadyQueue.offer(ad);
                         if (mReadyQueue.size() == 1) {//只要有了一个广告成功就通知上层展示
+                            callbackAD();
+                        }
+                        if (mFinished == mNum) {
                             callbackAD();
                         }
                     }
@@ -130,6 +139,10 @@ public class ADManager {
                 @Override
                 public void onLoadedFailed(String msg, String adId, int errorcode) {
                     Log.e("ADManager", "onLoadedFailed ");
+                    mFinished++;
+                    if (mFinished == mNum) {
+                        callbackAD();
+                    }
                 }
 
                 @Override
@@ -169,8 +182,27 @@ public class ADManager {
         }
     }
 
-public interface ADNumListener {
-    void onLoadedSuccess(List<NativeAd> list);
-}
+    public NativeAdsManager mManager;
+    public boolean mAdsLoaded = false;
+    public void loadExitAD(final Context context) {
+        mManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native4, 3);
+        mManager.setListener(new NativeAdsManager.Listener() {
+            @Override
+            public void onAdsLoaded() {
+                mAdsLoaded = true;
+                Log.e("ADManager", "onAdsLoaded ");
+            }
+
+            @Override
+            public void onAdError(AdError adError) {
+                Log.e("ADManager", "onAdError " + adError.getErrorCode()+" "+adError.getErrorMessage());
+            }
+        });
+        mManager.loadAds(NativeAd.MediaCacheFlag.ALL);
+    }
+
+    public interface ADNumListener {
+        void onLoadedSuccess(List<NativeAd> list);
+    }
 
 }
