@@ -23,12 +23,13 @@
         com.google.android.gms.gass,
         com.google.android.gms.tasks,
         com.google.android.gms.measurement,
-        com.google.android.gms.measurement.impl,
-        com.mobvista.msdk,
-        com.mobvista.msdk.appwall,
-        com.mobvista.msdk.interstitial,
-        com.mobvista.msdk.mvjscommon
-        "/>
+        com.google.android.gms.measurement.impl
+          "/>
+        <!--com.mobvista.msdk,-->
+        <!--com.mobvista.msdk.appwall,-->
+        <!--com.mobvista.msdk.interstitial,-->
+        <!--com.mobvista.msdk.mvjscommon-->
+        <!--"/>-->
 
     <uses-permission
         android:name="android.permission.READ_LOGS"
@@ -627,14 +628,14 @@
 
 
         <!-- 如果墙需要集成沉浸式 请加一个theme -->
-        <activity
-            android:name="com.mobvista.msdk.shell.MVActivity"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme2" />
-        <activity
-            android:name="com.mobvista.msdk.interstitial.view.MVInterstitialActivity"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name="com.mobvista.msdk.shell.MVActivity"-->
+            <!--android:configChanges="keyboard|orientation"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/AppTheme2" />-->
+        <!--<activity-->
+            <!--android:name="com.mobvista.msdk.interstitial.view.MVInterstitialActivity"-->
+            <!--android:screenOrientation="portrait" />-->
 
 
         <!---->
