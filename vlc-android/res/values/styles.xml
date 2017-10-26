@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <style name="Theme.NavigationView" parent="Theme.VLC">
+        <item name="android:listDivider">@color/grey500</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
     <style name="Theme.VLC" parent="Theme.VLC.7"/>
     <style name="Theme.VLC.7" parent="Theme.VLC.Apearance">
         <item name="actionBarStyle">@style/ActionBar</item>

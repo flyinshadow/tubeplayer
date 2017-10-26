@@ -193,6 +193,14 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                     nativeAd.unregisterView();
                     nativeAd.registerViewForInteraction(holder.adContainer);
                 }
+
+                if (holder.adIcon != null) {
+                    NativeAd.Image adIcon = nativeAd.getAdIcon();
+                    NativeAd.downloadAndDisplayImage(adIcon, holder.adIcon);
+                }
+                if (holder.adTitle != null) {
+                    holder.adTitle.setText(nativeAd.getAdTitle());
+                }
             } else {
                 LogUtil.e(TAG, "facebookAD nativeAd == null media title:" + media.getTitle());
             }
@@ -205,10 +213,6 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             holder.binding.setVariable(BR.selected, isSelected);
             if (holder.itemCheck != null) {
                 holder.itemCheck.setVisibility(isSelected ? View.VISIBLE : View.GONE);
-            }
-
-            if (holder.fileSize != null) {
-                holder.fileSize.setText(Strings.readableSize(media.getFileSize()));
             }
         }
     }
@@ -388,6 +392,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     private void fillView(ViewHolder holder, MediaWrapper media) {
         String text = "";
         String resolution = "";
+        String fileSize = "";
         int max = 0;
         int progress = 0;
 
@@ -415,8 +420,10 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                 }
             }
             resolution = Tools.getResolution(media);
+            fileSize = Strings.readableSize(media.getFileSize());
         }
 
+        holder.binding.setVariable(BR.fileSize, fileSize);
         holder.binding.setVariable(BR.resolution, resolution);
         holder.binding.setVariable(BR.time, text);
         holder.binding.setVariable(BR.max, max);
@@ -497,6 +504,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         private TextView adCallToAction;
         private TextView adBody;
         private MediaView adMedia;
+        private ImageView adIcon;
+        private TextView adTitle;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -513,6 +522,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             adCallToAction = (TextView) itemView.findViewById(R.id.ad_call_to_action);
             adBody = (TextView) itemView.findViewById(R.id.ad_body);
             adMedia = (MediaView) itemView.findViewById(R.id.ad_media);
+            adIcon = (ImageView) itemView.findViewById(R.id.ad_icon);
+            adTitle = (TextView) itemView.findViewById(R.id.ad_title);
 
             binding.setVariable(BR.holder, this);
             binding.setVariable(BR.cover, AsyncImageLoader.DEFAULT_COVER_VIDEO_DRAWABLE);

@@ -124,7 +124,9 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     private List<NativeAd> mNativeAdList = null;
 
-    RecyclerViewHeader mHeader;
+    private RecyclerViewHeader mHeader;
+    private LinearLayout mDirectories;
+
 
     /* All subclasses of Fragment must include a public empty constructor. */
     public VideoGridFragment() {
@@ -165,6 +167,15 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
         int viewMode;
         if (mFolderMain) {
+            mDirectories = (LinearLayout) v.findViewById(R.id.folder_directories);
+            mDirectories.setVisibility(View.VISIBLE);
+            mDirectories.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((MainActivity) getActivity()).showSecondaryFragment(SecondaryActivity.FILE_BROWSER);
+                }
+            });
+
             viewMode = VideoListAdapter.VIEW_MODE_FOLDER;
         } else {
             viewMode = PreferenceManager.getDefaultSharedPreferences(
@@ -282,7 +293,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     protected String getTitle() {
         if (mFolderMain) {
-            return getString(R.string.directories);
+            return getString(R.string.folders);
         }
         if (mGroup == null && mFolderGroup == null) {
             return getString(R.string.video);

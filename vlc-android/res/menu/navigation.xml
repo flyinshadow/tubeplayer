@@ -2,66 +2,72 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:id="@+id/scrollable_group"
+    <group
+        android:id="@+id/scrollable_group"
         android:checkableBehavior="single"
         android:orderInCategory="1">
-    <item
-        android:id="@+id/nav_video"
-        android:title="@string/video"
-        android:icon="@drawable/ic_menu_video" />
 
-    <item
-        android:id="@+id/nav_audio"
-        android:title="@string/audio"
-        android:icon="@drawable/ic_menu_audio" />
+        <item
+            android:id="@+id/nav_directories"
+            android:icon="@drawable/ic_menu_folder"
+            android:title="@string/folders"/>
 
-    <item
-        android:id="@+id/nav_directories"
-        android:title="@string/directories"
-        android:icon="@drawable/ic_menu_folder" />
+        <item
+            android:id="@+id/nav_video"
+            android:icon="@drawable/ic_menu_video"
+            android:title="@string/video"/>
 
-    <item
-        android:id="@+id/nav_network"
-        android:title="@string/network_browsing"
-        android:icon="@drawable/ic_menu_network" />
+        <item
+            android:id="@+id/nav_audio"
+            android:icon="@drawable/ic_menu_audio"
+            android:title="@string/audio"/>
 
-    <item
-        android:id="@+id/nav_mrl"
-        android:title="@string/open_mrl"
-        android:icon="@drawable/ic_menu_stream" />
+        <item
+            android:id="@+id/nav_network"
+            android:visible="false"
+            android:icon="@drawable/ic_menu_network"
+            android:title="@string/network_browsing"/>
 
-    <item
-        android:id="@+id/nav_history"
-        android:title="@string/history"
-        android:icon="@drawable/ic_menu_history" />
+        <item
+            android:id="@+id/nav_mrl"
+            android:visible="false"
+            android:icon="@drawable/ic_menu_stream"
+            android:title="@string/open_mrl"/>
+
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_menu_history"
+            android:title="@string/history"/>
+
+        <item
+            android:id="@+id/nav_theme"
+            android:icon="@drawable/ic_menu_theme"
+            android:title="@string/theme"/>
     </group>
-    <group android:id="@+id/fixed_group"
+    <group
+        android:id="@+id/fixed_group"
         android:checkableBehavior="single"
         android:orderInCategory="3">
 
         <item
-            android:id="@+id/nav_theme"
-            android:title="@string/theme"
-            android:icon="@drawable/ic_menu_theme" />
-
-        <item
             android:id="@+id/nav_night_mode"
-            android:title="@string/night_mode"
-            android:icon="@drawable/ic_menu_night_mode" />
+            android:visible="false"
+            android:icon="@drawable/ic_menu_night_mode"
+            android:title="@string/night_mode"/>
 
         <item
             android:id="@+id/nav_settings"
-            android:title="@string/preferences"
-            android:icon="@drawable/ic_menu_preferences" />
+            android:icon="@drawable/ic_menu_preferences"
+            android:title="@string/preferences"/>
 
         <item
             android:id="@+id/nav_share_app"
-            android:title="@string/share_app"
-            android:icon="@drawable/ic_menu_share" />
+            android:icon="@drawable/ic_menu_share"
+            android:title="@string/share_app"/>
 
         <item
             android:id="@+id/nav_about"
-            android:title="@string/about"
-            android:icon="@drawable/ic_menu_about"/>
+            android:icon="@drawable/ic_menu_about"
+            android:title="@string/about"/>
     </group>
 </menu>

@@ -26,47 +26,77 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/adContainer">
-
-        <FrameLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <com.wenjoyai.tubeplayer.gui.view.AutoFitRecyclerView
-                android:id="@id/android:list"
+            <LinearLayout
+                android:id="@+id/folder_directories"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:fadingEdge="none"
-                android:fastScrollEnabled="true"
-                android:gravity="center"
-                android:numColumns="auto_fit"
-                android:padding="@dimen/default_margin"
-                android:scrollbarStyle="outsideOverlay"
-                android:scrollbars="vertical"
-                android:stretchMode="none"/>
-
-            <com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader
-                android:id="@+id/header"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:background="#d8d8d8"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/default_margin"
                 android:visibility="gone"
-                android:layout_gravity="center_horizontal|top">
-
-                <TextView
-                    android:id="@+id/header_text"
+                >
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/default_text_size"
-                    android:fontFamily="sans-serif"
-                    android:layout_marginStart="@dimen/header_info_margin"
-                    android:layout_marginLeft="@dimen/header_info_margin"
-                    android:textStyle="normal"
-                    android:textColor="#4a4a4a"
+                    android:src="@drawable/ic_directories"
                     />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/default_margin"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:textSize="@dimen/full_title_text_size"
+                    android:textColor="?attr/list_title"
+                    android:text="@string/directories"
+                    />
+            </LinearLayout>
 
-            </com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader>
-        </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.wenjoyai.tubeplayer.gui.view.AutoFitRecyclerView
+                    android:id="@id/android:list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:fadingEdge="none"
+                    android:fastScrollEnabled="true"
+                    android:gravity="center"
+                    android:numColumns="auto_fit"
+                    android:padding="@dimen/default_margin"
+                    android:scrollbarStyle="outsideOverlay"
+                    android:scrollbars="vertical"
+                    android:stretchMode="none"/>
+
+                <com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader
+                    android:id="@+id/header"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:background="#d8d8d8"
+                    android:visibility="gone"
+                    android:layout_gravity="center_horizontal|top">
+
+                    <TextView
+                        android:id="@+id/header_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/default_text_size"
+                        android:fontFamily="sans-serif"
+                        android:layout_marginStart="@dimen/header_info_margin"
+                        android:layout_marginLeft="@dimen/header_info_margin"
+                        android:textStyle="normal"
+                        android:textColor="#4a4a4a"
+                        />
+
+                </com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader>
+            </FrameLayout>
+        </LinearLayout>
     </com.wenjoyai.tubeplayer.gui.view.SwipeRefreshLayout>
 
     <LinearLayout

@@ -31,6 +31,10 @@
             type="String" />
 
         <variable
+            name="fileSize"
+            type="String" />
+
+        <variable
             name="cover"
             type="android.graphics.drawable.BitmapDrawable" />
 
@@ -218,21 +222,18 @@
                 tools:targetApi="jelly_bean" />
 
             <TextView
-                android:id="@+id/ml_item_filesize"
-                android:layout_width="0dp"
+                android:id="@+id/ml_item_size"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 vlc:layout_constraintBottom_toTopOf="@+id/ml_item_progress"
-                vlc:layout_constraintStart_toEndOf="@+id/ml_item_time"
-                vlc:layout_constraintEnd_toEndOf="parent"
-                android:paddingRight="@dimen/half_default_margin"
-                android:paddingEnd="@dimen/half_default_margin"
+                vlc:layout_constraintStart_toStartOf="@+id/ml_item_title"
+                android:layout_marginBottom="@dimen/info_default_margin"
                 android:layout_alignWithParentIfMissing="true"
                 android:fontFamily="sans-serif-light"
-                android:gravity="end"
-                android:text="@{resolution}"
+                android:text="@{fileSize}"
                 android:textColor="?attr/list_subtitle"
                 android:textSize="14sp"
-                android:visibility="invisible" />
+                />
 
             <ProgressBar
                 android:id="@+id/ml_item_progress"

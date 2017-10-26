@@ -61,20 +61,21 @@
         <android.support.constraint.ConstraintLayout
             android:id="@+id/ad_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="53dp"
+            android:orientation="horizontal"
             android:visibility="@{isAd ? View.VISIBLE : View.GONE}"
             >
 
-            <com.facebook.ads.MediaView
-                android:id="@+id/ad_media"
-                android:layout_width="160dp"
-                android:layout_height="100dp"
-                android:layout_margin="@dimen/half_default_margin"
-                android:gravity="center"
-                vlc:layout_constraintBottom_toBottomOf="parent"
-                vlc:layout_constraintStart_toStartOf="parent"
-                vlc:layout_constraintTop_toTopOf="parent"
-                />
+            <ImageView
+                android:id="@+id/ad_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="7dp"
+                android:layout_marginStart="7dp"
+                vlc:layout_constraintBottom_toBottomOf="@id/ad_item"
+                vlc:layout_constraintStart_toStartOf="@id/ad_item"
+                vlc:layout_constraintTop_toTopOf="@id/ad_item"/>
 
             <LinearLayout
                 android:id="@+id/ad_choices_container"
@@ -82,46 +83,77 @@
                 android:layout_height="16dp"
                 android:gravity="start"
                 android:orientation="horizontal"
-                vlc:layout_constraintStart_toStartOf="@+id/ad_media"
-                vlc:layout_constraintTop_toTopOf="@+id/ad_media"
+                vlc:layout_constraintStart_toStartOf="@id/ad_icon"
+                vlc:layout_constraintTop_toTopOf="@id/ad_icon"
                 />
 
-            <TextView
-                android:id="@+id/ad_body"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/info_default_margin"
-                android:layout_marginStart="@dimen/info_default_margin"
-                android:layout_marginTop="@dimen/half_default_margin"
-                android:ellipsize="end"
-                android:fontFamily="sans-serif-light"
-                android:gravity="center_vertical"
-                android:maxLines="2"
-                android:textColor="?attr/list_title"
-                android:textSize="@dimen/ad_body_text_size"
-                tools:targetApi="jelly_bean"
-                vlc:layout_constraintBottom_toTopOf="@+id/ad_call_to_action"
-                vlc:layout_constraintEnd_toEndOf="parent"
-                vlc:layout_constraintStart_toEndOf="@+id/ad_media"
-                vlc:layout_constraintTop_toTopOf="parent"/>
+                android:layout_marginLeft="14dp"
+                android:layout_marginStart="14dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                vlc:layout_constraintBottom_toBottomOf="@id/ad_item"
+                vlc:layout_constraintEnd_toStartOf="@id/ad_call_to_action"
+                vlc:layout_constraintStart_toEndOf="@id/ad_icon"
+                vlc:layout_constraintTop_toTopOf="@id/ad_item">
+
+                <TextView
+                    android:id="@+id/ad_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="#de000000"
+                    android:textSize="@dimen/full_title_text_size"/>
+
+                <TextView
+                    android:id="@+id/ad_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:textColor="@color/video_folder_list_grey"
+                    android:textSize="@dimen/default_text_size"/>
+            </LinearLayout>
+
+            <!--<TextView-->
+            <!--android:id="@+id/ad_body"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/info_default_margin"-->
+            <!--android:layout_marginStart="@dimen/info_default_margin"-->
+            <!--android:layout_marginTop="@dimen/half_default_margin"-->
+            <!--android:ellipsize="end"-->
+            <!--android:fontFamily="sans-serif-light"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:maxLines="2"-->
+            <!--android:textColor="?attr/list_title"-->
+            <!--android:textSize="@dimen/ad_body_text_size"-->
+            <!--tools:targetApi="jelly_bean"-->
+            <!--vlc:layout_constraintBottom_toTopOf="@+id/ad_call_to_action"-->
+            <!--vlc:layout_constraintEnd_toEndOf="parent"-->
+            <!--vlc:layout_constraintStart_toEndOf="@+id/ad_media"-->
+            <!--vlc:layout_constraintTop_toTopOf="parent"/>-->
 
             <TextView
                 android:id="@+id/ad_call_to_action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/info_default_margin"
-                android:layout_marginStart="@dimen/info_default_margin"
+                android:layout_marginEnd="@dimen/overlay_margin"
+                android:layout_marginRight="@dimen/overlay_margin"
                 android:background="?attr/button_oval"
                 android:gravity="center"
-                android:paddingBottom="@dimen/half_default_margin"
-                android:paddingLeft="@dimen/info_default_margin"
-                android:paddingRight="@dimen/info_default_margin"
-                android:paddingTop="@dimen/half_default_margin"
+                android:paddingBottom="@dimen/default_margin"
+                android:paddingLeft="@dimen/default_margin"
+                android:paddingRight="@dimen/default_margin"
+                android:paddingTop="@dimen/default_margin"
                 android:textColor="@color/white"
                 android:textSize="@dimen/ad_call_to_action_text_size"
-                vlc:layout_constraintBottom_toBottomOf="@+id/ad_media"
-                vlc:layout_constraintStart_toEndOf="@+id/ad_media"
-                vlc:layout_constraintTop_toBottomOf="@+id/ad_body"/>
+                vlc:layout_constraintTop_toTopOf="@id/ad_item"
+                vlc:layout_constraintBottom_toBottomOf="@id/ad_item"
+                vlc:layout_constraintEnd_toEndOf="@id/ad_item"/>
 
         </android.support.constraint.ConstraintLayout>
 
@@ -129,7 +161,7 @@
         <LinearLayout
             android:id="@+id/video_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="53dp"
             android:clickable="true"
             android:focusable="true"
             android:longClickable="true"
@@ -148,7 +180,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
                 android:orientation="vertical">
 
                 <TextView
@@ -157,9 +191,9 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:lineSpacingExtra="8sp"
+                    android:text="@{media.title}"
                     android:textColor="?attr/list_title"
                     android:textSize="@dimen/full_title_text_size"
-                    android:text="@{media.title}"
                     />
 
                 <TextView
@@ -167,9 +201,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="6sp"
+                    android:text="@{time}"
                     android:textColor="@color/video_folder_list_grey"
                     android:textSize="@dimen/default_text_size"
-                    android:text="@{time}"
                     />
             </LinearLayout>
         </LinearLayout>
