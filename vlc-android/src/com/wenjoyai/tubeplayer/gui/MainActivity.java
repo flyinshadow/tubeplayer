@@ -67,11 +67,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FilterQueryProvider;
 
-import com.facebook.ads.AdError;
-import com.facebook.ads.NativeAd;
-import com.facebook.ads.NativeAdScrollView;
-import com.facebook.ads.NativeAdView;
-import com.facebook.ads.NativeAdsManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
@@ -88,7 +83,6 @@ import com.wenjoyai.tubeplayer.ad.ExitDialog;
 import com.wenjoyai.tubeplayer.ad.Interstitial;
 import com.wenjoyai.tubeplayer.ad.LoadingDialog;
 import com.wenjoyai.tubeplayer.ad.NetWorkUtil;
-import com.wenjoyai.tubeplayer.ad.RotateAD;
 import com.wenjoyai.tubeplayer.extensions.ExtensionListing;
 import com.wenjoyai.tubeplayer.extensions.ExtensionManagerService;
 import com.wenjoyai.tubeplayer.extensions.api.VLCExtensionItem;
@@ -159,6 +153,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private Interstitial mFirstOpenInterstitialAd;
     private boolean mIsResumed = true;//当前页面是否在前台
     private static SharedPreferences sSettings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
+    private long mOpenCount;//启动次数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,21 +238,21 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
         mMediaLibrary = VLCApplication.getMLInstance();
         submitNetwork();
+
+        mOpenCount = mSettings.getLong(OPEN_COUNT, 0);
+        mOpenCount++;
+        sSettings.edit().putLong(OPEN_COUNT, mOpenCount).apply();
     }
 
-    private void submitNetwork(){
+    private void submitNetwork() {
         String str = NetWorkUtil.getCurrentNetworkType();
-        Log.e(TAG,str);
+        Log.e(TAG, str);
         StatisticsManager.submitSelectContent(MainActivity.this, StatisticsManager.TYPE_NETWORK, str);
     }
 
     private boolean isloadAD = false;
 
     private void loadAD() {
-        if (isloadAD) {
-            return;
-        }
-        isloadAD = true;
         //旋转广告墙
         if (ADManager.sLevel >= ADManager.Level_Big) {
             preloadWall();
@@ -270,6 +265,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     public static final String KEY_LAST_OPEN_TIME = "key_last_open_time";
     LoadingDialog dialog;
     ExitDialog mExitDialog;
+
     //第一次打开
     private void loadOpenAD() {
 
@@ -300,7 +296,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                                     @Override
                                     public void onDismiss(DialogInterface dialog) {
                                         mFirstOpenInterstitialAd.show();
-                                        StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN+"show");
+                                        StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "show");
                                     }
                                 });
                             }
@@ -324,7 +320,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
                     @Override
                     public void onAdClick() {
-                        StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN+"click");
+                        StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "click");
                     }
 
                     @Override
@@ -336,7 +332,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         }
     }
 
-    private void loadExitAD(){
+    private void loadExitAD() {
         ADManager.getInstance().loadExitAD(this);
     }
 
@@ -476,17 +472,28 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setCheckedItem(mCurrentFragmentId);
         mCurrentFragmentId = mSettings.getInt("fragment_id", R.id.nav_video);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                loadAD();
+        if (!isloadAD) {
+            isloadAD = true;
+            int interval = 0;
+            if (mOpenCount == 1) {
+                interval = 15000;
+            } else {
+                interval = 500;
             }
-        }, 15000);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    loadAD();
+                }
+            }, interval);
+        }
     }
 
     //google lijiazhi
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private static final String PLATFOM = "ad_platform";
+    private static final String OPEN_COUNT = "first_open";
+
 
     private void initConfig() {
         //init
@@ -653,7 +660,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         }
     }
 
-    private void showExitDialog(){
+    private void showExitDialog() {
         if (mExitDialog == null) {
             mExitDialog = new ExitDialog(MainActivity.this, R.style.dialog);
             mExitDialog.setCancelable(true);
