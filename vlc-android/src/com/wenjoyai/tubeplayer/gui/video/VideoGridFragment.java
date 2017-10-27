@@ -175,6 +175,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     ((MainActivity) getActivity()).showSecondaryFragment(SecondaryActivity.FILE_BROWSER);
                 }
             });
+            mGridView.setPadding(0, mGridView.getPaddingTop(), mGridView.getPaddingRight(), mGridView.getPaddingBottom());
 
             viewMode = VideoListAdapter.VIEW_MODE_FOLDER;
         } else {

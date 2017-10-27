@@ -66,32 +66,28 @@
             android:visibility="@{isAd ? View.VISIBLE : View.GONE}"
             >
 
-            <ImageView
-                android:id="@+id/ad_icon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="7dp"
-                android:layout_marginStart="7dp"
-                vlc:layout_constraintBottom_toBottomOf="@id/ad_item"
-                vlc:layout_constraintStart_toStartOf="@id/ad_item"
-                vlc:layout_constraintTop_toTopOf="@id/ad_item"/>
-
             <LinearLayout
                 android:id="@+id/ad_choices_container"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:gravity="start"
                 android:orientation="horizontal"
-                vlc:layout_constraintStart_toStartOf="@id/ad_icon"
-                vlc:layout_constraintTop_toTopOf="@id/ad_icon"
                 />
+
+            <ImageView
+                android:id="@+id/ad_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                vlc:layout_constraintStart_toEndOf="@id/ad_choices_container"
+                vlc:layout_constraintBottom_toBottomOf="@id/ad_item"
+                vlc:layout_constraintTop_toTopOf="@id/ad_item"/>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="14dp"
-                android:layout_marginStart="14dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginStart="13dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 vlc:layout_constraintBottom_toBottomOf="@id/ad_item"
@@ -169,6 +165,8 @@
             android:onLongClick="@{holder::onLongClick}"
             android:orientation="horizontal"
             android:visibility="@{isAd ? View.GONE : View.VISIBLE}"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginLeft="@dimen/default_margin"
             >
 
             <ImageView
