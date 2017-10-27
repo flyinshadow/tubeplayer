@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.facebook.ads.NativeAdScrollView;
 import com.facebook.ads.NativeAdView;
 import com.wenjoyai.tubeplayer.R;
+import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 
 
 /**
@@ -36,13 +37,13 @@ public class ExitDialog extends Dialog {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_exit);
-
         if (scrollView != null) {
             ((LinearLayout) findViewById(R.id.hscrollContainer)).removeView(scrollView);
         }
-        scrollView = new NativeAdScrollView(getContext(), ADManager.getInstance().mManager,
+        scrollView = new NativeAdScrollView(getContext(), ADManager.getInstance().mExitManager,
                 NativeAdView.Type.HEIGHT_400);
         ((LinearLayout) findViewById(R.id.hscrollContainer)).addView(scrollView);
+        StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "shown");
         mCancelTv = (TextView)findViewById(R.id.exit_cancel);
         mOkTv = (TextView)findViewById(R.id.exit_ok);
         mCancelTv.setOnClickListener(new View.OnClickListener() {

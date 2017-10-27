@@ -4,13 +4,12 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
+import com.facebook.ads.AdListener;
 import com.facebook.ads.NativeAd;
-import com.facebook.ads.NativeAdScrollView;
-import com.facebook.ads.NativeAdView;
 import com.facebook.ads.NativeAdsManager;
-import com.wenjoyai.tubeplayer.R;
-import com.wenjoyai.tubeplayer.gui.MainActivity;
+import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -182,24 +181,48 @@ public class ADManager {
         }
     }
 
-    public NativeAdsManager mManager;
-    public boolean mAdsLoaded = false;
+    public NativeAdsManager mExitManager;
+    public boolean mExitAdsLoaded = false;
     public void loadExitAD(final Context context) {
-        mManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native4, 3);
-        mManager.setListener(new NativeAdsManager.Listener() {
+        mExitManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native4, 3);
+        mExitManager.setListener(new NativeAdsManager.Listener() {
             @Override
             public void onAdsLoaded() {
-                mAdsLoaded = true;
-                Log.e("ADManager", "onAdsLoaded ");
+                mExitAdsLoaded = true;
+                Log.e("ADManager", "onAdsLoaded exit");
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "loaded");
             }
 
             @Override
             public void onAdError(AdError adError) {
-                Log.e("ADManager", "onAdError " + adError.getErrorCode()+" "+adError.getErrorMessage());
+                Log.e("ADManager", "onAdError exit " + adError.getErrorCode()+" "+adError.getErrorMessage());
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "error "+adError.getErrorCode());
             }
         });
-        mManager.loadAds(NativeAd.MediaCacheFlag.ALL);
+        mExitManager.loadAds(NativeAd.MediaCacheFlag.ALL);
     }
+
+    public NativeAdsManager mPauseManager;
+    public boolean mPauseAdsLoaded = false;
+    public void loadPauseAD(final Context context) {
+        mPauseManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native5, 3);
+        mPauseManager.setListener(new NativeAdsManager.Listener() {
+            @Override
+            public void onAdsLoaded() {
+                mPauseAdsLoaded = true;
+                Log.e("ADManager", "onAdsLoaded pause");
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "loaded");
+            }
+
+            @Override
+            public void onAdError(AdError adError) {
+                Log.e("ADManager", "onAdError pause " + adError.getErrorCode()+" "+adError.getErrorMessage());
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "error "+adError.getErrorCode());
+            }
+        });
+        mPauseManager.loadAds(NativeAd.MediaCacheFlag.ALL);
+    }
+
 
     public interface ADNumListener {
         void onLoadedSuccess(List<NativeAd> list);

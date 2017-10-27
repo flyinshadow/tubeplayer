@@ -37,6 +37,9 @@ public class StatisticsManager {
     public static final String ITEM_AD_FEED_NATIVE_REQUEST ="feed_request_";
     public static final String ITEM_AD_FEED_NATIVE_CLICK ="feed_click_";
 
+    public static final String ITEM_AD_EXIT_ADS ="exit_ads_";
+    public static final String ITEM_AD_PAUSE_ADS ="pause_ads_";
+
 
     //视频播放
     public static final String EVENT_VIDEO_PLAY = "videoplay";

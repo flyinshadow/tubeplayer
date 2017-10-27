@@ -100,6 +100,8 @@ import android.widget.Toast;
 import com.facebook.ads.AdChoicesView;
 import com.facebook.ads.MediaView;
 import com.facebook.ads.NativeAd;
+import com.facebook.ads.NativeAdScrollView;
+import com.facebook.ads.NativeAdView;
 import com.wenjoyai.tubeplayer.BuildConfig;
 import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
@@ -3941,70 +3943,79 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             });
         }
     }
-
+    NativeAdScrollView scrollView;
     private void loadPauseNative(){
-        NativeAD mFeedNativeAD = new NativeAD();
-        mFeedNativeAD.loadAD(VideoPlayerActivity.this, ADManager.AD_Facebook, ADConstants.facebook_video_pause_native, new NativeAD.ADListener() {
-            @Override
-            public void onLoadedSuccess(com.facebook.ads.NativeAd nativeAd,String adId) {
-                if(null ==mNativeFrameLayout|| null==nativeAd){
-                    //异步过程，可能当前页面已经销毁了
-                    return;
-                }
-                mNativeFrameLayout.setVisibility(View.VISIBLE);
-                LayoutInflater inflater = LayoutInflater.from(VideoPlayerActivity.this);
-                RelativeLayout adView = (RelativeLayout) inflater.inflate(R.layout.layout_pause_native_ad, mNativeContainer, false);
-                mNativeContainer.removeAllViews();
-                mNativeContainer.addView(adView);
-
-                // Create native UI using the ad_front metadata.
-                ImageView nativeAdIcon = (ImageView) adView.findViewById(R.id.native_ad_icon);
-                TextView nativeAdTitle = (TextView) adView.findViewById(R.id.native_ad_title);
-                MediaView nativeAdMedia = (MediaView) adView.findViewById(R.id.native_ad_media);
-                // TextView nativeAdSocialContext = (TextView) adView.findViewById(R.id.native_ad_social_context);
-                TextView nativeAdBody = (TextView) adView.findViewById(R.id.native_ad_body);
-                Button nativeAdCallToAction = (Button) adView.findViewById(R.id.native_ad_call_to_action);
-
-                // Set the Text.
-                nativeAdTitle.setText(nativeAd.getAdTitle());
-                // nativeAdSocialContext.setText(nativeAd.getAdSocialContext());
-                nativeAdBody.setText(nativeAd.getAdBody());
-                nativeAdCallToAction.setText(nativeAd.getAdCallToAction());
-
-                // Download and display the ad_front icon.
-                NativeAd.Image adIcon = nativeAd.getAdIcon();
-                NativeAd.downloadAndDisplayImage(adIcon, nativeAdIcon);
-
-                // Download and display the cover image.
-                nativeAdMedia.setNativeAd(nativeAd);
-
-                // Add the AdChoices icon
-                LinearLayout adChoicesContainer = (LinearLayout) findViewById(R.id.ad_choices_container);
-                AdChoicesView adChoicesView = new AdChoicesView(VideoPlayerActivity.this, nativeAd, true);
-                adChoicesContainer.addView(adChoicesView);
-
-                // Register the Title and CTA button to listen for clicks.
-                List<View> clickableViews = new ArrayList<>();
-                clickableViews.add(nativeAdTitle);
-                clickableViews.add(nativeAdCallToAction);
-                nativeAd.registerViewForInteraction(mNativeContainer, clickableViews);
+        if (ADManager.getInstance().mPauseAdsLoaded) {
+            mNativeFrameLayout.setVisibility(View.VISIBLE);
+            if (scrollView != null) {
+                mNativeContainer.removeView(scrollView);
             }
-
-            @Override
-            public void onLoadedFailed(String msg,String adId, int errorcode) {
-
-            }
-
-            @Override
-            public void onAdClick() {
-
-            }
-
-            @Override
-            public void onAdImpression(NativeAd ad, String adId) {
-
-            }
-        });
+            scrollView = new NativeAdScrollView(VideoPlayerActivity.this, ADManager.getInstance().mPauseManager, NativeAdView.Type.HEIGHT_400);
+            StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "shown");
+            mNativeContainer.addView(scrollView);
+        }
+//        NativeAD mFeedNativeAD = new NativeAD();
+//        mFeedNativeAD.loadAD(VideoPlayerActivity.this, ADManager.AD_Facebook, ADConstants.facebook_video_pause_native, new NativeAD.ADListener() {
+//            @Override
+//            public void onLoadedSuccess(com.facebook.ads.NativeAd nativeAd,String adId) {
+//                if(null ==mNativeFrameLayout|| null==nativeAd){
+//                    //异步过程，可能当前页面已经销毁了
+//                    return;
+//                }
+//                mNativeFrameLayout.setVisibility(View.VISIBLE);
+//                LayoutInflater inflater = LayoutInflater.from(VideoPlayerActivity.this);
+//                RelativeLayout adView = (RelativeLayout) inflater.inflate(R.layout.layout_pause_native_ad, mNativeContainer, false);
+//                mNativeContainer.removeAllViews();
+//                mNativeContainer.addView(adView);
+//
+//                // Create native UI using the ad_front metadata.
+//                ImageView nativeAdIcon = (ImageView) adView.findViewById(R.id.native_ad_icon);
+//                TextView nativeAdTitle = (TextView) adView.findViewById(R.id.native_ad_title);
+//                MediaView nativeAdMedia = (MediaView) adView.findViewById(R.id.native_ad_media);
+//                // TextView nativeAdSocialContext = (TextView) adView.findViewById(R.id.native_ad_social_context);
+//                TextView nativeAdBody = (TextView) adView.findViewById(R.id.native_ad_body);
+//                Button nativeAdCallToAction = (Button) adView.findViewById(R.id.native_ad_call_to_action);
+//
+//                // Set the Text.
+//                nativeAdTitle.setText(nativeAd.getAdTitle());
+//                // nativeAdSocialContext.setText(nativeAd.getAdSocialContext());
+//                nativeAdBody.setText(nativeAd.getAdBody());
+//                nativeAdCallToAction.setText(nativeAd.getAdCallToAction());
+//
+//                // Download and display the ad_front icon.
+//                NativeAd.Image adIcon = nativeAd.getAdIcon();
+//                NativeAd.downloadAndDisplayImage(adIcon, nativeAdIcon);
+//
+//                // Download and display the cover image.
+//                nativeAdMedia.setNativeAd(nativeAd);
+//
+//                // Add the AdChoices icon
+//                LinearLayout adChoicesContainer = (LinearLayout) findViewById(R.id.ad_choices_container);
+//                AdChoicesView adChoicesView = new AdChoicesView(VideoPlayerActivity.this, nativeAd, true);
+//                adChoicesContainer.addView(adChoicesView);
+//
+//                // Register the Title and CTA button to listen for clicks.
+//                List<View> clickableViews = new ArrayList<>();
+//                clickableViews.add(nativeAdTitle);
+//                clickableViews.add(nativeAdCallToAction);
+//                nativeAd.registerViewForInteraction(mNativeContainer, clickableViews);
+//            }
+//
+//            @Override
+//            public void onLoadedFailed(String msg,String adId, int errorcode) {
+//
+//            }
+//
+//            @Override
+//            public void onAdClick() {
+//
+//            }
+//
+//            @Override
+//            public void onAdImpression(NativeAd ad, String adId) {
+//
+//            }
+//        });
     }
 
     /**

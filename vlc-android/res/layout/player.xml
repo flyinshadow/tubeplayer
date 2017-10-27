@@ -121,8 +121,11 @@
             <!--ads:adSize="320x300"/>-->
         <FrameLayout
             android:id="@+id/ad_container"
-            android:layout_width="300dp"
-            android:layout_height="232dp"
+            android:layout_width="330dp"
+            android:background="@color/white"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:layout_margin="10dp">
         </FrameLayout>
         <ImageView

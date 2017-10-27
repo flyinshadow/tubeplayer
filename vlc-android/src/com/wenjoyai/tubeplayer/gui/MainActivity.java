@@ -334,6 +334,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
     private void loadExitAD() {
         ADManager.getInstance().loadExitAD(this);
+        ADManager.getInstance().loadPauseAD(this);
     }
 
     private void setupNavigationView() {
@@ -653,7 +654,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             ((ExtensionBrowser) fragment).goBack();
             return;
         }
-        if (ADManager.getInstance().mAdsLoaded) {
+        if (ADManager.getInstance().mExitAdsLoaded) {
             showExitDialog();
         } else {
             finish();
