@@ -1,7 +1,10 @@
 package com.wenjoyai.tubeplayer.gui;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
@@ -9,9 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.ad.MyToast;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.ShareUtils;
@@ -41,19 +47,35 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
     private View mDislike;
     private long mNextTime = 0;
 
+    private ImageView oneIv,twoIv,threeIv,fourIv,fiveIv;
+
     private Calendar mCalendar = Calendar.getInstance();
+
+    private int mRateCount = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         View v = inflater.inflate(R.layout.rate, container, false);
         mRateStar = v.findViewById(R.id.rate_star);
         mCancel = v.findViewById(R.id.rate_cancel);
-        mDislike = v.findViewById(R.id.rate_dislike);
+//        mDislike = v.findViewById(R.id.rate_dislike);
         mRateStar.setOnClickListener(this);
         mCancel.setOnClickListener(this);
-        mDislike.setOnClickListener(this);
+//        mDislike.setOnClickListener(this);
 //        setCancelable(false);
+
+        oneIv = (ImageView) v.findViewById(R.id.one);
+        twoIv = (ImageView) v.findViewById(R.id.two);
+        threeIv = (ImageView) v.findViewById(R.id.three);
+        fourIv = (ImageView) v.findViewById(R.id.four);
+        fiveIv = (ImageView) v.findViewById(R.id.five);
+        oneIv.setOnClickListener(this);
+        twoIv.setOnClickListener(this);
+        threeIv.setOnClickListener(this);
+        fourIv.setOnClickListener(this);
+        fiveIv.setOnClickListener(this);
         return v;
     }
 
@@ -72,15 +94,15 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
         long time = new Date().getTime();
         switch (view.getId()) {
             case R.id.rate_star:
-
-                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_RATE_STAR);
-
-                LogUtil.d(TAG, "rate_star last time:" + time + "(" + Util.millisToDate(time) + ")");
-                time = Util.getDateNext(7);
-                LogUtil.d(TAG, "rate_star next time:" + time + "(" + Util.millisToDate(time) + ")");
-                mNextTime = time;
-                dismiss();
-                ShareUtils.launchAppDetail(getActivity(), getActivity().getPackageName());
+                MyToast.makeText(VLCApplication.getAppContext(),"dsfsdfdsfdsfdsf",Toast.LENGTH_LONG).show();
+//                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_RATE_STAR);
+//
+//                LogUtil.d(TAG, "rate_star last time:" + time + "(" + Util.millisToDate(time) + ")");
+//                time = Util.getDateNext(7);
+//                LogUtil.d(TAG, "rate_star next time:" + time + "(" + Util.millisToDate(time) + ")");
+//                mNextTime = time;
+//                dismiss();
+//                ShareUtils.launchAppDetail(getActivity(), getActivity().getPackageName());
                 break;
             case R.id.rate_cancel:
 
@@ -92,16 +114,58 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
                 mNextTime = time;
                 dismiss();
                 break;
-            case R.id.rate_dislike:
-
-                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_RATE_DISLIKE);
-
-                LogUtil.d(TAG, "rate_dislike last time:" + time + "(" + Util.millisToDate(time) + ")");
-                time = Util.getDateNext(7);
-                LogUtil.d(TAG, "rate_dislike next time:" + time + "(" + Util.millisToDate(time) + ")");
-                mNextTime = time;
-                dismiss();
+            // TODO: 2017/10/28  
+//            case R.id.rate_dislike:
+//
+//                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_RATE_DISLIKE);
+//
+//                LogUtil.d(TAG, "rate_dislike last time:" + time + "(" + Util.millisToDate(time) + ")");
+//                time = Util.getDateNext(7);
+//                LogUtil.d(TAG, "rate_dislike next time:" + time + "(" + Util.millisToDate(time) + ")");
+//                mNextTime = time;
+//                dismiss();
+//                break;
+            case R.id.one:
+                mRateCount=1;
+                oneIv.setImageResource(R.drawable.rate1_normal);
+                twoIv.setImageResource(R.drawable.rate2_grey);
+                threeIv.setImageResource(R.drawable.rate3_grey);
+                fourIv.setImageResource(R.drawable.rate4_grey);
+                fiveIv.setImageResource(R.drawable.rate5_grey);
                 break;
+            case R.id.two:
+                mRateCount=2;
+                oneIv.setImageResource(R.drawable.rate2_normal);
+                twoIv.setImageResource(R.drawable.rate2_normal);
+                threeIv.setImageResource(R.drawable.rate3_grey);
+                fourIv.setImageResource(R.drawable.rate4_grey);
+                fiveIv.setImageResource(R.drawable.rate5_grey);
+                break;
+            case R.id.three:
+                mRateCount=3;
+                oneIv.setImageResource(R.drawable.rate3_normal);
+                twoIv.setImageResource(R.drawable.rate3_normal);
+                threeIv.setImageResource(R.drawable.rate3_normal);
+                fourIv.setImageResource(R.drawable.rate4_grey);
+                fiveIv.setImageResource(R.drawable.rate5_grey);
+                break;
+            case R.id.four:
+                mRateCount=4;
+                oneIv.setImageResource(R.drawable.rate4_normal);
+                twoIv.setImageResource(R.drawable.rate4_normal);
+                threeIv.setImageResource(R.drawable.rate4_normal);
+                fourIv.setImageResource(R.drawable.rate4_normal);
+                fiveIv.setImageResource(R.drawable.rate5_grey);
+                break;
+            case R.id.five:
+                mRateCount=5;
+                oneIv.setImageResource(R.drawable.rate5_normal);
+                twoIv.setImageResource(R.drawable.rate5_normal);
+                threeIv.setImageResource(R.drawable.rate5_normal);
+                fourIv.setImageResource(R.drawable.rate5_normal);
+                fiveIv.setImageResource(R.drawable.rate5_normal);
+                break;
+
         }
     }
 

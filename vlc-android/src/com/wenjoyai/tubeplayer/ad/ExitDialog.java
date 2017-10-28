@@ -6,11 +6,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.ads.NativeAdScrollView;
 import com.facebook.ads.NativeAdView;
+import com.facebook.ads.NativeAdViewAttributes;
+import com.facebook.ads.NativeAdsManager;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 
@@ -25,23 +28,22 @@ public class ExitDialog extends Dialog {
     TextView mCancelTv;
     TextView mOkTv;
     Context mContext;
-    public ExitDialog(Context context, int theme) {
-        super(context, theme);
-    }
 
     public ExitDialog(Context context) {
         super(context);
+        mContext =context;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_exit);
+
         if (scrollView != null) {
             ((LinearLayout) findViewById(R.id.hscrollContainer)).removeView(scrollView);
         }
         scrollView = new NativeAdScrollView(getContext(), ADManager.getInstance().mExitManager,
-                NativeAdView.Type.HEIGHT_400);
+                NativeAdView.Type.HEIGHT_300);
         ((LinearLayout) findViewById(R.id.hscrollContainer)).addView(scrollView);
         StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "shown");
         mCancelTv = (TextView)findViewById(R.id.exit_cancel);
@@ -55,7 +57,10 @@ public class ExitDialog extends Dialog {
         mOkTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((Activity)mContext).finish();
+                dismiss();
+                if (null!=mContext) {
+                    ((Activity) mContext).finish();
+                }
             }
         });
     }

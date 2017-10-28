@@ -81,6 +81,7 @@ public class AudioPlayerContainerActivity extends BaseActivity implements Playba
     protected static final String ID_THEME = "theme";
     protected static final String ID_NIGHT_MODE = "night_mode";
     protected static final String ID_SHARE = "share";
+    protected static final String ID_RATE = "rate";
     protected static final String ID_ABOUT = "about";
 
     protected AppBarLayout mAppBarLayout;

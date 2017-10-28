@@ -242,6 +242,7 @@
     <string name="theme">Theme</string>
     <string name="night_mode">Night mode</string>
     <string name="share">Share</string>
+    <string name="rate">Rate</string>
 
     <string name="general_prefs_category">General</string>
     <string name="directories_summary">Select directories to include in the media library</string>
@@ -722,8 +723,8 @@
     <string name="file_name">Filename</string>
     <string name="about_version">V%1$s</string>
     <string name="share_app_text">"I'm using a professional video player app, come and enjoy playing video. https://play.google.com/store/apps/details?id=com.wenjoyai.tubeplayer"</string>
-    <string name="rate_stars">Rate 5 stars</string>
-    <string name="rate_content">Your 5-stars review is worth more than all money. Please write a nice review in Google Play to encourage me!</string>
+    <string name="rate_stars">Love Video Player?</string>
+    <string name="rate_content">You’ve experienced Video Player successfully. Please support us with a 5-star ratings.</string>
     <string name="rate_dislike">Dislike it</string>
     <string name="rate_cancel">Cancel</string>
     <string name="folders">Folders</string>

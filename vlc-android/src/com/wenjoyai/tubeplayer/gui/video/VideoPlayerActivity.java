@@ -70,7 +70,6 @@ import android.view.Display;
 import android.view.GestureDetector;
 import android.view.InputDevice;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -87,7 +86,6 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -97,9 +95,6 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.ads.AdChoicesView;
-import com.facebook.ads.MediaView;
-import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdScrollView;
 import com.facebook.ads.NativeAdView;
 import com.wenjoyai.tubeplayer.BuildConfig;
@@ -109,7 +104,6 @@ import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.ad.ADManager;
 import com.wenjoyai.tubeplayer.ad.Interstitial;
-import com.wenjoyai.tubeplayer.ad.NativeAD;
 import com.wenjoyai.tubeplayer.ad.RotateAD;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
@@ -153,7 +147,6 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -535,8 +528,12 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         //返回广告
         mHandler.postDelayed(mRunnable,ADManager.back_ad_delay_time*1000);
         initPauseNative();
+        mTranstionAnimIn = AnimationUtils.loadAnimation(this, R.anim.pause_ad_left_in);
+        mTranstionAnimOut = AnimationUtils.loadAnimation(this, R.anim.pause_ad_leave_right);
     }
 
+    private Animation mTranstionAnimIn;
+    private Animation mTranstionAnimOut;
     Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
@@ -770,12 +767,16 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private void restoreBrightness() {
         if (mRestoreAutoBrightness != -1f) {
             int brightness = (int) (mRestoreAutoBrightness * 255f);
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.SCREEN_BRIGHTNESS,
-                    brightness);
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.SCREEN_BRIGHTNESS_MODE,
-                    Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
+            try{
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.SCREEN_BRIGHTNESS,
+                        brightness);
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.SCREEN_BRIGHTNESS_MODE,
+                        Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
         // Save brightness if user wants to
         if (mSettings.getBoolean("save_brightness", false)) {
@@ -1691,6 +1692,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     mRotateAD.setVisibility(View.INVISIBLE);
                 }
                 if (mNativeFrameLayout != null) {
+                    mNativeFrameLayout.startAnimation(mTranstionAnimOut);
                     mNativeFrameLayout.setVisibility(View.GONE);
                 }
                 break;
@@ -3938,6 +3940,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             adClose.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    mNativeFrameLayout.startAnimation(mTranstionAnimOut);
                     mNativeFrameLayout.setVisibility(View.GONE);
                 }
             });
@@ -3945,14 +3948,15 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     }
     NativeAdScrollView scrollView;
     private void loadPauseNative(){
-        if (ADManager.getInstance().mPauseAdsLoaded) {
+        if (ADManager.getInstance().mPauseManager.isLoaded()) {
             mNativeFrameLayout.setVisibility(View.VISIBLE);
             if (scrollView != null) {
                 mNativeContainer.removeView(scrollView);
             }
-            scrollView = new NativeAdScrollView(VideoPlayerActivity.this, ADManager.getInstance().mPauseManager, NativeAdView.Type.HEIGHT_400);
+            scrollView = new NativeAdScrollView(VideoPlayerActivity.this, ADManager.getInstance().mPauseManager, NativeAdView.Type.HEIGHT_300);
             StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "shown");
             mNativeContainer.addView(scrollView);
+            mNativeFrameLayout.startAnimation(mTranstionAnimIn);
         }
 //        NativeAD mFeedNativeAD = new NativeAD();
 //        mFeedNativeAD.loadAD(VideoPlayerActivity.this, ADManager.AD_Facebook, ADConstants.facebook_video_pause_native, new NativeAD.ADListener() {

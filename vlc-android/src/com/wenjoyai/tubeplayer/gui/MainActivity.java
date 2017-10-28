@@ -654,7 +654,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             ((ExtensionBrowser) fragment).goBack();
             return;
         }
-        if (ADManager.getInstance().mExitAdsLoaded) {
+        if (ADManager.getInstance().mExitManager.isLoaded()) {
             showExitDialog();
         } else {
             finish();
@@ -663,7 +663,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
     private void showExitDialog() {
         if (mExitDialog == null) {
-            mExitDialog = new ExitDialog(MainActivity.this, R.style.dialog);
+            mExitDialog = new ExitDialog(MainActivity.this);
             mExitDialog.setCancelable(true);
         }
         if (null != mExitDialog && !isFinishing() && !mExitDialog.isShowing())
@@ -1166,6 +1166,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 case R.id.nav_share_app:
                     StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_SHARE);
                     break;
+                case R.id.nav_rate_app:
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_RATE);
+                    break;
                 case R.id.nav_night_mode:
                     StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_NIGHTMODE);
                     break;
@@ -1216,6 +1219,10 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                     break;
                 case R.id.nav_share_app:
                     shareApp();
+                    break;
+                case R.id.nav_rate_app:
+                    startActivity(new Intent(MainActivity.this, DialogActivity.class).setAction(DialogActivity.KEY_RATE)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                     break;
                 case R.id.nav_directories:
                     if (TextUtils.equals(BuildConfig.FLAVOR_target, "chrome")) {
@@ -1277,6 +1284,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 return ID_NIGHT_MODE;
             case R.id.nav_share_app:
                 return ID_SHARE;
+            case R.id.nav_rate_app:
+                return ID_RATE;
             default:
                 return ID_VIDEO;
         }
