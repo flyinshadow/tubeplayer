@@ -61,6 +61,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.ViewStubCompat;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
@@ -445,6 +446,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         mRootView = findViewById(R.id.player_root);
         mActionBarView = (ViewGroup) mActionBar.getCustomView();
+        Toolbar toolbar=(Toolbar)mActionBarView.getParent();
+        toolbar.setContentInsetsAbsolute(0,0);
 
         mTitle = (TextView) mActionBarView.findViewById(R.id.player_overlay_title);
         if (!AndroidUtil.isJellyBeanOrLater) {
