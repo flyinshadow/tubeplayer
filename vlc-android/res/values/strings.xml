@@ -724,9 +724,13 @@
     <string name="about_version">V%1$s</string>
     <string name="share_app_text">"I'm using a professional video player app, come and enjoy playing video. https://play.google.com/store/apps/details?id=com.wenjoyai.tubeplayer"</string>
     <string name="rate_stars">Love Video Player?</string>
-    <string name="rate_content">You’ve experienced Video Player successfully. Please support us with a 5-star ratings.</string>
+    <string name="rate_content_default">You’ve experienced Video Player successfully. Please support us with a 5-star ratings.</string>
+    <string name="rate_content_1_4">Would you mind giving us some feedbacks so that we can do better?</string>
+    <string name="rate_content_5">We are feeling loved. Thanks! Please submit your rating on Play Store.</string>
     <string name="rate_dislike">Dislike it</string>
     <string name="rate_cancel">Cancel</string>
+    <string name="rate_feedback">Feedback</string>
+    <string name="rate_us">Rate Us</string>
     <string name="folders">Folders</string>
 
     <string-array name="chroma_formats" translatable="false">

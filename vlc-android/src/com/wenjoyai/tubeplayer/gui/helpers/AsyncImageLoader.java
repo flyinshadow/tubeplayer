@@ -159,7 +159,6 @@ public class AsyncImageLoader {
         if (bitmap == null || bitmap.getWidth() <= 1 || bitmap.getHeight() <= 1)
             return;
         if (vdb != null) {
-            vdb.setVariable(BR.scaleType, ImageView.ScaleType.CENTER_CROP);
             vdb.setVariable(BR.cover, new BitmapDrawable(VLCApplication.getAppResources(), bitmap));
             vdb.setVariable(BR.protocol, null);
         } else {

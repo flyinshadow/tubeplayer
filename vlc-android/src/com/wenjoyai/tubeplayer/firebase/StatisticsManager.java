@@ -126,6 +126,8 @@ public class StatisticsManager {
     public static final String TYPE_SETTING = "setting";
     public static final String TYPE_SHARE = "share";
     public static final String TYPE_NIGHTMODE = "nightmode";
+    public static final String TYPE_HISTORY = "history";
+    public static final String TYPE_ABOUT = "about";
 
     //主页面
     public static final String EVENT_HOME_TAB = "hometab";

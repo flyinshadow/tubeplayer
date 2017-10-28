@@ -1190,6 +1190,12 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 case R.id.nav_night_mode:
                     StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_NIGHTMODE);
                     break;
+                case R.id.nav_history:
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_HISTORY);
+                    break;
+                case R.id.nav_about:
+                    StatisticsManager.submitDrawlayout(this, StatisticsManager.TYPE_ABOUT);
+                    break;
             }
         }
 

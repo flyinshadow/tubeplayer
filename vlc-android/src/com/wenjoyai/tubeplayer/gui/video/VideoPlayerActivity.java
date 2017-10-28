@@ -61,6 +61,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.ViewStubCompat;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
@@ -428,6 +429,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         mRootView = findViewById(R.id.player_root);
         mActionBarView = (ViewGroup) mActionBar.getCustomView();
+//        Remove ActionBar extra space
+//        Toolbar toolbar = (Toolbar)mActionBarView.getParent();
+//        toolbar.setContentInsetsAbsolute(0, 0);
 
         mTitle = (TextView) mActionBarView.findViewById(R.id.player_overlay_title);
         if (!AndroidUtil.isJellyBeanOrLater) {
@@ -438,7 +442,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mPlaylistToggle = (ImageView) findViewById(R.id.playlist_toggle);
         mPlaylist = (RecyclerView) findViewById(R.id.video_playlist);
 
-        mPopupPlayToggle = (ImageView) findViewById(R.id.popup_toggle);
+//        mPopupPlayToggle = (ImageView) findViewById(R.id.popup_toggle);
+        mTracks = (ImageView) findViewById(R.id.player_overlay_tracks);
+        mTracks.setOnClickListener(this);
+
         mGoBack = (ImageView) findViewById(R.id.player_goback);
 
         mScreenOrientation = Integer.valueOf(
@@ -716,7 +723,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onStop() {
-//        LogUtil.e(TAG,"onStop");
+        LogUtil.e(TAG,"onStop");
         super.onStop();
         mMedialibrary.resumeBackgroundOperations();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mServiceReceiver);
@@ -791,6 +798,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     protected void onDestroy() {
+        LogUtil.d(TAG, "onDestroy");
         if (null != mInterstitial) {
             mInterstitial.show();
         }
@@ -879,6 +887,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (mPlaybackStarted || mService == null)
             return;
 
+        LogUtil.d("firstvideo", "startPlayback");
+
         mSavedRate = 1.0f;
         mSavedTime = -1;
         mPlaybackStarted = true;
@@ -959,7 +969,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (mRootView != null)
             mRootView.setKeepScreenOn(true);
 
-        mPopupPlayToggle.setOnClickListener(this);
+//        mPopupPlayToggle.setOnClickListener(this);
         mGoBack.setOnClickListener(this);
     }
 
@@ -976,6 +986,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private void stopPlayback() {
         if (!mPlaybackStarted)
             return;
+
+        LogUtil.d("firstvideo", "stopPlayback");
 
         mWasPaused = !mService.isPlaying();
         if (!isFinishing()) {
@@ -998,9 +1010,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         if (mSwitchingView && mService != null) {
 //            LogUtil.d(TAG, "mLocation = \"" + mUri + "\"");
-            if (mSwitchToPopup)
+            if (mSwitchToPopup) {
                 mService.switchToPopup(mService.getCurrentMediaPosition());
-            else {
+            } else {
                 mService.getCurrentMediaWrapper().addFlags(MediaWrapper.MEDIA_FORCE_AUDIO);
                 mService.showWithoutParse(mService.getCurrentMediaPosition());
             }
@@ -1021,7 +1033,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mRateHasChanged = mSavedRate != 1.0f;
 
         mService.setRate(1.0f, false);
-        mService.stop();
+
+        if (!(mSwitchingView && mSwitchToPopup)) {
+            mService.stop();
+        }
     }
 
     private void cleanUI() {
@@ -1719,6 +1734,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             case MediaPlayer.Event.TimeChanged:
                 break;
             case MediaPlayer.Event.Vout:
+                LogUtil.d("firstvideo", "MediaPlayer.Event.Vout");
                 updateNavStatus();
                 if (mMenuIdx == -1)
                     handleVout(event.getVoutCount());
@@ -1832,6 +1848,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private void onPlaying() {
         if (!mIsPlaying) {
             LogUtil.d(TAG, "first Playing");
+            LogUtil.d("firstvideo", "first Playing");
             MediaWrapper mw = mService.getCurrentMediaWrapper();
             if (mw != null) {
                 String path = (mw.getUri() != null) ? mw.getUri().getPath() : "";
@@ -2983,8 +3000,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mTime = (TextView) findViewById(rtl ? R.id.player_overlay_length : R.id.player_overlay_time);
             mLength = (TextView) findViewById(rtl ? R.id.player_overlay_time : R.id.player_overlay_length);
             mPlayPause = (ImageView) findViewById(R.id.player_overlay_play);
-            mTracks = (ImageView) findViewById(R.id.player_overlay_tracks);
-            mTracks.setOnClickListener(this);
+//            mTracks = (ImageView) findViewById(R.id.player_overlay_tracks);
+//            mTracks.setOnClickListener(this);
+            mPopupPlayToggle = (ImageView) findViewById(R.id.popup_toggle);
+            mPopupPlayToggle.setOnClickListener(this);
             mAdvOptions = (ImageView) findViewById(R.id.player_overlay_adv_function);
             mAdvOptions.setOnClickListener(this);
             mLock = (ImageView) findViewById(R.id.lock_overlay_button);
@@ -3398,9 +3417,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mForcedTime = savedTime;
             setOverlayProgress();
             mForcedTime = -1;
-
-            showOverlay(true);
         }
+        showOverlay(true);
     }
 
     private SubtitlesGetTask mSubtitlesGetTask = null;
@@ -3831,6 +3849,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     public void onNewVideoLayout(IVLCVout vlcVout, int width, int height, int visibleWidth, int visibleHeight, int sarNum, int sarDen) {
+        LogUtil.d("firstvideo", "VideoPlayerActivity onNewVideoLayout width=" + width + " height=" + height + " visibleWidth=" + visibleWidth + " visibleHeight=" + visibleHeight);
         // store video size
         mVideoWidth = width;
         mVideoHeight = height;

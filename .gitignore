@@ -71,3 +71,4 @@ lib/
 *.apk
 
 keystore/
+mappings/
