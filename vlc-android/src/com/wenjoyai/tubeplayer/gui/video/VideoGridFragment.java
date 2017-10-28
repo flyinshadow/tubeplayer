@@ -126,7 +126,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     private RecyclerViewHeader mHeader;
     private LinearLayout mDirectories;
-
+    private TextView mHeaderText;
 
     /* All subclasses of Fragment must include a public empty constructor. */
     public VideoGridFragment() {
@@ -159,22 +159,30 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
         mDividerItemDecoration = new DividerItemDecoration(v.getContext(), DividerItemDecoration.VERTICAL);
 
-        if (mGroup != null || mFolderGroup != null) {
+        if (mGroup != null || mFolderGroup != null || mFolderMain) {
             mHeader = (RecyclerViewHeader) v.findViewById(R.id.header);
             mHeader.attachTo(mGridView);
             mHeader.setVisibility(View.VISIBLE);
+
+            mHeaderText = (TextView) mHeader.findViewById(R.id.header_text);
+            mDirectories = (LinearLayout) mHeader.findViewById(R.id.folder_directories);
+            if (mFolderMain) {
+                mHeaderText.setVisibility(View.GONE);
+                mDirectories.setVisibility(View.VISIBLE);
+                mDirectories.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ((MainActivity) getActivity()).showSecondaryFragment(SecondaryActivity.FILE_BROWSER);
+                    }
+                });
+            } else {
+                mHeaderText.setVisibility(View.VISIBLE);
+                mDirectories.setVisibility(View.GONE);
+            }
         }
 
         int viewMode;
         if (mFolderMain) {
-            mDirectories = (LinearLayout) v.findViewById(R.id.folder_directories);
-            mDirectories.setVisibility(View.VISIBLE);
-            mDirectories.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ((MainActivity) getActivity()).showSecondaryFragment(SecondaryActivity.FILE_BROWSER);
-                }
-            });
             mGridView.setPadding(0, mGridView.getPaddingTop(), mGridView.getPaddingRight(), mGridView.getPaddingBottom());
 
             viewMode = VideoListAdapter.VIEW_MODE_FOLDER;
@@ -565,9 +573,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                             mVideoAdapter.setNativeAd(mNativeAdList);
                         }
                         LogUtil.d(TAG, "aaaa updateList displayList size:" + displayList.size());
-                        if (mHeader != null) {
-                            TextView text = (TextView) mHeader.findViewById(R.id.header_text);
-                            text.setText(getHeaderInfo(displayList));
+                        if (mHeaderText != null && mHeaderText.getVisibility() == View.VISIBLE) {
+                            mHeaderText.setText(getHeaderInfo(displayList));
                         }
                         mVideoAdapter.update(displayList, false);
                     }
