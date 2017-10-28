@@ -87,11 +87,12 @@ public class ShareUtils {
         context.startActivity(Intent.createChooser(intent, "Share To"));
     }
 
-    public static void adviceEmail(Activity act) {
-        Intent data = new Intent(Intent.ACTION_SENDTO);
-        data.setData(Uri.parse("mailto: wenjoyai@gmail.com"));
-        data.putExtra(Intent.EXTRA_SUBJECT, act.getString(R.string.app_name));
-        act.startActivity(data);
+    public static void adviceEmail(Context context) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto: wenjoyai@gmail.com"));
+        intent.putExtra(Intent.EXTRA_SUBJECT, VLCApplication.getAppContext().getString(R.string.app_name));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     public static void launchAppDetail(Context context, String appPkg) {
