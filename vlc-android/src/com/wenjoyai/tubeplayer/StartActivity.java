@@ -26,12 +26,9 @@ package com.wenjoyai.tubeplayer;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.wenjoyai.tubeplayer.gui.AudioPlayerContainerActivity;
 import com.wenjoyai.tubeplayer.gui.BaseActivity;
@@ -100,15 +97,11 @@ public class StartActivity extends BaseActivity {
 //        }
 //    }
 
-    private TextView mSkipTv;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
-        mSkipTv = (TextView)findViewById(R.id.skip_tv);
         Intent intent = getIntent();
-        final boolean tv =  showTvUi();
+        boolean tv =  showTvUi();
         String action = intent != null ? intent.getAction(): null;
 
         if (Intent.ACTION_VIEW.equals(action) && intent.getData() != null) {
@@ -117,7 +110,7 @@ public class StartActivity extends BaseActivity {
                 startActivity(intent.setClass(this, VideoPlayerActivity.class));
             else
                 MediaUtils.openMediaNoUi(intent.getData());
-//            finish();
+            finish();
             return;
         }
 
@@ -127,8 +120,8 @@ public class StartActivity extends BaseActivity {
         int currentVersionNumber = BuildConfig.VERSION_CODE;
         int savedVersionNumber = settings.getInt(PREF_FIRST_RUN, -1);
         /* Check if it's the first run */
-        final boolean firstRun = savedVersionNumber == -1;
-        final boolean upgrade = firstRun || savedVersionNumber != currentVersionNumber;
+        boolean firstRun = savedVersionNumber == -1;
+        boolean upgrade = firstRun || savedVersionNumber != currentVersionNumber;
         if (upgrade)
             settings.edit().putInt(PREF_FIRST_RUN, currentVersionNumber).apply();
         // Rate dialog should come out
@@ -151,29 +144,14 @@ public class StartActivity extends BaseActivity {
             Intent serviceInent = new Intent(PlaybackService.ACTION_PLAY_FROM_SEARCH, null, this, PlaybackService.class)
                     .putExtra(PlaybackService.EXTRA_SEARCH_BUNDLE, intent.getExtras());
             startService(serviceInent);
-            finish();
         } else if (AudioPlayerContainerActivity.ACTION_SHOW_PLAYER.equals(action)) {
             startActivity(new Intent(this, tv ? AudioPlayerActivity.class : MainActivity.class));
-            finish();
         } else {
-            /** 倒计时60秒，一次1秒 */
-            CountDownTimer timer = new CountDownTimer(3*1000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    mSkipTv.setText(millisUntilFinished/1000+"s");
-                }
-
-                @Override
-                public void onFinish() {
-                    startActivity(new Intent(StartActivity.this, tv ? MainTvActivity.class : MainActivity.class)
-                            .putExtra(EXTRA_FIRST_RUN, firstRun)
-                            .putExtra(EXTRA_UPGRADE, upgrade));
-                    finish();
-                }
-            }.start();
-
+            startActivity(new Intent(this, tv ? MainTvActivity.class : MainActivity.class)
+                    .putExtra(EXTRA_FIRST_RUN, firstRun)
+                    .putExtra(EXTRA_UPGRADE, upgrade));
         }
-
+        finish();
     }
 
     private void startMedialibrary(boolean firstRun, boolean upgrade) {

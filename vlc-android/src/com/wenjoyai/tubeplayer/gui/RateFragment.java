@@ -95,14 +95,14 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
         switch (view.getId()) {
             case R.id.rate_star:
                 MyToast.makeText(VLCApplication.getAppContext(),"dsfsdfdsfdsfdsf",Toast.LENGTH_LONG).show();
-//                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_RATE_STAR);
-//
-//                LogUtil.d(TAG, "rate_star last time:" + time + "(" + Util.millisToDate(time) + ")");
-//                time = Util.getDateNext(7);
-//                LogUtil.d(TAG, "rate_star next time:" + time + "(" + Util.millisToDate(time) + ")");
-//                mNextTime = time;
-//                dismiss();
-//                ShareUtils.launchAppDetail(getActivity(), getActivity().getPackageName());
+                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_RATE_STAR);
+
+                LogUtil.d(TAG, "rate_star last time:" + time + "(" + Util.millisToDate(time) + ")");
+                time = Util.getDateNext(7);
+                LogUtil.d(TAG, "rate_star next time:" + time + "(" + Util.millisToDate(time) + ")");
+                mNextTime = time;
+                dismiss();
+                ShareUtils.launchAppDetail(getActivity(), getActivity().getPackageName());
                 break;
             case R.id.rate_cancel:
 

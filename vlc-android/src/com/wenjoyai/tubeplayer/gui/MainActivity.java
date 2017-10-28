@@ -152,6 +152,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 //    private RotateAD mRotateAD;
     private Interstitial mFirstOpenInterstitialAd;
     private boolean mIsResumed = true;//当前页面是否在前台
+    private boolean mIsOpenAdShown = false;//open广告是否展示
     private static SharedPreferences sSettings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
     private long mOpenCount;//启动次数
 
@@ -266,6 +267,34 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     LoadingDialog dialog;
     ExitDialog mExitDialog;
 
+    private void showOpenAD(){
+        // create alert dialog
+        if (dialog == null) {
+            dialog = new LoadingDialog(MainActivity.this, R.style.dialog);
+            dialog.setCancelable(true);
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    mIsOpenAdShown = true;
+                    if (null!= mFirstOpenInterstitialAd) {
+                        mFirstOpenInterstitialAd.show();
+                        StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "show");
+                    }
+                }
+            });
+        }
+        if (null != dialog && !isFinishing() && !dialog.isShowing())
+            dialog.show();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (null != dialog && dialog.isShowing() && !isFinishing()) {
+                    dialog.dismiss();
+                }
+            }
+        }, 1000);
+    }
+
     //第一次打开
     private void loadOpenAD() {
 
@@ -288,28 +317,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                     public void onLoadedSuccess() {
                         StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "loaded");
                         if (mIsResumed) {
-                            // create alert dialog
-                            if (dialog == null) {
-                                dialog = new LoadingDialog(MainActivity.this, R.style.dialog);
-                                dialog.setCancelable(true);
-                                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                    @Override
-                                    public void onDismiss(DialogInterface dialog) {
-                                        mFirstOpenInterstitialAd.show();
-                                        StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "show");
-                                    }
-                                });
-                            }
-                            if (null != dialog && !isFinishing() && !dialog.isShowing())
-                                dialog.show();
-                            mHandler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (null != dialog && dialog.isShowing() && !isFinishing()) {
-                                        dialog.dismiss();
-                                    }
-                                }
-                            }, 1000);
+                            showOpenAD();
+                        }else {
+                            mIsOpenAdShown = false;
                         }
                     }
 
@@ -487,6 +497,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                     loadAD();
                 }
             }, interval);
+        }
+        if (!mIsOpenAdShown){
+            showOpenAD();
         }
     }
 
