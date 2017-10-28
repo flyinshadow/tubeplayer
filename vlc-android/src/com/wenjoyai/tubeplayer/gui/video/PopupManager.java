@@ -122,11 +122,11 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
         mService.setVideoAspectRatio(null);
         mService.setVideoScale(0);
         mService.setVideoTrackEnabled(true);
-        if (!mService.isPlaying())
-            mService.playIndex(mService.getCurrentMediaPosition());
-        else
-            mService.flush();
-        mService.startService(new Intent(mService, PlaybackService.class));
+//        if (!mService.isPlaying())
+//            mService.playIndex(mService.getCurrentMediaPosition());
+//        else
+//            mService.flush();
+//        mService.startService(new Intent(mService, PlaybackService.class));
         showNotification();
     }
 
@@ -184,6 +184,10 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
     @Override
     public void onNewVideoLayout(IVLCVout vlcVout, int width, int height,
                                  int visibleWidth, int visibleHeight, int sarNum, int sarDen) {
+
+        Log.d("firstvideo", "PopupManager onNewVideoLayout width=" + width + ", height=" + height +
+                ", visibleWidth=" + visibleWidth + ", visibleHeight=" + visibleHeight);
+
         int displayW = mRootView.getWidth(), displayH = mRootView.getHeight();
 
         // sanity check
@@ -197,6 +201,8 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
             width = vtrack.width;
             height = vtrack.height;
         }
+
+        Log.d("firstvideo", "PopupManager onNewVideoLayout vtrack.width=" + vtrack.width + ", vtrack.height=" + vtrack.height);
 
         if (width == 0 || height == 0) {
             mRootView.setViewSize(displayW, displayH);

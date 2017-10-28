@@ -61,6 +61,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.ViewStubCompat;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
@@ -428,6 +429,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         mRootView = findViewById(R.id.player_root);
         mActionBarView = (ViewGroup) mActionBar.getCustomView();
+//        Remove ActionBar extra space
+//        Toolbar toolbar = (Toolbar)mActionBarView.getParent();
+//        toolbar.setContentInsetsAbsolute(0, 0);
 
         mTitle = (TextView) mActionBarView.findViewById(R.id.player_overlay_title);
         if (!AndroidUtil.isJellyBeanOrLater) {
@@ -716,7 +720,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onStop() {
-//        LogUtil.e(TAG,"onStop");
+        LogUtil.e(TAG,"onStop");
         super.onStop();
         mMedialibrary.resumeBackgroundOperations();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mServiceReceiver);
@@ -791,6 +795,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     protected void onDestroy() {
+        LogUtil.d(TAG, "onDestroy");
         if (null != mInterstitial) {
             mInterstitial.show();
         }
@@ -878,6 +883,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         /* start playback only when audio service and both surfaces are ready */
         if (mPlaybackStarted || mService == null)
             return;
+
+        LogUtil.d("firstvideo", "startPlayback");
 
         mSavedRate = 1.0f;
         mSavedTime = -1;
@@ -977,6 +984,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (!mPlaybackStarted)
             return;
 
+        LogUtil.d("firstvideo", "stopPlayback");
+
         mWasPaused = !mService.isPlaying();
         if (!isFinishing()) {
             mCurrentAudioTrack = mService.getAudioTrack();
@@ -1021,7 +1030,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mRateHasChanged = mSavedRate != 1.0f;
 
         mService.setRate(1.0f, false);
-        mService.stop();
+
+        if (!(mSwitchingView && mSwitchToPopup)) {
+            mService.stop();
+        }
     }
 
     private void cleanUI() {
@@ -1719,6 +1731,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             case MediaPlayer.Event.TimeChanged:
                 break;
             case MediaPlayer.Event.Vout:
+                LogUtil.d("firstvideo", "MediaPlayer.Event.Vout");
                 updateNavStatus();
                 if (mMenuIdx == -1)
                     handleVout(event.getVoutCount());
@@ -1832,6 +1845,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private void onPlaying() {
         if (!mIsPlaying) {
             LogUtil.d(TAG, "first Playing");
+            LogUtil.d("firstvideo", "first Playing");
             MediaWrapper mw = mService.getCurrentMediaWrapper();
             if (mw != null) {
                 String path = (mw.getUri() != null) ? mw.getUri().getPath() : "";
@@ -1953,6 +1967,11 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mSwitchToPopup = true;
         cleanUI();
         exitOK();
+//        final IVLCVout vlcVout = mService.getVLCVout();
+//        if (vlcVout.areViewsAttached()) {
+//            vlcVout.detachViews();
+//        }
+//        mService.switchToPopup(mService.getCurrentMediaPosition());
     }
 
     public void switchToAudioMode(boolean showUI) {

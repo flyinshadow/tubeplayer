@@ -321,7 +321,12 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         if (activity instanceof PlaybackService.Callback)
             mService.removeCallback((PlaybackService.Callback) activity);
         media.removeFlags(MediaWrapper.MEDIA_FORCE_AUDIO);
-        VideoPlayerActivity.start(getActivity(), media.getUri(), fromStart);
+        if (mService.isPlayingPopup()) {
+            mService.stop();
+            mService.load(media);
+        } else {
+            VideoPlayerActivity.start(getActivity(), media.getUri(), fromStart);
+        }
     }
 
     protected void playAudio(MediaWrapper media) {
