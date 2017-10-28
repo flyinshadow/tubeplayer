@@ -1007,9 +1007,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         if (mSwitchingView && mService != null) {
 //            LogUtil.d(TAG, "mLocation = \"" + mUri + "\"");
-            if (mSwitchToPopup)
+            if (mSwitchToPopup) {
                 mService.switchToPopup(mService.getCurrentMediaPosition());
-            else {
+            } else {
                 mService.getCurrentMediaWrapper().addFlags(MediaWrapper.MEDIA_FORCE_AUDIO);
                 mService.showWithoutParse(mService.getCurrentMediaPosition());
             }
@@ -1967,11 +1967,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mSwitchToPopup = true;
         cleanUI();
         exitOK();
-//        final IVLCVout vlcVout = mService.getVLCVout();
-//        if (vlcVout.areViewsAttached()) {
-//            vlcVout.detachViews();
-//        }
-//        mService.switchToPopup(mService.getCurrentMediaPosition());
     }
 
     public void switchToAudioMode(boolean showUI) {
@@ -3850,6 +3845,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     public void onNewVideoLayout(IVLCVout vlcVout, int width, int height, int visibleWidth, int visibleHeight, int sarNum, int sarDen) {
+        LogUtil.d("firstvideo", "VideoPlayerActivity onNewVideoLayout width=" + width + " height=" + height + " visibleWidth=" + visibleWidth + " visibleHeight=" + visibleHeight);
         // store video size
         mVideoWidth = width;
         mVideoHeight = height;
