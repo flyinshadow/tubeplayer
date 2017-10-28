@@ -153,6 +153,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private Interstitial mFirstOpenInterstitialAd;
     private boolean mIsResumed = true;//当前页面是否在前台
     private boolean mIsOpenAdShown = false;//open广告是否展示
+    private  boolean mIsOpenLoadSuc = false;
     private static SharedPreferences sSettings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
     private long mOpenCount;//启动次数
 
@@ -268,6 +269,10 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     ExitDialog mExitDialog;
 
     private void showOpenAD(){
+        if (!mIsOpenLoadSuc){
+            return;
+        }
+        mIsOpenAdShown = true;
         // create alert dialog
         if (dialog == null) {
             dialog = new LoadingDialog(MainActivity.this, R.style.dialog);
@@ -275,7 +280,6 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
-                    mIsOpenAdShown = true;
                     if (null!= mFirstOpenInterstitialAd) {
                         mFirstOpenInterstitialAd.show();
                         StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "show");
@@ -298,9 +302,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     //第一次打开
     private void loadOpenAD() {
 
-        long second = mSettings.getLong(KEY_LAST_OPEN_TIME, 0);
-        if (second == 0 || (System.currentTimeMillis() / 1000 - second) / 60 >= 2) {
-            mSettings.edit().putLong(KEY_LAST_OPEN_TIME, System.currentTimeMillis() / 1000).apply();
+//        long second = mSettings.getLong(KEY_LAST_OPEN_TIME, 0);
+//        if (second == 0 || (System.currentTimeMillis() / 1000 - second) / 60 >= 2) {
+//            mSettings.edit().putLong(KEY_LAST_OPEN_TIME, System.currentTimeMillis() / 1000).apply();
 
             String adID = "";
             if (ADManager.sPlatForm == ADManager.AD_MobVista) {
@@ -315,6 +319,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 mFirstOpenInterstitialAd.loadAD(this, ADManager.sPlatForm, adID, new Interstitial.ADListener() {
                     @Override
                     public void onLoadedSuccess() {
+                        mIsOpenLoadSuc = true;
                         StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "loaded");
                         if (mIsResumed) {
                             showOpenAD();
@@ -339,7 +344,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                     }
                 });
             }
-        }
+//        }
     }
 
     private void loadExitAD() {
