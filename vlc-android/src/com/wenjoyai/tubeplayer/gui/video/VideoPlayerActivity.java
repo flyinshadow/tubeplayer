@@ -442,7 +442,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mPlaylistToggle = (ImageView) findViewById(R.id.playlist_toggle);
         mPlaylist = (RecyclerView) findViewById(R.id.video_playlist);
 
-        mPopupPlayToggle = (ImageView) findViewById(R.id.popup_toggle);
+//        mPopupPlayToggle = (ImageView) findViewById(R.id.popup_toggle);
+        mTracks = (ImageView) findViewById(R.id.player_overlay_tracks);
+        mTracks.setOnClickListener(this);
+
         mGoBack = (ImageView) findViewById(R.id.player_goback);
 
         mScreenOrientation = Integer.valueOf(
@@ -966,7 +969,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (mRootView != null)
             mRootView.setKeepScreenOn(true);
 
-        mPopupPlayToggle.setOnClickListener(this);
+//        mPopupPlayToggle.setOnClickListener(this);
         mGoBack.setOnClickListener(this);
     }
 
@@ -2997,8 +3000,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mTime = (TextView) findViewById(rtl ? R.id.player_overlay_length : R.id.player_overlay_time);
             mLength = (TextView) findViewById(rtl ? R.id.player_overlay_time : R.id.player_overlay_length);
             mPlayPause = (ImageView) findViewById(R.id.player_overlay_play);
-            mTracks = (ImageView) findViewById(R.id.player_overlay_tracks);
-            mTracks.setOnClickListener(this);
+//            mTracks = (ImageView) findViewById(R.id.player_overlay_tracks);
+//            mTracks.setOnClickListener(this);
+            mPopupPlayToggle = (ImageView) findViewById(R.id.popup_toggle);
+            mPopupPlayToggle.setOnClickListener(this);
             mAdvOptions = (ImageView) findViewById(R.id.player_overlay_adv_function);
             mAdvOptions.setOnClickListener(this);
             mLock = (ImageView) findViewById(R.id.lock_overlay_button);
@@ -3412,9 +3417,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mForcedTime = savedTime;
             setOverlayProgress();
             mForcedTime = -1;
-
-            showOverlay(true);
         }
+        showOverlay(true);
     }
 
     private SubtitlesGetTask mSubtitlesGetTask = null;
