@@ -748,7 +748,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         ArrayList<MediaWrapper> items = mVideoAdapter.getAll();
         for (int i = 0; i < items.size(); ++i) {
             MediaWrapper mw = items.get(i);
-            if (mw.hasStateFlags(MediaLibraryItem.FLAG_SELECTED)) {
+            if (mw != null && mw.hasStateFlags(MediaLibraryItem.FLAG_SELECTED)) {
+
                 mw.removeStateFlags(MediaLibraryItem.FLAG_SELECTED);
                 mVideoAdapter.resetSelectionCount();
                 mVideoAdapter.notifyItemChanged(i, VideoListAdapter.UPDATE_SELECTION);

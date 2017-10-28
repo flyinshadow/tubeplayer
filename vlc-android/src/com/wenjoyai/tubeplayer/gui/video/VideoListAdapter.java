@@ -200,9 +200,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
         if (media.getItemType() == MediaWrapper.TYPE_AD && holder.adContainer != null) {
             bindAd(holder, (AdItem)media);
-            holder.binding.setVariable(BR.scaleType, ImageView.ScaleType.CENTER_CROP);
         } else {
-            holder.binding.setVariable(BR.scaleType, ImageView.ScaleType.CENTER_CROP);
             fillView(holder, media);
             holder.binding.setVariable(BR.media, media);
             boolean isSelected = media.hasStateFlags(MediaLibraryItem.FLAG_SELECTED);
