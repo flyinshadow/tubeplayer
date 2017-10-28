@@ -165,7 +165,7 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
                 fourIv.setImageResource(R.drawable.rate4_normal);
                 fiveIv.setImageResource(R.drawable.rate5_grey);
                 mRateTips.setText(VLCApplication.getAppResources().getString(R.string.rate_content_1_4));
-                mRateAction.setText(VLCApplication.getAppResources().getString(R.string.rate_feedback));
+                mRateAction.setText(VLCApplication.getAppResources().getString(R.string.rate_us));
                 break;
             case R.id.five:
                 mRateCount=5;

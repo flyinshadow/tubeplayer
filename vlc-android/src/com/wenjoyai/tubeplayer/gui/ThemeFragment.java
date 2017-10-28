@@ -38,8 +38,8 @@ public class ThemeFragment extends DialogFragment {
     private ThemeAdapter mThemeAdapter;
 
     public static final int[] sThemeStyles = {
-            R.style.Theme_VideoPlayer_Apearance_Black,
             R.style.Theme_VideoPlayer_Apearance_Red,
+            R.style.Theme_VideoPlayer_Apearance_Black,
             R.style.Theme_VideoPlayer_Apearance_Pink,
             R.style.Theme_VideoPlayer_Apearance_Purple,
             R.style.Theme_VideoPlayer_Apearance_DeepPurple,
@@ -57,8 +57,8 @@ public class ThemeFragment extends DialogFragment {
     };
 
     public static final int[] sThemeNightStyles = {
-            R.style.Theme_VideoPlayer_Apearance_Black_Night,
             R.style.Theme_VideoPlayer_Apearance_Red_Night,
+            R.style.Theme_VideoPlayer_Apearance_Black_Night,
             R.style.Theme_VideoPlayer_Apearance_Pink_Night,
             R.style.Theme_VideoPlayer_Apearance_Purple_Night,
             R.style.Theme_VideoPlayer_Apearance_DeepPurple_Night,
@@ -76,8 +76,8 @@ public class ThemeFragment extends DialogFragment {
     };
 
     public static final int[] sThemeActionBarStyles = {
-            R.style.Theme_VideoPlayer_Apearance_Black_ActionBar,
             R.style.Theme_VideoPlayer_Apearance_Red_ActionBar,
+            R.style.Theme_VideoPlayer_Apearance_Black_ActionBar,
             R.style.Theme_VideoPlayer_Apearance_Pink_ActionBar,
             R.style.Theme_VideoPlayer_Apearance_Purple_ActionBar,
             R.style.Theme_VideoPlayer_Apearance_DeepPurple_ActionBar,
@@ -95,7 +95,7 @@ public class ThemeFragment extends DialogFragment {
     };
 
     private final int[] mThemeColors = {
-            R.color.theme_color_black, R.color.theme_color_red, R.color.theme_color_pink, R.color.theme_color_purple,
+            R.color.theme_color_red, R.color.theme_color_black, R.color.theme_color_pink, R.color.theme_color_purple,
             R.color.theme_color_deep_purple, R.color.theme_color_indigo, R.color.theme_color_blue, R.color.theme_color_light_blue,
             R.color.theme_color_cyan, R.color.theme_color_teal, R.color.theme_color_green, R.color.theme_color_light_green,
             R.color.theme_color_lime, R.color.theme_color_amber, R.color.theme_color_orange, R.color.theme_color_deep_orange

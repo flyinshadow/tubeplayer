@@ -1245,8 +1245,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                     shareApp();
                     break;
                 case R.id.nav_rate_app:
-                    startActivity(new Intent(MainActivity.this, DialogActivity.class).setAction(DialogActivity.KEY_RATE)
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    new RateFragment().show(getSupportFragmentManager(), "rate");
                     break;
                 case R.id.nav_directories:
                     if (TextUtils.equals(BuildConfig.FLAVOR_target, "chrome")) {
