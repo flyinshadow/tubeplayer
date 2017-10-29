@@ -402,12 +402,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         int max = 0;
         int progress = 0;
 
-        if (mCurrentViewMode == VIEW_MODE_FOLDER) {
-            FolderGroup folderGroup = (FolderGroup) media;
-            int size = folderGroup.size();
-            text = VLCApplication.getAppResources().getQuantityString(R.plurals.videos_quantity, size, size);
-        }
-        else if (media.getType() == MediaWrapper.TYPE_GROUP) {
+        if (media.getType() == MediaWrapper.TYPE_GROUP && media instanceof Group) {
             Group group = (Group) media;
             int size = group.size();
             text = VLCApplication.getAppResources().getQuantityString(R.plurals.videos_quantity, size, size);

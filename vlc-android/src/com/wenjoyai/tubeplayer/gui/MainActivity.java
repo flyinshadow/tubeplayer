@@ -487,7 +487,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         }
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setCheckedItem(mCurrentFragmentId);
-        mCurrentFragmentId = mSettings.getInt("fragment_id", R.id.nav_video);
+        mCurrentFragmentId = mSettings.getInt("fragment_id", R.id.nav_directories);
         if (!isloadAD) {
             isloadAD = true;
             int interval = 0;
@@ -720,20 +720,20 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private Fragment getNewFragment(int id) {
         VideoGridFragment fragment;
         switch (id) {
-            case R.id.nav_audio:
-                return new AudioBrowserFragment();
-            case R.id.nav_directories:
+            case R.id.nav_video:
                 fragment = new VideoGridFragment();
-                fragment.setFolder(null, true);
+                fragment.setFolder(null, false);
                 return fragment;
 //                return new FileBrowserFragment();
+            case R.id.nav_audio:
+                return new AudioBrowserFragment();
             case R.id.nav_history:
                 return new HistoryFragment();
             case R.id.nav_network:
                 return new NetworkBrowserFragment();
             default:
                 fragment = new VideoGridFragment();
-                fragment.setFolder(null, false);
+                fragment.setFolder(null, true);
                 return fragment;
 //                return new VideoFolderFragment();
         }
@@ -1074,7 +1074,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     }
 
     private void reloadPreferences() {
-        mCurrentFragmentId = mSettings.getInt("fragment_id", R.id.nav_video);
+        mCurrentFragmentId = mSettings.getInt("fragment_id", R.id.nav_directories);
     }
 
     @Override

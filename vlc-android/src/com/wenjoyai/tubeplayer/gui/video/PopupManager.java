@@ -101,7 +101,7 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
 
     public void showPopup() {
         mService.addCallback(this);
-        int themeIndex = android.preference.PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, 0);
+        int themeIndex = android.preference.PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, ThemeFragment.DEFAULT_THEME_INDEX);
         mRootView = (PopupLayout) LayoutInflater.from(new ContextThemeWrapper(VLCApplication.getAppContext(), ThemeFragment.sThemeActionBarStyles[themeIndex])).inflate(R.layout.video_popup, null);
         if (mAlwaysOn)
             mRootView.setKeepScreenOn(true);

@@ -114,7 +114,7 @@ public class PreferencesActivity extends AppCompatActivity implements PlaybackSe
     private void applyTheme() {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean enableBlackTheme = pref.getBoolean(PreferencesActivity.KEY_ENABLE_NIGHT_THEME, false);
-        int themeIndex = pref.getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, 0);
+        int themeIndex = pref.getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, ThemeFragment.DEFAULT_THEME_INDEX);
         boolean autoDayNight = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getBoolean("daynight", false);
         int hourOfDay = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         boolean night = (hourOfDay <= 6) || (hourOfDay >= 18);

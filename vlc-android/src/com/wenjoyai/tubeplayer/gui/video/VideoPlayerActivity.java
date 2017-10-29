@@ -3883,7 +3883,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 //        if (VLCApplication.showTvUi() || enableBlackTheme) {
 //            setTheme(R.style.Theme_VLC_Black);
 //        }
-        int themeIndex = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, 0);
+        int themeIndex = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, ThemeFragment.DEFAULT_THEME_INDEX);
         setTheme(ThemeFragment.sThemeActionBarStyles[themeIndex]);
     }
 

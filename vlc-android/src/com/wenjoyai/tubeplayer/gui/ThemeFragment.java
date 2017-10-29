@@ -119,7 +119,7 @@ public class ThemeFragment extends DialogFragment {
 
                 StatisticsManager.submitTheme(getActivity(), "theme_" + i);
 
-                if (sSettings.getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, 0) == i) {
+                if (sSettings.getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, DEFAULT_THEME_INDEX) == i) {
                     return;
                 }
 
