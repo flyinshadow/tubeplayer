@@ -51,7 +51,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
+import com.wenjoyai.tubeplayer.gui.helpers.RecyclerViewHeader;
 import com.facebook.ads.NativeAd;
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.PlaybackService;
@@ -183,7 +183,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
         int viewMode;
         if (mFolderMain) {
-            mGridView.setPadding(0, mGridView.getPaddingTop(), mGridView.getPaddingRight(), mGridView.getPaddingBottom());
+            mGridView.setPadding(0, 0, mGridView.getPaddingRight(), mGridView.getPaddingBottom());
 
             viewMode = VideoListAdapter.VIEW_MODE_FOLDER;
         } else {

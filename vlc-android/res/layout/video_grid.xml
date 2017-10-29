@@ -45,7 +45,7 @@
                 android:scrollbars="vertical"
                 android:stretchMode="none"/>
 
-            <com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader
+            <com.wenjoyai.tubeplayer.gui.helpers.RecyclerViewHeader
                 android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
                             />
                     </LinearLayout>
                 </LinearLayout>
-            </com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader>
+            </com.wenjoyai.tubeplayer.gui.helpers.RecyclerViewHeader>
         </FrameLayout>
     </com.wenjoyai.tubeplayer.gui.view.SwipeRefreshLayout>
 

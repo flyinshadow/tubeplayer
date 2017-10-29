@@ -254,7 +254,6 @@ dependencies {
 //    compile(name: 'DuappsAd-Trigger-1.0', ext: 'aar')
 
     compile 'com.android.support:multidex:1.0.1'
-    compile 'com.bartoszlipinski:recyclerviewheader2:2.0.1'
 }
 
 static def buildTime() {
