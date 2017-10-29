@@ -640,6 +640,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
                     updateWidgetPosition(event.getPositionChanged());
                     break;
                 case MediaPlayer.Event.Vout:
+                    LogUtil.d("firstvideo", "MediaPlayer.Event.Vout");
                     break;
                 case MediaPlayer.Event.ESAdded:
                     if (event.getEsChangedType() == Media.Track.Type.Video && (mVideoBackground || !switchToVideo())) {

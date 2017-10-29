@@ -166,6 +166,6 @@
     <string name="rename">نام تبدیل کریں</string>
     <string name="theme">مرکزی خیال، موضوع</string>
     <string name="night_mode">رات موڈ</string>
-    <string name="share_app">حصہ داری کریں</string>
+    <string name="share">حصہ داری کریں</string>
     <!--Accessibility-->
 </resources>

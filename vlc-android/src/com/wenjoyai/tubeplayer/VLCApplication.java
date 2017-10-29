@@ -37,8 +37,6 @@ import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.MobileAds;
-import com.mobvista.msdk.MobVistaSDK;
-import com.mobvista.msdk.out.MobVistaSDKFactory;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.gui.DialogActivity;
 import com.wenjoyai.tubeplayer.gui.RateFragment;
@@ -62,7 +60,6 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -176,9 +173,9 @@ public class VLCApplication extends MultiDexApplication {
                     AndroidDevices.setRemoteControlReceiverEnabled(false);
                 /**     初始化广告     */
                 Looper.prepare();
-                MobVistaSDK sdk = MobVistaSDKFactory.getMobVistaSDK();
-                Map<String, String> map = sdk.getMVConfigurationMap(ADConstants.APP_ID,ADConstants.APP_KEY);
-                sdk.init(map, VLCApplication.this);
+//                MobVistaSDK sdk = MobVistaSDKFactory.getMobVistaSDK();
+//                Map<String, String> map = sdk.getMVConfigurationMap(ADConstants.APP_ID,ADConstants.APP_KEY);
+//                sdk.init(map, VLCApplication.this);
 
                 //初始化google广告
                 MobileAds.initialize(instance, ADConstants.GOOGLE_APP_ID);

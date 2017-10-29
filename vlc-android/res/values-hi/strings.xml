@@ -167,6 +167,6 @@
     <string name="rename">नाम बदलें</string>
     <string name="theme">थीम</string>
     <string name="night_mode">रात मोड</string>
-    <string name="share_app">साझा करें</string>
+    <string name="share">साझा करें</string>
     <!--Accessibility-->
 </resources>

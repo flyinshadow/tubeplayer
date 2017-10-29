@@ -30,9 +30,12 @@ public class ADConstants {
     public static final String facebook_video_back_interstitial="236470546883809_236503240213873";
     //原生广告
     //feed流
-    public static final String facebook_video_feed_native="236470546883809_236493373548193";
-    public static final String facebook_video_feed_native1="236470546883809_238572480006949";
-    public static final String facebook_video_feed_native2="236470546883809_238572650006932";
+    public static final String facebook_video_feed_native1 ="236470546883809_236493373548193";
+    public static final String facebook_video_feed_native2 ="236470546883809_238572480006949";
+    public static final String facebook_video_feed_native3 ="236470546883809_238572650006932";
+    public static final String facebook_video_feed_native4 ="236470546883809_241030203094510";
+    public static final String facebook_video_feed_native5 ="236470546883809_241030486427815";
+    public static final String facebook_video_feed_native6 ="236470546883809_241030603094470";
 
     //pause
     public static final String facebook_video_pause_native="236470546883809_236494143548116";
@@ -40,8 +43,6 @@ public class ADConstants {
     public static final String facebook_video_grid_bannar = "236470546883809_236502986880565";
     // 打开app
     public static final String facebook_first_open_interstitial = "236470546883809_236502230213974";
-    //viewer show  // TODO: 2017/10/12  
-//    public static final String facebook_viewer_interstitial = "";
 
 
 

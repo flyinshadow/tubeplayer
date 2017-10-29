@@ -26,10 +26,8 @@ package com.wenjoyai.tubeplayer.gui.video;
 
 import android.app.Notification;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -50,15 +48,18 @@ import android.widget.SeekBar;
 import org.videolan.libvlc.IVLCVout;
 import org.videolan.libvlc.Media;
 import org.videolan.libvlc.MediaPlayer;
+import org.videolan.medialibrary.media.MediaWrapper;
+
 import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.gui.ThemeFragment;
 import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
 import com.wenjoyai.tubeplayer.gui.view.PopupLayout;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 
 public class PopupManager implements PlaybackService.Callback, GestureDetector.OnDoubleTapListener,
-        View.OnClickListener, GestureDetector.OnGestureListener, IVLCVout.OnNewVideoLayoutListener {
+        View.OnClickListener, GestureDetector.OnGestureListener, IVLCVout.OnNewVideoLayoutListener, IVLCVout.Callback {
 
     private static final String TAG ="VLC/PopupManager";
 
@@ -76,6 +77,10 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
     private ImageView mPlayPauseButton;
     private final boolean mAlwaysOn;
     private SeekBar mSeekBar;
+
+    private SurfaceView mSurfaceView;
+    private int mVideoWidth;
+    private int mVideoHeight;
 
     public PopupManager(PlaybackService service) {
         mService = service;
@@ -98,7 +103,6 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
         mService.addCallback(this);
         int themeIndex = android.preference.PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, 0);
         mRootView = (PopupLayout) LayoutInflater.from(new ContextThemeWrapper(VLCApplication.getAppContext(), ThemeFragment.sThemeActionBarStyles[themeIndex])).inflate(R.layout.video_popup, null);
-//        mRootView.setVideoSize(mService.getCurrentMediaWrapper().getWidth(), mService.getCurrentMediaWrapper().getHeight());
         if (mAlwaysOn)
             mRootView.setKeepScreenOn(true);
         mPlayPauseButton = (ImageView) mRootView.findViewById(R.id.video_play_pause);
@@ -115,18 +119,22 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
         gestureDetector.setOnDoubleTapListener(this);
         mRootView.setGestureDetector(gestureDetector);
 
-        final IVLCVout vlcVout = mService.getVLCVout();
-        vlcVout.setVideoView((SurfaceView) mRootView.findViewById(R.id.player_surface));
+        mSurfaceView = (SurfaceView) mRootView.findViewById(R.id.popup_player_surface);
+
+        IVLCVout vlcVout = mService.getVLCVout();
+        vlcVout.setVideoView(mSurfaceView);
+        vlcVout.addCallback(this);
         vlcVout.attachViews(this);
         mRootView.setVLCVOut(vlcVout);
         mService.setVideoAspectRatio(null);
         mService.setVideoScale(0);
         mService.setVideoTrackEnabled(true);
-        if (!mService.isPlaying())
-            mService.playIndex(mService.getCurrentMediaPosition());
-        else
-            mService.flush();
-        mService.startService(new Intent(mService, PlaybackService.class));
+
+//        if (!mService.isPlaying())
+//            mService.playIndex(mService.getCurrentMediaPosition());
+//        else
+//            mService.flush();
+//        mService.startService(new Intent(mService, PlaybackService.class));
         showNotification();
     }
 
@@ -174,40 +182,65 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        if (Math.abs(velocityX) > FLING_STOP_VELOCITY || velocityY > FLING_STOP_VELOCITY) {
-            stopPlayback();
-            return true;
-        }
+//        if (Math.abs(velocityX) > FLING_STOP_VELOCITY || velocityY > FLING_STOP_VELOCITY) {
+//            stopPlayback();
+//            return true;
+//        }
         return false;
     }
 
     @Override
     public void onNewVideoLayout(IVLCVout vlcVout, int width, int height,
                                  int visibleWidth, int visibleHeight, int sarNum, int sarDen) {
-        int displayW = mRootView.getWidth(), displayH = mRootView.getHeight();
 
-        // sanity check
-        if (displayW * displayH == 0) {
-            Log.e(TAG, "Invalid surface size");
-            return;
-        }
+        LogUtil.d("firstvideo", "PopupManager onNewVideoLayout width=" + width + ", height=" + height +
+                ", visibleWidth=" + visibleWidth + ", visibleHeight=" + visibleHeight);
+
+        changeSurfaceLayout(width, height);
+    }
+
+    private void changeSurfaceLayout(int videoWidth, int videoHeight) {
+        int viewWidth = mRootView.getPopupWidth();
+        int viewHeight = mRootView.getPopupHeight();
+
+        int displayW = viewWidth;//Math.max(viewWidth, VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_width));
+        int displayH = viewHeight;//Math.max(viewHeight, VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_height));
 
         Media.VideoTrack vtrack = mService.getCurrentVideoTrack();
-        if (vtrack != null) {
-            width = vtrack.width;
-            height = vtrack.height;
+        MediaWrapper media = mService.getCurrentMediaWrapper();
+
+        if (videoWidth == 0 || videoHeight == 0) {
+            if (vtrack != null && vtrack.width > 0 && vtrack.height > 0) {
+                videoWidth = vtrack.width;
+                videoHeight = vtrack.height;
+            } else if (media != null) {
+                videoWidth = media.getWidth();
+                videoHeight = media.getHeight();
+            }
         }
 
-        if (width == 0 || height == 0) {
+        LogUtil.d("firstvideo", "PopupManager changeSurfaceLayout videoWidth=" + videoWidth + " videoHeight=" + videoHeight);
+
+        if (videoWidth == 0 || videoHeight == 0) {
             mRootView.setViewSize(displayW, displayH);
             return;
         }
 
-        if (width < height) {
-            displayW = VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_width_vertical);
+        if (videoWidth < videoHeight) {
+            displayH = Math.max(viewHeight, VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_height_vertical));
+            displayW = displayH * videoWidth / videoHeight;
+//            displayW = Math.max(viewWidth, VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_width_vertical));
+//            displayH = displayW * videoHeight / videoWidth;
+        } else {
+            displayW = Math.max(viewWidth, VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_width));
+            displayH = displayW * videoHeight / videoWidth;
         }
-        displayH = displayW * height / width;
-        mRootView.setViewSize(displayW, displayH);
+
+        LogUtil.d("firstvideo", "PopupManager changeSurfaceLayout displayW=" + displayW + " displayH=" + displayH);
+
+        if (displayW != viewWidth || displayH != viewHeight) {
+            mRootView.setViewSize(displayW, displayH);
+        }
     }
 
     @Override
@@ -238,6 +271,14 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
                 if (!mAlwaysOn)
                     mRootView.setKeepScreenOn(true);
                 mPlayPauseButton.setImageResource(R.drawable.ic_popup_pause);
+
+                Media.VideoTrack videoTrack = mService.getCurrentVideoTrack();
+                if (videoTrack != null) {
+                    LogUtil.d("firstvideo", "PopupManager Playing video width=" + videoTrack.width + " height=" + videoTrack.height);
+                    mVideoWidth = videoTrack.width;
+                    mVideoHeight = videoTrack.height;
+                    changeSurfaceLayout(mVideoWidth, mVideoHeight);
+                }
                 showNotification();
                 break;
             case MediaPlayer.Event.Paused:
@@ -245,6 +286,28 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
                     mRootView.setKeepScreenOn(false);
                 mPlayPauseButton.setImageResource(R.drawable.ic_popup_play);
                 showNotification();
+                break;
+            case MediaPlayer.Event.ESSelected:
+                if (event.getEsChangedType() == Media.VideoTrack.Type.Video) {
+                    Media.VideoTrack vt = mService.getCurrentVideoTrack();
+                    if (vt != null) {
+                        LogUtil.d("firstvideo", "PopupManager ESSelected video width=" + vt.width + " height=" + vt.height);
+                        mVideoWidth = vt.width;
+                        mVideoHeight = vt.height;
+                        changeSurfaceLayout(mVideoWidth, mVideoHeight);
+                    }
+                }
+                break;
+            case MediaPlayer.Event.Vout:
+                {
+                    Media.VideoTrack vt = mService.getCurrentVideoTrack();
+                    if (vt != null) {
+                        LogUtil.d("firstvideo", "PopupManager Vout video width=" + vt.width + " height=" + vt.height);
+                        mVideoWidth = vt.width;
+                        mVideoHeight = vt.height;
+                        changeSurfaceLayout(mVideoWidth, mVideoHeight);
+                    }
+                }
                 break;
         }
     }
@@ -292,7 +355,6 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
     private void stopPlayback() {
         long time = mService.getTime();
         long length = mService.getLength();
-        Uri uri = mService.getCurrentMediaWrapper().getUri();
         //remove saved position if in the last 5 seconds
         if (length - time < 5000)
             time = 0;
@@ -338,5 +400,15 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
 
     private void hideNotification() {
         NotificationManagerCompat.from(mService).cancel(42);
+    }
+
+    @Override
+    public void onSurfacesCreated(IVLCVout vlcVout) {
+        LogUtil.d("firstvideo", "PopupManager onSurfacesCreated");
+    }
+
+    @Override
+    public void onSurfacesDestroyed(IVLCVout vlcVout) {
+        LogUtil.d("firstvideo", "PopupManager onSurfacesDestroyed");
     }
 }

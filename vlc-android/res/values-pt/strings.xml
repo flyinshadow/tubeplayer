@@ -446,5 +446,5 @@
     <string name="rename">Renomear</string>
     <string name="theme">Tema</string>
     <string name="night_mode">Modo noturno</string>
-    <string name="share_app">Compartilhar</string>
+    <string name="share">Compartilhar</string>
 </resources>

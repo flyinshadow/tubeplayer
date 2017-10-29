@@ -67,12 +67,10 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.InputDevice;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -89,7 +87,6 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -99,27 +96,8 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.videolan.libvlc.IVLCVout;
-import org.videolan.libvlc.LibVLC;
-import org.videolan.libvlc.Media;
-import org.videolan.libvlc.MediaPlayer;
-import org.videolan.libvlc.util.AndroidUtil;
-import org.videolan.medialibrary.Medialibrary;
-import org.videolan.medialibrary.Tools;
-import org.videolan.medialibrary.media.MediaWrapper;
-
-import com.facebook.ads.AdChoicesView;
-import com.facebook.ads.MediaView;
-import com.facebook.ads.NativeAd;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.NativeExpressAdView;
-import com.google.android.gms.ads.VideoController;
-import com.google.android.gms.ads.VideoOptions;
-import com.mobvista.msdk.MobVistaConstans;
-import com.mobvista.msdk.MobVistaSDK;
-import com.mobvista.msdk.out.MobVistaSDKFactory;
-import com.mobvista.msdk.out.PreloadListener;
+import com.facebook.ads.NativeAdScrollView;
+import com.facebook.ads.NativeAdView;
 import com.wenjoyai.tubeplayer.BuildConfig;
 import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
@@ -127,7 +105,6 @@ import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.ad.ADManager;
 import com.wenjoyai.tubeplayer.ad.Interstitial;
-import com.wenjoyai.tubeplayer.ad.NativeAD;
 import com.wenjoyai.tubeplayer.ad.RotateAD;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
@@ -153,6 +130,15 @@ import com.wenjoyai.tubeplayer.util.Strings;
 import com.wenjoyai.tubeplayer.util.SubtitlesDownloader;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
+import org.videolan.libvlc.IVLCVout;
+import org.videolan.libvlc.LibVLC;
+import org.videolan.libvlc.Media;
+import org.videolan.libvlc.MediaPlayer;
+import org.videolan.libvlc.util.AndroidUtil;
+import org.videolan.medialibrary.Medialibrary;
+import org.videolan.medialibrary.Tools;
+import org.videolan.medialibrary.media.MediaWrapper;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -162,10 +148,7 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Random;
 
 public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.Callback, IVLCVout.OnNewVideoLayoutListener,
@@ -446,8 +429,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         mRootView = findViewById(R.id.player_root);
         mActionBarView = (ViewGroup) mActionBar.getCustomView();
-        Toolbar toolbar=(Toolbar)mActionBarView.getParent();
-        toolbar.setContentInsetsAbsolute(0,0);
+        //Remove ActionBar extra space
+        Toolbar toolbar = (Toolbar)mActionBarView.getParent();
+        toolbar.setContentInsetsAbsolute(0, 0);
 
         mTitle = (TextView) mActionBarView.findViewById(R.id.player_overlay_title);
         if (!AndroidUtil.isJellyBeanOrLater) {
@@ -458,7 +442,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mPlaylistToggle = (ImageView) findViewById(R.id.playlist_toggle);
         mPlaylist = (RecyclerView) findViewById(R.id.video_playlist);
 
-        mPopupPlayToggle = (ImageView) findViewById(R.id.popup_toggle);
+//        mPopupPlayToggle = (ImageView) findViewById(R.id.popup_toggle);
+        mTracks = (ImageView) findViewById(R.id.player_overlay_tracks);
+        mTracks.setOnClickListener(this);
+
         mGoBack = (ImageView) findViewById(R.id.player_goback);
 
         mScreenOrientation = Integer.valueOf(
@@ -546,16 +533,20 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             preloadWall();
         }
         //返回广告
-        mHandler.postDelayed(mRunnable,ADManager.back_ad_delay_time*1000);
+//        mHandler.postDelayed(mRunnable,ADManager.back_ad_delay_time*1000);
         initPauseNative();
+        mTranstionAnimIn = AnimationUtils.loadAnimation(this, R.anim.pause_ad_left_in);
+        mTranstionAnimOut = AnimationUtils.loadAnimation(this, R.anim.pause_ad_leave_right);
     }
 
-    Runnable mRunnable = new Runnable() {
-        @Override
-        public void run() {
-            loadInterstitial();
-        }
-    };
+    private Animation mTranstionAnimIn;
+    private Animation mTranstionAnimOut;
+//    Runnable mRunnable = new Runnable() {
+//        @Override
+//        public void run() {
+//            loadInterstitial();
+//        }
+//    };
 
     @Override
     protected void onResume() {
@@ -732,7 +723,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onStop() {
-//        LogUtil.e(TAG,"onStop");
+        LogUtil.e(TAG,"onStop");
         super.onStop();
         mMedialibrary.resumeBackgroundOperations();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mServiceReceiver);
@@ -783,12 +774,16 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private void restoreBrightness() {
         if (mRestoreAutoBrightness != -1f) {
             int brightness = (int) (mRestoreAutoBrightness * 255f);
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.SCREEN_BRIGHTNESS,
-                    brightness);
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.SCREEN_BRIGHTNESS_MODE,
-                    Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
+            try{
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.SCREEN_BRIGHTNESS,
+                        brightness);
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.SCREEN_BRIGHTNESS_MODE,
+                        Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
         // Save brightness if user wants to
         if (mSettings.getBoolean("save_brightness", false)) {
@@ -803,10 +798,11 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     protected void onDestroy() {
+        LogUtil.d(TAG, "onDestroy");
         if (null != mInterstitial) {
             mInterstitial.show();
         }
-        mHandler.removeCallbacks(mRunnable);
+//        mHandler.removeCallbacks(mRunnable);
         super.onDestroy();
         if (mReceiver != null)
             unregisterReceiver(mReceiver);
@@ -891,6 +887,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (mPlaybackStarted || mService == null)
             return;
 
+        LogUtil.d("firstvideo", "startPlayback");
+
         mSavedRate = 1.0f;
         mSavedTime = -1;
         mPlaybackStarted = true;
@@ -971,7 +969,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (mRootView != null)
             mRootView.setKeepScreenOn(true);
 
-        mPopupPlayToggle.setOnClickListener(this);
+//        mPopupPlayToggle.setOnClickListener(this);
         mGoBack.setOnClickListener(this);
     }
 
@@ -988,6 +986,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private void stopPlayback() {
         if (!mPlaybackStarted)
             return;
+
+        LogUtil.d("firstvideo", "stopPlayback");
 
         mWasPaused = !mService.isPlaying();
         if (!isFinishing()) {
@@ -1010,9 +1010,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         if (mSwitchingView && mService != null) {
 //            LogUtil.d(TAG, "mLocation = \"" + mUri + "\"");
-            if (mSwitchToPopup)
+            if (mSwitchToPopup) {
                 mService.switchToPopup(mService.getCurrentMediaPosition());
-            else {
+            } else {
                 mService.getCurrentMediaWrapper().addFlags(MediaWrapper.MEDIA_FORCE_AUDIO);
                 mService.showWithoutParse(mService.getCurrentMediaPosition());
             }
@@ -1033,7 +1033,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mRateHasChanged = mSavedRate != 1.0f;
 
         mService.setRate(1.0f, false);
-        mService.stop();
+
+        if (!(mSwitchingView && mSwitchToPopup)) {
+            mService.stop();
+        }
     }
 
     private void cleanUI() {
@@ -1700,8 +1703,11 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 break;
             case MediaPlayer.Event.Playing:
                 onPlaying();
-                mRotateAD.setVisibility(View.INVISIBLE);
+                if (mRotateAD != null) {
+                    mRotateAD.setVisibility(View.INVISIBLE);
+                }
                 if (mNativeFrameLayout != null) {
+                    mNativeFrameLayout.startAnimation(mTranstionAnimOut);
                     mNativeFrameLayout.setVisibility(View.GONE);
                 }
                 break;
@@ -1728,6 +1734,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             case MediaPlayer.Event.TimeChanged:
                 break;
             case MediaPlayer.Event.Vout:
+                LogUtil.d("firstvideo", "MediaPlayer.Event.Vout");
                 updateNavStatus();
                 if (mMenuIdx == -1)
                     handleVout(event.getVoutCount());
@@ -1841,6 +1848,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private void onPlaying() {
         if (!mIsPlaying) {
             LogUtil.d(TAG, "first Playing");
+            LogUtil.d("firstvideo", "first Playing");
             MediaWrapper mw = mService.getCurrentMediaWrapper();
             if (mw != null) {
                 String path = (mw.getUri() != null) ? mw.getUri().getPath() : "";
@@ -2992,8 +3000,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mTime = (TextView) findViewById(rtl ? R.id.player_overlay_length : R.id.player_overlay_time);
             mLength = (TextView) findViewById(rtl ? R.id.player_overlay_time : R.id.player_overlay_length);
             mPlayPause = (ImageView) findViewById(R.id.player_overlay_play);
-            mTracks = (ImageView) findViewById(R.id.player_overlay_tracks);
-            mTracks.setOnClickListener(this);
+//            mTracks = (ImageView) findViewById(R.id.player_overlay_tracks);
+//            mTracks.setOnClickListener(this);
+            mPopupPlayToggle = (ImageView) findViewById(R.id.popup_toggle);
+            mPopupPlayToggle.setOnClickListener(this);
             mAdvOptions = (ImageView) findViewById(R.id.player_overlay_adv_function);
             mAdvOptions.setOnClickListener(this);
             mLock = (ImageView) findViewById(R.id.lock_overlay_button);
@@ -3407,9 +3417,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mForcedTime = savedTime;
             setOverlayProgress();
             mForcedTime = -1;
-
-            showOverlay(true);
         }
+        showOverlay(true);
     }
 
     private SubtitlesGetTask mSubtitlesGetTask = null;
@@ -3840,6 +3849,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     public void onNewVideoLayout(IVLCVout vlcVout, int width, int height, int visibleWidth, int visibleHeight, int sarNum, int sarDen) {
+        LogUtil.d("firstvideo", "VideoPlayerActivity onNewVideoLayout width=" + width + " height=" + height + " visibleWidth=" + visibleWidth + " visibleHeight=" + visibleHeight);
         // store video size
         mVideoWidth = width;
         mVideoHeight = height;
@@ -3881,23 +3891,23 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
      * 对appwall做预加载，建议开发者使用，会提高收入
      */
     public void preloadWall() {
-        MobVistaSDK sdk = MobVistaSDKFactory.getMobVistaSDK();
-        Map<String, Object> preloadMap = new HashMap<String, Object>();
-        preloadMap.put(MobVistaConstans.PROPERTIES_LAYOUT_TYPE, MobVistaConstans.LAYOUT_APPWALL);
-        preloadMap.put(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.mobvista_library_roate_offer_wall);
-        preloadMap.put(MobVistaConstans.PRELOAD_RESULT_LISTENER, new PreloadListener() {
-            @Override
-            public void onPreloadSucceed() {
-//                Log.e(TAG, "onPreloadSucceed");
-                mIsAdLoadSuc = true;
-            }
-
-            @Override
-            public void onPreloadFaild(String s) {
-//                Log.e(TAG, "onPreloadFaild"+s);
-            }
-        });
-        sdk.preload(preloadMap);
+//        MobVistaSDK sdk = MobVistaSDKFactory.getMobVistaSDK();
+//        Map<String, Object> preloadMap = new HashMap<String, Object>();
+//        preloadMap.put(MobVistaConstans.PROPERTIES_LAYOUT_TYPE, MobVistaConstans.LAYOUT_APPWALL);
+//        preloadMap.put(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.mobvista_library_roate_offer_wall);
+//        preloadMap.put(MobVistaConstans.PRELOAD_RESULT_LISTENER, new PreloadListener() {
+//            @Override
+//            public void onPreloadSucceed() {
+////                Log.e(TAG, "onPreloadSucceed");
+//                mIsAdLoadSuc = true;
+//            }
+//
+//            @Override
+//            public void onPreloadFaild(String s) {
+////                Log.e(TAG, "onPreloadFaild"+s);
+//            }
+//        });
+//        sdk.preload(preloadMap);
     }
 
     public void loadInterstitial() {
@@ -3949,98 +3959,116 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             adClose.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    mNativeFrameLayout.startAnimation(mTranstionAnimOut);
                     mNativeFrameLayout.setVisibility(View.GONE);
                 }
             });
         }
     }
-
+    NativeAdScrollView scrollView;
     private void loadPauseNative(){
-        NativeAD mFeedNativeAD = new NativeAD();
-        mFeedNativeAD.loadAD(VideoPlayerActivity.this, ADManager.AD_Facebook, ADConstants.facebook_video_pause_native, new NativeAD.ADListener() {
-            @Override
-            public void onLoadedSuccess(com.facebook.ads.NativeAd nativeAd,String adId) {
-                if(null ==mNativeFrameLayout|| null==nativeAd){
-                    //异步过程，可能当前页面已经销毁了
-                    return;
-                }
-                mNativeFrameLayout.setVisibility(View.VISIBLE);
-                LayoutInflater inflater = LayoutInflater.from(VideoPlayerActivity.this);
-                RelativeLayout adView = (RelativeLayout) inflater.inflate(R.layout.layout_pause_native_ad, mNativeContainer, false);
-                mNativeContainer.removeAllViews();
-                mNativeContainer.addView(adView);
-
-                // Create native UI using the ad_front metadata.
-                ImageView nativeAdIcon = (ImageView) adView.findViewById(R.id.native_ad_icon);
-                TextView nativeAdTitle = (TextView) adView.findViewById(R.id.native_ad_title);
-                MediaView nativeAdMedia = (MediaView) adView.findViewById(R.id.native_ad_media);
-                // TextView nativeAdSocialContext = (TextView) adView.findViewById(R.id.native_ad_social_context);
-                TextView nativeAdBody = (TextView) adView.findViewById(R.id.native_ad_body);
-                Button nativeAdCallToAction = (Button) adView.findViewById(R.id.native_ad_call_to_action);
-
-                // Set the Text.
-                nativeAdTitle.setText(nativeAd.getAdTitle());
-                // nativeAdSocialContext.setText(nativeAd.getAdSocialContext());
-                nativeAdBody.setText(nativeAd.getAdBody());
-                nativeAdCallToAction.setText(nativeAd.getAdCallToAction());
-
-                // Download and display the ad_front icon.
-                NativeAd.Image adIcon = nativeAd.getAdIcon();
-                NativeAd.downloadAndDisplayImage(adIcon, nativeAdIcon);
-
-                // Download and display the cover image.
-                nativeAdMedia.setNativeAd(nativeAd);
-
-                // Add the AdChoices icon
-                LinearLayout adChoicesContainer = (LinearLayout) findViewById(R.id.ad_choices_container);
-                AdChoicesView adChoicesView = new AdChoicesView(VideoPlayerActivity.this, nativeAd, true);
-                adChoicesContainer.addView(adChoicesView);
-
-                // Register the Title and CTA button to listen for clicks.
-                List<View> clickableViews = new ArrayList<>();
-                clickableViews.add(nativeAdTitle);
-                clickableViews.add(nativeAdCallToAction);
-                nativeAd.registerViewForInteraction(mNativeContainer, clickableViews);
+        if (ADManager.getInstance().mPauseManager.isLoaded()) {
+            mNativeFrameLayout.setVisibility(View.VISIBLE);
+            if (scrollView != null) {
+                mNativeContainer.removeView(scrollView);
             }
-
-            @Override
-            public void onLoadedFailed(String msg,String adId) {
-
-            }
-
-            @Override
-            public void onAdClick() {
-
-            }
-        });
+            scrollView = new NativeAdScrollView(VideoPlayerActivity.this, ADManager.getInstance().mPauseManager, NativeAdView.Type.HEIGHT_300);
+            StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "shown");
+            mNativeContainer.addView(scrollView);
+            mNativeFrameLayout.startAnimation(mTranstionAnimIn);
+        }
+//        NativeAD mFeedNativeAD = new NativeAD();
+//        mFeedNativeAD.loadAD(VideoPlayerActivity.this, ADManager.AD_Facebook, ADConstants.facebook_video_pause_native, new NativeAD.ADListener() {
+//            @Override
+//            public void onLoadedSuccess(com.facebook.ads.NativeAd nativeAd,String adId) {
+//                if(null ==mNativeFrameLayout|| null==nativeAd){
+//                    //异步过程，可能当前页面已经销毁了
+//                    return;
+//                }
+//                mNativeFrameLayout.setVisibility(View.VISIBLE);
+//                LayoutInflater inflater = LayoutInflater.from(VideoPlayerActivity.this);
+//                RelativeLayout adView = (RelativeLayout) inflater.inflate(R.layout.layout_pause_native_ad, mNativeContainer, false);
+//                mNativeContainer.removeAllViews();
+//                mNativeContainer.addView(adView);
+//
+//                // Create native UI using the ad_front metadata.
+//                ImageView nativeAdIcon = (ImageView) adView.findViewById(R.id.native_ad_icon);
+//                TextView nativeAdTitle = (TextView) adView.findViewById(R.id.native_ad_title);
+//                MediaView nativeAdMedia = (MediaView) adView.findViewById(R.id.native_ad_media);
+//                // TextView nativeAdSocialContext = (TextView) adView.findViewById(R.id.native_ad_social_context);
+//                TextView nativeAdBody = (TextView) adView.findViewById(R.id.native_ad_body);
+//                Button nativeAdCallToAction = (Button) adView.findViewById(R.id.native_ad_call_to_action);
+//
+//                // Set the Text.
+//                nativeAdTitle.setText(nativeAd.getAdTitle());
+//                // nativeAdSocialContext.setText(nativeAd.getAdSocialContext());
+//                nativeAdBody.setText(nativeAd.getAdBody());
+//                nativeAdCallToAction.setText(nativeAd.getAdCallToAction());
+//
+//                // Download and display the ad_front icon.
+//                NativeAd.Image adIcon = nativeAd.getAdIcon();
+//                NativeAd.downloadAndDisplayImage(adIcon, nativeAdIcon);
+//
+//                // Download and display the cover image.
+//                nativeAdMedia.setNativeAd(nativeAd);
+//
+//                // Add the AdChoices icon
+//                LinearLayout adChoicesContainer = (LinearLayout) findViewById(R.id.ad_choices_container);
+//                AdChoicesView adChoicesView = new AdChoicesView(VideoPlayerActivity.this, nativeAd, true);
+//                adChoicesContainer.addView(adChoicesView);
+//
+//                // Register the Title and CTA button to listen for clicks.
+//                List<View> clickableViews = new ArrayList<>();
+//                clickableViews.add(nativeAdTitle);
+//                clickableViews.add(nativeAdCallToAction);
+//                nativeAd.registerViewForInteraction(mNativeContainer, clickableViews);
+//            }
+//
+//            @Override
+//            public void onLoadedFailed(String msg,String adId, int errorcode) {
+//
+//            }
+//
+//            @Override
+//            public void onAdClick() {
+//
+//            }
+//
+//            @Override
+//            public void onAdImpression(NativeAd ad, String adId) {
+//
+//            }
+//        });
     }
 
     /**
      * 通过intent打开appwall
      */
     public void openWall() {
-        try {
-            Class<?> aClass = Class.forName("com.mobvista.msdk.shell.MVActivity");
-            Intent intent = new Intent(this, aClass);
-            intent.putExtra(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.mobvista_library_roate_offer_wall);
-            this.startActivity(intent);
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-        }
+//        try {
+//            Class<?> aClass = Class.forName("com.mobvista.msdk.shell.MVActivity");
+//            Intent intent = new Intent(this, aClass);
+//            intent.putExtra(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.mobvista_library_roate_offer_wall);
+//            this.startActivity(intent);
+//        } catch (Exception e) {
+//            Log.e(TAG, e.getMessage());
+//        }
     }
 
     /**
      * 初始化广告view
      */
     private void initAD() {
-        mRotateAD = (RotateAD) findViewById(R.id.player_roate_ad);
-        mRotateAD.setOnClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openWall();
-                StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_VIDEO_NAME);
-            }
-        });
+//        mRotateAD = (RotateAD) findViewById(R.id.player_roate_ad);
+//        if (null != mRotateAD) {
+//            mRotateAD.setOnClick(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    openWall();
+//                    StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_VIDEO_NAME);
+//                }
+//            });
+//        }
     }
 
 

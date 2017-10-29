@@ -336,5 +336,5 @@
     <string name="rename">ตั้งชื่อใหม่</string>
     <string name="theme">ชุดรูปแบบ</string>
     <string name="night_mode">โหมดกลางคืน</string>
-    <string name="share_app">ใช้ร่วมกัน</string>
+    <string name="share">ใช้ร่วมกัน</string>
 </resources>

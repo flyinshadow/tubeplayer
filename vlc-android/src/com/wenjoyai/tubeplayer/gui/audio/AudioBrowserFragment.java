@@ -31,7 +31,6 @@ import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,23 +42,11 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.TextView;
 
-import org.videolan.libvlc.Media;
-import org.videolan.libvlc.util.MediaBrowser;
-import org.videolan.medialibrary.Medialibrary;
-import org.videolan.medialibrary.interfaces.MediaAddedCb;
-import org.videolan.medialibrary.interfaces.MediaUpdatedCb;
-import org.videolan.medialibrary.media.Album;
-import org.videolan.medialibrary.media.Artist;
-import org.videolan.medialibrary.media.Genre;
-import org.videolan.medialibrary.media.MediaLibraryItem;
-import org.videolan.medialibrary.media.MediaWrapper;
-import org.videolan.medialibrary.media.Playlist;
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
 import com.wenjoyai.tubeplayer.gui.PlaylistActivity;
-import com.wenjoyai.tubeplayer.gui.SecondaryActivity;
 import com.wenjoyai.tubeplayer.gui.helpers.AudioUtil;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
 import com.wenjoyai.tubeplayer.gui.view.ContextMenuRecyclerView;
@@ -68,7 +55,19 @@ import com.wenjoyai.tubeplayer.gui.view.SwipeRefreshLayout;
 import com.wenjoyai.tubeplayer.interfaces.Filterable;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.FileUtils;
+import com.wenjoyai.tubeplayer.util.ShareUtils;
 import com.wenjoyai.tubeplayer.util.WeakHandler;
+
+import org.videolan.libvlc.Media;
+import org.videolan.libvlc.util.MediaBrowser;
+import org.videolan.medialibrary.Medialibrary;
+import org.videolan.medialibrary.interfaces.MediaAddedCb;
+import org.videolan.medialibrary.interfaces.MediaUpdatedCb;
+import org.videolan.medialibrary.media.Album;
+import org.videolan.medialibrary.media.Artist;
+import org.videolan.medialibrary.media.MediaLibraryItem;
+import org.videolan.medialibrary.media.MediaWrapper;
+import org.videolan.medialibrary.media.Playlist;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -230,12 +229,13 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
         if (pos != MODE_SONG) {
             menu.setGroupVisible(R.id.songs_view_only, false);
             menu.setGroupVisible(R.id.phone_only, false);
+            menu.findItem(R.id.audio_share).setVisible(false);
         }
         if (pos == MODE_ARTIST || pos == MODE_ALBUM)
             menu.findItem(R.id.audio_list_browser_play).setVisible(true);
-        if (pos != MODE_SONG && pos != MODE_PLAYLIST)
+        if (pos != MODE_SONG && pos != MODE_PLAYLIST) {
             menu.findItem(R.id.audio_list_browser_delete).setVisible(false);
-        else {
+        } else {
             MenuItem item = menu.findItem(R.id.audio_list_browser_delete);
             AudioBrowserAdapter adapter = pos == MODE_SONG ? mSongsAdapter : mPlaylistAdapter;
             MediaLibraryItem mediaItem = adapter.getItem(position);
@@ -336,6 +336,11 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
 
         if (id == R.id.audio_view_add_playlist) {
             UiTools.addToPlaylist(getActivity(), mediaItem.getTracks(mMediaLibrary));
+            return true;
+        }
+
+        if (id == R.id.audio_share && mediaItem.getItemType() == MediaLibraryItem.TYPE_MEDIA) {
+            ShareUtils.shareMedia(getActivity(), (MediaWrapper)mediaItem);
             return true;
         }
 

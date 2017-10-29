@@ -2,16 +2,22 @@ package com.wenjoyai.tubeplayer.gui;
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.ad.MyToast;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.ShareUtils;
@@ -36,24 +42,42 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
 
     private static final int CHECK_COUNT_PEROID = 24 * 60 * 1000; // 一天
 
-    private View mRateStar;
+    private TextView mRateAction;
     private View mCancel;
     private View mDislike;
     private long mNextTime = 0;
+    private TextView mRateTips;
+
+    private ImageView oneIv,twoIv,threeIv,fourIv,fiveIv;
 
     private Calendar mCalendar = Calendar.getInstance();
+
+    private int mRateCount = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         View v = inflater.inflate(R.layout.rate, container, false);
-        mRateStar = v.findViewById(R.id.rate_star);
+        mRateAction = (TextView) v.findViewById(R.id.rate_action);
         mCancel = v.findViewById(R.id.rate_cancel);
-        mDislike = v.findViewById(R.id.rate_dislike);
-        mRateStar.setOnClickListener(this);
+//        mDislike = v.findViewById(R.id.rate_dislike);
+        mRateAction.setOnClickListener(this);
         mCancel.setOnClickListener(this);
-        mDislike.setOnClickListener(this);
+//        mDislike.setOnClickListener(this);
 //        setCancelable(false);
+        mRateTips = (TextView) v.findViewById(R.id.rate_tips);
+
+        oneIv = (ImageView) v.findViewById(R.id.one);
+        twoIv = (ImageView) v.findViewById(R.id.two);
+        threeIv = (ImageView) v.findViewById(R.id.three);
+        fourIv = (ImageView) v.findViewById(R.id.four);
+        fiveIv = (ImageView) v.findViewById(R.id.five);
+        oneIv.setOnClickListener(this);
+        twoIv.setOnClickListener(this);
+        threeIv.setOnClickListener(this);
+        fourIv.setOnClickListener(this);
+        fiveIv.setOnClickListener(this);
         return v;
     }
 
@@ -71,16 +95,18 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
     public void onClick(View view) {
         long time = new Date().getTime();
         switch (view.getId()) {
-            case R.id.rate_star:
-
-                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_RATE_STAR);
-
-                LogUtil.d(TAG, "rate_star last time:" + time + "(" + Util.millisToDate(time) + ")");
+            case R.id.rate_action:
+                if (mRateCount >= 4) {
+                    MyToast.makeText(VLCApplication.getAppContext(), "", Toast.LENGTH_LONG).show();
+                    StatisticsManager.submitRate(VLCApplication.getAppContext(), StatisticsManager.ITEM_RATE_STAR);
+                    ShareUtils.launchAppDetail(VLCApplication.getAppContext(), VLCApplication.getAppContext().getPackageName());
+                } else {
+                    StatisticsManager.submitRate(VLCApplication.getAppContext(), StatisticsManager.ITEM_RATE_DISLIKE);
+                    ShareUtils.adviceEmail(VLCApplication.getAppContext());
+                }
                 time = Util.getDateNext(7);
-                LogUtil.d(TAG, "rate_star next time:" + time + "(" + Util.millisToDate(time) + ")");
                 mNextTime = time;
                 dismiss();
-                ShareUtils.launchAppDetail(getActivity(), getActivity().getPackageName());
                 break;
             case R.id.rate_cancel:
 
@@ -92,15 +118,65 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
                 mNextTime = time;
                 dismiss();
                 break;
-            case R.id.rate_dislike:
-
-                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_RATE_DISLIKE);
-
-                LogUtil.d(TAG, "rate_dislike last time:" + time + "(" + Util.millisToDate(time) + ")");
-                time = Util.getDateNext(7);
-                LogUtil.d(TAG, "rate_dislike next time:" + time + "(" + Util.millisToDate(time) + ")");
-                mNextTime = time;
-                dismiss();
+//            case R.id.rate_dislike:
+//
+//                StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_RATE_DISLIKE);
+//
+//                LogUtil.d(TAG, "rate_dislike last time:" + time + "(" + Util.millisToDate(time) + ")");
+//                time = Util.getDateNext(7);
+//                LogUtil.d(TAG, "rate_dislike next time:" + time + "(" + Util.millisToDate(time) + ")");
+//                mNextTime = time;
+//                dismiss();
+//                break;
+            case R.id.one:
+                mRateCount=1;
+                oneIv.setImageResource(R.drawable.rate1_normal);
+                twoIv.setImageResource(R.drawable.rate2_grey);
+                threeIv.setImageResource(R.drawable.rate3_grey);
+                fourIv.setImageResource(R.drawable.rate4_grey);
+                fiveIv.setImageResource(R.drawable.rate5_grey);
+                mRateTips.setText(VLCApplication.getAppResources().getString(R.string.rate_content_1_4));
+                mRateAction.setText(VLCApplication.getAppResources().getString(R.string.rate_feedback));
+                break;
+            case R.id.two:
+                mRateCount=2;
+                oneIv.setImageResource(R.drawable.rate2_normal);
+                twoIv.setImageResource(R.drawable.rate2_normal);
+                threeIv.setImageResource(R.drawable.rate3_grey);
+                fourIv.setImageResource(R.drawable.rate4_grey);
+                fiveIv.setImageResource(R.drawable.rate5_grey);
+                mRateTips.setText(VLCApplication.getAppResources().getString(R.string.rate_content_1_4));
+                mRateAction.setText(VLCApplication.getAppResources().getString(R.string.rate_feedback));
+                break;
+            case R.id.three:
+                mRateCount=3;
+                oneIv.setImageResource(R.drawable.rate3_normal);
+                twoIv.setImageResource(R.drawable.rate3_normal);
+                threeIv.setImageResource(R.drawable.rate3_normal);
+                fourIv.setImageResource(R.drawable.rate4_grey);
+                fiveIv.setImageResource(R.drawable.rate5_grey);
+                mRateTips.setText(VLCApplication.getAppResources().getString(R.string.rate_content_1_4));
+                mRateAction.setText(VLCApplication.getAppResources().getString(R.string.rate_feedback));
+                break;
+            case R.id.four:
+                mRateCount=4;
+                oneIv.setImageResource(R.drawable.rate4_normal);
+                twoIv.setImageResource(R.drawable.rate4_normal);
+                threeIv.setImageResource(R.drawable.rate4_normal);
+                fourIv.setImageResource(R.drawable.rate4_normal);
+                fiveIv.setImageResource(R.drawable.rate5_grey);
+                mRateTips.setText(VLCApplication.getAppResources().getString(R.string.rate_content_1_4));
+                mRateAction.setText(VLCApplication.getAppResources().getString(R.string.rate_us));
+                break;
+            case R.id.five:
+                mRateCount=5;
+                oneIv.setImageResource(R.drawable.rate5_normal);
+                twoIv.setImageResource(R.drawable.rate5_normal);
+                threeIv.setImageResource(R.drawable.rate5_normal);
+                fourIv.setImageResource(R.drawable.rate5_normal);
+                fiveIv.setImageResource(R.drawable.rate5_normal);
+                mRateTips.setText(VLCApplication.getAppResources().getString(R.string.rate_content_5));
+                mRateAction.setText(VLCApplication.getAppResources().getString(R.string.rate_us));
                 break;
         }
     }
@@ -145,7 +221,7 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
             sSettings.edit().putInt(KEY_RATE_LAST_VERSION, VLCApplication.getVersionCode()).apply();
         }
 
-        if (getActivity() != null) {
+        if (getActivity() != null && (getActivity() instanceof DialogActivity)) {
             getActivity().finish();
         }
     }

@@ -56,6 +56,7 @@ import com.wenjoyai.tubeplayer.gui.view.SwipeRefreshLayout;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.FileUtils;
+import com.wenjoyai.tubeplayer.util.ShareUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -183,6 +184,8 @@ public class AudioAlbumsSongsFragment extends BaseAudioBrowser implements SwipeR
         if (!AndroidDevices.isPhone())
             menu.setGroupVisible(R.id.phone_only, false);
         menu.findItem(R.id.audio_list_browser_play).setVisible(true);
+        menu.findItem(R.id.audio_share).setVisible(false);
+
         //Hide delete if we cannot
         final AudioBrowserAdapter adapter = mViewPager.getCurrentItem() == MODE_ALBUM ? mAlbumsAdapter : mSongsAdapter;
         final MediaLibraryItem mediaItem = adapter.getItem(position);
@@ -237,6 +240,11 @@ public class AudioAlbumsSongsFragment extends BaseAudioBrowser implements SwipeR
             args.putParcelableArray(SavePlaylistDialog.KEY_NEW_TRACKS, mediaItem.getTracks(mMediaLibrary));
             savePlaylistDialog.setArguments(args);
             savePlaylistDialog.show(fm, "fragment_add_to_playlist");
+            return true;
+        }
+
+        if (id == R.id.audio_share && mediaItem.getItemType() == MediaLibraryItem.TYPE_MEDIA) {
+            ShareUtils.shareMedia(getActivity(), (MediaWrapper)mediaItem);
             return true;
         }
 

@@ -165,6 +165,6 @@
     <string name="rename">Đổi tên</string>
     <string name="theme">Chủ đề</string>
     <string name="night_mode">Chế độ ban đêm</string>
-    <string name="share_app">Chia sẻ</string>
+    <string name="share">Chia sẻ</string>
     <!--Accessibility-->
 </resources>

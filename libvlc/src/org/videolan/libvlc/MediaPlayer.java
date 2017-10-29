@@ -34,6 +34,7 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.util.SparseArray;
 
 import org.videolan.libvlc.util.AndroidUtil;
@@ -107,6 +108,44 @@ public class MediaPlayer extends VLCObject<MediaPlayer.Event> {
         }
         public float getBuffering() {
             return argf1;
+        }
+
+        public static String getType(int type) {
+            switch (type) {
+                case MediaChanged:
+                    return "MediaChanged";
+                case Opening:
+                    return "Opening";
+                case Buffering:
+                    return "Buffering";
+                case Playing:
+                    return "Playing";
+                case Paused:
+                    return "Paused";
+                case Stopped:
+                    return "Stopped";
+                case EndReached:
+                    return "EndReached";
+                case EncounteredError:
+                    return "EncounteredError";
+                case TimeChanged:
+                    return "TimeChanged";
+                case PositionChanged:
+                    return "PositionChanged";
+                case SeekableChanged:
+                    return "SeekableChanged";
+                case PausableChanged:
+                    return "PausableChanged";
+                case Vout:
+                    return "Vout";
+                case ESAdded:
+                    return "ESAdded";
+                case ESDeleted:
+                    return "ESDeleted";
+                case ESSelected:
+                    return "ESSelected";
+            }
+            return Integer.toHexString(type);
         }
     }
 
@@ -1079,6 +1118,7 @@ public class MediaPlayer extends VLCObject<MediaPlayer.Event> {
 
     @Override
     protected synchronized Event onEventNative(int eventType, long arg1, long arg2, float argf1) {
+        Log.d("firstvideo", "MediaPlayer onEventNative eventType=" + Event.getType(eventType) + ", arg1=" + arg1 + ", arg2=" + arg2 + ", argf1=" + argf1);
         switch (eventType) {
             case Event.MediaChanged:
             case Event.Stopped:
@@ -1097,6 +1137,7 @@ public class MediaPlayer extends VLCObject<MediaPlayer.Event> {
             case Event.PositionChanged:
                 return new Event(eventType, argf1);
             case Event.Vout:
+                Log.d("firstvideo", "MediaPlayer.Event.Vout");
                 mVoutCount = (int) arg1;
                 notify();
                 return new Event(eventType, arg1);

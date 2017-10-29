@@ -126,7 +126,8 @@ public class NetworkBrowserFragment extends BaseBrowserFragment {
             runOnBrowserThread(new Runnable() {
                 @Override
                 public void run() {
-                    mMediaBrowser.discoverNetworkShares();
+                    if (mMediaBrowser != null)
+                        mMediaBrowser.discoverNetworkShares();
                 }
             });
         else {

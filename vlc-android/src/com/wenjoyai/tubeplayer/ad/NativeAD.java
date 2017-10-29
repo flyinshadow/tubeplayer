@@ -2,7 +2,6 @@ package com.wenjoyai.tubeplayer.ad;
 
 import android.content.Context;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
@@ -10,9 +9,7 @@ import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.facebook.ads.AdListener;
 import com.facebook.ads.NativeAd;
-import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
-import com.wenjoyai.tubeplayer.gui.video.VideoPlayerActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -38,7 +35,7 @@ public class NativeAD {
         mRetryCount = 0;
     }
 
-    public void loadAD(final Context context, long type, String adId, final ADListener listener) {
+    public void loadAD(final Context context, long type, final String adId, final ADListener listener) {
         mAdId = adId;
         mType = type;
         mListener = listener;
@@ -47,21 +44,19 @@ public class NativeAD {
         mFacebookAd.setAdListener(new AdListener() {
             @Override
             public void onError(Ad ad, AdError error) {
-                if (mAdId == ADConstants.facebook_video_feed_native) {
-                    StatisticsManager.submitAd(context, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_FACEBOOK_FAILED + " 1 " + error.getErrorCode());
-                } else if (mAdId == ADConstants.facebook_video_feed_native1) {
-                    StatisticsManager.submitAd(context, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_FACEBOOK_FAILED + " 2 " + error.getErrorCode());
-                } else if (mAdId == ADConstants.facebook_video_feed_native2) {
-                    StatisticsManager.submitAd(context, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_FACEBOOK_FAILED + " 3 " + error.getErrorCode());
+                submitError(mAdId, error);
+                if (error.getErrorCode()==1001){//1001尽量少，
+                    if (null != mListener) {
+                        mListener.onLoadedFailed("1001", mAdId,1001);
+                    }
+                    return;
                 }
-                // Ad error callback
-                Log.e(TAG, "onError " + error.getErrorCode() + error.getErrorMessage());
                 startProgressTimer();
             }
 
             @Override
             public void onAdLoaded(Ad ad) {
-                Log.e(TAG, "onAdLoaded");
+                submitLoaded(mAdId);
                 // Ad loaded callback
                 if (null != listener) {
                     listener.onLoadedSuccess(mFacebookAd, mAdId);
@@ -70,7 +65,7 @@ public class NativeAD {
 
             @Override
             public void onAdClicked(Ad ad) {
-                Log.e(TAG, "onAdClicked");
+                submitClick(mAdId);
                 // Ad clicked callback
                 if (null != listener) {
                     listener.onAdClick();
@@ -79,28 +74,26 @@ public class NativeAD {
 
             @Override
             public void onLoggingImpression(Ad ad) {
-                Log.e(TAG, "onLoggingImpression");
-                // Ad impression logged callback
-                if (mAdId == ADConstants.facebook_video_feed_native) {
-                    StatisticsManager.submitAd(context, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_1);
-                } else if (mAdId == ADConstants.facebook_video_feed_native1) {
-                    StatisticsManager.submitAd(context, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_2);
-                } else if (mAdId == ADConstants.facebook_video_feed_native2) {
-                    StatisticsManager.submitAd(context, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_3);
+                if (null != listener) {
+                    listener.onAdImpression(mFacebookAd,mAdId);
                 }
+                submitImpression(mAdId);
+                Log.e(TAG, "onLoggingImpression");
             }
         });
         // Request an ad
-        Log.e(TAG, "loadAd ");
+        submitRequest(mAdId);
         mFacebookAd.loadAd(NativeAd.MediaCacheFlag.ALL);
     }
 
     public interface ADListener {
         void onLoadedSuccess(NativeAd ad, String adId);
 
-        void onLoadedFailed(String msg, String adId);
+        void onLoadedFailed(String msg, String adId, int errorcode);
 
         void onAdClick();
+
+        void onAdImpression(NativeAd ad, String adId);
     }
 
     protected void startProgressTimer() {
@@ -118,23 +111,24 @@ public class NativeAD {
             mProgressTimerTask.cancel();
         }
     }
-    public final  int CODE_REFRESH = 1;
 
-    Handler mHandler = new Handler(){
+    public final int CODE_REFRESH = 1;
+
+    Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case CODE_REFRESH:
-                    Log.e(TAG, "MyTimerTask "+mAdId+" "+mRetryCount);
+                    Log.e(TAG, "MyTimerTask " + mAdId + " " + mRetryCount);
                     mRetryCount++;
                     cancelProgressTimer();
                     if (mRetryCount > 2) {
-                        Log.e(TAG, "retry all still failed"+mRetryCount);
+                        Log.e(TAG, "retry all still failed" + mRetryCount);
                         if (null != mListener) {
-                            mListener.onLoadedFailed("retry all still failed", mAdId);
+                            mListener.onLoadedFailed("retry all still failed", mAdId, 0);
                         }
                     } else {
-                        loadAD(mContext,mType,mAdId,mListener);
+                        loadAD(mContext, mType, mAdId, mListener);
                     }
                     break;
             }
@@ -144,9 +138,115 @@ public class NativeAD {
     protected class MyTimerTask extends TimerTask {
         @Override
         public void run() {
-            Message msg= mHandler.obtainMessage();
+            Message msg = mHandler.obtainMessage();
             msg.what = CODE_REFRESH;
             mHandler.sendMessage(msg);
         }
     }
+
+    private void submitRequest(String adId) {
+        Log.e(TAG, "adRequest ");
+        if (null == mContext) {
+            return;
+        }
+        // Ad impression logged callback
+        if (adId == ADConstants.facebook_video_feed_native1) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_REQUEST + "1");
+        } else if (adId == ADConstants.facebook_video_feed_native2) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_REQUEST + "2");
+        } else if (adId == ADConstants.facebook_video_feed_native3) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_REQUEST + "3");
+        } else if (adId == ADConstants.facebook_video_feed_native4) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_REQUEST + "4");
+        } else if (adId == ADConstants.facebook_video_feed_native5) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_REQUEST + "5");
+        } else if (adId == ADConstants.facebook_video_feed_native6) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_REQUEST + "6");
+        }
+    }
+
+    private void submitLoaded(String adId) {
+        Log.e(TAG, "onAdLoaded");
+        if (null == mContext) {
+            return;
+        }
+        // Ad impression logged callback
+        if (adId == ADConstants.facebook_video_feed_native1) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_LOADED + "1");
+        } else if (adId == ADConstants.facebook_video_feed_native2) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_LOADED + "2");
+        } else if (adId == ADConstants.facebook_video_feed_native3) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_LOADED + "3");
+        } else if (adId == ADConstants.facebook_video_feed_native4) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_LOADED + "4");
+        } else if (adId == ADConstants.facebook_video_feed_native5) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_LOADED + "5");
+        } else if (adId == ADConstants.facebook_video_feed_native6) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_LOADED + "6");
+        }
+    }
+
+    private void submitError(String adId, AdError error) {
+        Log.e(TAG, "onError " + error.getErrorCode() + error.getErrorMessage());
+        if (null == mContext) {
+            return;
+        }
+        if (adId == ADConstants.facebook_video_feed_native1) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_FAILED + "1 " + error.getErrorCode());
+        } else if (adId == ADConstants.facebook_video_feed_native2) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_FAILED + "2 " + error.getErrorCode());
+        } else if (adId == ADConstants.facebook_video_feed_native3) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_FAILED + "3 " + error.getErrorCode());
+        } else if (adId == ADConstants.facebook_video_feed_native4) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_FAILED + "4 " + error.getErrorCode());
+        } else if (adId == ADConstants.facebook_video_feed_native5) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_FAILED + "5 " + error.getErrorCode());
+        } else if (adId == ADConstants.facebook_video_feed_native6) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_FAILED + "6 " + error.getErrorCode());
+        }
+
+    }
+
+    private void submitImpression(String adId) {
+        if (null == mContext) {
+            return;
+        }
+        // Ad impression logged callback
+        if (adId == ADConstants.facebook_video_feed_native1) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_IMPRESSION + "1");
+        } else if (adId == ADConstants.facebook_video_feed_native2) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_IMPRESSION + "2");
+        } else if (adId == ADConstants.facebook_video_feed_native3) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_IMPRESSION + "3");
+        } else if (adId == ADConstants.facebook_video_feed_native4) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_IMPRESSION + "4");
+        } else if (adId == ADConstants.facebook_video_feed_native5) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_IMPRESSION + "5");
+        } else if (adId == ADConstants.facebook_video_feed_native6) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_IMPRESSION + "6");
+        }
+    }
+
+    private void submitClick(String adId) {
+        Log.e(TAG, "onAdClicked");
+        if (null == mContext) {
+            return;
+        }
+        // Ad impression logged callback
+        if (adId == ADConstants.facebook_video_feed_native1) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_CLICK + "1");
+        } else if (adId == ADConstants.facebook_video_feed_native2) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_CLICK + "2");
+        } else if (adId == ADConstants.facebook_video_feed_native3) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_CLICK + "3");
+        } else if (adId == ADConstants.facebook_video_feed_native4) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_CLICK + "4");
+        } else if (adId == ADConstants.facebook_video_feed_native5) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_CLICK + "5");
+        } else if (adId == ADConstants.facebook_video_feed_native6) {
+            StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_CLICK + "6");
+        }
+    }
+
+
 }

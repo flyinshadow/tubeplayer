@@ -1,19 +1,18 @@
 package com.wenjoyai.tubeplayer.ad;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdListener;
 import com.facebook.ads.NativeAd;
-import com.wenjoyai.tubeplayer.VLCApplication;
+import com.facebook.ads.NativeAdsManager;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by LiJiaZhi on 2017/9/23.
@@ -58,27 +57,104 @@ public class ADManager {
     }
 
     private ADManager() {
+        mAdIdList.clear();
+        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native1));
+        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native2));
+        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native3));
+//        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native4));
+//        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native5));
+//        mAdIdList.add(new AdID(ADConstants.facebook_video_feed_native6));
     }
 
     //缓存广告数组
-    private List<NativeAd> mNativeAdlist = new ArrayList<>();
     private int mNum = 3;
     //请求广告时间间隔默认10分钟
-    public static long REQUEST_FEED_NTIVE_INTERVAL = 10 * 60;
-    protected Timer UPDATE_PROGRESS_TIMER;
-    protected MyTimerTask mProgressTimerTask;
+//    public static long REQUEST_FEED_NTIVE_INTERVAL = 10 * 60;
+//    protected Timer UPDATE_PROGRESS_TIMER;
+//    protected MyTimerTask mProgressTimerTask;
     private Context mContext;
-    //失败个数
-    private int mFailed = 0;
     private ADNumListener mListener;
+
+    //准备好的，给上层的数据 3个
+    private LimitQueue<NativeAd> mReadyQueue = new LimitQueue<>(mNum);
+    public List<AdID> mAdIdList = new ArrayList<>();
+    private int mIndex = 0;
+    private int mFinished = 0;
+
+    class AdID {
+        public String adId;
+        public boolean isDepreted = false;
+
+        public AdID(String adId) {
+            this.adId = adId;
+        }
+    }
+
+    /**
+     * 获取下一个广告位
+     *
+     * @return
+     */
+    private String getNextAdId() {
+        AdID adID = mAdIdList.get(mIndex % mAdIdList.size());
+        mIndex++;
+        return adID.adId;
+    }
+
 
     /**
      * 开始加载广告
      */
     public void startLoadAD(Context context) {
         mContext = context;
-        mNativeAdlist.clear();
-        startProgressTimer();
+        mReadyQueue.clear();
+        //初始化加载三个
+        mFinished = 0;
+        for (int i = 0; i < mNum; i++) {
+            loadAD();
+        }
+    }
+
+
+    private void loadAD() {
+        String adId = getNextAdId();
+        if (!TextUtils.isEmpty(adId)) {
+            new NativeAD().loadAD(mContext, ADManager.AD_Facebook, adId, new NativeAD.ADListener() {
+                @Override
+                public void onLoadedSuccess(com.facebook.ads.NativeAd ad, String adId) {
+                    mFinished++;
+                    Log.e("ADManager", "onLoadedSuccess " + adId);
+                    if (null != ad) {
+                        mReadyQueue.offer(ad);
+                        if (mReadyQueue.size() == 1) {//只要有了一个广告成功就通知上层展示
+                            callbackAD();
+                        }
+                        if (mFinished == mNum) {
+                            callbackAD();
+                        }
+                    }
+                }
+
+                @Override
+                public void onLoadedFailed(String msg, String adId, int errorcode) {
+                    Log.e("ADManager", "onLoadedFailed ");
+                    mFinished++;
+                    if (mFinished == mNum) {
+                        callbackAD();
+                    }
+                }
+
+                @Override
+                public void onAdClick() {
+
+                }
+
+                @Override
+                public void onAdImpression(NativeAd ad, String adId) {
+                    Log.e("ADManager", "onAdImpression ");
+                }
+            });
+        }
     }
 
     /**
@@ -93,95 +169,60 @@ public class ADManager {
 
     //回调给上层广告数组
     protected void callbackAD() {
-        Log.e("NativeAD", "callbackAD ");
-        if (null != mListener) {
+        Log.e("ADManager", "callbackAD " + mReadyQueue.size());
+        if (null != mListener && mReadyQueue.size() > 0) {
             List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
-            tempList.addAll(mNativeAdlist);
+            for (int i = 0; i < mReadyQueue.size(); i++) {
+                tempList.add(mReadyQueue.get(i));
+            }
             if (tempList.size() > 0) {
                 mListener.onLoadedSuccess(tempList);
             }
         }
     }
 
-    protected void startProgressTimer() {
-        try {
-            UPDATE_PROGRESS_TIMER = new Timer();
-            mProgressTimerTask = new MyTimerTask();
-            UPDATE_PROGRESS_TIMER.schedule(mProgressTimerTask, 0, REQUEST_FEED_NTIVE_INTERVAL * 1000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void cancelProgressTimer() {
-        if (UPDATE_PROGRESS_TIMER != null) {
-            UPDATE_PROGRESS_TIMER.cancel();
-        }
-        if (mProgressTimerTask != null) {
-            mProgressTimerTask.cancel();
-        }
-    }
-
-    public final int CODE_REFRESH = 1;
-
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case CODE_REFRESH:
-                    if (VLCApplication.getAppContext().mAppForeground) {
-                        mFailed = 0;
-                        mNativeAdlist.clear();
-                        for (int i = 0; i < mNum; i++) {
-                            final NativeAD mFeedNativeAD = new NativeAD();
-                            String adUnit = "";
-                            if (i % 3 == 0) {
-                                adUnit = ADConstants.facebook_video_feed_native;
-                            } else if (i % 3 == 1) {
-                                adUnit = ADConstants.facebook_video_feed_native1;
-                            } else {
-                                adUnit = ADConstants.facebook_video_feed_native2;
-                            }
-                            mFeedNativeAD.loadAD(mContext, ADManager.AD_Facebook, adUnit, new NativeAD.ADListener() {
-                                @Override
-                                public void onLoadedSuccess(com.facebook.ads.NativeAd ad, String adId) {
-                                    if (null != ad) {
-                                        mNativeAdlist.add(ad);
-                                        if (mNativeAdlist.size()==1){//只要有了一个广告成功就通知上层展示
-                                            callbackAD();
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onLoadedFailed(String msg, String adId) {
-                                    mFailed++;
-                                    if (mFailed == mNum) {
-                                        StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_FACEBOOK_FAILED + " all ");
-                                    }
-                                }
-
-                                @Override
-                                public void onAdClick() {
-
-                                }
-                            });
-                        }
-                    }
-                    break;
+    public NativeAdsManager mExitManager;
+    public boolean mExitAdsLoaded = false;
+    public void loadExitAD(final Context context) {
+        mExitManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native4, 3);
+        mExitManager.setListener(new NativeAdsManager.Listener() {
+            @Override
+            public void onAdsLoaded() {
+                mExitAdsLoaded = true;
+                Log.e("ADManager", "onAdsLoaded exit");
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "loaded");
             }
-        }
-    };
 
-
-    protected class MyTimerTask extends TimerTask {
-        @Override
-        public void run() {
-            Message msg = mHandler.obtainMessage();
-            msg.what = CODE_REFRESH;
-            mHandler.sendMessage(msg);
-        }
+            @Override
+            public void onAdError(AdError adError) {
+                Log.e("ADManager", "onAdError exit " + adError.getErrorCode()+" "+adError.getErrorMessage());
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "error "+adError.getErrorCode());
+            }
+        });
+        mExitManager.loadAds(NativeAd.MediaCacheFlag.ALL);
     }
+
+    public NativeAdsManager mPauseManager;
+    public boolean mPauseAdsLoaded = false;
+    public void loadPauseAD(final Context context) {
+        mPauseManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native5, 3);
+        mPauseManager.setListener(new NativeAdsManager.Listener() {
+            @Override
+            public void onAdsLoaded() {
+                mPauseAdsLoaded = true;
+                Log.e("ADManager", "onAdsLoaded pause");
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "loaded");
+            }
+
+            @Override
+            public void onAdError(AdError adError) {
+                Log.e("ADManager", "onAdError pause " + adError.getErrorCode()+" "+adError.getErrorMessage());
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "error "+adError.getErrorCode());
+            }
+        });
+        mPauseManager.loadAds(NativeAd.MediaCacheFlag.ALL);
+    }
+
 
     public interface ADNumListener {
         void onLoadedSuccess(List<NativeAd> list);

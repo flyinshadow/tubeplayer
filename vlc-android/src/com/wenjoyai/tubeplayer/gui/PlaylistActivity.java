@@ -62,6 +62,7 @@ import com.wenjoyai.tubeplayer.gui.view.ContextMenuRecyclerView;
 import com.wenjoyai.tubeplayer.interfaces.IEventsHandler;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.FileUtils;
+import com.wenjoyai.tubeplayer.util.ShareUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -99,7 +100,7 @@ public class PlaylistActivity extends AudioPlayerContainerActivity implements IE
         final int fabVisibility =  savedInstanceState != null
             ? savedInstanceState.getInt(TAG_FAB_VISIBILITY) : -1;
 
-        if (!TextUtils.isEmpty(mPlaylist.getArtworkMrl())) {
+        if (mPlaylist != null && !TextUtils.isEmpty(mPlaylist.getArtworkMrl())) {
             VLCApplication.runBackground(new Runnable() {
                 @Override
                 public void run() {
@@ -341,6 +342,9 @@ public class PlaylistActivity extends AudioPlayerContainerActivity implements IE
             args.putParcelableArray(SavePlaylistDialog.KEY_NEW_TRACKS, media.getTracks(mMediaLibrary));
             savePlaylistDialog.setArguments(args);
             savePlaylistDialog.show(fm, "fragment_add_to_playlist");
+            return true;
+        } else if (id == R.id.audio_share) {
+            ShareUtils.shareMedia(this, media);
             return true;
         }
         return false;

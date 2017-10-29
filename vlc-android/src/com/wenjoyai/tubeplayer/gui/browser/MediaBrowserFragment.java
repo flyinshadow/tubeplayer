@@ -215,8 +215,11 @@ public abstract class MediaBrowserFragment extends PlaybackServiceFragment imple
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            for (String path : mediaPaths)
-                                mService.removeLocation(path);
+                            for (String path : mediaPaths) {
+                                if (mService != null) {
+                                    mService.removeLocation(path);
+                                }
+                            }
                             if (refresh)
                                 onRefresh();
                         }

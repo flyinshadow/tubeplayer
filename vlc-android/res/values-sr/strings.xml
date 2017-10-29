@@ -235,7 +235,7 @@
     <string name="rename">Преименуј</string>
     <string name="theme">Теме</string>
     <string name="night_mode">Ноћ режим</string>
-    <string name="share_app">Удео</string>
+    <string name="share">Удео</string>
     <!--Accessibility-->
     <!--Widget-->
 </resources>

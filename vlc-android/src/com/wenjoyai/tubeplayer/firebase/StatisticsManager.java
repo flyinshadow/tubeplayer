@@ -27,15 +27,18 @@ public class StatisticsManager {
 
     public static final String ITEM_AD_GOOGLE_BACK ="google_back_ad";
     public static final String ITEM_AD_GOOGLE_VIEWER ="google_viewer_ad";
-    public static final String ITEM_AD_GOOGLE_FIRST_OPEN ="google_first_open_ad";
+    public static final String ITEM_AD_GOOGLE_FIRST_OPEN ="open_ad_";
     public static final String ITEM_AD_GOOGLE_PAUSE_NATIVE ="google_pause_native_ad";
     public static final String ITEM_AD_GOOGLE_VIDEO_BANNER ="google_video_banner";
 
-    public static final String ITEM_AD_FEED_NATIVE_FACEBOOK_FAILED ="feed_facebook_failed";
+    public static final String ITEM_AD_FEED_NATIVE_FAILED ="feed_failed_";
+    public static final String ITEM_AD_FEED_NATIVE_IMPRESSION ="feed_impression_";
+    public static final String ITEM_AD_FEED_NATIVE_LOADED ="feed_loaded_";
+    public static final String ITEM_AD_FEED_NATIVE_REQUEST ="feed_request_";
+    public static final String ITEM_AD_FEED_NATIVE_CLICK ="feed_click_";
 
-    public static final String ITEM_AD_FEED_NATIVE_1 ="feed_native_1";
-    public static final String ITEM_AD_FEED_NATIVE_2 ="feed_native_2";
-    public static final String ITEM_AD_FEED_NATIVE_3 ="feed_native_3";
+    public static final String ITEM_AD_EXIT_ADS ="exit_ads_";
+    public static final String ITEM_AD_PAUSE_ADS ="pause_ads_";
 
 
     //视频播放
@@ -61,6 +64,9 @@ public class StatisticsManager {
     public static final String TYPE_VIDEO_EXTEND_REPEAT = "extend_extend_repeat";
     public static final String TYPE_VIDEO_EXTEND_SHUFFLE = "extend_shuffle";
     public static final String TYPE_VIDEO_RATIO = "ratio";
+
+    public static final String TYPE_NETWORK = "net";
+
 
     public static final String ITEM_VIDEO_LENGTH_0_1 = "0-1";
     public static final String ITEM_VIDEO_LENGTH_1_3 = "1-3";
@@ -120,6 +126,8 @@ public class StatisticsManager {
     public static final String TYPE_SETTING = "setting";
     public static final String TYPE_SHARE = "share";
     public static final String TYPE_NIGHTMODE = "nightmode";
+    public static final String TYPE_HISTORY = "history";
+    public static final String TYPE_ABOUT = "about";
 
     //主页面
     public static final String EVENT_HOME_TAB = "hometab";
@@ -163,6 +171,9 @@ public class StatisticsManager {
      * @param itemName
      */
     public static void submitAd(Context context, String type, String itemName) {
+        if (null == context){
+            return;
+        }
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemName);
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, itemName);
@@ -180,6 +191,9 @@ public class StatisticsManager {
      * @param itemName 文件时长
      */
     public static void submitVideoPlay(Context context, String type, String itemId, String itemName) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitVideoPlay, " + type + " " + itemId + " " + itemName);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
@@ -189,6 +203,9 @@ public class StatisticsManager {
     }
 
     public static void submitVideoPlaySuccess(Context context, String itemId, String itemName) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitVideoPlaySuccess, " + itemId + " " + itemName);
         Bundle bundle = new Bundle();
         if (!TextUtils.isEmpty(itemId)) {
@@ -201,6 +218,9 @@ public class StatisticsManager {
     }
 
     public static void submitPlayError(Context context, String itemId) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitPlayError, " + itemId);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
@@ -279,6 +299,9 @@ public class StatisticsManager {
      * @param itemName
      */
     public static void submitAudioPlay(Context context, String type, String itemName) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitAudioPlay, " + type + " " + itemName);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemName);
@@ -294,6 +317,9 @@ public class StatisticsManager {
      * @param itemId
      */
     public static void submitTheme(Context context, String itemId) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitTheme, " + itemId);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
@@ -306,6 +332,9 @@ public class StatisticsManager {
      * @param context
      */
     public static void submitDrawlayout(Context context, String type) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitDrawlayout, " + type);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, type);
@@ -318,6 +347,9 @@ public class StatisticsManager {
      * @param context
      */
     public static void submitHomeTab(Context context, String type, String itemName) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitHomeTab, " + type + " " + itemName);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemName);
@@ -331,6 +363,9 @@ public class StatisticsManager {
      * @param itemId
      */
     public static void submitRate(Context context, String itemId) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitRate, " + itemId);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
@@ -343,6 +378,9 @@ public class StatisticsManager {
      * @param itemId
      */
     public static void submitSelectContent(Context context, String contentType, String itemId) {
+        if (null == context){
+            return;
+        }
         LogUtil.d(TAG, "submitSelectContent, " + contentType + " " + itemId);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType);

@@ -23,10 +23,10 @@ public class BannerAD {
     com.facebook.ads.AdView mFacebookAd;
     AdView mGoogleAD;
 
-    public View loadAD(Context context, long type, String adId, final ADListener listener) {
+    public void loadAD(final Context context, long type, String adId, final ADListener listener) {
         //nomral级别以上才展示插屏
         if (ADManager.sLevel<ADManager.Level_Big){
-            return null;
+            return ;
         }
         if (type == ADManager.AD_MobVista) {
         } else if (type == ADManager.AD_Facebook) {
@@ -50,11 +50,13 @@ public class BannerAD {
                 @Override
                 public void onError(Ad ad, AdError adError) {
                     Log.e(TAG, "onAdLoaded "+adError.getErrorCode()+"  "+adError.getErrorMessage());
+                    mFacebookAd = null;
+                    loadAD(context,ADManager.AD_Google, ADConstants.google_video_grid_bannar,listener);
                 }
 
                 @Override
                 public void onAdLoaded(Ad ad) {
-                    listener.onLoadedSuccess();
+                    listener.onLoadedSuccess(mFacebookAd);
                 }
 
                 @Override
@@ -70,7 +72,6 @@ public class BannerAD {
                 }
             });
             mFacebookAd.loadAd();
-            return mFacebookAd;
         } else if (type == ADManager.AD_Google) {
             mGoogleAD = new AdView(context);
             mGoogleAD.setAdSize(AdSize.SMART_BANNER);
@@ -80,7 +81,7 @@ public class BannerAD {
                 public void onAdLoaded() {
                     // Code to be executed when an ad finishes loading.
                     Log.e(TAG, "onAdLoaded");
-                    listener.onLoadedSuccess();
+                    listener.onLoadedSuccess(mGoogleAD);
                 }
 
                 @Override
@@ -128,9 +129,7 @@ public class BannerAD {
             });
             AdRequest adRequest = new AdRequest.Builder().build();
             mGoogleAD.loadAd(adRequest);
-            return mGoogleAD;
         }
-        return null;
     }
 
     public void destroy(){
@@ -141,7 +140,7 @@ public class BannerAD {
         }
     }
     public interface ADListener {
-        void onLoadedSuccess();
+        void onLoadedSuccess(View view);
 
         void onLoadedFailed();
         void onAdClick();

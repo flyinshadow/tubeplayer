@@ -445,5 +445,5 @@
     <string name="rename">Rebaptiser</string>
     <string name="theme">Thème</string>
     <string name="night_mode">Mode nuit</string>
-    <string name="share_app">Partager</string>
+    <string name="share">Partager</string>
 </resources>

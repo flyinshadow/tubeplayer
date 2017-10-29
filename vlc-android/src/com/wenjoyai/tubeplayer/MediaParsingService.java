@@ -132,23 +132,25 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
             if (mLastNotificationTime <= 0L)
                 mLastNotificationTime = System.currentTimeMillis();
         }
-        switch (intent.getAction()) {
-            case ACTION_INIT:
-                setupMedialibrary(intent.getBooleanExtra(StartActivity.EXTRA_UPGRADE, false));
-                break;
-            case ACTION_RELOAD:
-                reload(intent.getStringExtra(EXTRA_PATH));
-                break;
-            case ACTION_DISCOVER:
-                discover(intent.getStringExtra(EXTRA_PATH));
-                break;
-            case ACTION_DISCOVER_DEVICE:
-                discoverStorage(intent.getStringExtra(EXTRA_PATH));
-                break;
-            default:
-                LogUtil.d(TAG, "aaaa onStartCommand exitCommand");
-                exitCommand();
-                return START_NOT_STICKY;
+        if (intent != null) {
+            switch (intent.getAction()) {
+                case ACTION_INIT:
+                    setupMedialibrary(intent.getBooleanExtra(StartActivity.EXTRA_UPGRADE, false));
+                    break;
+                case ACTION_RELOAD:
+                    reload(intent.getStringExtra(EXTRA_PATH));
+                    break;
+                case ACTION_DISCOVER:
+                    discover(intent.getStringExtra(EXTRA_PATH));
+                    break;
+                case ACTION_DISCOVER_DEVICE:
+                    discoverStorage(intent.getStringExtra(EXTRA_PATH));
+                    break;
+                default:
+                    LogUtil.d(TAG, "aaaa onStartCommand exitCommand");
+                    exitCommand();
+                    return START_NOT_STICKY;
+            }
         }
         LogUtil.d(TAG, "aaaa MediaParsingService onStartCommand sendBroadcast ACTION_SERVICE_STARTED");
         mLocalBroadcastManager.sendBroadcast(new Intent(ACTION_SERVICE_STARTED));

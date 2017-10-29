@@ -87,8 +87,8 @@
         <item name="ic_playasaudio_on">@drawable/ic_playasaudio_on</item>
         <item name="ic_popup_expand">@drawable/ic_popup_expand</item>
         <item name="ic_popup_dim">@drawable/ic_popup_dim</item>
-        <item name="ic_speed_normal_style">@drawable/ic_speed</item>
-        <item name="ic_sleep_normal_style">@drawable/ic_sleep</item>
+        <item name="ic_speed_normal_style">@drawable/ic_speed_w</item>
+        <item name="ic_sleep_normal_style">@drawable/ic_sleep_w</item>
         <item name="ic_jumpto_normal_style">@drawable/ic_jumpto</item>
         <item name="ic_chapter_normal_style">@drawable/ic_chapter</item>
         <item name="ic_equalizer_normal_style">@drawable/ic_equalizer</item>
@@ -416,8 +416,8 @@
         <item name="ic_playasaudio_on">@drawable/ic_playasaudio_on</item>
         <item name="ic_popup_expand">@drawable/ic_popup_expand</item>
         <item name="ic_popup_dim">@drawable/ic_popup_dim</item>
-        <item name="ic_speed_normal_style">@drawable/ic_speed</item>
-        <item name="ic_sleep_normal_style">@drawable/ic_sleep</item>
+        <item name="ic_speed_normal_style">@drawable/ic_speed_w</item>
+        <item name="ic_sleep_normal_style">@drawable/ic_sleep_w</item>
         <item name="ic_jumpto_normal_style">@drawable/ic_jumpto</item>
         <item name="ic_chapter_normal_style">@drawable/ic_chapter</item>
         <item name="ic_equalizer_normal_style">@drawable/ic_equalizer</item>
@@ -1184,5 +1184,14 @@
         <item name="android:windowNoTitle">true</item><!--无标题-->
         <item name="android:windowBackground">@color/transparent</item><!--背景透明-->
         <item name="android:backgroundDimEnabled">false</item><!--模糊-->
+    </style>
+
+    <style name="dialog1" parent="@android:style/Theme.Dialog">
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:windowBackground">@color/tube_red700</item><!--背景透明-->
+        <item name="android:backgroundDimEnabled">true</item><!--模糊-->
+        <item name="android:radius">10dp</item>
     </style>
 </resources>

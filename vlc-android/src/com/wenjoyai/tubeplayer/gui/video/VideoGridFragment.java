@@ -80,6 +80,7 @@ import com.wenjoyai.tubeplayer.media.MediaUtils;
 import com.wenjoyai.tubeplayer.util.FileUtils;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.Strings;
+import com.wenjoyai.tubeplayer.util.ShareUtils;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
 import org.videolan.libvlc.Media;
@@ -345,7 +346,11 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         if (activity instanceof PlaybackService.Callback)
             mService.removeCallback((PlaybackService.Callback) activity);
         media.removeFlags(MediaWrapper.MEDIA_FORCE_AUDIO);
-        VideoPlayerActivity.start(getActivity(), media.getUri(), fromStart);
+        if (mService.isPlayingPopup()) {
+            mService.load(media);
+        } else {
+            VideoPlayerActivity.start(getActivity(), media.getUri(), fromStart);
+        }
     }
 
     protected void playAudio(MediaWrapper media) {
@@ -392,6 +397,9 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 return true;
             case R.id.video_download_subtitles:
                 MediaUtils.getSubs(getActivity(), media);
+                return true;
+            case R.id.video_share:
+                ShareUtils.shareMedia(getActivity() != null ? getActivity() : VLCApplication.getAppContext(), media);
                 return true;
         }
         return false;
@@ -450,7 +458,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         if (media == null)
             return;
         MenuInflater inflater = getActivity().getMenuInflater();
-        inflater.inflate(media instanceof MediaGroup ? R.menu.video_group_contextual : R.menu.video_list, menu);
+        inflater.inflate(media instanceof MediaGroup ? R.menu.video_group_contextual : R.menu.video_list_contextual, menu);
         if (media instanceof MediaGroup) {
             if (!AndroidUtil.isHoneycombOrLater) {
                 menu.findItem(R.id.video_list_append).setVisible(false);
@@ -792,7 +800,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         ArrayList<MediaWrapper> items = mVideoAdapter.getAll();
         for (int i = 0; i < items.size(); ++i) {
             MediaWrapper mw = items.get(i);
-            if (mw.hasStateFlags(MediaLibraryItem.FLAG_SELECTED)) {
+            if (mw != null && mw.hasStateFlags(MediaLibraryItem.FLAG_SELECTED)) {
+
                 mw.removeStateFlags(MediaLibraryItem.FLAG_SELECTED);
                 mVideoAdapter.resetSelectionCount();
                 mVideoAdapter.notifyItemChanged(i, VideoListAdapter.UPDATE_SELECTION);
@@ -913,22 +922,25 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         mVideoAdapter.toggleViewMode(targetViewMode);
     }
 
-    private void loadBanner() {
-//        if (ADManager.isShowOpenAD) {
-        String adID = "";
-        if (ADManager.sPlatForm == ADManager.AD_MobVista) {
-        } else if (ADManager.sPlatForm == ADManager.AD_Google) {
-            adID = ADConstants.google_video_grid_bannar;
-        } else if (ADManager.sPlatForm == ADManager.AD_Facebook) {
-            adID = ADConstants.facebook_video_grid_bannar;
-        }
-        if (!TextUtils.isEmpty(adID)) {
-            mBannerAD = new BannerAD();
-            View view = mBannerAD.loadAD(getActivity(), ADManager.sPlatForm, adID, new BannerAD.ADListener() {
-                @Override
-                public void onLoadedSuccess() {
-                    StatisticsManager.submitAd(getActivity(), StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_VIDEO_BANNER);
-                }
+    private void loadBanner(){
+            String adID = "";
+            if (ADManager.sPlatForm == ADManager.AD_MobVista) {
+            } else if (ADManager.sPlatForm == ADManager.AD_Google) {
+                adID = ADConstants.google_video_grid_bannar;
+            } else if (ADManager.sPlatForm == ADManager.AD_Facebook) {
+                adID = ADConstants.facebook_video_grid_bannar;
+            }
+            if (!TextUtils.isEmpty(adID)) {
+                mBannerAD = new BannerAD();
+                mBannerAD.loadAD(getActivity(), ADManager.sPlatForm, adID, new BannerAD.ADListener() {
+                    @Override
+                    public void onLoadedSuccess(View view) {
+                        if (null != view) {
+                            mAdContainer.removeAllViews();
+                            mAdContainer.addView(view);
+                        }
+                        StatisticsManager.submitAd(getActivity(), StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_VIDEO_BANNER);
+                    }
 
                 @Override
                 public void onLoadedFailed() {
@@ -943,13 +955,9 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 @Override
                 public void onAdClose() {
 
-                }
-            });
-            if (null != view) {
-                mAdContainer.addView(view);
+                    }
+                });
             }
-        }
-//        }
     }
 
     private boolean checkAds() {
@@ -966,6 +974,9 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 Log.e("yNativeAD", "aaaa onLoadedSuccess list:" + (list == null ? 0 : list.size()));
                 if (checkAds()) {
                     mVideoAdapter.setNativeAd(mNativeAdList);
+                    if (mParsingFinished || mParsed) {
+                        mHandler.sendEmptyMessage(UPDATE_LIST);
+                    }
                 }
 //                if (checkAds() && (mParsingFinished || mParsed)) {
 //                    mShowAd = true;

@@ -235,11 +235,11 @@ dependencies {
     compile 'com.google.firebase:firebase-config:11.2.0'
     compile 'com.google.firebase:firebase-ads:11.2.0'
     //mobvista
-    compile(name: 'mobvista_alphab', ext: 'aar')
-    compile(name: 'mobvista_appwall', ext: 'aar')
-    compile(name: 'mobvista_common', ext: 'aar')
-    compile(name: 'mobvista_interstitial', ext: 'aar')
-    compile(name: 'mobvista_mvjscommon', ext: 'aar')
+//    compile(name: 'mobvista_alphab', ext: 'aar')
+//    compile(name: 'mobvista_appwall', ext: 'aar')
+//    compile(name: 'mobvista_common', ext: 'aar')
+//    compile(name: 'mobvista_interstitial', ext: 'aar')
+//    compile(name: 'mobvista_mvjscommon', ext: 'aar')
     //mopub
 //    compile('com.mopub:mopub-sdk:4.16.1@aar') {
 //        transitive = true

@@ -52,16 +52,26 @@
         android:visibility="gone"
         />
 
+    <!--<ImageView-->
+        <!--android:id="@+id/popup_toggle"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_gravity="end"-->
+        <!--android:src="@drawable/ic_popup_dim"-->
+        <!--android:scaleType="center"-->
+        <!--android:focusable="true"-->
+        <!--/>-->
+
     <ImageView
-        android:id="@+id/popup_toggle"
+        android:id="@+id/player_overlay_tracks"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_gravity="end"
-        android:src="@drawable/ic_popup_dim"
+        android:src="@drawable/ic_audiosub_circle"
         android:scaleType="center"
-        android:focusable="true"
-        />
+        android:focusable="true"/>
 
     <ImageView
         android:id="@+id/player_overlay_navmenu"
@@ -75,11 +85,11 @@
         android:focusable="true"
         android:visibility="gone" />
     <!-- Useless views to fix Chrome OS build -->
-    <Space
+    <TextView
         android:id="@+id/player_overlay_systime"
         android:layout_width="0dp"
         android:layout_height="0dp" />
-    <Space
+    <TextView
         android:id="@+id/player_overlay_battery"
         android:layout_width="0dp"
         android:layout_height="0dp" />

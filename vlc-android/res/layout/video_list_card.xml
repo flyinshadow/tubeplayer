@@ -39,10 +39,6 @@
             type="android.graphics.drawable.BitmapDrawable" />
 
         <variable
-            name="scaleType"
-            type="android.widget.ImageView.ScaleType" />
-
-        <variable
             name="holder"
             type="com.wenjoyai.tubeplayer.gui.video.VideoListAdapter.ViewHolder" />
 
@@ -157,7 +153,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     vlc:media="@{media}"
-                    android:scaleType="@{scaleType}"
+                    android:scaleType="centerCrop"
                     android:src="@{cover}"
                     android:background="@color/video_cover_background"
                     />
@@ -166,7 +162,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_action_mode_select_1610"
-                    android:scaleType="@{scaleType}"
+                    android:scaleType="centerCrop"
                     android:visibility="gone"
                     />
             </android.support.constraint.ConstraintLayout>

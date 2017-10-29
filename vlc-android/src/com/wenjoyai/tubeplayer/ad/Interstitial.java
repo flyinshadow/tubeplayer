@@ -9,11 +9,6 @@ import com.facebook.ads.InterstitialAd;
 import com.facebook.ads.InterstitialAdListener;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.mobvista.msdk.MobVistaConstans;
-import com.mobvista.msdk.out.InterstitialListener;
-import com.mobvista.msdk.out.MVInterstitialHandler;
-
-import java.util.HashMap;
 
 /**
  * Created by LiJiaZhi on 2017/9/26.
@@ -25,7 +20,7 @@ public class Interstitial {
     //facebook
     com.facebook.ads.InterstitialAd mFacebookAd;
     com.google.android.gms.ads.InterstitialAd mGoogleAD;
-    MVInterstitialHandler mInterstitialHandler;
+//    MVInterstitialHandler mInterstitialHandler;
 
     public void loadAD(final Context context, long type, final String adId, final ADListener listener) {
         //nomral级别以上才展示插屏
@@ -33,71 +28,6 @@ public class Interstitial {
             return;
         }
         if (type == ADManager.AD_MobVista) {
-            HashMap<String, Object> hashMap = new HashMap<String, Object>();
-            //设置广告位ID 必填
-            hashMap.put(MobVistaConstans.PROPERTIES_UNIT_ID, adId);
-            mInterstitialHandler = new MVInterstitialHandler(context, hashMap);
-            mInterstitialHandler.setInterstitialListener(new InterstitialListener() {
-                /**
-                 * 当Interstitial显示成功后回调
-                 */
-                @Override
-                public void onInterstitialShowSuccess() {
-                    Log.e(TAG, "onInterstitialShowSuccess");
-                    listener.onLoadedSuccess();
-                }
-
-                /**
-                 * 当Interstitial显示错误后回调
-                 * @prams errorMsg 错误消息
-                 */
-                @Override
-                public void onInterstitialShowFail(String errorMsg) {
-                    Log.e(TAG, "onInterstitialShowFail errorMsg:" + errorMsg);
-                    listener.onLoadedFailed();
-                }
-
-                /**
-                 * 当Interstitial广告加载成功后回调
-                 */
-                @Override
-                public void onInterstitialLoadSuccess() {
-                    Log.e(TAG, "onInterstitialLoadSuccess");
-                }
-
-                /**
-                 * 当Interstitial 广告加载成功后回调
-                 * @prams errorMsg 错误消息
-                 */
-                @Override
-                public void onInterstitialLoadFail(String errorMsg) {
-                    Log.e(TAG, "onInterstitialLoadFail errorMsg:" + errorMsg);
-                }
-
-                /**
-                 * 当Interstitial关闭后回调
-                 *
-                 */
-                @Override
-                public void onInterstitialClosed() {
-                    Log.e(TAG, "onInterstitialClosed");
-                    if (null!= listener){
-                        listener.onAdClose();
-                    }
-                }
-
-                /**
-                 * 当Interstitial广告被点击后回调
-                 */
-                @Override
-                public void onInterstitialAdClick() {
-                    Log.e(TAG, "onInterstitialAdClick");
-                    if (null != listener){
-                        listener.onAdClick();
-                    }
-                }
-            });
-            mInterstitialHandler.preload();
         } else if (type == ADManager.AD_Facebook) {
             Log.e(TAG, "startloading ");
             mFacebookAd = new InterstitialAd(context, adId);
@@ -227,9 +157,10 @@ public class Interstitial {
             mFacebookAd.show();
         } else if (mGoogleAD != null && mGoogleAD.isLoaded()) {
             mGoogleAD.show();
-        } else if (mInterstitialHandler != null) {
-            mInterstitialHandler.show();
         }
+//        else if (mInterstitialHandler != null) {
+//            mInterstitialHandler.show();
+//        }
     }
 
 

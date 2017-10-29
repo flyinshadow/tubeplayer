@@ -218,7 +218,7 @@
     <string name="rename">Pārdēvēt</string>
     <string name="theme">Tēma</string>
     <string name="night_mode">Nakts režīms</string>
-    <string name="share_app">Akciju</string>
+    <string name="share">Akciju</string>
     <!--Accessibility-->
     <!--Widget-->
 </resources>

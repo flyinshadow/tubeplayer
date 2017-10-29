@@ -76,8 +76,13 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
 
         if (getSupportFragmentManager().getFragments() == null) {
             String fragmentId = getIntent().getStringExtra(KEY_FRAGMENT);
-            fetchSecondaryFragment(fragmentId);
-            if (mFragment == null){
+            try {
+                fetchSecondaryFragment(fragmentId);
+            } catch (Exception e) {
+                mFragment = null;
+                LogUtil.e(TAG, "fetchSecondaryFragment e:" + e);
+            }
+            if (mFragment == null) {
                 finish();
                 return;
             }
@@ -118,8 +123,9 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
             viewMode = VideoListAdapter.VIEW_MODE_GRID;
         }
         if (fragment instanceof VideoGridFragment) {
-            if (mMenu != null)
+            if (mMenu != null && null!= mMenu.findItem(R.id.ml_menu_view_mode)) {
                 mMenu.findItem(R.id.ml_menu_view_mode).setVisible(visible);
+            }
             if (viewMode != ((VideoGridFragment) fragment).getCurrentViewMode()) {
                 ((VideoGridFragment) fragment).toggleVideoMode(viewMode);
             }
