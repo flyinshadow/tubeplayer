@@ -3967,15 +3967,17 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     }
     NativeAdScrollView scrollView;
     private void loadPauseNative(){
-        if (ADManager.getInstance().mPauseManager.isLoaded()) {
-            mNativeFrameLayout.setVisibility(View.VISIBLE);
-            if (scrollView != null) {
-                mNativeContainer.removeView(scrollView);
+        if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()) {
+            if (mNativeFrameLayout != null && mNativeContainer != null) {
+                mNativeFrameLayout.setVisibility(View.VISIBLE);
+                if (scrollView != null) {
+                    mNativeContainer.removeView(scrollView);
+                }
+                scrollView = new NativeAdScrollView(VideoPlayerActivity.this, ADManager.getInstance().mPauseManager, NativeAdView.Type.HEIGHT_300);
+                StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "shown");
+                mNativeContainer.addView(scrollView);
+                mNativeFrameLayout.startAnimation(mTranstionAnimIn);
             }
-            scrollView = new NativeAdScrollView(VideoPlayerActivity.this, ADManager.getInstance().mPauseManager, NativeAdView.Type.HEIGHT_300);
-            StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "shown");
-            mNativeContainer.addView(scrollView);
-            mNativeFrameLayout.startAnimation(mTranstionAnimIn);
         }
 //        NativeAD mFeedNativeAD = new NativeAD();
 //        mFeedNativeAD.loadAD(VideoPlayerActivity.this, ADManager.AD_Facebook, ADConstants.facebook_video_pause_native, new NativeAD.ADListener() {

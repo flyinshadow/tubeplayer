@@ -787,27 +787,27 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     @Override
     public void onClick(View v, int position, MediaLibraryItem item) {
         MediaWrapper media = (MediaWrapper) item;
-            if (mActionMode != null) {
-                item.toggleStateFlag(MediaLibraryItem.FLAG_SELECTED);
-                mVideoAdapter.updateSelectionCount(item.hasStateFlags(MediaLibraryItem.FLAG_SELECTED));
-                mVideoAdapter.notifyItemChanged(position, VideoListAdapter.UPDATE_SELECTION);
-                invalidateActionMode();
-                return;
-            }
-            Activity activity = getActivity();
-            if (media instanceof MediaGroup) {
-                String title = media.getTitle().substring(media.getTitle().toLowerCase().startsWith("the") ? 4 : 0);
-                ((MainActivity)activity).showSecondaryFragment(SecondaryActivity.VIDEO_GROUP_LIST, title);
+        if (mActionMode != null) {
+            item.toggleStateFlag(MediaLibraryItem.FLAG_SELECTED);
+            mVideoAdapter.updateSelectionCount(item.hasStateFlags(MediaLibraryItem.FLAG_SELECTED));
+            mVideoAdapter.notifyItemChanged(position, VideoListAdapter.UPDATE_SELECTION);
+            invalidateActionMode();
+            return;
+        }
+        Activity activity = getActivity();
+        if (media instanceof MediaGroup) {
+            String title = media.getTitle().substring(media.getTitle().toLowerCase().startsWith("the") ? 4 : 0);
+            ((MainActivity)activity).showSecondaryFragment(SecondaryActivity.VIDEO_GROUP_LIST, title);
+        } else if (media != null) {
+            media.removeFlags(MediaWrapper.MEDIA_FORCE_AUDIO);
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
+            if (settings.getBoolean("force_play_all", false)) {
+                ArrayList<MediaWrapper> playList = new ArrayList<>();
+                MediaUtils.openList(activity, playList, mVideoAdapter.getListWithPosition(playList, position));
             } else {
-                media.removeFlags(MediaWrapper.MEDIA_FORCE_AUDIO);
-                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
-                if (settings.getBoolean("force_play_all", false)) {
-                    ArrayList<MediaWrapper> playList = new ArrayList<>();
-                    MediaUtils.openList(activity, playList, mVideoAdapter.getListWithPosition(playList, position));
-                } else {
-                    playVideo(media, false);
-                }
+                playVideo(media, false);
             }
+        }
     }
 
     @Override
