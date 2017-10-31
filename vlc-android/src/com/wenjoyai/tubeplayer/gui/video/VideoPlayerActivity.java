@@ -723,7 +723,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onStop() {
-        LogUtil.e(TAG,"onStop");
+//        LogUtil.e(TAG,"onStop");
         super.onStop();
         mMedialibrary.resumeBackgroundOperations();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mServiceReceiver);
@@ -798,7 +798,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     protected void onDestroy() {
-        LogUtil.d(TAG, "onDestroy");
+//        LogUtil.d(TAG, "onDestroy");
         if (null != mInterstitial) {
             mInterstitial.show();
         }
@@ -887,7 +887,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (mPlaybackStarted || mService == null)
             return;
 
-        LogUtil.d("firstvideo", "startPlayback");
+//        LogUtil.d(TAG, "startPlayback");
 
         mSavedRate = 1.0f;
         mSavedTime = -1;
@@ -987,7 +987,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (!mPlaybackStarted)
             return;
 
-        LogUtil.d("firstvideo", "stopPlayback");
+//        LogUtil.d("firstvideo", "stopPlayback");
 
         mWasPaused = !mService.isPlaying();
         if (!isFinishing()) {
@@ -1734,7 +1734,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             case MediaPlayer.Event.TimeChanged:
                 break;
             case MediaPlayer.Event.Vout:
-                LogUtil.d("firstvideo", "MediaPlayer.Event.Vout");
+//                LogUtil.d("firstvideo", "MediaPlayer.Event.Vout");
                 updateNavStatus();
                 if (mMenuIdx == -1)
                     handleVout(event.getVoutCount());
@@ -1800,16 +1800,19 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
             switch (msg.what) {
                 case FADE_OUT:
+//                    LogUtil.d(TAG, "FADE_OUT");
                     hideOverlay(false);
                     break;
                 case SHOW_PROGRESS:
                     int pos = setOverlayProgress();
+//                    LogUtil.d(TAG, "SHOW_PROGRESS pos=" + pos);
                     if (canShowProgress()) {
                         msg = mHandler.obtainMessage(SHOW_PROGRESS);
                         mHandler.sendMessageDelayed(msg, 1000 - (pos % 1000));
                     }
                     break;
                 case FADE_OUT_INFO:
+//                    LogUtil.d(TAG, "FADE_OUT_INFO");
                     fadeOutInfo();
                     break;
                 case START_PLAYBACK:
@@ -1831,6 +1834,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     startLoading();
                     break;
                 case HIDE_INFO:
+//                    LogUtil.d(TAG, "HIDE_INFO");
                     hideOverlay(true);
                     break;
                 case SHOW_INFO:
@@ -1848,7 +1852,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private void onPlaying() {
         if (!mIsPlaying) {
             LogUtil.d(TAG, "first Playing");
-            LogUtil.d("firstvideo", "first Playing");
             MediaWrapper mw = mService.getCurrentMediaWrapper();
             if (mw != null) {
                 String path = (mw.getUri() != null) ? mw.getUri().getPath() : "";
@@ -1875,6 +1878,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     StatisticsManager.submitVideoPlaySuccess(this, mw.getUri().getPath(), null);
                 }
             }
+            showOverlay();
         }
         mIsPlaying = true;
         setPlaybackParameters();
@@ -2811,6 +2815,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             pause();
         } else {
             play();
+            showOverlay(true);
         }
     }
 
@@ -3032,6 +3037,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
      * hider overlay
      */
     private void hideOverlay(boolean fromUser) {
+//        LogUtil.d(TAG, "hideOverlay fromUser=" + fromUser + " mShowing=" + mShowing);
         if (mShowing) {
             mHandler.removeMessages(FADE_OUT);
             mHandler.removeMessages(SHOW_PROGRESS);
@@ -3179,6 +3185,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 ? "-" + '\u00A0' + Tools.millisToString(length - time)
                 : Tools.millisToString(length));
 
+//        LogUtil.d(TAG, "setOverlayProgress mTime=" + mTime + " mLength=" + mLength);
         return time;
     }
 
@@ -3250,7 +3257,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @TargetApi(12)
     @SuppressWarnings({"unchecked"})
     protected void loadMedia() {
-        LogUtil.e(TAG, "loadMedia");
+//        LogUtil.e(TAG, "loadMedia");
         if (mService == null)
             return;
         mUri = null;
@@ -3417,13 +3424,14 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             title = itemTitle;
         mTitle.setText(title);
 
+//        LogUtil.d(TAG, "loadMedia mWasPaused=" + mWasPaused);
         if (mWasPaused) {
             // XXX: Workaround to update the seekbar position
             mForcedTime = savedTime;
             setOverlayProgress();
             mForcedTime = -1;
+            showOverlay(true);
         }
-        showOverlay(true);
     }
 
     private SubtitlesGetTask mSubtitlesGetTask = null;
