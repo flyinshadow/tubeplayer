@@ -910,25 +910,22 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     private boolean mParsed = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getBoolean(KEY_PARSING_ONCE, false);
 
-    public void loadFeedNative(){
-        ADManager.getInstance().getNativeAdlist(new ADManager.ADNumListener() {
-            @Override
-            public void onLoadedSuccess(List<NativeAd> list) {
-                mNativeAdList = list;
-                Log.e("yNativeAD", "aaaa onLoadedSuccess list:" + (list == null ? 0 : list.size()));
-                if (checkAds()) {
-                    mVideoAdapter.setNativeAd(mNativeAdList);
-                    if (mParsingFinished || mParsed) {
-                        mHandler.sendEmptyMessage(UPDATE_LIST);
-                    }
+    private ADManager.ADNumListener mAdNumListener = new ADManager.ADNumListener() {
+        @Override
+        public void onLoadedSuccess(List<NativeAd> list) {
+            mNativeAdList = list;
+            Log.e("yNativeAD", "aaaa onLoadedSuccess list:" + (list == null ? 0 : list.size()));
+            if (checkAds()) {
+                mVideoAdapter.setNativeAd(mNativeAdList);
+                if (mParsingFinished || mParsed) {
+                    mHandler.sendEmptyMessage(UPDATE_LIST);
                 }
-//                if (checkAds() && (mParsingFinished || mParsed)) {
-//                    mShowAd = true;
-//                    LogUtil.d(TAG, "aaaa facebookAD onLoadedSuccess UPDATE_LIST");
-//                    mHandler.sendEmptyMessage(UPDATE_LIST);
-//                }
             }
-        });
+        }
+    };
+
+    public void loadFeedNative() {
+        ADManager.getInstance().getNativeAdlist(mAdNumListener);
     }
 
     public int getCurrentViewMode() {
