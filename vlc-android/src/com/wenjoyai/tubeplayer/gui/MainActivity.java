@@ -302,9 +302,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     //第一次打开
     private void loadOpenAD() {
 
-//        long second = mSettings.getLong(KEY_LAST_OPEN_TIME, 0);
-//        if (second == 0 || (System.currentTimeMillis() / 1000 - second) / 60 >= 2) {
-//            mSettings.edit().putLong(KEY_LAST_OPEN_TIME, System.currentTimeMillis() / 1000).apply();
+        long second = mSettings.getLong(KEY_LAST_OPEN_TIME, 0);
+        if (second == 0 || (System.currentTimeMillis() / 1000 - second) / 60 >= 2) {
+            mSettings.edit().putLong(KEY_LAST_OPEN_TIME, System.currentTimeMillis() / 1000).apply();
 
             String adID = "";
             if (ADManager.sPlatForm == ADManager.AD_MobVista) {
@@ -344,7 +344,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                     }
                 });
             }
-//        }
+        }
     }
 
     private void loadExitAD() {
