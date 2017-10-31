@@ -234,6 +234,8 @@ public class SubtitlesDownloader {
 
         //Second pass
         for (MediaWrapper media : mediaList){
+            if (media == null)
+                continue;
             String fileName = media.getUri().getLastPathSegment();
             if (!success.containsKey(fileName))
                 notFoundFiles.add(media);
@@ -286,6 +288,8 @@ public class SubtitlesDownloader {
         }
         //fill fails list
         for (MediaWrapper media : mediaList){
+            if (media == null)
+                continue;
             String fileName;
             fileName = media.getUri().getLastPathSegment();
             if (!success.containsKey(fileName)){

@@ -200,11 +200,11 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
     }
 
     private void changeSurfaceLayout(int videoWidth, int videoHeight) {
-        int viewWidth = mRootView.getWidth();
-        int viewHeight = mRootView.getHeight();
+        int viewWidth = mRootView.getPopupWidth();
+        int viewHeight = mRootView.getPopupHeight();
 
-        int displayW = Math.max(viewWidth, VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_width));
-        int displayH = viewHeight;//VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_height);
+        int displayW = viewWidth;//Math.max(viewWidth, VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_width));
+        int displayH = viewHeight;//Math.max(viewHeight, VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_height));
 
         Media.VideoTrack vtrack = mService.getCurrentVideoTrack();
         MediaWrapper media = mService.getCurrentMediaWrapper();
@@ -227,9 +227,14 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
         }
 
         if (videoWidth < videoHeight) {
-            displayW = VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_width_vertical);
+            displayH = Math.max(viewHeight, VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_height_vertical));
+            displayW = displayH * videoWidth / videoHeight;
+//            displayW = Math.max(viewWidth, VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_width_vertical));
+//            displayH = displayW * videoHeight / videoWidth;
+        } else {
+            displayW = Math.max(viewWidth, VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_width));
+            displayH = displayW * videoHeight / videoWidth;
         }
-        displayH = displayW * videoHeight / videoWidth;
 
         LogUtil.d("firstvideo", "PopupManager changeSurfaceLayout displayW=" + displayW + " displayH=" + displayH);
 

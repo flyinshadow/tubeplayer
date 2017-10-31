@@ -397,7 +397,11 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         int max = 0;
         int progress = 0;
 
-        if (media.getType() == MediaWrapper.TYPE_GROUP && media instanceof MediaGroup) {
+        if (media.getType() == MediaWrapper.TYPE_AD) {
+            return;
+        }
+
+        if ((media.getType() == MediaWrapper.TYPE_GROUP) && (media instanceof MediaGroup)) {
             MediaGroup mediaGroup = (MediaGroup) media;
             int size = mediaGroup.size();
             text = VLCApplication.getAppResources().getQuantityString(R.plurals.videos_quantity, size, size);

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -165,7 +166,7 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
                 fourIv.setImageResource(R.drawable.rate4_normal);
                 fiveIv.setImageResource(R.drawable.rate5_grey);
                 mRateTips.setText(VLCApplication.getAppResources().getString(R.string.rate_content_1_4));
-                mRateAction.setText(VLCApplication.getAppResources().getString(R.string.rate_feedback));
+                mRateAction.setText(VLCApplication.getAppResources().getString(R.string.rate_us));
                 break;
             case R.id.five:
                 mRateCount=5;
@@ -220,7 +221,7 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
             sSettings.edit().putInt(KEY_RATE_LAST_VERSION, VLCApplication.getVersionCode()).apply();
         }
 
-        if (getActivity() != null) {
+        if (getActivity() != null && (getActivity() instanceof DialogActivity)) {
             getActivity().finish();
         }
     }
