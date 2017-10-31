@@ -402,6 +402,10 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         int max = 0;
         int progress = 0;
 
+        if (media.getType() == MediaWrapper.TYPE_AD) {
+            return;
+        }
+
         if (media.getType() == MediaWrapper.TYPE_GROUP && media instanceof Group) {
             Group group = (Group) media;
             int size = group.size();

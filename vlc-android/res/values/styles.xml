@@ -1186,12 +1186,8 @@
         <item name="android:backgroundDimEnabled">false</item><!--模糊-->
     </style>
 
-    <style name="dialog1" parent="@android:style/Theme.Dialog">
-        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
-        <item name="android:windowIsTranslucent">false</item><!--半透明-->
-        <item name="android:windowNoTitle">true</item><!--无标题-->
-        <item name="android:windowBackground">@color/tube_red700</item><!--背景透明-->
-        <item name="android:backgroundDimEnabled">true</item><!--模糊-->
-        <item name="android:radius">10dp</item>
+    <style name="dialog_style">
+        <item name="android:windowEnterAnimation">@anim/pause_ad_left_in</item>
+        <item name="android:windowExitAnimation">@anim/pause_ad_leave_right</item>
     </style>
 </resources>
