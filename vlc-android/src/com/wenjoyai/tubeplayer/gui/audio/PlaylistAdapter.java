@@ -175,6 +175,8 @@ public class PlaylistAdapter extends BaseQueuedAdapter<ArrayList<MediaWrapper>, 
     @Override
     public void onItemDismiss(final int position) {
         final MediaWrapper media = getItem(position);
+        if (media == null)
+            return;
         String message = String.format(VLCApplication.getAppResources().getString(R.string.remove_playlist_item), media.getTitle());
         if (mAudioPlayer instanceof Fragment){
             View v = ((Fragment) mAudioPlayer).getView();
