@@ -2211,10 +2211,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (mNativeFrameLayout.getVisibility()==View.VISIBLE) {
+        if (mNativeFrameLayout != null && mNativeFrameLayout.getVisibility()==View.VISIBLE) {
             mNativeFrameLayout.startAnimation(mTranstionAnimOut);
             mNativeFrameLayout.setVisibility(View.GONE);
-
         }
         if (mService == null)
             return false;
