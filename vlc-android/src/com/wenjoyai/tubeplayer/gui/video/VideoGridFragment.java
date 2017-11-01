@@ -617,7 +617,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     @Override
     public void onRefresh() {
         LogUtil.d(TAG, "aaaa onRefresh");
-//        mVideoAdapter.resetAdIndex();
+        mVideoAdapter.resetAdIndex();
         if (mHandler != null) {
             mHandler.postDelayed(mSwipeRefreshRunnable, 5000);
         }
