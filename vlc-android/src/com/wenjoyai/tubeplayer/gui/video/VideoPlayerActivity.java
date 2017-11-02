@@ -2649,7 +2649,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
                 if (Permissions.canDrawOverlays(this)) {
                     switchToPopupMode();
-                    loadPauseNative();
+                    Intent intent = new Intent();
+                    intent.setAction("smallWindow");
+                    intent.putExtra("data", "Hi!I am broadcastData!");
+                    sendBroadcast(intent);
                 }else {
                     Permissions.checkDrawOverlaysPermission(this);
                 }
