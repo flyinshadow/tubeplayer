@@ -675,7 +675,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             ((ExtensionBrowser) fragment).goBack();
             return;
         }
-        if (!ADManager.getInstance().mIsPauseADShown &&ADManager.getInstance().mPauseManager.isLoaded()) {
+        if (!ADManager.getInstance().mIsPauseADShown && ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()) {
             showExitDialog();
         } else {
             finish();
