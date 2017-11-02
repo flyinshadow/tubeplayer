@@ -52,7 +52,7 @@ public class RateFragment extends DialogFragment implements View.OnClickListener
 
     private Calendar mCalendar = Calendar.getInstance();
 
-    private int mRateCount = 0;
+    private int mRateCount = 5;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
