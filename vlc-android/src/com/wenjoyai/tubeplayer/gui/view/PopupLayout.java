@@ -75,7 +75,9 @@ public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.
 
     public void setVLCVOut(IVLCVout vout) {
         mVLCVout = vout;
-        mVLCVout.setWindowSize(mPopupWidth, mPopupHeight);
+        if (mPopupWidth > 0 && mPopupHeight > 0) {
+            mVLCVout.setWindowSize(mPopupWidth, mPopupHeight);
+        }
     }
 
     /*
