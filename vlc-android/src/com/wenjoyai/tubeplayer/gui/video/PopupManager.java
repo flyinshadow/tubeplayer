@@ -123,7 +123,7 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
 
         IVLCVout vlcVout = mService.getVLCVout();
         vlcVout.setVideoView(mSurfaceView);
-        vlcVout.addCallback(this);
+//        vlcVout.addCallback(this);
         vlcVout.attachViews(this);
         mRootView.setVLCVOut(vlcVout);
         mService.setVideoAspectRatio(null);
@@ -205,6 +205,13 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
 
         int displayW = viewWidth;//Math.max(viewWidth, VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_width));
         int displayH = viewHeight;//Math.max(viewHeight, VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_height));
+
+        if (displayW == 0) {
+            displayW = VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_width);
+        }
+        if (displayH == 0) {
+            displayH = VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_height);
+        }
 
         Media.VideoTrack vtrack = mService.getCurrentVideoTrack();
         MediaWrapper media = mService.getCurrentMediaWrapper();
