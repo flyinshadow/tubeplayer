@@ -37,7 +37,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.ads.AdChoicesView;
@@ -72,25 +71,28 @@ public class StartActivity extends BaseActivity {
     public static final String EXTRA_FIRST_RUN = "extra_first_run";
     public static final String EXTRA_UPGRADE = "extra_upgrade";
 
-    private TextView mSkipTv;
-    private FrameLayout mNativeContainer;
-
-    boolean firstRun;
-    boolean upgrade;
-    boolean tv;
-    CountDownTimer timer;
+//    private TextView mSkipTv;
+//    private FrameLayout mNativeContainer;
+//    private FrameLayout mContainer;
+//
+//    boolean firstRun;
+//    boolean upgrade;
+//    boolean tv;
+//    CountDownTimer timer;
+//    private boolean mIsAdLoaded = false;//是否有广告结果返回，包括正确和错误返回-------超时限制
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_welcome);
-        mSkipTv = (TextView) findViewById(R.id.skip_tv);
-        mNativeContainer = (FrameLayout) findViewById(R.id.adContainer);
+//        setContentView(R.layout.activity_welcome);
+//        mSkipTv = (TextView) findViewById(R.id.skip_tv);
+//        mNativeContainer = (FrameLayout) findViewById(R.id.adContainer);
+//        mContainer = (FrameLayout) findViewById(R.id.splash_container);
 
         Intent intent = getIntent();
-        tv = showTvUi();
-        String action = intent != null ? intent.getAction() : null;
+        boolean tv =  showTvUi();
+        String action = intent != null ? intent.getAction(): null;
 
         if (Intent.ACTION_VIEW.equals(action) && intent.getData() != null) {
             intent.setDataAndType(intent.getData(), intent.getType());
@@ -98,7 +100,7 @@ public class StartActivity extends BaseActivity {
                 startActivity(intent.setClass(this, VideoPlayerActivity.class));
             else
                 MediaUtils.openMediaNoUi(intent.getData());
-            finish();
+//            finish();
             return;
         }
 
@@ -108,8 +110,8 @@ public class StartActivity extends BaseActivity {
         int currentVersionNumber = BuildConfig.VERSION_CODE;
         int savedVersionNumber = settings.getInt(PREF_FIRST_RUN, -1);
         /* Check if it's the first run */
-        firstRun = savedVersionNumber == -1;
-        upgrade = firstRun || savedVersionNumber != currentVersionNumber;
+        boolean firstRun = savedVersionNumber == -1;
+        boolean upgrade = firstRun || savedVersionNumber != currentVersionNumber;
         if (upgrade)
             settings.edit().putInt(PREF_FIRST_RUN, currentVersionNumber).apply();
         // Rate dialog should come out
@@ -132,27 +134,15 @@ public class StartActivity extends BaseActivity {
             Intent serviceInent = new Intent(PlaybackService.ACTION_PLAY_FROM_SEARCH, null, this, PlaybackService.class)
                     .putExtra(PlaybackService.EXTRA_SEARCH_BUNDLE, intent.getExtras());
             startService(serviceInent);
-            //add
             finish();
-            return;
         } else if (AudioPlayerContainerActivity.ACTION_SHOW_PLAYER.equals(action)) {
             startActivity(new Intent(this, tv ? AudioPlayerActivity.class : MainActivity.class));
-            //add
             finish();
-            return;
         } else {
-            loadAD();
-            timer = new CountDownTimer(5 * 1000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    mSkipTv.setText(millisUntilFinished / 1000 + "s");
-                }
-
-                @Override
-                public void onFinish() {
-                    jump();
-                }
-            }.start();
+            startActivity(new Intent(this, tv ? MainTvActivity.class : MainActivity.class)
+                    .putExtra(EXTRA_FIRST_RUN, firstRun)
+                    .putExtra(EXTRA_UPGRADE, upgrade));
+            finish();
         }
     }
 
@@ -172,10 +162,10 @@ public class StartActivity extends BaseActivity {
     }
 
     private void jump() {
-        startActivity(new Intent(this, tv ? MainTvActivity.class : MainActivity.class)
-                .putExtra(EXTRA_FIRST_RUN, firstRun)
-                .putExtra(EXTRA_UPGRADE, upgrade));
-        finish();
+//        startActivity(new Intent(this, tv ? MainTvActivity.class : MainActivity.class)
+//                .putExtra(EXTRA_FIRST_RUN, firstRun)
+//                .putExtra(EXTRA_UPGRADE, upgrade));
+//        finish();
     }
 
     private void startMedialibrary(boolean firstRun, boolean upgrade) {
@@ -191,71 +181,87 @@ public class StartActivity extends BaseActivity {
     }
 
     private void loadAD() {
-        NativeAD mFeedNativeAD = new NativeAD();
-        mFeedNativeAD.loadAD(this, ADManager.AD_Facebook, ADConstants.facebook_video_pause_native, new NativeAD.ADListener() {
-            @Override
-            public void onLoadedSuccess(com.facebook.ads.NativeAd nativeAd, String adId) {
-                if (null == mNativeContainer || null == nativeAd) {
-                    //异步过程，可能当前页面已经销毁了
-                    return;
-                }
-                mNativeContainer.setVisibility(View.VISIBLE);
-                LayoutInflater inflater = LayoutInflater.from(StartActivity.this);
-                LinearLayout adView = (LinearLayout) inflater.inflate(R.layout.layout_pause_native_ad, mNativeContainer, false);
-                mNativeContainer.removeAllViews();
-                mNativeContainer.addView(adView);
-
-                // Create native UI using the ad_front metadata.
-                ImageView nativeAdIcon = (ImageView) adView.findViewById(R.id.native_ad_icon);
-                TextView nativeAdTitle = (TextView) adView.findViewById(R.id.native_ad_title);
-                MediaView nativeAdMedia = (MediaView) adView.findViewById(R.id.native_ad_media);
-                // TextView nativeAdSocialContext = (TextView) adView.findViewById(R.id.native_ad_social_context);
-                TextView nativeAdBody = (TextView) adView.findViewById(R.id.native_ad_body);
-                Button nativeAdCallToAction = (Button) adView.findViewById(R.id.native_ad_call_to_action);
-
-                // Set the Text.
-                nativeAdTitle.setText(nativeAd.getAdTitle());
-                // nativeAdSocialContext.setText(nativeAd.getAdSocialContext());
-                nativeAdBody.setText(nativeAd.getAdBody());
-                nativeAdCallToAction.setText(nativeAd.getAdCallToAction());
-
-                // Download and display the ad_front icon.
-                NativeAd.Image adIcon = nativeAd.getAdIcon();
-                NativeAd.downloadAndDisplayImage(adIcon, nativeAdIcon);
-
-                // Download and display the cover image.
-                nativeAdMedia.setNativeAd(nativeAd);
-
-                // Add the AdChoices icon
-                LinearLayout adChoicesContainer = (LinearLayout) findViewById(R.id.ad_choices_container);
-                AdChoicesView adChoicesView = new AdChoicesView(StartActivity.this, nativeAd, true);
-                adChoicesContainer.addView(adChoicesView);
-
-                // Register the Title and CTA button to listen for clicks.
-                List<View> clickableViews = new ArrayList<>();
-                clickableViews.add(nativeAdTitle);
-                clickableViews.add(nativeAdCallToAction);
-                nativeAd.registerViewForInteraction(mNativeContainer, clickableViews);
-            }
-
-            @Override
-            public void onLoadedFailed(String msg, String adId, int errorcode) {
-                if (null != timer) {
-                    timer.cancel();
-                }
-                jump();
-            }
-
-            @Override
-            public void onAdClick() {
-
-            }
-
-            @Override
-            public void onAdImpression(NativeAd ad, String adId) {
-
-            }
-        });
+//        NativeAD mFeedNativeAD = new NativeAD();
+//        mFeedNativeAD.loadAD(this, ADManager.AD_Facebook, ADConstants.facebook_video_pause_native, new NativeAD.ADListener() {
+//            @Override
+//            public void onLoadedSuccess(com.facebook.ads.NativeAd nativeAd, String adId) {
+//                if (null == mNativeContainer || null == nativeAd) {
+//                    //异步过程，可能当前页面已经销毁了
+//                    return;
+//                }
+//                mContainer.setVisibility(View.VISIBLE);
+//                mIsAdLoaded = true;
+//                timer = new CountDownTimer(3 * 1000, 1000) {
+//                    @Override
+//                    public void onTick(long millisUntilFinished) {
+//                        mSkipTv.setText(millisUntilFinished / 1000 + "s");
+//                    }
+//
+//                    @Override
+//                    public void onFinish() {
+//                        jump();
+//                    }
+//                }.start();
+//
+//                LayoutInflater inflater = LayoutInflater.from(StartActivity.this);
+//                LinearLayout adView = (LinearLayout) inflater.inflate(R.layout.layout_pause_native_ad, mNativeContainer, false);
+//                mNativeContainer.removeAllViews();
+//                mNativeContainer.addView(adView);
+//
+//                // Create native UI using the ad_front metadata.
+//                ImageView nativeAdIcon = (ImageView) adView.findViewById(R.id.native_ad_icon);
+//                TextView nativeAdTitle = (TextView) adView.findViewById(R.id.native_ad_title);
+//                MediaView nativeAdMedia = (MediaView) adView.findViewById(R.id.native_ad_media);
+//                // TextView nativeAdSocialContext = (TextView) adView.findViewById(R.id.native_ad_social_context);
+//                TextView nativeAdBody = (TextView) adView.findViewById(R.id.native_ad_body);
+//                Button nativeAdCallToAction = (Button) adView.findViewById(R.id.native_ad_call_to_action);
+//
+//                // Set the Text.
+//                nativeAdTitle.setText(nativeAd.getAdTitle());
+//                // nativeAdSocialContext.setText(nativeAd.getAdSocialContext());
+//                nativeAdBody.setText(nativeAd.getAdBody());
+//                nativeAdCallToAction.setText(nativeAd.getAdCallToAction());
+//
+//                // Download and display the ad_front icon.
+//                NativeAd.Image adIcon = nativeAd.getAdIcon();
+//                NativeAd.downloadAndDisplayImage(adIcon, nativeAdIcon);
+//
+//                // Download and display the cover image.
+//                nativeAdMedia.setNativeAd(nativeAd);
+//
+//                // Add the AdChoices icon
+//                LinearLayout adChoicesContainer = (LinearLayout) findViewById(R.id.ad_choices_container);
+//                AdChoicesView adChoicesView = new AdChoicesView(StartActivity.this, nativeAd, true);
+//                adChoicesContainer.addView(adChoicesView);
+//
+//                // Register the Title and CTA button to listen for clicks.
+//                List<View> clickableViews = new ArrayList<>();
+//                clickableViews.add(nativeAdTitle);
+//                clickableViews.add(nativeAdCallToAction);
+//                nativeAd.registerViewForInteraction(mNativeContainer, clickableViews);
+//            }
+//
+//            @Override
+//            public void onLoadedFailed(String msg, String adId, int errorcode) {
+//                mIsAdLoaded = true;
+//                if (null != timer) {
+//                    timer.cancel();
+//                }
+//                jump();
+//            }
+//
+//            @Override
+//            public void onAdClick() {
+//
+//            }
+//
+//            @Override
+//            public void onAdImpression(NativeAd ad, String adId) {
+//
+//            }
+//        });
     }
+
+
 
 }
