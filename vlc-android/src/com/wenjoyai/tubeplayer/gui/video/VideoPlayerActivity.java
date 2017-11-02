@@ -1708,7 +1708,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 if (mRotateAD != null) {
                     mRotateAD.setVisibility(View.INVISIBLE);
                 }
-                if (mNativeFrameLayout != null) {
+                if (mNativeFrameLayout != null && mNativeFrameLayout.getVisibility()==View.VISIBLE) {
                     mNativeFrameLayout.startAnimation(mTranstionAnimOut);
                     mNativeFrameLayout.setVisibility(View.GONE);
                 }
@@ -2645,13 +2645,14 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 onAudioSubClick(v);
                 break;
             case R.id.popup_toggle:
-                loadPauseNative();
                 StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_POPUP, null, null);
 
-                if (Permissions.canDrawOverlays(this))
+                if (Permissions.canDrawOverlays(this)) {
                     switchToPopupMode();
-                else
+                    loadPauseNative();
+                }else {
                     Permissions.checkDrawOverlaysPermission(this);
+                }
                 break;
             case R.id.player_goback:
                 exitOK();
@@ -3981,7 +3982,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     }
     NativeAdScrollView scrollView;
     private void loadPauseNative(){
-        if (!ADManager.getInstance().mIsPauseADShown && ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()) {
+        if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()) {
             if (mNativeFrameLayout != null && mNativeContainer != null) {
                 ADManager.getInstance().mIsPauseADShown = true;
                 mNativeFrameLayout.setVisibility(View.VISIBLE);
