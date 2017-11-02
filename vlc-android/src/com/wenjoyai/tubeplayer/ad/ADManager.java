@@ -206,7 +206,7 @@ public class ADManager {
     public boolean mIsPauseADShown = false;
     public void loadPauseAD(final Context context) {
         mIsPauseADShown = false;
-        mPauseManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native5, 3);
+        mPauseManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native4, 3);
         mPauseManager.setListener(new NativeAdsManager.Listener() {
             @Override
             public void onAdsLoaded() {

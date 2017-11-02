@@ -1,14 +1,14 @@
 package com.wenjoyai.tubeplayer.ad;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.facebook.ads.NativeAdScrollView;
 import com.facebook.ads.NativeAdView;
@@ -37,8 +37,7 @@ public class PauseDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_pause);
         getWindow().setWindowAnimations(R.style.dialog_style);
-
-        ADManager.getInstance().mIsPauseADShown = true;
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         if (scrollView != null) {
             ((LinearLayout) findViewById(R.id.hscrollContainer)).removeView(scrollView);
         }
