@@ -165,11 +165,17 @@ public class PlaylistAdapter extends BaseQueuedAdapter<ArrayList<MediaWrapper>, 
         mAudioPlayer.onSelectionSet(position);
     }
 
+    private boolean validateIndex(int index) {
+        return index >= 0 && index < mDataSet.size();
+    }
+
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
-        Collections.swap(mDataSet, fromPosition, toPosition);
-        notifyItemMoved(fromPosition, toPosition);
-        mHandler.obtainMessage(PlaylistHandler.ACTION_MOVE, fromPosition, toPosition).sendToTarget();
+        if (validateIndex(fromPosition) && validateIndex(toPosition)) {
+            Collections.swap(mDataSet, fromPosition, toPosition);
+            notifyItemMoved(fromPosition, toPosition);
+            mHandler.obtainMessage(PlaylistHandler.ACTION_MOVE, fromPosition, toPosition).sendToTarget();
+        }
     }
 
     @Override

@@ -695,7 +695,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     @MainThread
     void update(final ArrayList<MediaWrapper> items, final boolean detectMoves) {
-        LogUtil.d(TAG, "xxxx mainthread update mPendingUpdates.size()=" + mPendingUpdates.size() + ", items.size()=" + items.size());
+//        LogUtil.d(TAG, "xxxx mainthread update mPendingUpdates.size()=" + mPendingUpdates.size() + ", items.size()=" + items.size());
         mPendingUpdates.add(items);
         if (mPendingUpdates.size() == 1) {
             internalUpdate(items, detectMoves);
