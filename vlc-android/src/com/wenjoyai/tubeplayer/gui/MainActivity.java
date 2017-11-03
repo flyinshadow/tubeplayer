@@ -1427,9 +1427,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     public class MyBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()) {
-                showPauseDialog();
-            }
+//            if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()) {
+//                showPauseDialog();
+//            }
         }
     }
 
