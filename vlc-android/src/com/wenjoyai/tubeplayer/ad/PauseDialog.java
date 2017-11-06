@@ -1,21 +1,17 @@
 package com.wenjoyai.tubeplayer.ad;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.StyleRes;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.facebook.ads.NativeAdScrollView;
 import com.facebook.ads.NativeAdView;
-import com.facebook.ads.NativeAdViewAttributes;
-import com.facebook.ads.NativeAdsManager;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 
@@ -25,13 +21,12 @@ import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
  * exit对话框
  */
 
-public class ExitDialog extends Dialog {
+public class PauseDialog extends Dialog {
     NativeAdScrollView scrollView;
-    TextView mCancelTv;
-    TextView mOkTv;
+    ImageView mCloseIv;
     Context mContext;
 
-    public ExitDialog(Context context) {
+    public PauseDialog(Context context) {
         super(context);
         mContext =context;
     }
@@ -40,32 +35,22 @@ public class ExitDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_exit);
+        setContentView(R.layout.dialog_pause);
         getWindow().setWindowAnimations(R.style.dialog_style);
-
-        ADManager.getInstance().mIsPauseADShown = true;
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         if (scrollView != null) {
             ((LinearLayout) findViewById(R.id.hscrollContainer)).removeView(scrollView);
         }
+        ADManager.getInstance().mIsPauseADShown = true;
         scrollView = new NativeAdScrollView(getContext(), ADManager.getInstance().mPauseManager,
                 NativeAdView.Type.HEIGHT_300);
         ((LinearLayout) findViewById(R.id.hscrollContainer)).addView(scrollView);
-        StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "shown");
-        mCancelTv = (TextView)findViewById(R.id.exit_cancel);
-        mOkTv = (TextView)findViewById(R.id.exit_ok);
-        mCancelTv.setOnClickListener(new View.OnClickListener() {
+        StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "shown");
+        mCloseIv = (ImageView)findViewById(R.id.ad_close_iv);
+        mCloseIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
-            }
-        });
-        mOkTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-                if (null!=mContext) {
-                    ((Activity) mContext).finish();
-                }
             }
         });
     }

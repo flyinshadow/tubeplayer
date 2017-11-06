@@ -533,7 +533,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             preloadWall();
         }
         //返回广告
-//        mHandler.postDelayed(mRunnable,ADManager.back_ad_delay_time*1000);
+        if (ADManager.sLevel>=ADManager.Level_Big){//如果是level 3才会加载返回广告
+            mHandler.postDelayed(mRunnable,ADManager.back_ad_delay_time*1000);
+        }
+
         initPauseNative();
         mTranstionAnimIn = AnimationUtils.loadAnimation(this, R.anim.pause_ad_left_in);
         mTranstionAnimOut = AnimationUtils.loadAnimation(this, R.anim.pause_ad_leave_right);
@@ -541,12 +544,12 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     private Animation mTranstionAnimIn;
     private Animation mTranstionAnimOut;
-//    Runnable mRunnable = new Runnable() {
-//        @Override
-//        public void run() {
-//            loadInterstitial();
-//        }
-//    };
+    Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            loadInterstitial();
+        }
+    };
 
     @Override
     protected void onResume() {
@@ -802,7 +805,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (null != mInterstitial) {
             mInterstitial.show();
         }
-//        mHandler.removeCallbacks(mRunnable);
+        mHandler.removeCallbacks(mRunnable);
         super.onDestroy();
         if (mReceiver != null)
             unregisterReceiver(mReceiver);
@@ -815,7 +818,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         }
 
         mAudioManager = null;
-//        mHandler.removeCallbacks(mRunnable);
     }
 
     /**
@@ -1706,7 +1708,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 if (mRotateAD != null) {
                     mRotateAD.setVisibility(View.INVISIBLE);
                 }
-                if (mNativeFrameLayout != null) {
+                if (mNativeFrameLayout != null && mNativeFrameLayout.getVisibility()==View.VISIBLE) {
                     mNativeFrameLayout.startAnimation(mTranstionAnimOut);
                     mNativeFrameLayout.setVisibility(View.GONE);
                 }
@@ -2643,13 +2645,17 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 onAudioSubClick(v);
                 break;
             case R.id.popup_toggle:
-
                 StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_POPUP, null, null);
 
-                if (Permissions.canDrawOverlays(this))
+                if (Permissions.canDrawOverlays(this)) {
                     switchToPopupMode();
-                else
+//                    Intent intent = new Intent();
+//                    intent.setAction("smallWindow");
+//                    intent.putExtra("data", "Hi!I am broadcastData!");
+//                    sendBroadcast(intent);
+                }else {
                     Permissions.checkDrawOverlaysPermission(this);
+                }
                 break;
             case R.id.player_goback:
                 exitOK();
@@ -3981,6 +3987,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private void loadPauseNative(){
         if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()) {
             if (mNativeFrameLayout != null && mNativeContainer != null) {
+                ADManager.getInstance().mIsPauseADShown = true;
                 mNativeFrameLayout.setVisibility(View.VISIBLE);
                 if (scrollView != null) {
                     mNativeContainer.removeView(scrollView);

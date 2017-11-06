@@ -23,10 +23,6 @@ public class Interstitial {
 //    MVInterstitialHandler mInterstitialHandler;
 
     public void loadAD(final Context context, long type, final String adId, final ADListener listener) {
-        //nomral级别以上才展示插屏
-        if (ADManager.sLevel<ADManager.Level_Normal){
-            return;
-        }
         if (type == ADManager.AD_MobVista) {
         } else if (type == ADManager.AD_Facebook) {
             Log.e(TAG, "startloading ");

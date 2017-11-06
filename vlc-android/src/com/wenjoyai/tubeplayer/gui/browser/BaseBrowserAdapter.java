@@ -178,12 +178,16 @@ public class BaseBrowserAdapter extends BaseQueuedAdapter<ArrayList<MediaLibrary
 
         public void onClick(View v){
             int position = getLayoutPosition();
-            fragment.onClick(v, position, mMediaList.get(position));
+            if (position >= 0 && position < mMediaList.size()) {
+                fragment.onClick(v, position, mMediaList.get(position));
+            }
         }
 
         public void onMoreClick(View v) {
             int position = getLayoutPosition();
-            fragment.onCtxClick(v, position, mMediaList.get(position));
+            if (position >= 0 && position < mMediaList.size()) {
+                fragment.onCtxClick(v, position, mMediaList.get(position));
+            }
         }
 
         @Override

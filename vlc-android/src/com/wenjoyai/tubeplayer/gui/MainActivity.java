@@ -22,10 +22,12 @@ package com.wenjoyai.tubeplayer.gui;
 
 import android.annotation.TargetApi;
 import android.app.SearchManager;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -66,6 +68,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FilterQueryProvider;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -83,6 +86,7 @@ import com.wenjoyai.tubeplayer.ad.ExitDialog;
 import com.wenjoyai.tubeplayer.ad.Interstitial;
 import com.wenjoyai.tubeplayer.ad.LoadingDialog;
 import com.wenjoyai.tubeplayer.ad.NetWorkUtil;
+import com.wenjoyai.tubeplayer.ad.PauseDialog;
 import com.wenjoyai.tubeplayer.extensions.ExtensionListing;
 import com.wenjoyai.tubeplayer.extensions.ExtensionManagerService;
 import com.wenjoyai.tubeplayer.extensions.api.VLCExtensionItem;
@@ -157,6 +161,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private  boolean mIsOpenLoadSuc = false;
     private static SharedPreferences sSettings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
     private long mOpenCount;//启动次数
+    MyBroadcastReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -245,6 +250,12 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         mOpenCount = mSettings.getLong(OPEN_COUNT, 0);
         mOpenCount++;
         sSettings.edit().putLong(OPEN_COUNT, mOpenCount).apply();
+
+        //小窗播放通知
+        mReceiver = new MyBroadcastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("smallWindow");
+        registerReceiver(mReceiver, filter);
     }
 
     private void submitNetwork() {
@@ -268,6 +279,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     public static final String KEY_LAST_OPEN_TIME = "key_last_open_time";
     LoadingDialog dialog;
     ExitDialog mExitDialog;
+    PauseDialog mPauseDialog;
 
     private void showOpenAD(){
         if (!mIsOpenLoadSuc){
@@ -302,7 +314,10 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
     //第一次打开
     private void loadOpenAD() {
-
+        //nomral级别以上才展示插屏
+        if (ADManager.sLevel<ADManager.Level_Normal){
+            return;
+        }
         long second = mSettings.getLong(KEY_LAST_OPEN_TIME, 0);
         if (second == 0 || (System.currentTimeMillis() / 1000 - second) / 60 >= 2) {
             mSettings.edit().putLong(KEY_LAST_OPEN_TIME, System.currentTimeMillis() / 1000).apply();
@@ -349,7 +364,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     }
 
     private void loadExitAD() {
-        ADManager.getInstance().loadExitAD(this);
+//        ADManager.getInstance().loadExitAD(this);
         ADManager.getInstance().loadPauseAD(this);
     }
 
@@ -649,6 +664,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (null!=mReceiver) {
+            unregisterReceiver(mReceiver);
+        }
     }
 
     @Override
@@ -673,7 +691,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             ((ExtensionBrowser) fragment).goBack();
             return;
         }
-        if (ADManager.getInstance().mExitManager.isLoaded()) {
+        if (!ADManager.getInstance().mIsPauseADShown && ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()) {
             showExitDialog();
         } else {
             finish();
@@ -687,6 +705,15 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         }
         if (null != mExitDialog && !isFinishing() && !mExitDialog.isShowing())
             mExitDialog.show();
+    }
+
+    private void showPauseDialog(){
+        if (mPauseDialog == null) {
+            mPauseDialog = new PauseDialog(MainActivity.this);
+            mPauseDialog.setCancelable(true);
+        }
+        if (null != mPauseDialog && !isFinishing() && !mPauseDialog.isShowing())
+            mPauseDialog.show();
     }
 
     @Override
@@ -1382,6 +1409,16 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 //                StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_LIBRARY_NAME);
 //            }
 //        });
+    }
+
+
+    public class MyBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+//            if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()) {
+//                showPauseDialog();
+//            }
+        }
     }
 
 }
