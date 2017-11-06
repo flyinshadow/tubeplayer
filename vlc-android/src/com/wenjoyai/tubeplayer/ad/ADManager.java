@@ -42,6 +42,8 @@ public class ADManager {
     public static boolean isShowGoogleVideoBanner = false;//是否显示视频列表页的banner
     public static boolean isShowMobvista = false;//是否显示旋转动画的mobvista广告
 
+    public static boolean isShowExit = true;//是否显示退出广告位
+
 
     private static volatile ADManager instance;
 
@@ -181,32 +183,32 @@ public class ADManager {
         }
     }
 
-//    public NativeAdsManager mExitManager;
-//    public boolean mExitAdsLoaded = false;
-//    public void loadExitAD(final Context context) {
-//        mExitManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native4, 3);
-//        mExitManager.setListener(new NativeAdsManager.Listener() {
-//            @Override
-//            public void onAdsLoaded() {
-//                mExitAdsLoaded = true;
-//                Log.e("ADManager", "onAdsLoaded exit");
-//                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "loaded");
-//            }
-//
-//            @Override
-//            public void onAdError(AdError adError) {
-//                Log.e("ADManager", "onAdError exit " + adError.getErrorCode()+" "+adError.getErrorMessage());
-//                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "error "+adError.getErrorCode());
-//            }
-//        });
-//        mExitManager.loadAds(NativeAd.MediaCacheFlag.ALL);
-//    }
+    public NativeAdsManager mExitManager = null;
+    public boolean mExitAdsLoaded = false;
+    public void loadExitAD(final Context context) {
+        mExitManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native4, 3);
+        mExitManager.setListener(new NativeAdsManager.Listener() {
+            @Override
+            public void onAdsLoaded() {
+                mExitAdsLoaded = true;
+                Log.e("ADManager", "onAdsLoaded exit");
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "loaded");
+            }
+
+            @Override
+            public void onAdError(AdError adError) {
+                Log.e("ADManager", "onAdError exit " + adError.getErrorCode()+" "+adError.getErrorMessage());
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "error "+adError.getErrorCode());
+            }
+        });
+        mExitManager.loadAds(NativeAd.MediaCacheFlag.ALL);
+    }
 
     public NativeAdsManager mPauseManager;
-    public boolean mIsPauseADShown = false;
+//    public boolean mIsPauseADShown = false;
     public void loadPauseAD(final Context context) {
-        mIsPauseADShown = false;
-        mPauseManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native4, 3);
+//        mIsPauseADShown = false;
+        mPauseManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native5, 3);
         mPauseManager.setListener(new NativeAdsManager.Listener() {
             @Override
             public void onAdsLoaded() {

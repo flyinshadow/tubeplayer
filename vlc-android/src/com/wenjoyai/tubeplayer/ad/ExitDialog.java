@@ -43,11 +43,11 @@ public class ExitDialog extends Dialog {
         setContentView(R.layout.dialog_exit);
         getWindow().setWindowAnimations(R.style.dialog_style);
 
-        ADManager.getInstance().mIsPauseADShown = true;
+//        ADManager.getInstance().mIsPauseADShown = true;
         if (scrollView != null) {
             ((LinearLayout) findViewById(R.id.hscrollContainer)).removeView(scrollView);
         }
-        scrollView = new NativeAdScrollView(getContext(), ADManager.getInstance().mPauseManager,
+        scrollView = new NativeAdScrollView(getContext(), ADManager.getInstance().mExitManager,
                 NativeAdView.Type.HEIGHT_300);
         ((LinearLayout) findViewById(R.id.hscrollContainer)).addView(scrollView);
         StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "shown");

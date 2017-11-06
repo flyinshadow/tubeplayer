@@ -3987,7 +3987,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private void loadPauseNative(){
         if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()) {
             if (mNativeFrameLayout != null && mNativeContainer != null) {
-                ADManager.getInstance().mIsPauseADShown = true;
+//                ADManager.getInstance().mIsPauseADShown = true;
                 mNativeFrameLayout.setVisibility(View.VISIBLE);
                 if (scrollView != null) {
                     mNativeContainer.removeView(scrollView);
