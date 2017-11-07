@@ -151,26 +151,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
         mDividerItemDecoration = new DividerItemDecoration(v.getContext(), DividerItemDecoration.VERTICAL);
 
-
-        int viewMode;
-        if (mFolderGroup != null) {
-            viewMode = VideoListAdapter.VIEW_MODE_FULL_TITLE;
-        } else {
-            viewMode = PreferenceManager.getDefaultSharedPreferences(
-                    VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
-                    VideoListAdapter.VIEW_MODE_DEFAULT);
-        }
-
         if (mVideoAdapter == null) {
-            mVideoAdapter = new VideoListAdapter(this, viewMode);
+            mVideoAdapter = new VideoListAdapter(this);
         }
-        if (mVideoAdapter.getCurrentViewMode() == VideoListAdapter.VIEW_MODE_LIST) {
-            mGridView.addItemDecoration(mDividerItemDecoration);
-        }
-
         mGridView.setAdapter(mVideoAdapter);
-
-        updateViewMode(viewMode);
 
         mAdContainer = (FrameLayout) v.findViewById(R.id.adContainer);
         return v;
@@ -862,8 +846,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     }
 
     public void toggleVideoMode(int targetViewMode) {
-        updateViewMode(targetViewMode);
-        mVideoAdapter.toggleViewMode(targetViewMode);
+        if (mVideoAdapter.getCurrentViewMode() != targetViewMode) {
+            updateViewMode(targetViewMode);
+            mVideoAdapter.toggleViewMode(targetViewMode);
+        }
     }
 
     private void loadBanner(){

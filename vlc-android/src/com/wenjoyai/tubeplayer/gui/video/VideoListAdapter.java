@@ -119,14 +119,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     private int mSelectionCount = 0;
     private int mGridCardWidth = 0;
 
-    private int mCurrentViewMode = VIEW_MODE_DEFAULT;
+    private int mCurrentViewMode = -1;//VIEW_MODE_DEFAULT;
 
     protected final ExecutorService mUpdateExecutor = Executors.newSingleThreadExecutor();
 
-    VideoListAdapter(IEventsHandler eventsHandler, int viewMode) {
+    VideoListAdapter(IEventsHandler eventsHandler) {
         super();
         mEventsHandler = eventsHandler;
-        mCurrentViewMode = viewMode;
     }
 
     VideoComparator getComparator() {
@@ -444,9 +443,10 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     }
 
     public void toggleViewMode(int targetViewMode) {
-        mCurrentViewMode = targetViewMode;
-        notifyItemRangeChanged(0, getItemCount());
-//        notifyDataSetChanged();
+        if (mCurrentViewMode != targetViewMode) {
+            mCurrentViewMode = targetViewMode;
+            notifyItemRangeChanged(0, getItemCount());
+        }
     }
 
     public int getCurrentViewMode() {
