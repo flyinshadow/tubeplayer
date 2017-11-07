@@ -364,7 +364,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     }
 
     private void loadExitAD() {
-//        ADManager.getInstance().loadExitAD(this);
+        if (ADManager.getInstance().isShowExit) {
+            ADManager.getInstance().loadExitAD(this);
+        }
         ADManager.getInstance().loadPauseAD(this);
     }
 
@@ -528,11 +530,13 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private static final String PLATFOM = "ad_platform";
     private static final String OPEN_COUNT = "first_open";
+    private static final String SHOW_EIXT = "show_exit";
 
 
     private void initConfig() {
         //init
         ADManager.sPlatForm = mSettings.getLong(PLATFOM, ADManager.AD_Facebook);
+        ADManager.isShowExit = mSettings.getBoolean(SHOW_EIXT, true);
 
         // Get Remote Config instance.
         // [START get_remote_config_instance]
@@ -592,7 +596,11 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                         ADManager.sPlatForm = mFirebaseRemoteConfig.getLong("ad_platform_type");
                         ADManager.sLevel = mFirebaseRemoteConfig.getLong("ad_level_type");
                         ADManager.back_ad_delay_time = mFirebaseRemoteConfig.getLong("back_ad_delay_time");
+                        ADManager.isShowExit = mFirebaseRemoteConfig.getBoolean("show_exit");
                         sSettings.edit().putLong(PLATFOM, ADManager.sPlatForm).apply();
+                        sSettings.edit().putBoolean(SHOW_EIXT, ADManager.isShowExit).apply();
+
+
 
 //                        ADManager.REQUEST_FEED_NTIVE_INTERVAL = mFirebaseRemoteConfig.getLong("request_feed_native_interval");
 
@@ -691,7 +699,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             ((ExtensionBrowser) fragment).goBack();
             return;
         }
-        if (!ADManager.getInstance().mIsPauseADShown && ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()) {
+        if (ADManager.getInstance().mExitManager != null && ADManager.getInstance().mExitManager.isLoaded()) {
             showExitDialog();
         } else {
             finish();

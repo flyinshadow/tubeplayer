@@ -41,7 +41,7 @@ public class PauseDialog extends Dialog {
         if (scrollView != null) {
             ((LinearLayout) findViewById(R.id.hscrollContainer)).removeView(scrollView);
         }
-        ADManager.getInstance().mIsPauseADShown = true;
+//        ADManager.getInstance().mIsPauseADShown = true;
         scrollView = new NativeAdScrollView(getContext(), ADManager.getInstance().mPauseManager,
                 NativeAdView.Type.HEIGHT_300);
         ((LinearLayout) findViewById(R.id.hscrollContainer)).addView(scrollView);
