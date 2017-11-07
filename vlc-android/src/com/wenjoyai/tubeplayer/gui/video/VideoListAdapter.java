@@ -452,7 +452,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     public void toggleViewMode(int targetViewMode) {
         mCurrentViewMode = targetViewMode;
-        notifyDataSetChanged();
+        notifyItemRangeChanged(0, getItemCount());
+//        notifyDataSetChanged();
     }
 
     public int getCurrentViewMode() {
