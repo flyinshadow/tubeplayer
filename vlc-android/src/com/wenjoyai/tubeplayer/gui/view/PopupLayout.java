@@ -42,6 +42,7 @@ import org.videolan.libvlc.IVLCVout;
 import org.videolan.libvlc.util.AndroidUtil;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 
 public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.OnScaleGestureListener, View.OnTouchListener {
     private static final String TAG = "VLC/PopupView";
@@ -75,7 +76,7 @@ public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.
 
     public void setVLCVOut(IVLCVout vout) {
         mVLCVout = vout;
-        if (mPopupWidth > 0 && mPopupHeight > 0) {
+        if (mVLCVout != null && mPopupWidth > 0 && mPopupHeight > 0) {
             mVLCVout.setWindowSize(mPopupWidth, mPopupHeight);
         }
     }
@@ -85,7 +86,7 @@ public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.
      */
     public void close() {
         setKeepScreenOn(false);
-        mWindowManager.removeView(this);
+        mWindowManager.removeViewImmediate(this);
         mWindowManager = null;
         mVLCVout = null;
     }
@@ -110,6 +111,8 @@ public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.
         containInScreen(width, height);
         mLayoutParams.width = width;
         mLayoutParams.height = height;
+        LogUtil.d(TAG, "PopupManager setViewSize updateViewLayout [" + mLayoutParams.x + "," + mLayoutParams.y + "," +mLayoutParams.width + ","
+                + mLayoutParams.height + "]");
         mWindowManager.updateViewLayout(this, mLayoutParams);
         mPopupWidth = width;
         mPopupHeight = height;
@@ -142,6 +145,7 @@ public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.
         params.gravity = Gravity.BOTTOM | Gravity.START;
         params.x = 50;
         params.y = 50;
+        params.windowAnimations = android.R.style.Animation_Translucent;
         if (AndroidUtil.isHoneycombOrLater)
             mScaleGestureDetector = new ScaleGestureDetector(context, this);
         setOnTouchListener(this);
@@ -186,6 +190,8 @@ public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.
                     mLayoutParams.x = initialX + (int) (event.getRawX() - initialTouchX);
                     mLayoutParams.y = initialY - (int) (event.getRawY() - initialTouchY);
                     containInScreen(mLayoutParams.width, mLayoutParams.height);
+                    LogUtil.d(TAG, "PopupManager ACTION_MOVE updateViewLayout [" + mLayoutParams.x + "," + mLayoutParams.y + "," +mLayoutParams.width + ","
+                            + mLayoutParams.height + "]");
                     mWindowManager.updateViewLayout(PopupLayout.this, mLayoutParams);
                     return true;
                 }

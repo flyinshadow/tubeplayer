@@ -91,7 +91,6 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
         hideNotification();
         if (mRootView == null)
             return;
-//        mService.setVideoTrackEnabled(false);
         mService.removeCallback(this);
         final IVLCVout vlcVout = mService.getVLCVout();
         vlcVout.detachViews();
@@ -113,6 +112,7 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
         mExpandButton.setOnClickListener(this);
 
         mSeekBar = (SeekBar) mRootView.findViewById(R.id.popup_seekbar);
+        mSeekBar.setEnabled(false);
         mSeekBar.setVisibility(View.GONE);
 
         GestureDetectorCompat gestureDetector = new GestureDetectorCompat(mService, this);
@@ -137,8 +137,8 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
 //        mService.startService(new Intent(mService, PlaybackService.class));
 //        showNotification();
 
-//        mHandler.sendEmptyMessage(SHOW_BUTTONS);
-//        mHandler.sendEmptyMessageDelayed(HIDE_BUTTONS, MSG_DELAY);
+        mHandler.sendEmptyMessage(SHOW_BUTTONS);
+        mHandler.sendEmptyMessageDelayed(HIDE_BUTTONS, MSG_DELAY);
     }
 
     @Override
@@ -197,7 +197,7 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
     public void onNewVideoLayout(IVLCVout vlcVout, int width, int height,
                                  int visibleWidth, int visibleHeight, int sarNum, int sarDen) {
 
-        LogUtil.d("firstvideo", "PopupManager onNewVideoLayout width=" + width + ", height=" + height +
+        LogUtil.d(TAG, "PopupManager onNewVideoLayout width=" + width + ", height=" + height +
                 ", visibleWidth=" + visibleWidth + ", visibleHeight=" + visibleHeight);
 
         changeSurfaceLayout(width, height);
@@ -230,7 +230,7 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
             }
         }
 
-        LogUtil.d("firstvideo", "PopupManager changeSurfaceLayout videoWidth=" + videoWidth + " videoHeight=" + videoHeight);
+        LogUtil.d(TAG, "PopupManager changeSurfaceLayout videoWidth=" + videoWidth + " videoHeight=" + videoHeight);
 
         if (videoWidth == 0 || videoHeight == 0) {
             mRootView.setViewSize(displayW, displayH);
@@ -247,7 +247,7 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
             displayH = displayW * videoHeight / videoWidth;
         }
 
-        LogUtil.d("firstvideo", "PopupManager changeSurfaceLayout displayW=" + displayW + " displayH=" + displayH);
+        LogUtil.d(TAG, "PopupManager changeSurfaceLayout displayW=" + displayW + " displayH=" + displayH);
 
         if (displayW != viewWidth || displayH != viewHeight) {
             mRootView.setViewSize(displayW, displayH);
@@ -287,7 +287,7 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
 
 //                    Media.VideoTrack vt = mService.getCurrentVideoTrack();
 //                    if (vt != null && vt.width > 0 && vt.height > 0) {
-//                        LogUtil.d("firstvideo", "PopupManager Playing video width=" + vt.width + " height=" + vt.height);
+//                        LogUtil.d(TAG, "PopupManager Playing video width=" + vt.width + " height=" + vt.height);
 //                        mVideoWidth = vt.width;
 //                        mVideoHeight = vt.height;
 //                        changeSurfaceLayout(mVideoWidth, mVideoHeight);
@@ -306,7 +306,7 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
 //                    if (event.getEsChangedType() == Media.VideoTrack.Type.Video) {
 //                        Media.VideoTrack vt = mService.getCurrentVideoTrack();
 //                        if (vt != null && vt.width > 0 && vt.height > 0) {
-//                            LogUtil.d("firstvideo", "PopupManager ESSelected video width=" + vt.width + " height=" + vt.height);
+//                            LogUtil.d(TAG, "PopupManager ESSelected video width=" + vt.width + " height=" + vt.height);
 //                            mVideoWidth = vt.width;
 //                            mVideoHeight = vt.height;
 //                            changeSurfaceLayout(mVideoWidth, mVideoHeight);
@@ -318,7 +318,7 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
                 {
 //                    Media.VideoTrack vt = mService.getCurrentVideoTrack();
 //                    if (vt != null && vt.width > 0 && vt.height > 0) {
-//                        LogUtil.d("firstvideo", "PopupManager Vout video width=" + vt.width + " height=" + vt.height);
+//                        LogUtil.d(TAG, "PopupManager Vout video width=" + vt.width + " height=" + vt.height);
 //                        mVideoWidth = vt.width;
 //                        mVideoHeight = vt.height;
 //                        changeSurfaceLayout(mVideoWidth, mVideoHeight);
