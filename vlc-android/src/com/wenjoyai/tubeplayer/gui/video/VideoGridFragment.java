@@ -154,6 +154,9 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         if (mVideoAdapter == null) {
             mVideoAdapter = new VideoListAdapter(this);
         }
+        if (mVideoAdapter.getCurrentViewMode() != -1) {
+            updateViewMode(mVideoAdapter.getCurrentViewMode());
+        }
         mGridView.setAdapter(mVideoAdapter);
 
         mAdContainer = (FrameLayout) v.findViewById(R.id.adContainer);
@@ -263,10 +266,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     }
 
     private void updateViewMode(int targetViewMode) {
-        if (getView() == null || getActivity() == null) {
-            Log.w(TAG, "Unable to setup the view");
-            return;
-        }
+//        if (getView() == null || getActivity() == null) {
+//            Log.w(TAG, "Unable to setup the view");
+//            return;
+//        }
         Resources res = getResources();
         boolean listMode = targetViewMode != VideoListAdapter.VIEW_MODE_GRID;
 //        listMode |= res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT &&
