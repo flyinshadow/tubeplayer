@@ -33,7 +33,6 @@
                 vlc:expandedTitleMarginStart="48dp"
                 vlc:layout_scrollFlags="scroll|exitUntilCollapsed" >
                 <android.support.constraint.ConstraintLayout
-                    android:id="@+id/ad_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <ImageView

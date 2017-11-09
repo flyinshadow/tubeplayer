@@ -48,6 +48,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -340,7 +341,11 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 MediaUtils.openList(getActivity(), playList, mVideoAdapter.getListWithPosition(playList, position));
                 return true;
             case R.id.video_list_info:
-                showInfoDialog(media);
+            {
+                View itemView = mGridView.getLayoutManager().findViewByPosition(position);
+                ImageView thumb = (ImageView) itemView.findViewById(R.id.ml_item_thumbnail);
+                showInfoDialog(media, thumb);
+            }
                 return true;
             case R.id.video_list_rename:
                 renameVideo(media);

@@ -29,6 +29,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -212,6 +213,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                 holder.fileSize.setText(Strings.readableSize(media.getFileSize()));
             }
         }
+
+        ViewCompat.setTransitionName(holder.thumbView, "media_thumb_" + String.valueOf(media.getId()));
     }
 
     @Override

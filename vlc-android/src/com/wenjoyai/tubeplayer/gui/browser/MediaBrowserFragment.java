@@ -31,7 +31,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.util.Log;
@@ -39,6 +41,7 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import org.videolan.medialibrary.Medialibrary;
 import org.videolan.medialibrary.media.MediaLibraryItem;
@@ -230,9 +233,26 @@ public abstract class MediaBrowserFragment extends PlaybackServiceFragment imple
     }
 
     protected void showInfoDialog(MediaLibraryItem item) {
-        Intent i = new Intent(getActivity(), InfoActivity.class);
-        i.putExtra(InfoActivity.TAG_ITEM, item);
-        startActivity(i);
+        Intent intent = new Intent(getActivity(), InfoActivity.class);
+        intent.putExtra(InfoActivity.TAG_ITEM, item);
+        startActivity(intent);
+    }
+
+    protected void showInfoDialog(MediaLibraryItem item, ImageView sharedImageView) {
+        Intent intent = new Intent(getActivity(), InfoActivity.class);
+        intent.putExtra(InfoActivity.TAG_ITEM, item);
+
+        String transitionName = ViewCompat.getTransitionName(sharedImageView);
+        LogUtil.d(TAG, "showInfoDialog transitionName=" + transitionName);
+
+        intent.putExtra(InfoActivity.EXTRA_MEDIA_THUMB_TRANSITION_NAME, transitionName);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                getActivity(),
+                sharedImageView,
+                transitionName);
+
+        startActivity(intent, options.toBundle());
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)

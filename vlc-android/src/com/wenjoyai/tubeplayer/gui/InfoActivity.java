@@ -17,6 +17,7 @@ import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 
 import org.videolan.libvlc.LibVLC;
 import org.videolan.libvlc.Media;
@@ -40,6 +41,7 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
 
     public final static String TAG_ITEM = "ML_ITEM";
     public final static String TAG_FAB_VISIBILITY= "FAB";
+    public static final String EXTRA_MEDIA_THUMB_TRANSITION_NAME = "media_thumb_transition_name";
 
     private MediaWrapper mItem;
     private MediaInfoAdapter mAdapter;
@@ -53,6 +55,8 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        supportPostponeEnterTransition();
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.info_activity);
 
@@ -78,6 +82,12 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
         mAdapter = new MediaInfoAdapter(this);
         mBinding.list.setAdapter(mAdapter);
 
+        ImageView cover = (ImageView) findViewById(R.id.playlist_cover);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            String imageTransitionName = getIntent().getExtras().getString(EXTRA_MEDIA_THUMB_TRANSITION_NAME);
+            cover.setTransitionName(imageTransitionName);
+        }
+
         if (!TextUtils.isEmpty(mItem.getArtworkMrl())) {
             VLCApplication.runBackground(new Runnable() {
                 @Override
@@ -92,6 +102,8 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
                                 mBinding.appbar.setExpanded(true, true);
                                 if (fabVisibility != -1)
                                     mBinding.fab.setVisibility(fabVisibility);
+
+                                supportStartPostponedEnterTransition();
                             }
                         });
                     } else
