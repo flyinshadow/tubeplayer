@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -100,8 +101,11 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
         } else
             noCoverFallback();
         mBinding.fab.setOnClickListener(this);
-        mCheckFileTask = (CheckFileTask) new CheckFileTask().execute();
-        mLoadImageTask = (LoadImageTask) new LoadImageTask().execute();
+        mCheckFileTask = new CheckFileTask();
+        mLoadImageTask = new LoadImageTask();
+
+        mCheckFileTask.exec();
+        mLoadImageTask.exec();
 
 //        mBinding.length.setText(mItem.getLength() > 0L ? Tools.millisToString(mItem.getLength()) : "");
         mBinding.infoPath.setText(Uri.decode(mItem.getUri().getPath()));
@@ -150,6 +154,13 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
     }
 
     private class CheckFileTask extends AsyncTask<Void, Void, File> {
+
+        void exec() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+                executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            else
+                execute();
+        }
 
         private void checkSubtitles(File itemFile) {
             String extension, filename, videoName = Uri.decode(itemFile.getName()), parentPath = Uri.decode(itemFile.getParent());
@@ -217,6 +228,13 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
     }
 
     private class LoadImageTask extends AsyncTask<Void, Void, Media> {
+
+        public void exec() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+                executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            else
+                execute();
+        }
 
         @Override
         protected Media doInBackground(Void... params) {
