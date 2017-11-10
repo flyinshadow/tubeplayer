@@ -289,19 +289,19 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         }
         mGridView.setNumColumns(listMode ? 1 : -1);
         if (mVideoAdapter.isListMode() != listMode) {
-            if (listMode && targetViewMode != VideoListAdapter.VIEW_MODE_BIGPIC && targetViewMode != VideoListAdapter.VIEW_MODE_FULL_TITLE)
-                mGridView.addItemDecoration(mDividerItemDecoration);
-            else
-                mGridView.removeItemDecoration(mDividerItemDecoration);
+//            if (listMode && targetViewMode != VideoListAdapter.VIEW_MODE_BIGPIC && targetViewMode != VideoListAdapter.VIEW_MODE_FULL_TITLE)
+//                mGridView.addItemDecoration(mDividerItemDecoration);
+//            else
+//                mGridView.removeItemDecoration(mDividerItemDecoration);
             mVideoAdapter.setListMode(listMode);
         }
-        if (targetViewMode == VideoListAdapter.VIEW_MODE_GRID) {
-            mGridView.removeItemDecoration(mDividerItemDecoration);
-        } else if (targetViewMode == VideoListAdapter.VIEW_MODE_LIST) {
-            mGridView.addItemDecoration(mDividerItemDecoration);
-        } else if (targetViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
-            mGridView.removeItemDecoration(mDividerItemDecoration);
-        }
+//        if (targetViewMode == VideoListAdapter.VIEW_MODE_GRID) {
+//            mGridView.removeItemDecoration(mDividerItemDecoration);
+//        } else if (targetViewMode == VideoListAdapter.VIEW_MODE_LIST) {
+//            mGridView.addItemDecoration(mDividerItemDecoration);
+//        } else if (targetViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
+//            mGridView.removeItemDecoration(mDividerItemDecoration);
+//        }
     }
 
     protected void playVideo(MediaWrapper media, boolean fromStart) {
