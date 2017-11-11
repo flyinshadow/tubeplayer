@@ -218,7 +218,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             }
         }
 
-        ViewCompat.setTransitionName(holder.thumbView, "media_thumb_" + String.valueOf(media.getId()));
+        if (holder.thumbView != null && media != null) {
+            ViewCompat.setTransitionName(holder.thumbView, "media_thumb_" + String.valueOf(media.getId()));
+        }
     }
 
     @Override
