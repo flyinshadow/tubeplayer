@@ -573,8 +573,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (!mIsShare){
             return;
         }
-        mPreIv.setImageURI(Uri.fromFile(new File(mediaWrapper.getArtworkMrl())) );
         if (null!= mediaWrapper&&!TextUtils.isEmpty(mediaWrapper.getArtworkMrl())) {
+            mPreIv.setImageURI(Uri.fromFile(new File(mediaWrapper.getArtworkMrl())) );
             mPrell.setVisibility(View.VISIBLE);
             mAllRl.setVisibility(View.INVISIBLE);
 

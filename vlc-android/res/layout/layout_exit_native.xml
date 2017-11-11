@@ -1,129 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/native_layout"
+    android:id="@+id/native_ad_unit"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <com.facebook.ads.MediaView
+        android:id="@+id/native_ad_media"
+        android:layout_width="wrap_content"
+        android:layout_height="172dp"
+        android:background="#999999"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <LinearLayout
+        android:id="@+id/ad_choices_container"
         android:layout_width="match_parent"
-        android:layout_height="290dp">
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:orientation="horizontal" />
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            app:cardBackgroundColor="#59ffffff"
-            app:cardCornerRadius="4dp"
-            app:cardElevation="0dp" />
+    <TextView
+        android:id="@+id/sponsored_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="Sponsored"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="10sp" />
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            app:cardBackgroundColor="#A6ffffff"
-            app:cardCornerRadius="4dp"
-            app:cardElevation="0dp" />
+    <ImageView
+        android:id="@+id/native_ad_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="-20dip"
+        android:layout_gravity="center_vertical"
+        android:layout_below="@+id/native_ad_media"
+        tools:src="@drawable/icon" />
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/framelayout"
-            android:background="@drawable/shape_corner_white_top">
-
-            <com.facebook.ads.MediaView
-                android:id="@+id/native_ad_media"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:gravity="center" />
-        </FrameLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/native_ad_media"
+        android:layout_toRightOf="@id/native_ad_icon"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/ad_choices_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:orientation="horizontal" />
-
-        <TextView
-            android:id="@+id/sponsored_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:ellipsize="end"
-            android:lines="1"
-            android:text="Sponsored"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="10sp" />
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingTop="9dip"
+            android:paddingBottom="9dip"
+            android:paddingLeft="9dip"
+            android:paddingRight="10dp">
 
-        <FrameLayout
-            android:id="@+id/framelayout"
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/shape_corner_white_bottom"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/native_ad_icon"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="16dp"
-                tools:src="@drawable/icon" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/native_ad_title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="78dp"
-                android:orientation="vertical">
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:gravity="center_vertical"
+                android:paddingRight="5dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                tools:text="Facebook Test AD" />
 
-                <TextView
-                    android:id="@+id/native_ad_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:paddingRight="5dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp"
-                    tools:text="Facebook Test ADDD" />
+            <TextView
+                android:id="@+id/native_ad_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:gravity="center_vertical"
+                android:textColor="#8a000000"
+                android:textSize="12sp"
+                tools:text="Your Ad intergration works" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/native_ad_body"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:maxLines="2"
-                    android:textColor="#8a000000"
-                    android:textSize="12sp"
-                    tools:text="Your Ad intergration works " />
-            </LinearLayout>
-        </FrameLayout>
-    </RelativeLayout>
+        <Button
+            android:id="@+id/native_ad_call_to_action"
+            android:layout_width="84dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/button_oval_green"
+            android:gravity="center"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:layout_marginRight="4dip"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:text="Button" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/native_ad_call_to_action"
-        android:layout_width="167dp"
-        android:layout_height="36dp"
-        android:layout_below="@+id/framelayout"
-        android:layout_marginTop="31dp"
-        android:background="@drawable/shape_white"
-        android:gravity="center"
-        android:textColor="#05c200"
-        android:textSize="12sp"
-        tools:text="Button" />
-</LinearLayout>
+
+</RelativeLayout>

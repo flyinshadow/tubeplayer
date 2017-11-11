@@ -27,6 +27,8 @@
             tools:src="@drawable/banner"
             android:transitionName="image" />
     </FrameLayout>
+
+
     <RelativeLayout
         android:id="@+id/all_rl"
         android:layout_width="match_parent"
@@ -161,6 +163,7 @@
         </FrameLayout>
 
     </RelativeLayout>
+
 
     <!--<ImageView-->
         <!--android:id="@+id/pre_iv"-->
