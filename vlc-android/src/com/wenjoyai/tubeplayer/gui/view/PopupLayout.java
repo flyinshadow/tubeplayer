@@ -36,15 +36,24 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Transformation;
 import android.widget.RelativeLayout;
+
+import com.wenjoyai.tubeplayer.R;
+import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 
 import org.videolan.libvlc.IVLCVout;
 import org.videolan.libvlc.util.AndroidUtil;
-import com.wenjoyai.tubeplayer.R;
-import com.wenjoyai.tubeplayer.VLCApplication;
 
 public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.OnScaleGestureListener, View.OnTouchListener {
-    private static final String TAG = "VLC/PopupView";
+    private static final String TAG = "VLC/PopupLayout";
+
+    private static final int X_MARGIN = 8;
+    private static final int Y_MARGIN = 8;
 
     private IVLCVout mVLCVout;
     private WindowManager mWindowManager;
@@ -75,7 +84,7 @@ public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.
 
     public void setVLCVOut(IVLCVout vout) {
         mVLCVout = vout;
-        if (mPopupWidth > 0 && mPopupHeight > 0) {
+        if (mVLCVout != null && mPopupWidth > 0 && mPopupHeight > 0) {
             mVLCVout.setWindowSize(mPopupWidth, mPopupHeight);
         }
     }
@@ -85,7 +94,7 @@ public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.
      */
     public void close() {
         setKeepScreenOn(false);
-        mWindowManager.removeView(this);
+        mWindowManager.removeViewImmediate(this);
         mWindowManager = null;
         mVLCVout = null;
     }
@@ -110,6 +119,8 @@ public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.
         containInScreen(width, height);
         mLayoutParams.width = width;
         mLayoutParams.height = height;
+        LogUtil.d(TAG, "PopupManager setViewSize updateViewLayout [" + mLayoutParams.x + "," + mLayoutParams.y + "," +mLayoutParams.width + ","
+                + mLayoutParams.height + "]");
         mWindowManager.updateViewLayout(this, mLayoutParams);
         mPopupWidth = width;
         mPopupHeight = height;
@@ -140,8 +151,9 @@ public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.
                 PixelFormat.OPAQUE);
 
         params.gravity = Gravity.BOTTOM | Gravity.START;
-        params.x = 50;
-        params.y = 50;
+        params.x = X_MARGIN;
+        params.y = Y_MARGIN;
+        params.windowAnimations = android.R.style.Animation_Translucent;
         if (AndroidUtil.isHoneycombOrLater)
             mScaleGestureDetector = new ScaleGestureDetector(context, this);
         setOnTouchListener(this);
@@ -181,14 +193,16 @@ public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.
                 return true;
             case MotionEvent.ACTION_UP:
                 return true;
-            case MotionEvent.ACTION_MOVE:
-                if (mScaleGestureDetector == null || !mScaleGestureDetector.isInProgress()) {
-                    mLayoutParams.x = initialX + (int) (event.getRawX() - initialTouchX);
-                    mLayoutParams.y = initialY - (int) (event.getRawY() - initialTouchY);
-                    containInScreen(mLayoutParams.width, mLayoutParams.height);
-                    mWindowManager.updateViewLayout(PopupLayout.this, mLayoutParams);
-                    return true;
-                }
+//            case MotionEvent.ACTION_MOVE:
+//                if (mScaleGestureDetector == null || !mScaleGestureDetector.isInProgress()) {
+//                    mLayoutParams.x = initialX + (int) (event.getRawX() - initialTouchX);
+//                    mLayoutParams.y = initialY - (int) (event.getRawY() - initialTouchY);
+//                    containInScreen(mLayoutParams.width, mLayoutParams.height);
+//                    LogUtil.d(TAG, "PopupManager ACTION_MOVE updateViewLayout [" + mLayoutParams.x + "," + mLayoutParams.y + "," +mLayoutParams.width + ","
+//                            + mLayoutParams.height + "]");
+//                    mWindowManager.updateViewLayout(PopupLayout.this, mLayoutParams);
+//                    return true;
+//                }
         }
         return false;
     }
@@ -220,5 +234,117 @@ public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.
             mLayoutParams.x = mScreenWidth - width;
         if (mLayoutParams.y + height > mScreenHeight)
             mLayoutParams.y = mScreenHeight - height;
+    }
+
+    private Animation.AnimationListener mAnimationListener = new Animation.AnimationListener() {
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+            // TODO Auto-generated method stub
+            LogUtil.d(TAG, "onAnimationStart");
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            // TODO Auto-generated method stub
+            LogUtil.d(TAG, "onAnimationEnd");
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+            // TODO Auto-generated method stub
+            LogUtil.d(TAG, "onAnimationRepeat");
+        }
+    };
+
+    private void animationMoveVideo(int toX, int toY, boolean visibleAfterMove) {
+        LogUtil.d(TAG, "animationMoveVideo toX=" + toX + ", toY=" + toY);
+        MyTranslateAnimation animation = new MyTranslateAnimation(this, toX, toY, visibleAfterMove);
+        animation.setAnimationListener(mAnimationListener);
+        findViewById(R.id.popup_player_layout).startAnimation(animation);
+    }
+
+    public void slideToLeft() {
+        animationMoveVideo(X_MARGIN, mLayoutParams.y, true);
+    }
+
+    public void slideToRight() {
+        animationMoveVideo(mScreenWidth - getWidth() - X_MARGIN, mLayoutParams.y, true);
+    }
+
+    public void slideToTop() {
+        int statusBarHeight = UiTools.getStatusBarHeight(getContext());
+        LogUtil.d(TAG, "slideToTop statusBarHeight=" + statusBarHeight);
+        animationMoveVideo(mLayoutParams.x, mScreenHeight - statusBarHeight - getHeight() - Y_MARGIN, true);
+    }
+
+    public void slideToBottom() {
+        animationMoveVideo(mLayoutParams.x, Y_MARGIN, true);
+    }
+
+    private class MyTranslateAnimation extends Animation {
+        private final int interval = 200;
+        private View view;
+        private int fromX;
+        private int fromY;
+        private int toX;
+        private int toY;
+        private boolean visibleAfterAnimation = true;
+
+        public MyTranslateAnimation(View view, int toX, int toY, boolean visibleAfterAnimation) {
+            this.view = view;
+            WindowManager.LayoutParams lp = mLayoutParams;//(WindowManager.LayoutParams)view.getLayoutParams();
+            this.fromX = lp.x;
+            this.fromY = lp.y;
+            this.toX = toX;
+            this.toY = toY;
+            this.visibleAfterAnimation = visibleAfterAnimation;
+            this.setInterpolator(new DecelerateInterpolator());
+            this.setDuration(interval);
+//            this.setFillEnabled(true);
+//            this.setFillAfter(true);
+
+            LogUtil.d(TAG, "MyTranslateAnimation from "
+                    + "[ " + fromX + "," + fromY + "," + lp.width  + "," + lp.height + "]" + ",to"
+                    + "[ " + toX + "," + toY + "," + lp.width  + "," + lp.height + "]");
+        }
+
+        @Override
+        protected void applyTransformation(float interpolatedTime, Transformation t) {
+            LogUtil.d(TAG, "applyTransformation interpolatedTime = " + interpolatedTime);
+            WindowManager.LayoutParams lp = mLayoutParams;//(WindowManager.LayoutParams)view.getLayoutParams();
+            int newX = 0;
+            int newY = 0;
+            if (interpolatedTime == 1.0f) {
+                newX = toX;
+                newY = toY;
+            } else {
+                newX = (int)(fromX + (toX - fromX) * interpolatedTime);
+                newY = (int)(fromY + (toY - fromY) * interpolatedTime);
+            }
+            if (newX != lp.x || newY != lp.y) {
+                LogUtil.d(TAG, "applyTransformation new [" + newX + "," + newY + "]");
+                lp.x = newX;
+                lp.y = newY;
+//                view.setLayoutParams(lp);
+                mLayoutParams = lp;
+                mWindowManager.updateViewLayout(PopupLayout.this, mLayoutParams);
+            }
+//            if (interpolatedTime == 1.0f) {
+//                if (!visibleAfterAnimation) {
+//                    view.setVisibility(View.GONE);
+//                }
+//            }
+        }
+
+        @Override
+        public void initialize(int width, int height, int parentWidth, int parentHeight) {
+            super.initialize(width, height, parentWidth, parentHeight);
+        }
+
+        @Override
+        public boolean willChangeBounds() {
+            return false;
+        }
     }
 }

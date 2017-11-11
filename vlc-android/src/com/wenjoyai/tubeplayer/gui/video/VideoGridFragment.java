@@ -48,6 +48,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -194,15 +195,12 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         }
 
         if (mVideoAdapter == null) {
-            mVideoAdapter = new VideoListAdapter(this, viewMode);
+            mVideoAdapter = new VideoListAdapter(this);
         }
-        if (mVideoAdapter.getCurrentViewMode() == VideoListAdapter.VIEW_MODE_LIST) {
-            mGridView.addItemDecoration(mDividerItemDecoration);
+        if (mVideoAdapter.getCurrentViewMode() != -1) {
+            updateViewMode(mVideoAdapter.getCurrentViewMode());
         }
-
         mGridView.setAdapter(mVideoAdapter);
-
-        updateViewMode(viewMode);
 
         mAdContainer = (FrameLayout) v.findViewById(R.id.adContainer);
         return v;
@@ -315,10 +313,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     }
 
     private void updateViewMode(int targetViewMode) {
-        if (getView() == null || getActivity() == null) {
-            Log.w(TAG, "Unable to setup the view");
-            return;
-        }
+//        if (getView() == null || getActivity() == null) {
+//            Log.w(TAG, "Unable to setup the view");
+//            return;
+//        }
         Resources res = getResources();
         boolean listMode = targetViewMode != VideoListAdapter.VIEW_MODE_GRID;
 
@@ -333,11 +331,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             mVideoAdapter.setGridCardWidth(mGridView.getColumnWidth());
         }
         mGridView.setNumColumns(listMode ? 1 : -1);
-        mVideoAdapter.setListMode(listMode);
-
-        mGridView.removeItemDecoration(mDividerItemDecoration);
-        if (targetViewMode == VideoListAdapter.VIEW_MODE_LIST) {
-            mGridView.addItemDecoration(mDividerItemDecoration);
+        if (mVideoAdapter.isListMode() != listMode) {
+            mVideoAdapter.setListMode(listMode);
         }
     }
 
@@ -378,7 +373,11 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 MediaUtils.openList(getActivity(), playList, mVideoAdapter.getListWithPosition(playList, position));
                 return true;
             case R.id.video_list_info:
-                showInfoDialog(media);
+            {
+                View itemView = mGridView.getLayoutManager().findViewByPosition(position);
+                ImageView thumb = (ImageView) itemView.findViewById(R.id.ml_item_thumbnail);
+                showInfoDialog(media, thumb);
+            }
                 return true;
             case R.id.video_list_rename:
                 renameVideo(media);
@@ -918,8 +917,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     }
 
     public void toggleVideoMode(int targetViewMode) {
-        updateViewMode(targetViewMode);
-        mVideoAdapter.toggleViewMode(targetViewMode);
+        if (mVideoAdapter.getCurrentViewMode() != targetViewMode) {
+            updateViewMode(targetViewMode);
+            mVideoAdapter.toggleViewMode(targetViewMode);
+        }
     }
 
     private void loadBanner(){

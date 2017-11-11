@@ -29,6 +29,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -120,14 +121,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     private int mSelectionCount = 0;
     private int mGridCardWidth = 0;
 
-    private int mCurrentViewMode = VIEW_MODE_DEFAULT;
+    private int mCurrentViewMode = -1;//VIEW_MODE_DEFAULT;
 
     protected final ExecutorService mUpdateExecutor = Executors.newSingleThreadExecutor();
 
-    VideoListAdapter(IEventsHandler eventsHandler, int viewMode) {
+    VideoListAdapter(IEventsHandler eventsHandler) {
         super();
         mEventsHandler = eventsHandler;
-        mCurrentViewMode = viewMode;
     }
 
     VideoComparator getComparator() {
@@ -217,6 +217,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                 holder.itemCheck.setVisibility(isSelected ? View.VISIBLE : View.GONE);
             }
         }
+
+        ViewCompat.setTransitionName(holder.thumbView, "media_thumb_" + String.valueOf(media.getId()));
     }
 
     @Override
@@ -451,9 +453,10 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     }
 
     public void toggleViewMode(int targetViewMode) {
-        mCurrentViewMode = targetViewMode;
-        notifyItemRangeChanged(0, getItemCount());
-//        notifyDataSetChanged();
+        if (mCurrentViewMode != targetViewMode) {
+            mCurrentViewMode = targetViewMode;
+            notifyItemRangeChanged(0, getItemCount());
+        }
     }
 
     public int getCurrentViewMode() {

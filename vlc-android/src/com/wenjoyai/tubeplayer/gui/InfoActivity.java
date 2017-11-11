@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +17,7 @@ import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 
 import org.videolan.libvlc.LibVLC;
 import org.videolan.libvlc.Media;
@@ -39,6 +41,7 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
 
     public final static String TAG_ITEM = "ML_ITEM";
     public final static String TAG_FAB_VISIBILITY= "FAB";
+    public static final String EXTRA_MEDIA_THUMB_TRANSITION_NAME = "media_thumb_transition_name";
 
     private MediaWrapper mItem;
     private MediaInfoAdapter mAdapter;
@@ -52,6 +55,8 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        supportPostponeEnterTransition();
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.info_activity);
 
@@ -77,6 +82,12 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
         mAdapter = new MediaInfoAdapter(this);
         mBinding.list.setAdapter(mAdapter);
 
+        ImageView cover = (ImageView) findViewById(R.id.playlist_cover);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            String imageTransitionName = getIntent().getExtras().getString(EXTRA_MEDIA_THUMB_TRANSITION_NAME);
+            cover.setTransitionName(imageTransitionName);
+        }
+
         if (!TextUtils.isEmpty(mItem.getArtworkMrl())) {
             VLCApplication.runBackground(new Runnable() {
                 @Override
@@ -91,6 +102,8 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
                                 mBinding.appbar.setExpanded(true, true);
                                 if (fabVisibility != -1)
                                     mBinding.fab.setVisibility(fabVisibility);
+
+                                supportStartPostponedEnterTransition();
                             }
                         });
                     } else
@@ -100,8 +113,11 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
         } else
             noCoverFallback();
         mBinding.fab.setOnClickListener(this);
-        mCheckFileTask = (CheckFileTask) new CheckFileTask().execute();
-        mLoadImageTask = (LoadImageTask) new LoadImageTask().execute();
+        mCheckFileTask = new CheckFileTask();
+        mLoadImageTask = new LoadImageTask();
+
+        mCheckFileTask.exec();
+        mLoadImageTask.exec();
 
 //        mBinding.length.setText(mItem.getLength() > 0L ? Tools.millisToString(mItem.getLength()) : "");
         mBinding.infoPath.setText(Uri.decode(mItem.getUri().getPath()));
@@ -150,6 +166,13 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
     }
 
     private class CheckFileTask extends AsyncTask<Void, Void, File> {
+
+        void exec() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+                executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            else
+                execute();
+        }
 
         private void checkSubtitles(File itemFile) {
             String extension, filename, videoName = Uri.decode(itemFile.getName()), parentPath = Uri.decode(itemFile.getParent());
@@ -217,6 +240,13 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
     }
 
     private class LoadImageTask extends AsyncTask<Void, Void, Media> {
+
+        public void exec() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+                executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            else
+                execute();
+        }
 
         @Override
         protected Media doInBackground(Void... params) {

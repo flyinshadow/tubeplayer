@@ -1262,6 +1262,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                     startActivityForResult(new Intent(this, PreferencesActivity.class), ACTIVITY_RESULT_PREFERENCES);
                     break;
                 case R.id.nav_mrl:
+                    mCurrentFragmentId = id;
                     new MRLPanelFragment().show(getSupportFragmentManager(), "fragment_mrl");
                     break;
                 case R.id.nav_share_app:
