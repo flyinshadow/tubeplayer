@@ -78,7 +78,7 @@ public class ADManager {
     private ADNumListener mListener;
 
     //准备好的，给上层的数据 3个
-    private LimitQueue<NativeAd> mReadyQueue = new LimitQueue<>(mNum);
+    private LimitQueue<NativeWrapper> mReadyQueue = new LimitQueue<>(mNum);
     public List<AdID> mAdIdList = new ArrayList<>();
     private int mIndex = 0;
     private int mFinished = 0;
@@ -90,6 +90,29 @@ public class ADManager {
         public AdID(String adId) {
             this.adId = adId;
         }
+    }
+
+    class NativeWrapper{
+        public NativeAd nativeAd;
+        public boolean isShown = false;
+
+        public NativeWrapper(NativeAd nativeAd) {
+            this.nativeAd = nativeAd;
+        }
+    }
+
+    /**
+     * 没有显示的feed流广告个数
+     * @return
+     */
+    public List<NativeAd> getUnshownFeed(){
+        List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
+        for (int i = 0; i < mReadyQueue.size(); i++) {
+            if (!mReadyQueue.get(i).isShown) {
+                tempList.add(mReadyQueue.get(i).nativeAd);
+            }
+        }
+        return tempList;
     }
 
     /**
@@ -127,7 +150,7 @@ public class ADManager {
                     mFinished++;
                     Log.e("ADManager", "onLoadedSuccess " + adId);
                     if (null != ad) {
-                        mReadyQueue.offer(ad);
+                        mReadyQueue.offer(new NativeWrapper(ad));
                         if (mReadyQueue.size() == 1) {//只要有了一个广告成功就通知上层展示
                             callbackAD();
                         }
@@ -154,6 +177,12 @@ public class ADManager {
                 @Override
                 public void onAdImpression(NativeAd ad, String adId) {
                     Log.e("ADManager", "onAdImpression ");
+                    for (int i = 0;i <mReadyQueue.size();i++){
+                        if (mReadyQueue.get(i).nativeAd.getId().equals(adId)){
+                            mReadyQueue.get(i).isShown = true;
+                            return;
+                        }
+                    }
                 }
             });
         }
@@ -175,7 +204,7 @@ public class ADManager {
         if (null != mListener && mReadyQueue.size() > 0) {
             List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
             for (int i = 0; i < mReadyQueue.size(); i++) {
-                tempList.add(mReadyQueue.get(i));
+                tempList.add(mReadyQueue.get(i).nativeAd);
             }
             if (tempList.size() > 0) {
                 mListener.onLoadedSuccess(tempList);

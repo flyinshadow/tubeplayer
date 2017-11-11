@@ -363,9 +363,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     }
 
     private void loadExitAD() {
-        if (ADManager.getInstance().isShowExit) {
-            ADManager.getInstance().loadExitAD(this);
-        }
+//        if (ADManager.getInstance().isShowExit) {
+//            ADManager.getInstance().loadExitAD(this);
+//        }
         ADManager.getInstance().loadPauseAD(this);
     }
 
@@ -698,8 +698,13 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             ((ExtensionBrowser) fragment).goBack();
             return;
         }
-        if (ADManager.getInstance().mExitManager != null && ADManager.getInstance().mExitManager.isLoaded()) {
-            showExitDialog();
+        int unshownSize = ADManager.getInstance().getUnshownFeed().size();
+
+        if (unshownSize>0) {
+            StatisticsManager.submitAd(this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_UNSHOWN + String.valueOf(unshownSize));
+            if (ADManager.getInstance().isShowExit) {
+                showExitDialog();
+            }
         } else {
             finish();
         }

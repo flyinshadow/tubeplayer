@@ -51,6 +51,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
@@ -61,11 +62,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.ViewStubCompat;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.transition.Transition;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.GestureDetector;
@@ -141,6 +142,7 @@ import org.videolan.medialibrary.media.MediaWrapper;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.io.ObjectInputStream;
@@ -280,6 +282,16 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private int mCurrentScreenOrientation;
     private ImageView mLock;
     private ImageView mSize;
+
+
+
+    private ImageView mPreIv;
+    private RelativeLayout mAllRl;
+    private FrameLayout mPrell;
+    private boolean mIsShare = false;
+
+
+
     private String KEY_REMAINING_TIME_DISPLAY = "remaining_time_display";
     private String KEY_BLUETOOTH_DELAY = "key_bluetooth_delay";
     private long mSpuDelay = 0L;
@@ -433,6 +445,13 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 //        Toolbar toolbar = (Toolbar)mActionBarView.getParent();
 //        toolbar.setContentInsetsAbsolute(0, 0);
 
+
+        mPreIv = (ImageView) findViewById(R.id.pre_iv);
+        mAllRl= (RelativeLayout) findViewById(R.id.all_rl);
+        mPrell= (FrameLayout) findViewById(R.id.pre_ll);
+
+
+
         mTitle = (TextView) mActionBarView.findViewById(R.id.player_overlay_title);
         if (!AndroidUtil.isJellyBeanOrLater) {
             mSysTime = (TextView) findViewById(R.id.player_overlay_systime);
@@ -461,6 +480,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         /* Loading view */
         mLoading = (ImageView) findViewById(R.id.player_overlay_loading);
+
+        //share
+        dealShare();
+
         if (mPresentation != null)
             mTipsBackground = (ImageView) findViewById(R.id.player_remote_tips_background);
         dimStatusBar(true);
@@ -540,6 +563,60 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         initPauseNative();
         mTranstionAnimIn = AnimationUtils.loadAnimation(this, R.anim.pause_ad_left_in);
         mTranstionAnimOut = AnimationUtils.loadAnimation(this, R.anim.pause_ad_leave_right);
+    }
+
+    //处理转场
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void dealShare(){
+        MediaWrapper mediaWrapper = getIntent().getParcelableExtra(PLAY_EXTRA_ITEM_MEDIA);
+        mIsShare = getIntent().getBooleanExtra(PLAY_EXTRA_ITEM_IS_SHARE,false);
+        if (!mIsShare){
+            return;
+        }
+        mPreIv.setImageURI(Uri.fromFile(new File(mediaWrapper.getArtworkMrl())) );
+        if (null!= mediaWrapper&&!TextUtils.isEmpty(mediaWrapper.getArtworkMrl())) {
+            mPrell.setVisibility(View.VISIBLE);
+            mAllRl.setVisibility(View.INVISIBLE);
+
+            Transition sharedElementEnterTransition = getWindow().getSharedElementEnterTransition();
+            sharedElementEnterTransition.setDuration(200);
+            sharedElementEnterTransition.addListener(new Transition.TransitionListener() {
+                @Override
+                public void onTransitionStart(Transition transition) {
+
+                }
+
+
+                @Override
+                public void onTransitionEnd(Transition transition) {
+                    // 在这里移除侦听器是非常重要的，因为共享元素过渡在退出时再次向后执行。 如果我们不删除侦听器，这个代码将再次被触发。
+                    transition.removeListener(this);
+                    mAnimated = true;
+                    sstart();
+
+//                //启动动画
+//                findViewById(R.id.pre_ll).startAnimation(mAlphaIn);
+                }
+
+
+                @Override
+                public void onTransitionCancel(Transition transition) {
+
+                }
+
+
+                @Override
+                public void onTransitionPause(Transition transition) {
+
+                }
+
+
+                @Override
+                public void onTransitionResume(Transition transition) {
+
+                }
+            });
+        }
     }
 
     private Animation mTranstionAnimIn;
@@ -1087,6 +1164,18 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         start(context, uri, null, fromStart, -1);
     }
 
+    public final static String PLAY_EXTRA_ITEM_MEDIA = "media";
+    public final static String PLAY_EXTRA_ITEM_IS_SHARE = "is_share";
+
+    //add shareelment
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    public static void start(Context context, Uri uri, MediaWrapper media, boolean fromStart, Bundle bundle) {
+        Intent intent = getIntent(context, uri, null, fromStart, -1);
+        intent.putExtra(PLAY_EXTRA_ITEM_MEDIA, media);
+        intent.putExtra(PLAY_EXTRA_ITEM_IS_SHARE, true);
+        context.startActivity(intent,bundle);
+    }
+
     public static void start(Context context, Uri uri, String title) {
         start(context, uri, title, false, -1);
     }
@@ -1150,6 +1239,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     protected void exit(int resultCode) {
         if (isFinishing())
             return;
+        mAllRl.removeAllViews();
+        mPrell.setVisibility(View.VISIBLE);
         Intent resultIntent = new Intent(ACTION_RESULT);
         if (mUri != null && mService != null) {
             if (AndroidUtil.isNougatOrLater)
@@ -1160,7 +1251,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             resultIntent.putExtra(EXTRA_DURATION, mService.getLength());
         }
         setResult(resultCode, resultIntent);
-        finish();
+        finishAfterTransition();
+//        finish();
     }
 
     private void exitOK() {
@@ -1704,6 +1796,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 mHasSubItems = false;
                 break;
             case MediaPlayer.Event.Playing:
+                mAllRl.setVisibility(View.VISIBLE);
+                mPrell.setVisibility(View.GONE);
                 onPlaying();
                 if (mRotateAD != null) {
                     mRotateAD.setVisibility(View.INVISIBLE);
@@ -1712,6 +1806,15 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     mNativeFrameLayout.startAnimation(mTranstionAnimOut);
                     mNativeFrameLayout.setVisibility(View.GONE);
                 }
+
+//                mHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mAllRl.setVisibility(View.VISIBLE);
+//                        mPrell.setVisibility(View.GONE);
+//                    }
+//                }, 2000);
+
                 break;
             case MediaPlayer.Event.Paused:
                 updateOverlayPausePlay();
@@ -1782,8 +1885,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             case MediaPlayer.Event.Buffering:
                 if (!mIsPlaying)
                     break;
-                if (event.getBuffering() == 100f)
+                if (event.getBuffering() == 100f) {
                     stopLoading();
+                }
                 else if (!mHandler.hasMessages(LOADING_ANIMATION) && !mIsLoading
                         && mTouchAction != TOUCH_SEEK && !mDragging)
                     mHandler.sendEmptyMessageDelayed(LOADING_ANIMATION, LOADING_ANIMATION_DELAY);
@@ -3853,10 +3957,26 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @Override
     public void onConnected(PlaybackService service) {
         mService = service;
-        if (!mSwitchingView)
-            mHandler.sendEmptyMessage(START_PLAYBACK);
-        mSwitchingView = false;
-        mSettings.edit().putBoolean(PreferencesActivity.VIDEO_RESTORE, false).apply();
+        if(!mIsShare){
+            if (!mSwitchingView)
+                mHandler.sendEmptyMessage(START_PLAYBACK);
+            mSwitchingView = false;
+            mSettings.edit().putBoolean(PreferencesActivity.VIDEO_RESTORE, false).apply();
+        } else {
+            mConnected = true;
+            sstart();
+        }
+    }
+
+    private boolean mConnected = false;
+    private boolean mAnimated = false;
+    private void sstart(){
+        if (mConnected&&mAnimated) {
+            if (!mSwitchingView)
+                mHandler.sendEmptyMessage(START_PLAYBACK);
+            mSwitchingView = false;
+            mSettings.edit().putBoolean(PreferencesActivity.VIDEO_RESTORE, false).apply();
+        }
     }
 
     @Override

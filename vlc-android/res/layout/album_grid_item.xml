@@ -14,7 +14,7 @@
         vlc:layout_constraintStart_toStartOf="parent"
         vlc:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/ic_no_album"
-        android:scaleType="centerCrop"
+        android:scaleType="centerCrop" 
         />
 
     <TextView

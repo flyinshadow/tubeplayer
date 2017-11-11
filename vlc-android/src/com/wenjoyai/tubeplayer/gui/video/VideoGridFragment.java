@@ -22,6 +22,7 @@ package com.wenjoyai.tubeplayer.gui.video;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,12 +34,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.annotation.MainThread;
+import android.support.annotation.RequiresApi;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.Pair;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -303,7 +306,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         }
     }
 
-    protected void playVideo(MediaWrapper media, boolean fromStart) {
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    protected void playVideo(MediaWrapper media, boolean fromStart,View v) {
         Activity activity = getActivity();
         if (activity instanceof PlaybackService.Callback)
             mService.removeCallback((PlaybackService.Callback) activity);
@@ -311,7 +315,22 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         if (mService.isPlayingPopup()) {
             mService.load(media);
         } else {
-            VideoPlayerActivity.start(getActivity(), media.getUri(), fromStart);
+//            VideoPlayerActivity.start(getActivity(), media.getUri(), fromStart);
+            if (null != v){
+                //share element
+                // set share element transition animation for current activity
+//                Transition ts = new ChangeTransform();
+//                ts.setDuration(3000);
+//                getActivity().getWindow().setExitTransition(ts);
+
+                Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(getActivity(),
+                        Pair.create(v.findViewById(R.id.ml_item_thumbnail), "image")).toBundle();
+                VideoPlayerActivity.start(getActivity(), media.getUri(), media,fromStart,bundle);
+                // 屏蔽 Activity 默认转场效果
+                getActivity().overridePendingTransition(0, 0);
+            } else {
+                VideoPlayerActivity.start(getActivity(), media.getUri(), fromStart);
+            }
         }
     }
 
@@ -330,7 +349,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             return false;
         switch (menu.getItemId()) {
             case R.id.video_list_play_from_start:
-                playVideo(media, true);
+                playVideo(media, true,null);
                 return true;
             case R.id.video_list_play_audio:
                 playAudio(media);
@@ -792,7 +811,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 ArrayList<MediaWrapper> playList = new ArrayList<>();
                 MediaUtils.openList(activity, playList, mVideoAdapter.getListWithPosition(playList, position));
             } else {
-                playVideo(media, false);
+                playVideo(media, false,v);
             }
         }
     }

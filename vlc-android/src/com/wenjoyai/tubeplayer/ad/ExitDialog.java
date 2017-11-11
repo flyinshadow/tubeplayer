@@ -43,7 +43,6 @@ public class ExitDialog extends Dialog {
         setContentView(R.layout.dialog_exit);
         getWindow().setWindowAnimations(R.style.dialog_style);
 
-//        ADManager.getInstance().mIsPauseADShown = true;
         if (scrollView != null) {
             ((LinearLayout) findViewById(R.id.hscrollContainer)).removeView(scrollView);
         }
