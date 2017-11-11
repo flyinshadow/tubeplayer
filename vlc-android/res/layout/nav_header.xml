@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="MX Video Player"
+        android:text="Mix Video Player"
         android:textColor="#FFF"
         android:textSize="24sp" />
 

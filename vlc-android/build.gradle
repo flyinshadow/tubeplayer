@@ -45,7 +45,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.wenjoyai.tubeplayer"
+        applicationId "mx.max.mix.dx.mxplayer.maxplayer.mixplayer.dxplayer.mplayer"
 
         resValue "string", "build_time", buildTime()
         resValue "string", "build_host", hostName()
@@ -163,7 +163,7 @@ android {
 
         //Custom APK name
         variant.outputs.each { output ->
-            def outputName = "VideoPlayer-"
+            def outputName = "MixPlayer-"
             if (variant.productFlavors.get(0).name != "vanilla")
                 outputName += variant.productFlavors.get(0).name.toUpperCase() + "-"
             outputName += variant.versionName + "-" + variant.productFlavors.get(1).name + ".apk"

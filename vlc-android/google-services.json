@@ -1,43 +1,35 @@
 {
   "project_info": {
-    "project_number": "705098303102",
-    "firebase_url": "https://tubeplayer-67e17.firebaseio.com",
-    "project_id": "tubeplayer-67e17",
-    "storage_bucket": "tubeplayer-67e17.appspot.com"
+    "project_number": "688375929521",
+    "firebase_url": "https://mixvideoplayer.firebaseio.com",
+    "project_id": "mixvideoplayer",
+    "storage_bucket": "mixvideoplayer.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:705098303102:android:5f0991014308f0c1",
+        "mobilesdk_app_id": "1:688375929521:android:4c2c4360514e53cc",
         "android_client_info": {
-          "package_name": "com.wenjoyai.tubeplayer"
+          "package_name": "mx.max.mix.dx.mxplayer.maxplayer.mixplayer.dxplayer.mplayer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "705098303102-835criu5jmgvlv51kj026gah49g71f5o.apps.googleusercontent.com",
+          "client_id": "688375929521-g9gscqi4edirhrufemcsnhdvamalont8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.wenjoyai.tubeplayer",
-            "certificate_hash": "ab01fd6fb1532e3e4fee26c8eed21b4e8b850e84"
-          }
-        },
-        {
-          "client_id": "705098303102-g6t7lq7m3v837nonopb8af2gag83fll4.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.wenjoyai.tubeplayer",
+            "package_name": "mx.max.mix.dx.mxplayer.maxplayer.mixplayer.dxplayer.mplayer",
             "certificate_hash": "61272858845595b9f98c5a3030779ad78b8eb8bd"
           }
         },
         {
-          "client_id": "705098303102-5qnqggfm13p6c6hcsrgo1jcb1f8asrji.apps.googleusercontent.com",
+          "client_id": "688375929521-blk0g1hnferavkuaosr7e8uv0uqha8ut.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBi0DOZbniSF2qJemPW3Blw5sJ_kXszP34"
+          "current_key": "AIzaSyAtt3wXlUaxQkuLJROkoeLucgxe9J5PHug"
         }
       ],
       "services": {
@@ -48,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "705098303102-5qnqggfm13p6c6hcsrgo1jcb1f8asrji.apps.googleusercontent.com",
+              "client_id": "688375929521-blk0g1hnferavkuaosr7e8uv0uqha8ut.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
