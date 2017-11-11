@@ -68,7 +68,7 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
     private static final int SHOW_BUTTONS = 0;
     private static final int HIDE_BUTTONS = 1;
 
-    private static final int kMinFlingX = 80;
+    private static final int kMinFlingX = 50;
     private static final int kMinFlingY = 50;
     private static final int kMinVelocityX = 0;
     private static final int kMinVelocityY = 0;

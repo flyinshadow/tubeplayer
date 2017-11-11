@@ -193,16 +193,16 @@ public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.
                 return true;
             case MotionEvent.ACTION_UP:
                 return true;
-//            case MotionEvent.ACTION_MOVE:
-//                if (mScaleGestureDetector == null || !mScaleGestureDetector.isInProgress()) {
-//                    mLayoutParams.x = initialX + (int) (event.getRawX() - initialTouchX);
-//                    mLayoutParams.y = initialY - (int) (event.getRawY() - initialTouchY);
-//                    containInScreen(mLayoutParams.width, mLayoutParams.height);
-//                    LogUtil.d(TAG, "PopupManager ACTION_MOVE updateViewLayout [" + mLayoutParams.x + "," + mLayoutParams.y + "," +mLayoutParams.width + ","
-//                            + mLayoutParams.height + "]");
-//                    mWindowManager.updateViewLayout(PopupLayout.this, mLayoutParams);
-//                    return true;
-//                }
+            case MotionEvent.ACTION_MOVE:
+                if (mScaleGestureDetector == null || !mScaleGestureDetector.isInProgress()) {
+                    mLayoutParams.x = initialX + (int) (event.getRawX() - initialTouchX);
+                    mLayoutParams.y = initialY - (int) (event.getRawY() - initialTouchY);
+                    containInScreen(mLayoutParams.width, mLayoutParams.height);
+                    LogUtil.d(TAG, "PopupManager ACTION_MOVE updateViewLayout [" + mLayoutParams.x + "," + mLayoutParams.y + "," +mLayoutParams.width + ","
+                            + mLayoutParams.height + "]");
+                    mWindowManager.updateViewLayout(PopupLayout.this, mLayoutParams);
+                    return true;
+                }
         }
         return false;
     }
