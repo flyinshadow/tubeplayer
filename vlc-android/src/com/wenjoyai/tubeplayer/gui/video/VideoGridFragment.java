@@ -293,7 +293,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
         LogUtil.d(TAG, "aaaa onMedialibraryReady UPDATE_LIST");
         mHandler.sendEmptyMessage(UPDATE_LIST);
-        if (mGroup == null) {
+        if (mGroup == null && mFolderGroup == null) {
             mMediaLibrary.setMediaUpdatedCb(VideoGridFragment.this, Medialibrary.FLAG_MEDIA_UPDATED_VIDEO);
             mMediaLibrary.setMediaAddedCb(VideoGridFragment.this, Medialibrary.FLAG_MEDIA_ADDED_VIDEO);
         }
@@ -561,11 +561,9 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     }
                 } else {
                     if (mFolderMain) {
-                        for (Group item : FolderGroup.getDummy().group(itemList))
-                            displayList.add(item);
+                        displayList.addAll(FolderGroup.getDummy().group(itemList));
                     } else {
-                        for (Group item : MediaGroup.getDummy().group(itemList))
-                            displayList.add(item.getMedia());
+                        displayList.addAll(MediaGroup.getDummy().group(itemList));
                     }
                 }
                 if (mGroup == null && mFolderGroup == null && mParsingFinished && !mSubmitVideoCount) {

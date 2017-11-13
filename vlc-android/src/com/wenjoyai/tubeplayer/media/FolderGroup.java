@@ -108,10 +108,10 @@ public class FolderGroup extends Group implements Parcelable {
         return mMedias.toArray(new MediaWrapper[mMedias.size()]);
     }
 
-    @Override
-    public int getItemType() {
-        return MediaLibraryItem.TYPE_FOLDER;
-    }
+//    @Override
+//    public int getItemType() {
+//        return MediaLibraryItem.TYPE_FOLDER;
+//    }
 
     public static <T extends MediaWrapper> void sort(List<T> folders) {
         Collections.sort(folders, new Comparator<T>() {
