@@ -166,8 +166,8 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
         mCallsExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                for (String folder : Medialibrary.getBlackList())
-                    mMedialibrary.banFolder(path + folder);
+//                for (String folder : Medialibrary.getBlackList())
+//                    mMedialibrary.banFolder(path + folder);
                 mMedialibrary.discover(path);
             }
         });
@@ -202,8 +202,8 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
                     return;
                 }
                 mMedialibrary.addDevice(uuid, path, true, true);
-                for (String folder : Medialibrary.getBlackList())
-                    mMedialibrary.banFolder(path + folder);
+//                for (String folder : Medialibrary.getBlackList())
+//                    mMedialibrary.banFolder(path + folder);
             }
         }
     }
@@ -251,8 +251,8 @@ public class MediaParsingService extends Service implements DevicesDiscoveryCb {
                         Log.e("yNativeAD", "setupMedialibrary sendBroadcast ACTION_MEDIALIBRARY_READY");
                         mLocalBroadcastManager.sendBroadcast(new Intent(VLCApplication.ACTION_MEDIALIBRARY_READY));
                         if (shouldInit) {
-                            for (String folder : Medialibrary.getBlackList())
-                                mMedialibrary.banFolder(AndroidDevices.EXTERNAL_PUBLIC_DIRECTORY + folder);
+//                            for (String folder : Medialibrary.getBlackList())
+//                                mMedialibrary.banFolder(AndroidDevices.EXTERNAL_PUBLIC_DIRECTORY + folder);
                             for (File folder : Medialibrary.getDefaultFolders()) {
                                 mMedialibrary.discover(folder.getAbsolutePath());
                             }
