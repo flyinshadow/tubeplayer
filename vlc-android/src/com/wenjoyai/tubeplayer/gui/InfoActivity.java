@@ -153,7 +153,8 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
         if (mItem != null) {
             mService.load(mItem.getTracks(VLCApplication.getMLInstance()), 0);
         }
-        finish();
+//        finish();
+        supportFinishAfterTransition();
     }
 
     @Override
@@ -301,7 +302,8 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
             switch (msg.what) {
                 case EXIT:
                     activity.setResult(PreferencesActivity.RESULT_RESCAN);
-                    activity.finish();
+//                    activity.finish();
+                    activity.supportFinishAfterTransition();
                     break;
                 case SHOW_SUBTITLES:
                     activity.mBinding.infoSubtitles.setVisibility(View.VISIBLE);

@@ -35,6 +35,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.MainThread;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -814,10 +815,66 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     }
 
     @Override
-    public void onCtxClick(View v, int position, MediaLibraryItem item) {
+    public void onCtxClick(View v, final int position, MediaLibraryItem item) {
             if (mActionMode != null)
                 return;
             mGridView.openContextMenu(position);
+
+//        final MediaWrapper media = mVideoAdapter.getItem(position);
+//        int menuRes = (media instanceof MediaGroup) ? R.menu.video_group_contextual : R.menu.video_list_contextual;
+//        showPopupMenu(v, menuRes, new PopupMenu.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.video_list_play_from_start:
+//                        playVideo(media, true);
+//                        return true;
+//                    case R.id.video_list_play_audio:
+//                        playAudio(media);
+//                        return true;
+//                    case R.id.video_list_play_all:
+//                        ArrayList<MediaWrapper> playList = new ArrayList<>();
+//                        MediaUtils.openList(getActivity(), playList, mVideoAdapter.getListWithPosition(playList, position));
+//                        return true;
+//                    case R.id.video_list_info:
+//                    {
+//                        View itemView = mGridView.getLayoutManager().findViewByPosition(position);
+//                        ImageView thumb = (ImageView) itemView.findViewById(R.id.ml_item_thumbnail);
+//                        showInfoDialog(media, thumb);
+//                    }
+//                    return true;
+//                    case R.id.video_list_rename:
+//                        renameVideo(media);
+//                        return true;
+//                    case R.id.video_list_delete:
+//                        removeVideo(media);
+//                        return true;
+//                    case R.id.video_group_play:
+//                        MediaUtils.openList(getActivity(), ((MediaGroup) media).getAll(), 0);
+//                        return true;
+//                    case R.id.video_list_append:
+//                        if (media instanceof MediaGroup)
+//                            mService.append(((MediaGroup)media).getAll());
+//                        else
+//                            mService.append(media);
+//                        return true;
+//                    case R.id.video_download_subtitles:
+//                        MediaUtils.getSubs(getActivity(), media);
+//                        return true;
+//                    case R.id.video_share:
+//                        ShareUtils.shareMedia(getActivity() != null ? getActivity() : VLCApplication.getAppContext(), media);
+//                        return true;
+//                }
+//                return false;
+//            }
+//        });
+    }
+
+    private void showPopupMenu(View anchor, int menuRes, PopupMenu.OnMenuItemClickListener onMenuItemClickListener) {
+        PopupMenu popup = new PopupMenu(getActivity(), anchor);
+        popup.getMenuInflater().inflate(menuRes, popup.getMenu());
+        popup.setOnMenuItemClickListener(onMenuItemClickListener);
+        popup.show();
     }
 
     @Override

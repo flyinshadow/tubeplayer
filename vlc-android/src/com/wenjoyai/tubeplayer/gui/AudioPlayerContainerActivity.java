@@ -205,7 +205,7 @@ public class AudioPlayerContainerActivity extends BaseActivity implements Playba
                 if (current instanceof StorageBrowserFragment)
                     ((StorageBrowserFragment) current).goBack();
                 else
-                    finish();
+                    supportFinishAfterTransition();
                 return true;
         }
         return super.onOptionsItemSelected(item);

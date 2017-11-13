@@ -255,7 +255,7 @@ public abstract class BaseBrowserFragment extends MediaBrowserFragment implement
         if (!mRoot)
             getActivity().getSupportFragmentManager().popBackStack();
         else
-            getActivity().finish();
+            getActivity().supportFinishAfterTransition();
     }
 
     public void browse (MediaWrapper media, int position, boolean save) {
