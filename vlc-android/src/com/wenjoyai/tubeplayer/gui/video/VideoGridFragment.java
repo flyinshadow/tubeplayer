@@ -27,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -317,15 +318,13 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         } else {
 //            VideoPlayerActivity.start(getActivity(), media.getUri(), fromStart);
             if (null != v){
-                //share element
-                // set share element transition animation for current activity
-//                Transition ts = new ChangeTransform();
-//                ts.setDuration(3000);
-//                getActivity().getWindow().setExitTransition(ts);
-
-                Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(getActivity(),
-                        Pair.create(v.findViewById(R.id.ml_item_thumbnail), "image")).toBundle();
-                VideoPlayerActivity.start(getActivity(), media.getUri(), media,fromStart,bundle);
+                // 创建一个 rect 对象来存储共享元素位置信息
+                Rect rect = new Rect();
+                // 获取元素位置信息
+                v.findViewById(R.id.ml_item_thumbnail).getGlobalVisibleRect(rect);
+                // 将位置信息附加到 intent 上
+//                intent.setSourceBounds(rect);
+                VideoPlayerActivity.start(getActivity(), media.getUri(), media,fromStart,rect);
                 // 屏蔽 Activity 默认转场效果
                 getActivity().overridePendingTransition(0, 0);
             } else {
