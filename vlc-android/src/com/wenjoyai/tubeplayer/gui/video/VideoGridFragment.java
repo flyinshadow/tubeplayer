@@ -317,6 +317,18 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         }
     }
 
+    protected void playVideo(MediaWrapper media, boolean fromStart, ImageView sharedImageView) {
+        Activity activity = getActivity();
+        if (activity instanceof PlaybackService.Callback)
+            mService.removeCallback((PlaybackService.Callback) activity);
+        media.removeFlags(MediaWrapper.MEDIA_FORCE_AUDIO);
+        if (mService.isPlayingPopup()) {
+            mService.load(media);
+        } else {
+            VideoPlayerActivity.start(getActivity(), media.getUri(), fromStart, sharedImageView, media);
+        }
+    }
+
     protected void playAudio(MediaWrapper media) {
         if (mService != null) {
             media.addFlags(MediaWrapper.MEDIA_FORCE_AUDIO);
@@ -798,7 +810,12 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 ArrayList<MediaWrapper> playList = new ArrayList<>();
                 MediaUtils.openList(activity, playList, mVideoAdapter.getListWithPosition(playList, position));
             } else {
-                playVideo(media, false);
+                ImageView thumb = (ImageView) v.findViewById(R.id.ml_item_thumbnail);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && thumb != null) {
+                    playVideo(media, false, thumb);
+                } else {
+                    playVideo(media, false);
+                }
             }
         }
     }
