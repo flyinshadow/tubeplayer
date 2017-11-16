@@ -4,20 +4,27 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.StyleRes;
+import android.support.v4.view.PagerAdapter;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.facebook.ads.NativeAdScrollView;
-import com.facebook.ads.NativeAdView;
-import com.facebook.ads.NativeAdViewAttributes;
-import com.facebook.ads.NativeAdsManager;
+import com.facebook.ads.AdChoicesView;
+import com.facebook.ads.MediaView;
+import com.facebook.ads.NativeAd;
 import com.wenjoyai.tubeplayer.R;
-import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
+import com.wenjoyai.tubeplayer.gui.video.VideoPlayerActivity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
 
 /**
@@ -26,14 +33,14 @@ import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
  */
 
 public class ExitDialog extends Dialog {
-    NativeAdScrollView scrollView;
+    AutoScrollViewPager viewPager;
     TextView mCancelTv;
     TextView mOkTv;
     Context mContext;
 
     public ExitDialog(Context context) {
         super(context);
-        mContext =context;
+        mContext = context;
     }
 
     @Override
@@ -43,15 +50,9 @@ public class ExitDialog extends Dialog {
         setContentView(R.layout.dialog_exit);
         getWindow().setWindowAnimations(R.style.dialog_style);
 
-        if (scrollView != null) {
-            ((LinearLayout) findViewById(R.id.hscrollContainer)).removeView(scrollView);
-        }
-        scrollView = new NativeAdScrollView(getContext(), ADManager.getInstance().mExitManager,
-                NativeAdView.Type.HEIGHT_300);
-        ((LinearLayout) findViewById(R.id.hscrollContainer)).addView(scrollView);
-        StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "shown");
-        mCancelTv = (TextView)findViewById(R.id.exit_cancel);
-        mOkTv = (TextView)findViewById(R.id.exit_ok);
+        viewPager = (AutoScrollViewPager) findViewById(R.id.view_pager);
+        mCancelTv = (TextView) findViewById(R.id.exit_cancel);
+        mOkTv = (TextView) findViewById(R.id.exit_ok);
         mCancelTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,10 +63,86 @@ public class ExitDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 dismiss();
-                if (null!=mContext) {
+                if (null != mContext) {
                     ((Activity) mContext).finish();
                 }
             }
         });
+
+        viewPager.setAdapter(new MyViewPagerAdapter(ADManager.getInstance().getUnshownFeed()));
+        viewPager.setCycle(true);
+        viewPager.setInterval(2000);
+        viewPager.startAutoScroll();
+    }
+
+    class MyViewPagerAdapter extends PagerAdapter {
+
+        //直接继承PagerAdapter，至少必须重写下面的四个方法，否则会报错
+        private List<View> views = new ArrayList<>();
+        private List<NativeAd> mDatas = new ArrayList<>();
+
+        public MyViewPagerAdapter(List<NativeAd> mDatas) {
+            this.mDatas = mDatas;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView(views.get(position));//删除页卡
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            LayoutInflater inflater = LayoutInflater.from(container.getContext());
+            RelativeLayout adView = (RelativeLayout) inflater.inflate(R.layout.layout_exit_native, container, false);
+
+            NativeAd nativeAd = mDatas.get(position);
+            // Create native UI using the ad_front metadata.
+            ImageView nativeAdIcon = (ImageView) adView.findViewById(R.id.native_ad_icon);
+            TextView nativeAdTitle = (TextView) adView.findViewById(R.id.native_ad_title);
+            MediaView nativeAdMedia = (MediaView) adView.findViewById(R.id.native_ad_media);
+            // TextView nativeAdSocialContext = (TextView) adView.findViewById(R.id.native_ad_social_context);
+            TextView nativeAdBody = (TextView) adView.findViewById(R.id.native_ad_body);
+            Button nativeAdCallToAction = (Button) adView.findViewById(R.id.native_ad_call_to_action);
+
+            // Set the Text.
+            nativeAdTitle.setText(nativeAd.getAdTitle());
+            // nativeAdSocialContext.setText(nativeAd.getAdSocialContext());
+            nativeAdBody.setText(nativeAd.getAdBody());
+            nativeAdCallToAction.setText(nativeAd.getAdCallToAction());
+
+            // Download and display the ad_front icon.
+            NativeAd.Image adIcon = nativeAd.getAdIcon();
+            NativeAd.downloadAndDisplayImage(adIcon, nativeAdIcon);
+
+            // Download and display the cover image.
+            nativeAdMedia.setNativeAd(nativeAd);
+
+            // Add the AdChoices icon
+            LinearLayout adChoicesContainer = (LinearLayout) adView.findViewById(R.id.ad_choices_container);
+            AdChoicesView adChoicesView = new AdChoicesView(container.getContext(), nativeAd, true);
+            adChoicesContainer.addView(adChoicesView);
+
+            // Register the Title and CTA button to listen for clicks.
+            List<View> clickableViews = new ArrayList<>();
+            clickableViews.add(nativeAdTitle);
+            clickableViews.add(nativeAdCallToAction);
+            nativeAd.registerViewForInteraction(container, clickableViews);
+
+            views.add(adView);
+            //这个方法用来实例化页卡
+            container.addView(views.get(position));
+
+            return views.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mDatas.size();//返回页卡的数量
+        }
+
+        @Override
+        public boolean isViewFromObject(View arg0, Object arg1) {
+            return arg0 == arg1;//官方提示这样写
+        }
     }
 }
