@@ -115,6 +115,7 @@ import com.wenjoyai.tubeplayer.ad.RotateAD;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
 import com.wenjoyai.tubeplayer.gui.PlaybackServiceActivity;
+import com.wenjoyai.tubeplayer.gui.RateDialog;
 import com.wenjoyai.tubeplayer.gui.ThemeFragment;
 import com.wenjoyai.tubeplayer.gui.audio.PlaylistAdapter;
 import com.wenjoyai.tubeplayer.gui.browser.FilePickerActivity;
@@ -401,6 +402,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private boolean mTransitionEnd = false;
     Transition mSharedElementEnterTransition;
     Transition.TransitionListener mTransitionListener;
+
+    private long mPlayTime = 0;
+    private long mPlayLength = 0;
 
     private static LibVLC LibVLC() {
         return VLCInstance.get();
@@ -785,7 +789,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mSurfaceXDisplayRange = Math.max(mScreen.widthPixels, mScreen.heightPixels);
         resetHudLayout();
 
-        if (mService != null && mService.isPlaying() && VLCApplication.sWillShowRate) {
+        if (mService != null && mService.isPlaying() && RateDialog.isShowing()) {
             doPlayPause();
         }
     }
@@ -914,6 +918,14 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (null != mInterstitial) {
             mInterstitial.show();
         }
+
+        LogUtil.d(TAG, "onDestroy mPlayTime=" + mPlayTime + ", mPlayLength=" + mPlayLength);
+        // 视频时长10分钟以上播放进度5分钟以上提示评分
+        // 10分钟以下播放进度2分钟以上提示评分
+        if ((mPlayLength > 600000 && mPlayTime >= 300000) || (mPlayLength <= 600000 && mPlayTime >= 120000)) {
+            RateDialog.tryToShow(VLCApplication.getAppContext(), 5);
+        }
+
         mHandler.removeCallbacks(mRunnable);
         super.onDestroy();
         if (mReceiver != null)
@@ -1823,6 +1835,15 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     public void updateProgress() {
+        if (mService != null) {
+            long time = mService.getTime();
+            long length = mService.getLength();
+            LogUtil.d(TAG, "updateProgress time=" + time + ", length=" + length);
+            if (time > 0)
+                mPlayTime = time;
+            if (length > 0)
+                mPlayLength = length;
+        }
     }
 
     @Override
@@ -2799,11 +2820,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
                 if (Permissions.canDrawOverlays(this)) {
                     switchToPopupMode();
-//                    Intent intent = new Intent();
-//                    intent.setAction("smallWindow");
-//                    intent.putExtra("data", "Hi!I am broadcastData!");
-//                    sendBroadcast(intent);
-                }else {
+                    LogUtil.d(TAG, "switchToPopupMode try to show RateDialog");
+                    // 小窗提示评分
+                    RateDialog.tryToShow(this, 5);
+                } else {
                     Permissions.checkDrawOverlaysPermission(this);
                 }
                 break;
@@ -3821,6 +3841,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 mPresentationDisplayId = presentationDisplay.getDisplayId();
             } catch (WindowManager.InvalidDisplayException ex) {
                 LogUtil.w(TAG, "Couldn't show presentation!  Display was removed in "
+                LogUtil.w(TAG, "Couldn't start presentation!  Display was removed in "
                         + "the meantime.", ex);
                 mPresentation = null;
             }
