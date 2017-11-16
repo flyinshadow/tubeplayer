@@ -267,12 +267,12 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private boolean isloadAD = false;
 
     private void loadAD() {
-//        //旋转广告墙
-//        if (ADManager.sLevel >= ADManager.Level_Big) {
-//            preloadWall();
-//        }
-//        loadOpenAD();
-//        loadExitAD();
+        //旋转广告墙
+        if (ADManager.sLevel >= ADManager.Level_Big) {
+            preloadWall();
+        }
+        loadOpenAD();
+        loadExitAD();
     }
 
     private Handler mHandler = new Handler();
@@ -314,60 +314,63 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
     //第一次打开
     private void loadOpenAD() {
-//        //nomral级别以上才展示插屏
-//        if (ADManager.sLevel<ADManager.Level_Normal){
-//            return;
-//        }
-//        long second = mSettings.getLong(KEY_LAST_OPEN_TIME, 0);
-//        if (second == 0 || (System.currentTimeMillis() / 1000 - second) / 60 >= 2) {
-//            mSettings.edit().putLong(KEY_LAST_OPEN_TIME, System.currentTimeMillis() / 1000).apply();
-//
-//            String adID = "";
-//            if (ADManager.sPlatForm == ADManager.AD_MobVista) {
-//            } else if (ADManager.sPlatForm == ADManager.AD_Google) {
-//                adID = ADConstants.google_first_open_interstitial;
-//            } else if (ADManager.sPlatForm == ADManager.AD_Facebook) {
-//                adID = ADConstants.facebook_first_open_interstitial;
-//            }
-//            if (!TextUtils.isEmpty(adID)) {
-//                mFirstOpenInterstitialAd = new Interstitial();
-//                StatisticsManager.submitAd(this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "request");
-//                mFirstOpenInterstitialAd.loadAD(this, ADManager.sPlatForm, adID, new Interstitial.ADListener() {
-//                    @Override
-//                    public void onLoadedSuccess() {
-//                        mIsOpenLoadSuc = true;
-//                        StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "loaded");
-//                        if (mIsResumed) {
-//                            showOpenAD();
-//                        }else {
-//                            mIsOpenAdShown = false;
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onLoadedFailed() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onAdClick() {
-//                        StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "click");
-//                    }
-//
-//                    @Override
-//                    public void onAdClose() {
-//
-//                    }
-//                });
-//            }
-//        }
+        //nomral级别以上才展示插屏
+        if (ADManager.sLevel<ADManager.Level_Normal){
+            return;
+        }
+        long second = mSettings.getLong(KEY_LAST_OPEN_TIME, 0);
+        if (second == 0 || (System.currentTimeMillis() / 1000 - second) / 60 >= 2) {
+            mSettings.edit().putLong(KEY_LAST_OPEN_TIME, System.currentTimeMillis() / 1000).apply();
+
+            String adID = "";
+            if (ADManager.sPlatForm == ADManager.AD_MobVista) {
+            } else if (ADManager.sPlatForm == ADManager.AD_Google) {
+                adID = ADConstants.google_first_open_interstitial;
+            } else if (ADManager.sPlatForm == ADManager.AD_Facebook) {
+                adID = ADConstants.facebook_first_open_interstitial;
+            }
+            if (!TextUtils.isEmpty(adID)) {
+                mFirstOpenInterstitialAd = new Interstitial();
+                StatisticsManager.submitAd(this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "request");
+                mFirstOpenInterstitialAd.loadAD(this, ADManager.sPlatForm, adID, new Interstitial.ADListener() {
+                    @Override
+                    public void onLoadedSuccess() {
+                        mIsOpenLoadSuc = true;
+                        StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "loaded");
+                        if (mIsResumed) {
+                            showOpenAD();
+                        }else {
+                            mIsOpenAdShown = false;
+                        }
+                    }
+
+                    @Override
+                    public void onLoadedFailed() {
+
+                    }
+
+                    @Override
+                    public void onAdClick() {
+                        StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "click");
+                    }
+
+                    @Override
+                    public void onAdClose() {
+
+                    }
+                });
+            }
+        }
     }
 
     private void loadExitAD() {
-//        if (ADManager.getInstance().isShowExit) {
-//            ADManager.getInstance().loadExitAD(this);
-//        }
-//        ADManager.getInstance().loadPauseAD(this);
+        if (ADManager.sLevel == ADManager.Level_None) {
+            return;
+        }
+        if (ADManager.getInstance().isShowExit) {
+            ADManager.getInstance().loadExitAD(this);
+        }
+        ADManager.getInstance().loadPauseAD(this);
     }
 
     private void setupNavigationView() {

@@ -393,6 +393,21 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     }
 
     @MainThread
+    public void updateFolder(final MediaWrapper[] items) {
+        final ArrayList<MediaWrapper> list = getAll();
+        for (MediaWrapper media : items) {
+            FolderGroup.getDummy().insertInto(list, media);
+        }
+//        FolderGroup.sort(list);
+        VLCApplication.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        });
+    }
+
+    @MainThread
     public void clear() {
         LogUtil.d(TAG, "xxxx clear");
         mVideos.clear();

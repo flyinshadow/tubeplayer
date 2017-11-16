@@ -292,11 +292,11 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         super.onMedialibraryReady();
 
         LogUtil.d(TAG, "aaaa onMedialibraryReady UPDATE_LIST");
-        mHandler.sendEmptyMessage(UPDATE_LIST);
         if (mGroup == null && mFolderGroup == null) {
             mMediaLibrary.setMediaUpdatedCb(VideoGridFragment.this, Medialibrary.FLAG_MEDIA_UPDATED_VIDEO);
             mMediaLibrary.setMediaAddedCb(VideoGridFragment.this, Medialibrary.FLAG_MEDIA_ADDED_VIDEO);
         }
+        mHandler.sendEmptyMessage(UPDATE_LIST);
     }
 
     protected String getTitle() {
@@ -501,7 +501,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 //        }
         Log.e("yNativeAD", "onMediaUpdated mediaList:" + mediaList.length);
 
-        if (!mParsingFinished) {
+        if (!mFolderMain && !mParsingFinished && mediaList.length > 0) {
             updateItems(mediaList);
         }
     }
@@ -514,14 +514,20 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 //        }
         LogUtil.d(TAG, "onMediaAdded mediaList:" + mediaList.length);
 
-        updateItems(mediaList);
+        if (mediaList.length > 0) {
+            updateItems(mediaList);
+        }
     }
 
     public void updateItems(final MediaWrapper[] mediaList) {
         VLCApplication.runOnMainThread(new Runnable() {
             @Override
             public void run() {
-                mVideoAdapter.update(mediaList);
+                if (mFolderMain) {
+                    mVideoAdapter.updateFolder(mediaList);
+                } else {
+                    mVideoAdapter.update(mediaList);
+                }
                 updateEmptyView();
             }
         });

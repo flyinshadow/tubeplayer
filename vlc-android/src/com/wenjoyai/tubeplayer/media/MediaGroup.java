@@ -33,10 +33,12 @@ import java.util.List;
 
 public class MediaGroup extends Group {
 
+    private static MediaGroup dummy = new MediaGroup(Uri.parse("file://dummy"));
+
     public final static String TAG = "VLC/MediaGroup";
 
     public MediaGroup(MediaWrapper media) {
-        super(media);
+        super(media, null);
     }
 
     public MediaGroup(Uri uri) {
@@ -44,13 +46,14 @@ public class MediaGroup extends Group {
     }
 
     public static MediaGroup getDummy() {
-        return new MediaGroup(Uri.parse("file://dummy"));
+        return dummy;
     }
 
-    public void insertInto(List<Group> groups, MediaWrapper media) {
+    public void insertInto(List<MediaWrapper> groups, MediaWrapper media) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
         int minGroupLengthValue = Integer.valueOf(preferences.getString("video_min_group_length", "6"));
-        for (Group mediaGroup : groups) {
+        for (MediaWrapper wrapper : groups) {
+            Group mediaGroup = (Group) wrapper;
             String group = mediaGroup.getTitle();
             String title = media.getTitle();
 

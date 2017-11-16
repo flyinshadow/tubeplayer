@@ -36,54 +36,57 @@ public class NativeAD {
     }
 
     public void loadAD(final Context context, long type, final String adId, final ADListener listener) {
-//        mAdId = adId;
-//        mType = type;
-//        mListener = listener;
-//        mContext = context;
-//        mFacebookAd = new NativeAd(context, mAdId);
-//        mFacebookAd.setAdListener(new AdListener() {
-//            @Override
-//            public void onError(Ad ad, AdError error) {
-//                submitError(mAdId, error);
-//                if (error.getErrorCode()==1001){//1001尽量少，
-//                    if (null != mListener) {
-//                        mListener.onLoadedFailed("1001", mAdId,1001);
-//                    }
-//                    return;
-//                }
-//                startProgressTimer();
-//            }
-//
-//            @Override
-//            public void onAdLoaded(Ad ad) {
-//                submitLoaded(mAdId);
-//                // Ad loaded callback
-//                if (null != listener) {
-//                    listener.onLoadedSuccess(mFacebookAd, mAdId);
-//                }
-//            }
-//
-//            @Override
-//            public void onAdClicked(Ad ad) {
-//                submitClick(mAdId);
-//                // Ad clicked callback
-//                if (null != listener) {
-//                    listener.onAdClick();
-//                }
-//            }
-//
-//            @Override
-//            public void onLoggingImpression(Ad ad) {
-//                if (null != listener) {
-//                    listener.onAdImpression(mFacebookAd,mAdId);
-//                }
-//                submitImpression(mAdId);
-//                Log.e(TAG, "onLoggingImpression");
-//            }
-//        });
-//        // Request an ad
-//        submitRequest(mAdId);
-//        mFacebookAd.loadAd(NativeAd.MediaCacheFlag.ALL);
+        if (ADManager.sLevel == ADManager.Level_None){
+            return;
+        }
+        mAdId = adId;
+        mType = type;
+        mListener = listener;
+        mContext = context;
+        mFacebookAd = new NativeAd(context, mAdId);
+        mFacebookAd.setAdListener(new AdListener() {
+            @Override
+            public void onError(Ad ad, AdError error) {
+                submitError(mAdId, error);
+                if (error.getErrorCode()==1001){//1001尽量少，
+                    if (null != mListener) {
+                        mListener.onLoadedFailed("1001", mAdId,1001);
+                    }
+                    return;
+                }
+                startProgressTimer();
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                submitLoaded(mAdId);
+                // Ad loaded callback
+                if (null != listener) {
+                    listener.onLoadedSuccess(mFacebookAd, mAdId);
+                }
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+                submitClick(mAdId);
+                // Ad clicked callback
+                if (null != listener) {
+                    listener.onAdClick();
+                }
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+                if (null != listener) {
+                    listener.onAdImpression(mFacebookAd,mAdId);
+                }
+                submitImpression(mAdId);
+                Log.e(TAG, "onLoggingImpression");
+            }
+        });
+        // Request an ad
+        submitRequest(mAdId);
+        mFacebookAd.loadAd(NativeAd.MediaCacheFlag.ALL);
     }
 
     public interface ADListener {

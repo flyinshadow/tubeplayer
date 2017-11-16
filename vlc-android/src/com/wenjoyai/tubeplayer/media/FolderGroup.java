@@ -3,10 +3,10 @@ package com.wenjoyai.tubeplayer.media;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
-import com.wenjoyai.tubeplayer.gui.helpers.BitmapUtil;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.FileUtils;
 
@@ -14,7 +14,6 @@ import org.videolan.medialibrary.Medialibrary;
 import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -24,6 +23,8 @@ import java.util.List;
  */
 
 public class FolderGroup extends Group implements Parcelable {
+
+    private static FolderGroup dummy = new FolderGroup(Uri.parse("file://dummy"));
 
     private String mFolderPath;
 //    private ArrayList<MediaWrapper> mMedias = new ArrayList<>();
@@ -47,7 +48,7 @@ public class FolderGroup extends Group implements Parcelable {
 //                media.getTrackNumber(),
 //                media.getDiscNumber(),
 //                0l);
-        super(media);
+        super(media, Uri.parse(FileUtils.getParent(media.getUri().getPath())));
 //        mMedias.add(media);
         mFolderPath = FileUtils.getParent(media.getUri().getPath());
         mTitle = getFolderTitle(mFolderPath);
@@ -72,7 +73,7 @@ public class FolderGroup extends Group implements Parcelable {
     }
 
     public static FolderGroup getDummy() {
-        return new FolderGroup(Uri.parse("file://dummy"));
+        return dummy;
     }
 
     @Override
@@ -108,10 +109,10 @@ public class FolderGroup extends Group implements Parcelable {
         return mMedias.toArray(new MediaWrapper[mMedias.size()]);
     }
 
-//    @Override
-//    public int getItemType() {
-//        return MediaLibraryItem.TYPE_FOLDER;
-//    }
+    @Override
+    public int getItemType() {
+        return MediaLibraryItem.TYPE_FOLDER;
+    }
 
     public static <T extends MediaWrapper> void sort(List<T> folders) {
         Collections.sort(folders, new Comparator<T>() {
@@ -121,6 +122,7 @@ public class FolderGroup extends Group implements Parcelable {
                 FolderGroup itemY = (FolderGroup) item2;
                 return compareInternal(itemX, itemY);
             }
+
             private int compareInternal(FolderGroup item1, FolderGroup item2) {
                 if (item1 == null)
                     return item2 == null ? 0 : -1;
@@ -140,9 +142,10 @@ public class FolderGroup extends Group implements Parcelable {
         });
     }
 
-    public void insertInto(List<Group> groups, MediaWrapper media) {
-        for (Group folderGroup : groups) {
-            String groupFolderPath = ((FolderGroup)folderGroup).getFolderPath();
+    public void insertInto(List<MediaWrapper> groups, MediaWrapper media) {
+        for (MediaWrapper group : groups) {
+            FolderGroup folderGroup = (FolderGroup) group;
+            String groupFolderPath = folderGroup.getFolderPath();
             String mediaFolderPath = FileUtils.getParent(media.getUri().getPath());
 
             if (mediaFolderPath.equals(groupFolderPath)) {
@@ -154,4 +157,12 @@ public class FolderGroup extends Group implements Parcelable {
         groups.add(new FolderGroup(media));
     }
 
+    @Override
+    public boolean equals(MediaLibraryItem other) {
+        if (other instanceof FolderGroup) {
+            return TextUtils.equals((this).getFolderPath(), ((FolderGroup) other).getFolderPath())
+                    && this.mMedias.size() == ((FolderGroup) other).mMedias.size();
+        }
+        return false;
+    }
 }

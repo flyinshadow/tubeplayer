@@ -20,14 +20,12 @@
 
 package com.wenjoyai.tubeplayer.media;
 
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Parcel;
-import android.preference.PreferenceManager;
 
-import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.gui.helpers.BitmapUtil;
 
+import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
 
 import java.util.ArrayList;
@@ -39,8 +37,8 @@ public abstract class Group extends MediaWrapper {
 
     protected ArrayList<MediaWrapper> mMedias;
 
-    public Group(MediaWrapper media) {
-        super(media.getUri(),
+    public Group(MediaWrapper media, Uri uri) {
+        super(uri == null ? media.getUri() : uri,
                 media.getTime(),
                 media.getLength(),
                 MediaWrapper.TYPE_GROUP,
@@ -58,7 +56,7 @@ public abstract class Group extends MediaWrapper {
                 media.getTrackNumber(),
                 media.getDiscNumber(),
                 media.getLastModified());
-        mMedias = new ArrayList<MediaWrapper>();
+        mMedias = new ArrayList<>();
         mMedias.add(media);
     }
 
@@ -99,22 +97,29 @@ public abstract class Group extends MediaWrapper {
         this.mTitle = title;
     }
 
-    public List<Group> group(MediaWrapper[] mediaList) {
-        ArrayList<Group> groups = new ArrayList<>();
+    public List<MediaWrapper> group(MediaWrapper[] mediaList) {
+        ArrayList<MediaWrapper> groups = new ArrayList<>();
         for (MediaWrapper media : mediaList)
             if (media != null)
                 insertInto(groups, media);
         return groups;
     }
 
-    public List<Group> group(List<MediaWrapper> mediaList) {
-        ArrayList<Group> groups = new ArrayList<>();
+    public List<MediaWrapper> group(List<MediaWrapper> mediaList) {
+        ArrayList<MediaWrapper> groups = new ArrayList<>();
         for (MediaWrapper media : mediaList)
             if (media != null)
                 insertInto(groups, media);
         return groups;
     }
 
-    public abstract void insertInto(List<Group> groups, MediaWrapper media);
+    public abstract void insertInto(List<MediaWrapper> groups, MediaWrapper media);
 
+    @Override
+    public boolean equals(MediaLibraryItem other) {
+        if (other instanceof Group && super.equals(other)) {
+            return this.mMedias.size() == ((Group) other).mMedias.size();
+        }
+        return false;
+    }
 }

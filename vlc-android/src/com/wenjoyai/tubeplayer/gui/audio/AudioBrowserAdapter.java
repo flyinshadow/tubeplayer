@@ -269,14 +269,14 @@ public class AudioBrowserAdapter extends BaseQueuedAdapter<MediaLibraryItem[], A
 
         // generate folder list
         if (mType == MediaLibraryItem.TYPE_FOLDER) {
-            List<Group> mFolders = new ArrayList<>();
+            List<MediaWrapper> mFolders = new ArrayList<>();
             for (MediaLibraryItem item : items) {
                 if (item.getItemType() == MediaLibraryItem.TYPE_MEDIA) {
                     FolderGroup.getDummy().insertInto(mFolders, (MediaWrapper)item);
                 }
             }
             FolderGroup.sort(mFolders);
-            for (Group folderGroup : mFolders) {
+            for (MediaWrapper folderGroup : mFolders) {
                 datalist.add(folderGroup);
             }
             return datalist.toArray(new MediaLibraryItem[datalist.size()]);

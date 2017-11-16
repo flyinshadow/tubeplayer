@@ -191,6 +191,8 @@
                     android:lineSpacingExtra="8sp"
                     android:text="@{media.title}"
                     android:textColor="?attr/list_title"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:textSize="@dimen/full_title_text_size"
                     />
 

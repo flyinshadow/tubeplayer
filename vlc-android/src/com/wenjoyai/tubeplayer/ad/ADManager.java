@@ -4,9 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
-import com.facebook.ads.AdListener;
 import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdsManager;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
@@ -29,6 +27,7 @@ public class ADManager {
     public static long sPlatForm = AD_Facebook;
 
     //广告级别
+    public static final long Level_None = 0; //无广告
     public static final long Level_Little = 1;//只有feed流和pause的native
     public static final long Level_Normal = 2;//加上插屏
     public static final long Level_Big = 3;//加上banner
@@ -119,44 +118,47 @@ public class ADManager {
 
 
     private void loadAD() {
-//        String adId = getNextAdId();
-//        if (!TextUtils.isEmpty(adId)) {
-//            new NativeAD().loadAD(mContext, ADManager.AD_Facebook, adId, new NativeAD.ADListener() {
-//                @Override
-//                public void onLoadedSuccess(com.facebook.ads.NativeAd ad, String adId) {
-//                    mFinished++;
-//                    Log.e("ADManager", "onLoadedSuccess " + adId);
-//                    if (null != ad) {
-//                        mReadyQueue.offer(ad);
-//                        if (mReadyQueue.size() == 1) {//只要有了一个广告成功就通知上层展示
-//                            callbackAD();
-//                        }
-//                        if (mFinished == mNum) {
-//                            callbackAD();
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onLoadedFailed(String msg, String adId, int errorcode) {
-//                    Log.e("ADManager", "onLoadedFailed ");
-//                    mFinished++;
-//                    if (mFinished == mNum) {
-//                        callbackAD();
-//                    }
-//                }
-//
-//                @Override
-//                public void onAdClick() {
-//
-//                }
-//
-//                @Override
-//                public void onAdImpression(NativeAd ad, String adId) {
-//                    Log.e("ADManager", "onAdImpression ");
-//                }
-//            });
-//        }
+        if (sLevel == Level_None) {
+            return;
+        }
+        String adId = getNextAdId();
+        if (!TextUtils.isEmpty(adId)) {
+            new NativeAD().loadAD(mContext, ADManager.AD_Facebook, adId, new NativeAD.ADListener() {
+                @Override
+                public void onLoadedSuccess(com.facebook.ads.NativeAd ad, String adId) {
+                    mFinished++;
+                    Log.e("ADManager", "onLoadedSuccess " + adId);
+                    if (null != ad) {
+                        mReadyQueue.offer(ad);
+                        if (mReadyQueue.size() == 1) {//只要有了一个广告成功就通知上层展示
+                            callbackAD();
+                        }
+                        if (mFinished == mNum) {
+                            callbackAD();
+                        }
+                    }
+                }
+
+                @Override
+                public void onLoadedFailed(String msg, String adId, int errorcode) {
+                    Log.e("ADManager", "onLoadedFailed ");
+                    mFinished++;
+                    if (mFinished == mNum) {
+                        callbackAD();
+                    }
+                }
+
+                @Override
+                public void onAdClick() {
+
+                }
+
+                @Override
+                public void onAdImpression(NativeAd ad, String adId) {
+                    Log.e("ADManager", "onAdImpression ");
+                }
+            });
+        }
     }
 
     /**
@@ -186,43 +188,49 @@ public class ADManager {
     public NativeAdsManager mExitManager = null;
     public boolean mExitAdsLoaded = false;
     public void loadExitAD(final Context context) {
-//        mExitManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native4, 3);
-//        mExitManager.setListener(new NativeAdsManager.Listener() {
-//            @Override
-//            public void onAdsLoaded() {
-//                mExitAdsLoaded = true;
-//                Log.e("ADManager", "onAdsLoaded exit");
-//                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "loaded");
-//            }
-//
-//            @Override
-//            public void onAdError(AdError adError) {
-//                Log.e("ADManager", "onAdError exit " + adError.getErrorCode()+" "+adError.getErrorMessage());
-//                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "error "+adError.getErrorCode());
-//            }
-//        });
-//        mExitManager.loadAds(NativeAd.MediaCacheFlag.ALL);
+        if (sLevel == Level_None) {
+            return;
+        }
+        mExitManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native4, 3);
+        mExitManager.setListener(new NativeAdsManager.Listener() {
+            @Override
+            public void onAdsLoaded() {
+                mExitAdsLoaded = true;
+                Log.e("ADManager", "onAdsLoaded exit");
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "loaded");
+            }
+
+            @Override
+            public void onAdError(AdError adError) {
+                Log.e("ADManager", "onAdError exit " + adError.getErrorCode()+" "+adError.getErrorMessage());
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "error "+adError.getErrorCode());
+            }
+        });
+        mExitManager.loadAds(NativeAd.MediaCacheFlag.ALL);
     }
 
     public NativeAdsManager mPauseManager;
 //    public boolean mIsPauseADShown = false;
     public void loadPauseAD(final Context context) {
-////        mIsPauseADShown = false;
-//        mPauseManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native5, 3);
-//        mPauseManager.setListener(new NativeAdsManager.Listener() {
-//            @Override
-//            public void onAdsLoaded() {
-//                Log.e("ADManager", "onAdsLoaded pause");
-//                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "loaded");
-//            }
-//
-//            @Override
-//            public void onAdError(AdError adError) {
-//                Log.e("ADManager", "onAdError pause " + adError.getErrorCode()+" "+adError.getErrorMessage());
-//                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "error "+adError.getErrorCode());
-//            }
-//        });
-//        mPauseManager.loadAds(NativeAd.MediaCacheFlag.ALL);
+//        mIsPauseADShown = false;
+        if (sLevel == Level_None) {
+            return;
+        }
+        mPauseManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native5, 3);
+        mPauseManager.setListener(new NativeAdsManager.Listener() {
+            @Override
+            public void onAdsLoaded() {
+                Log.e("ADManager", "onAdsLoaded pause");
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "loaded");
+            }
+
+            @Override
+            public void onAdError(AdError adError) {
+                Log.e("ADManager", "onAdError pause " + adError.getErrorCode()+" "+adError.getErrorMessage());
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "error "+adError.getErrorCode());
+            }
+        });
+        mPauseManager.loadAds(NativeAd.MediaCacheFlag.ALL);
     }
 
 
