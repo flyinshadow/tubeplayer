@@ -21,6 +21,7 @@
 package com.wenjoyai.tubeplayer;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -62,6 +63,7 @@ import android.support.v7.app.NotificationCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.videolan.libvlc.IVLCVout;
@@ -229,6 +231,13 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
         mp.getVLCVout().addCallback(this);
 
         return mp;
+    }
+
+    private ImageView mSharedImageView;
+    private Activity mSharedActivity;
+    public void setSharedImageView(ImageView imageView, Activity activity) {
+        mSharedImageView = imageView;
+        mSharedActivity = activity;
     }
 
     @Override
@@ -640,7 +649,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
                     updateWidgetPosition(event.getPositionChanged());
                     break;
                 case MediaPlayer.Event.Vout:
-                    LogUtil.d("firstvideo", "MediaPlayer.Event.Vout");
+//                    LogUtil.d(TAG, "MediaPlayer.Event.Vout");
                     break;
                 case MediaPlayer.Event.ESAdded:
                     if (event.getEsChangedType() == Media.Track.Type.Video && (mVideoBackground || !switchToVideo())) {
@@ -2019,8 +2028,15 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
                     }
                 });
         } else {//Start VideoPlayer for first video, it will trigger playIndex when ready.
-            VideoPlayerActivity.startOpened(VLCApplication.getAppContext(),
-                    getCurrentMediaWrapper().getUri(), mCurrentIndex);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mSharedActivity != null && mSharedImageView != null) {
+                VideoPlayerActivity.startOpened(mSharedActivity,
+                        getCurrentMediaWrapper().getUri(), mCurrentIndex, mSharedImageView, getCurrentMediaWrapper());
+                mSharedActivity = null;
+                mSharedImageView = null;
+            } else {
+                VideoPlayerActivity.startOpened(VLCApplication.getAppContext(),
+                        getCurrentMediaWrapper().getUri(), mCurrentIndex);
+            }
         }
     }
 

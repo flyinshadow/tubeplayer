@@ -22,12 +22,10 @@ package com.wenjoyai.tubeplayer.gui.video;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,7 +33,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.annotation.MainThread;
-import android.support.annotation.RequiresApi;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.PopupMenu;
@@ -43,7 +40,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.Pair;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -309,8 +305,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 //        }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    protected void playVideo(MediaWrapper media, boolean fromStart,View v) {
+    protected void playVideo(MediaWrapper media, boolean fromStart) {
         Activity activity = getActivity();
         if (activity instanceof PlaybackService.Callback)
             mService.removeCallback((PlaybackService.Callback) activity);
@@ -318,20 +313,19 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         if (mService.isPlayingPopup()) {
             mService.load(media);
         } else {
-//            VideoPlayerActivity.start(getActivity(), media.getUri(), fromStart);
-            if (null != v){
-                // 创建一个 rect 对象来存储共享元素位置信息
-                Rect rect = new Rect();
-                // 获取元素位置信息
-                v.findViewById(R.id.ml_item_thumbnail).getGlobalVisibleRect(rect);
-                // 将位置信息附加到 intent 上
-//                intent.setSourceBounds(rect);
-                VideoPlayerActivity.start(getActivity(), media.getUri(), media,fromStart,rect);
-                // 屏蔽 Activity 默认转场效果
-                getActivity().overridePendingTransition(0, 0);
-            } else {
-                VideoPlayerActivity.start(getActivity(), media.getUri(), fromStart);
-            }
+            VideoPlayerActivity.start(getActivity(), media.getUri(), fromStart);
+        }
+    }
+
+    protected void playVideo(MediaWrapper media, boolean fromStart, ImageView sharedImageView) {
+        Activity activity = getActivity();
+        if (activity instanceof PlaybackService.Callback)
+            mService.removeCallback((PlaybackService.Callback) activity);
+        media.removeFlags(MediaWrapper.MEDIA_FORCE_AUDIO);
+        if (mService.isPlayingPopup()) {
+            mService.load(media);
+        } else {
+            VideoPlayerActivity.start(getActivity(), media.getUri(), fromStart, sharedImageView, media);
         }
     }
 
@@ -350,7 +344,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             return false;
         switch (menu.getItemId()) {
             case R.id.video_list_play_from_start:
-                playVideo(media, true,null);
+                playVideo(media, true);
                 return true;
             case R.id.video_list_play_audio:
                 playAudio(media);
@@ -816,7 +810,12 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 ArrayList<MediaWrapper> playList = new ArrayList<>();
                 MediaUtils.openList(activity, playList, mVideoAdapter.getListWithPosition(playList, position));
             } else {
-                playVideo(media, false,v);
+                ImageView thumb = (ImageView) v.findViewById(R.id.ml_item_thumbnail);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && thumb != null) {
+                    playVideo(media, false, thumb);
+                } else {
+                    playVideo(media, false);
+                }
             }
         }
     }

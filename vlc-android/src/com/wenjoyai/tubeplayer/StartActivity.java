@@ -26,29 +26,14 @@ package com.wenjoyai.tubeplayer;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.facebook.ads.AdChoicesView;
-import com.facebook.ads.MediaView;
-import com.facebook.ads.NativeAd;
-import com.wenjoyai.tubeplayer.ad.ADConstants;
-import com.wenjoyai.tubeplayer.ad.ADManager;
-import com.wenjoyai.tubeplayer.ad.NativeAD;
 import com.wenjoyai.tubeplayer.gui.AudioPlayerContainerActivity;
 import com.wenjoyai.tubeplayer.gui.BaseActivity;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
-import com.wenjoyai.tubeplayer.gui.RateFragment;
+import com.wenjoyai.tubeplayer.gui.RateDialog;
 import com.wenjoyai.tubeplayer.gui.SearchActivity;
 import com.wenjoyai.tubeplayer.gui.tv.MainTvActivity;
 import com.wenjoyai.tubeplayer.gui.tv.audioplayer.AudioPlayerActivity;
@@ -59,9 +44,6 @@ import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.Permissions;
 
 import org.videolan.libvlc.util.AndroidUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class StartActivity extends BaseActivity {
 
@@ -116,10 +98,10 @@ public class StartActivity extends BaseActivity {
             settings.edit().putInt(PREF_FIRST_RUN, currentVersionNumber).apply();
         // Rate dialog should come out
         if (upgrade) {
-            settings.edit().putLong(RateFragment.KEY_RATE_SHOW_LAST, 0).apply();
-            settings.edit().putLong(RateFragment.KEY_RATE_SHOW_NEXT, 0).apply();
-            settings.edit().putInt(RateFragment.KEY_RATE_SHOW_COUNT, 0).apply();
-            settings.edit().putInt(RateFragment.KEY_RATE_LAST_VERSION, 0).apply();
+            settings.edit().putLong(RateDialog.KEY_RATE_SHOW_LAST, 0).apply();
+            settings.edit().putLong(RateDialog.KEY_RATE_SHOW_NEXT, 0).apply();
+            settings.edit().putInt(RateDialog.KEY_RATE_SHOW_COUNT, 0).apply();
+            settings.edit().putInt(RateDialog.KEY_RATE_LAST_VERSION, 0).apply();
 
             settings.edit().putBoolean(VideoGridFragment.KEY_STAT_VIDEO_COUNT, false).apply();
             settings.edit().putBoolean(VideoGridFragment.KEY_PARSING_ONCE, false).apply();

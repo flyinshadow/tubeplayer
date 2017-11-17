@@ -1185,4 +1185,9 @@
         <item name="android:windowEnterAnimation">@anim/pause_ad_left_in</item>
         <item name="android:windowExitAnimation">@anim/pause_ad_leave_right</item>
     </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/anim_enter_left</item>
+        <item name="android:windowExitAnimation">@anim/anim_leave_right</item>
+    </style>
 </resources>
