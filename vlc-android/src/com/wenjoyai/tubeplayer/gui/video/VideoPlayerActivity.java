@@ -3841,7 +3841,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 mPresentationDisplayId = presentationDisplay.getDisplayId();
             } catch (WindowManager.InvalidDisplayException ex) {
                 LogUtil.w(TAG, "Couldn't show presentation!  Display was removed in "
-                LogUtil.w(TAG, "Couldn't start presentation!  Display was removed in "
                         + "the meantime.", ex);
                 mPresentation = null;
             }

@@ -259,7 +259,12 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             boolean changeTheme = getIntent().getExtras().getBoolean(ThemeFragment.EXTRA_CHANGE_THEME);
             if (changeTheme) {
                 LogUtil.d(TAG, "Theme changed, try to show RateDialog");
-                RateDialog.tryToShow(this, 5);
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        RateDialog.tryToShow(VLCApplication.getAppContext(), 5);
+                    }
+                }, 1500);
             }
         }
     }
