@@ -35,6 +35,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.MainThread;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -345,6 +346,18 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             mService.load(media);
         } else {
             VideoPlayerActivity.start(getActivity(), media.getUri(), fromStart);
+        }
+    }
+
+    protected void playVideo(MediaWrapper media, boolean fromStart, ImageView sharedImageView) {
+        Activity activity = getActivity();
+        if (activity instanceof PlaybackService.Callback)
+            mService.removeCallback((PlaybackService.Callback) activity);
+        media.removeFlags(MediaWrapper.MEDIA_FORCE_AUDIO);
+        if (mService.isPlayingPopup()) {
+            mService.load(media);
+        } else {
+            VideoPlayerActivity.start(getActivity(), media.getUri(), fromStart, sharedImageView, media);
         }
     }
 
@@ -864,7 +877,12 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 ArrayList<MediaWrapper> playList = new ArrayList<>();
                 MediaUtils.openList(activity, playList, mVideoAdapter.getListWithPosition(playList, position));
             } else {
-                playVideo(media, false);
+                ImageView thumb = (ImageView) v.findViewById(R.id.ml_item_thumbnail);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && thumb != null) {
+                    playVideo(media, false, thumb);
+                } else {
+                    playVideo(media, false);
+                }
             }
         }
     }
@@ -881,10 +899,17 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     }
 
     @Override
-    public void onCtxClick(View v, int position, MediaLibraryItem item) {
+    public void onCtxClick(View v, final int position, MediaLibraryItem item) {
         if (mActionMode != null)
             return;
         mGridView.openContextMenu(position);
+    }
+
+    private void showPopupMenu(View anchor, int menuRes, PopupMenu.OnMenuItemClickListener onMenuItemClickListener) {
+        PopupMenu popup = new PopupMenu(getActivity(), anchor);
+        popup.getMenuInflater().inflate(menuRes, popup.getMenu());
+        popup.setOnMenuItemClickListener(onMenuItemClickListener);
+        popup.show();
     }
 
     @Override
@@ -973,7 +998,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     private ADManager.ADNumListener mAdNumListener = new ADManager.ADNumListener() {
         @Override
-        public void onLoadedSuccess(List<NativeAd> list) {
+        public void onLoadedSuccess(List<NativeAd> list , boolean needGif){
             mNativeAdList = list;
             Log.e("yNativeAD", "aaaa onLoadedSuccess list:" + (list == null ? 0 : list.size()));
             if (checkAds()) {
@@ -981,6 +1006,16 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 if (mParsingFinished || mParsed) {
                     mHandler.sendEmptyMessage(UPDATE_LIST);
                 }
+            }
+
+            if (needGif){
+                ((MainActivity)getActivity()).showGif(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // TODO: 2017/11/18 改变顺序
+
+                    }
+                });
             }
         }
     };

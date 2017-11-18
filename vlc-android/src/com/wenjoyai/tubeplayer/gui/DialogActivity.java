@@ -30,6 +30,8 @@ import android.text.TextUtils;
 import android.view.ViewGroup;
 
 import com.wenjoyai.tubeplayer.MediaParsingService;
+import com.wenjoyai.tubeplayer.R;
+import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.gui.dialogs.ExternalStorageDialog;
 import com.wenjoyai.tubeplayer.gui.dialogs.VlcDialog;
 import com.wenjoyai.tubeplayer.gui.dialogs.VlcLoginDialog;
@@ -45,8 +47,6 @@ public class DialogActivity extends AppCompatActivity {
     public static final String KEY_STREAM = "streamDialog";
     public static final String KEY_STORAGE = "storageDialog";
     public static final String KEY_RATE = "rateDialog";
-
-    public static boolean sRateStarted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +66,18 @@ public class DialogActivity extends AppCompatActivity {
             setupStreamDialog();
         else if (KEY_STORAGE.equals(key))
             setupStorageDialog();
-        else if (KEY_RATE.equals(key))
-            startRateDialog();
+        else if (KEY_RATE.equals(key)) {
+            int defaultScore = 0;
+            if (getIntent() != null && getIntent().getExtras() != null) {
+                defaultScore = getIntent().getExtras().getInt(RateDialog.EXTRA_RATE_SCORE_DEFAULT);
+            }
+            startRateDialog(defaultScore);
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        sRateStarted = false;
     }
 
     @Override
@@ -114,14 +118,21 @@ public class DialogActivity extends AppCompatActivity {
         dialog.show(fm, key);
     }
 
-    private void startRateDialog() {
-        sRateStarted = true;
+    private void startRateDialog(int defaultScore) {
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        if (mRate != null && mRate.isVisible())
-//            return;
-//        if (mRate == null) {
-//            mRate = new RateFragment();
-//        }
-        new RateFragment().show(getSupportFragmentManager(), "rate_fragment");
+        RateDialog rateDialog = new RateDialog();
+        rateDialog.setDefaultScore(defaultScore);
+        rateDialog.setOnDismissRate(new RateDialog.OnRateDismiss() {
+            @Override
+            public void onDismiss() {
+                VLCApplication.runOnMainThreadDelay(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 300);
+            }
+        });
+        rateDialog.show(getSupportFragmentManager(), "rate_fragment");
     }
 }

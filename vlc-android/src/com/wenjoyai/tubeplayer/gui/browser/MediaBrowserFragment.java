@@ -245,7 +245,7 @@ public abstract class MediaBrowserFragment extends PlaybackServiceFragment imple
         String transitionName = ViewCompat.getTransitionName(sharedImageView);
         LogUtil.d(TAG, "showInfoDialog transitionName=" + transitionName);
 
-        intent.putExtra(InfoActivity.EXTRA_MEDIA_THUMB_TRANSITION_NAME, transitionName);
+        intent.putExtra(InfoActivity.INFO_EXTRA_THUMB_TRANSITION_NAME, transitionName);
 
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 getActivity(),

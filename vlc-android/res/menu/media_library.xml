@@ -30,12 +30,12 @@
         android:id="@+id/ml_menu_last_playlist"
         android:icon="@drawable/ic_menu_lastplaylist"
         android:title="@string/last_playlist"
-        vlc:showAsAction="ifRoom" />
+        vlc:showAsAction="collapseActionView" />
     <item
         android:title="@string/sortby"
         android:icon="@drawable/ic_menu_sort"
         android:id="@+id/ml_menu_sortby"
-        vlc:showAsAction="ifRoom">
+        vlc:showAsAction="collapseActionView">
         <menu>
             <item
                 android:id="@+id/ml_menu_sortby_date"

@@ -68,7 +68,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FilterQueryProvider;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -120,6 +119,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.droidsonroids.gif.GifImageView;
+
 import static com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity.RESULT_RESTART;
 
 public class MainActivity extends AudioPlayerContainerActivity implements FilterQueryProvider, NavigationView.OnNavigationItemSelectedListener, ExtensionManagerService.ExtensionManagerActivity, SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener {
@@ -163,6 +164,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private long mOpenCount;//启动次数
     MyBroadcastReceiver mReceiver;
 
+    private GifImageView mGifImageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -184,6 +187,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         //开始广告缓存
         ADManager.getInstance().startLoadAD(this);
         mDrawerLayout = (HackyDrawerLayout) findViewById(R.id.root_container);
+        mGifImageView = (GifImageView)findViewById(R.id.main_gif_iv);
         setupNavigationView();
 
         initAudioPlayerContainerActivity();
@@ -256,6 +260,19 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         IntentFilter filter = new IntentFilter();
         filter.addAction("smallWindow");
         registerReceiver(mReceiver, filter);
+
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            boolean changeTheme = getIntent().getExtras().getBoolean(ThemeFragment.EXTRA_CHANGE_THEME);
+            if (changeTheme) {
+                LogUtil.d(TAG, "Theme changed, try to show RateDialog");
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        RateDialog.tryToShow(VLCApplication.getAppContext(), 5);
+                    }
+                }, 1500);
+            }
+        }
     }
 
     private void submitNetwork() {
@@ -366,9 +383,6 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private void loadExitAD() {
         if (ADManager.sLevel == ADManager.Level_None) {
             return;
-        }
-        if (ADManager.getInstance().isShowExit) {
-            ADManager.getInstance().loadExitAD(this);
         }
         ADManager.getInstance().loadPauseAD(this);
     }
@@ -675,6 +689,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mIsGifShow = false;
         if (null!=mReceiver) {
             unregisterReceiver(mReceiver);
         }
@@ -702,11 +717,15 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             ((ExtensionBrowser) fragment).goBack();
             return;
         }
-        if (ADManager.getInstance().mExitManager != null && ADManager.getInstance().mExitManager.isLoaded()) {
-            showExitDialog();
-        } else {
-            finish();
+        int unshownSize = ADManager.getInstance().getUnshownFeed().size();
+
+        if (unshownSize>0) {
+            StatisticsManager.submitAd(this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_UNSHOWN + String.valueOf(unshownSize));
+//            if (ADManager.getInstance().isShowExit) {
+//                showExitDialog();
+//            }
         }
+        finish();
     }
 
     private void showExitDialog() {
@@ -932,7 +951,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         menu.findItem(R.id.ml_menu_filter).setVisible(current instanceof Filterable && ((Filterable) current).enableSearchOption());
         LogUtil.d(TAG, "viewmode getScreenRotation:" + getScreenRotation());
         menu.findItem(R.id.ml_menu_view_mode).setVisible(current instanceof VideoGridFragment && !((VideoGridFragment)current).getFolderMain() &&
-                ((getScreenRotation() == Surface.ROTATION_0) || (getScreenRotation() == Surface.ROTATION_180)));
+                ((getScreenRotation() == Surface.ROTATION_0) || (getScreenRotation() == Surface.ROTATION_180)) && !mIsGifShow);
         return true;
     }
 
@@ -1272,8 +1291,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                     shareApp();
                     break;
                 case R.id.nav_rate_app:
-                    startActivity(new Intent(MainActivity.this, DialogActivity.class).setAction(DialogActivity.KEY_RATE)
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    RateDialog.start(this, 5);
                     break;
                 case R.id.nav_directories:
                     if (TextUtils.equals(BuildConfig.FLAVOR_target, "chrome")) {
@@ -1431,6 +1449,36 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 //                showPauseDialog();
 //            }
         }
+    }
+
+    private boolean mIsGifShow = false;
+    /**
+     * 显示小动画
+     */
+    public void showGif(final View.OnClickListener listener){
+        if (mIsGifShow){
+            return;
+        }
+        Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_placeholder);
+        if (current instanceof VideoGridFragment && ((getScreenRotation() == Surface.ROTATION_0) || (getScreenRotation() == Surface.ROTATION_180))){
+            mMenu.findItem(R.id.ml_menu_view_mode).setVisible(false);
+        }
+
+        mGifImageView.setVisibility(View.VISIBLE);
+        mGifImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(v);
+                ADManager.getInstance().mInterstitial.show();
+                mGifImageView.setVisibility(View.GONE);
+
+                Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_placeholder);
+                mMenu.findItem(R.id.ml_menu_view_mode).setVisible(current instanceof VideoGridFragment &&
+                        ((getScreenRotation() == Surface.ROTATION_0) || (getScreenRotation() == Surface.ROTATION_180)));
+            }
+        });
+        mIsGifShow = true;
+
     }
 
 }

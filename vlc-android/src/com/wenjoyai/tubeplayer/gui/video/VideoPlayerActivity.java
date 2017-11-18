@@ -36,8 +36,11 @@ import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
+import android.graphics.SurfaceTexture;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.media.MediaRouter;
 import android.net.Uri;
@@ -52,9 +55,11 @@ import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -66,6 +71,7 @@ import android.support.v7.widget.ViewStubCompat;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.transition.Transition;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.GestureDetector;
@@ -76,6 +82,7 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.Surface;
 import android.view.SurfaceView;
+import android.view.TextureView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLayoutChangeListener;
@@ -109,11 +116,14 @@ import com.wenjoyai.tubeplayer.ad.RotateAD;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
 import com.wenjoyai.tubeplayer.gui.PlaybackServiceActivity;
+import com.wenjoyai.tubeplayer.gui.RateDialog;
 import com.wenjoyai.tubeplayer.gui.ThemeFragment;
 import com.wenjoyai.tubeplayer.gui.audio.PlaylistAdapter;
 import com.wenjoyai.tubeplayer.gui.browser.FilePickerActivity;
 import com.wenjoyai.tubeplayer.gui.browser.FilePickerFragment;
 import com.wenjoyai.tubeplayer.gui.dialogs.AdvOptionsDialog;
+import com.wenjoyai.tubeplayer.gui.helpers.AsyncImageLoader;
+import com.wenjoyai.tubeplayer.gui.helpers.AudioUtil;
 import com.wenjoyai.tubeplayer.gui.helpers.OnRepeatListener;
 import com.wenjoyai.tubeplayer.gui.helpers.SwipeDragItemTouchHelperCallback;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
@@ -171,6 +181,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     public final static String PLAY_EXTRA_OPENED_POSITION = "opened_position";
     public final static String PLAY_DISABLE_HARDWARE = "disable_hardware";
 
+    public static final String PLAY_EXTRA_THUMB_TRANSITION_NAME = "player_thumb_transition_name";
+    public static final String PLAY_EXTRA_ITEM = "player_item";
+
     public final static String ACTION_RESULT = Strings.buildPkgString("player.result");
     public final static String EXTRA_POSITION = "extra_position";
     public final static String EXTRA_DURATION = "extra_duration";
@@ -186,7 +199,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private final PlaybackServiceActivity.Helper mHelper = new PlaybackServiceActivity.Helper(this, this);
     protected PlaybackService mService;
     private Medialibrary mMedialibrary;
-    private SurfaceView mSurfaceView = null;
+    private TextureView mSurfaceView = null;
     private SurfaceView mSubtitlesSurfaceView = null;
     private View mRootView;
     private FrameLayout mSurfaceFrame;
@@ -382,6 +395,18 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private FrameLayout mNativeFrameLayout;
     private FrameLayout mNativeContainer;
 
+    // 转场动画相关
+    private View mPlayerVideoContainer;
+    private View mPlayerMediaThumbContainer;
+    private MediaWrapper mSharedItem;
+    private boolean mWillTransition = false;
+    private boolean mTransitionEnd = false;
+    Transition mSharedElementEnterTransition;
+    Transition.TransitionListener mTransitionListener;
+
+    private long mPlayTime = 0;
+    private long mPlayLength = 0;
+
     private static LibVLC LibVLC() {
         return VLCInstance.get();
     }
@@ -389,15 +414,22 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @Override
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     protected void onCreate(Bundle savedInstanceState) {
-//        LogUtil.e(TAG,"onCreate");
+        LogUtil.e(TAG,"--- onCreate");
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
         applyTheme();
         super.onCreate(savedInstanceState);
+
 
         if (!VLCInstance.testCompatibleCPU(this)) {
             exit(RESULT_CANCELED);
             return;
         }
+
+        supportPostponeEnterTransition();
+
+        mSharedItem = (MediaWrapper) (savedInstanceState != null ?
+                savedInstanceState.getParcelable(PLAY_EXTRA_ITEM) :
+                (getIntent() != null ? getIntent().getParcelableExtra(PLAY_EXTRA_ITEM) : null));
 
         if (AndroidUtil.isJellyBeanMR1OrLater) {
             // Get the media router service (Miracast)
@@ -451,10 +483,14 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mScreenOrientation = Integer.valueOf(
                 mSettings.getString("screen_orientation", "99" /*SCREEN ORIENTATION SENSOR*/));
 
-        mSurfaceView = (SurfaceView) findViewById(R.id.player_surface);
-        mSubtitlesSurfaceView = (SurfaceView) findViewById(R.id.subtitles_surface);
+        mSurfaceView = (TextureView) findViewById(R.id.player_surface);
 
-        mSubtitlesSurfaceView.setZOrderMediaOverlay(true);
+        mSubtitlesSurfaceView = (SurfaceView) findViewById(R.id.subtitles_surface);
+//        mSubtitlesSurfaceView.setAlpha(0);
+//        mSubtitlesSurfaceView.setOpaque(false);
+
+        mSubtitlesSurfaceView.setZOrderOnTop(true);
+//        mSubtitlesSurfaceView.setZOrderMediaOverlay(true);
         mSubtitlesSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
 
         mSurfaceFrame = (FrameLayout) findViewById(R.id.player_surface_frame);
@@ -464,7 +500,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (mPresentation != null)
             mTipsBackground = (ImageView) findViewById(R.id.player_remote_tips_background);
         dimStatusBar(true);
-        mHandler.sendEmptyMessageDelayed(LOADING_ANIMATION, LOADING_ANIMATION_DELAY);
+//        mHandler.sendEmptyMessageDelayed(LOADING_ANIMATION, LOADING_ANIMATION_DELAY);
 
         mSwitchingView = false;
 
@@ -540,6 +576,82 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         initPauseNative();
         mTranstionAnimIn = AnimationUtils.loadAnimation(this, R.anim.pause_ad_left_in);
         mTranstionAnimOut = AnimationUtils.loadAnimation(this, R.anim.pause_ad_leave_right);
+
+        mPlayerVideoContainer = findViewById(R.id.player_video_container);
+        mPlayerMediaThumbContainer = findViewById(R.id.player_media_thumb_container);
+
+        mWillTransition = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) && mSharedItem != null;
+        if (mWillTransition) {
+            initTransition();
+        } else {
+            mPlayerVideoContainer.setVisibility(View.VISIBLE);
+            mPlayerMediaThumbContainer.setVisibility(View.GONE);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void initTransition() {
+        mPlayerVideoContainer.setVisibility(View.GONE);
+        mPlayerMediaThumbContainer.setVisibility(View.VISIBLE);
+        final ImageView thumb = (ImageView) findViewById(R.id.player_media_thumb);
+        String imageTransitionName = getIntent().getExtras().getString(PLAY_EXTRA_THUMB_TRANSITION_NAME);
+        thumb.setTransitionName(imageTransitionName);
+
+        mSharedElementEnterTransition = getWindow().getSharedElementEnterTransition();
+        mTransitionListener = new Transition.TransitionListener() {
+            @Override
+            public void onTransitionStart(Transition transition) {
+                LogUtil.d(TAG, "onTransitionStart");
+            }
+
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                LogUtil.d(TAG, "onTransitionEnd");
+
+                mPlayerVideoContainer.setVisibility(View.VISIBLE);
+                mSubtitlesSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+                mSubtitlesSurfaceView.setZOrderOnTop(true);
+                mTransitionEnd = true;
+
+                if (!mSwitchingView)
+                    mHandler.sendEmptyMessage(START_PLAYBACK);
+            }
+
+            @Override
+            public void onTransitionCancel(Transition transition) {
+                LogUtil.d(TAG, "onTransitionCancel");
+            }
+
+            @Override
+            public void onTransitionPause(Transition transition) {
+                LogUtil.d(TAG, "onTransitionPause");
+            }
+
+            @Override
+            public void onTransitionResume(Transition transition) {
+                LogUtil.d(TAG, "onTransitionResume");
+            }
+        };
+        mSharedElementEnterTransition.addListener(mTransitionListener);
+        if (mSharedItem != null) {
+            VLCApplication.runBackground(new Runnable() {
+                @Override
+                public void run() {
+                    final Bitmap cover = AudioUtil.readCoverBitmap(Uri.decode(mSharedItem.getArtworkMrl()), 0);
+                    VLCApplication.runOnMainThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (cover != null) {
+                                thumb.setImageDrawable(new BitmapDrawable(getResources(), cover));
+                            } else {
+                                thumb.setImageDrawable(AsyncImageLoader.DEFAULT_COVER_VIDEO_DRAWABLE);
+                            }
+                            supportStartPostponedEnterTransition();
+                        }
+                    });
+                }
+            });
+        }
     }
 
     private Animation mTranstionAnimIn;
@@ -553,7 +665,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     protected void onResume() {
-//        LogUtil.d(TAG, "onResume");
+        LogUtil.d(TAG, "---- onResume");
         super.onResume();
         /*
          * Set listeners here to avoid NPE when activity is closing
@@ -604,7 +716,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     protected void onNewIntent(Intent intent) {
-//        LogUtil.d(TAG, "onNewIntent");
+        LogUtil.d(TAG, "---- onNewIntent");
         setIntent(intent);
         if (mPlaybackStarted && mService.getCurrentMediaWrapper() != null) {
             Uri uri = intent.hasExtra(PLAY_EXTRA_ITEM_LOCATION) ?
@@ -667,8 +779,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        if (!AndroidUtil.isHoneycombOrLater)
+        if (!AndroidUtil.isHoneycombOrLater) {
+            LogUtil.d(TAG, "onConfigurationChanged changeSurfaceLayout");
             changeSurfaceLayout();
+        }
         super.onConfigurationChanged(newConfig);
         getWindowManager().getDefaultDisplay().getMetrics(mScreen);
         mCurrentScreenOrientation = newConfig.orientation;
@@ -676,7 +790,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mSurfaceXDisplayRange = Math.max(mScreen.widthPixels, mScreen.heightPixels);
         resetHudLayout();
 
-        if (mService != null && mService.isPlaying() && VLCApplication.sWillShowRate) {
+        if (mService != null && mService.isPlaying() && RateDialog.isShowing()) {
             doPlayPause();
         }
     }
@@ -703,7 +817,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     protected void onStart() {
-//        LogUtil.e(TAG,"onStart");
+        LogUtil.e(TAG,"---- onStart");
         super.onStart();
         mMedialibrary.pauseBackgroundOperations();
         mHelper.onStart();
@@ -726,7 +840,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onStop() {
-//        LogUtil.e(TAG,"onStop");
+        LogUtil.e(TAG,"---- onStop");
         super.onStop();
         mMedialibrary.resumeBackgroundOperations();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mServiceReceiver);
@@ -801,10 +915,18 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     protected void onDestroy() {
-//        LogUtil.d(TAG, "onDestroy");
+        LogUtil.d(TAG, "---- onDestroy");
         if (null != mInterstitial) {
             mInterstitial.show();
         }
+
+        LogUtil.d(TAG, "onDestroy mPlayTime=" + mPlayTime + ", mPlayLength=" + mPlayLength);
+        // 视频时长10分钟以上播放进度5分钟以上提示评分
+        // 10分钟以下播放进度2分钟以上提示评分
+        if ((mPlayLength > 600000 && mPlayTime >= 300000) || (mPlayLength <= 600000 && mPlayTime >= 120000)) {
+            RateDialog.tryToShow(VLCApplication.getAppContext(), 5);
+        }
+
         mHandler.removeCallbacks(mRunnable);
         super.onDestroy();
         if (mReceiver != null)
@@ -861,6 +983,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 private final Runnable mRunnable = new Runnable() {
                     @Override
                     public void run() {
+                        LogUtil.d(TAG, "mOnLayoutChangeListener changeSurfaceLayout");
+
                         changeSurfaceLayout();
                     }
                 };
@@ -876,6 +1000,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 }
             };
             mSurfaceFrame.addOnLayoutChangeListener(mOnLayoutChangeListener);
+            LogUtil.d(TAG, "surfaceFrameAddLayoutListener changeSurfaceLayout");
+
             changeSurfaceLayout();
         } else {
             mSurfaceFrame.removeOnLayoutChangeListener(mOnLayoutChangeListener);
@@ -1083,6 +1209,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         start(context, uri, null, false, -1);
     }
 
+    public static void start(Context context, Uri uri, boolean fromStart, ImageView sharedImageView, MediaWrapper media) {
+        start(context, uri, null, fromStart, -1, sharedImageView, media);
+    }
+
     public static void start(Context context, Uri uri, boolean fromStart) {
         start(context, uri, null, fromStart, -1);
     }
@@ -1095,10 +1225,27 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         start(context, uri, null, false, openedPosition);
     }
 
+    public static void startOpened(Context context, Uri uri, int openedPosition, ImageView sharedImageView, MediaWrapper media) {
+        start(context, uri, null, false, openedPosition, sharedImageView, media);
+    }
+
     private static void start(Context context, Uri uri, String title, boolean fromStart, int openedPosition) {
         Intent intent = getIntent(context, uri, title, fromStart, openedPosition);
 
         context.startActivity(intent);
+    }
+
+    private static void start(Context context, Uri uri, String title, boolean fromStart, int openedPosition, ImageView sharedImageView, MediaWrapper media) {
+        Intent intent = getIntent(context, uri, title, fromStart, openedPosition);
+        intent.putExtra(PLAY_EXTRA_ITEM, media);
+        intent.putExtra(PLAY_EXTRA_THUMB_TRANSITION_NAME, ViewCompat.getTransitionName(sharedImageView));
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                (Activity)context,
+                sharedImageView,
+                ViewCompat.getTransitionName(sharedImageView));
+
+        context.startActivity(intent, options.toBundle());
     }
 
     public static Intent getIntent(String action, MediaWrapper mw, boolean fromStart, int openedPosition) {
@@ -1160,7 +1307,15 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             resultIntent.putExtra(EXTRA_DURATION, mService.getLength());
         }
         setResult(resultCode, resultIntent);
-        finish();
+//        finish();
+        if (mWillTransition) {
+            if (mSharedElementEnterTransition != null) {
+                mSharedElementEnterTransition.removeListener(mTransitionListener);
+            }
+            mPlayerVideoContainer.setVisibility(View.GONE);
+            mPlayerMediaThumbContainer.setVisibility(View.VISIBLE);
+        }
+        supportFinishAfterTransition();
     }
 
     private void exitOK() {
@@ -1681,6 +1836,15 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     public void updateProgress() {
+        if (mService != null) {
+            long time = mService.getTime();
+            long length = mService.getLength();
+            LogUtil.d(TAG, "updateProgress time=" + time + ", length=" + length);
+            if (time > 0)
+                mPlayTime = time;
+            if (length > 0)
+                mPlayLength = length;
+        }
     }
 
     @Override
@@ -1736,7 +1900,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             case MediaPlayer.Event.TimeChanged:
                 break;
             case MediaPlayer.Event.Vout:
-//                LogUtil.d("firstvideo", "MediaPlayer.Event.Vout");
+                LogUtil.d(TAG, "MediaPlayer.Event.Vout");
+//                Toast.makeText(this, "Vout", Toast.LENGTH_SHORT).show();
                 updateNavStatus();
                 if (mMenuIdx == -1)
                     handleVout(event.getVoutCount());
@@ -1768,7 +1933,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             case MediaPlayer.Event.ESSelected:
                 if (event.getEsChangedType() == Media.VideoTrack.Type.Video) {
                     Media.VideoTrack vt = mService.getCurrentVideoTrack();
-                    changeSurfaceLayout();
+//                    changeSurfaceLayout();
                     if (vt != null)
                         mFov = vt.projection == Media.VideoTrack.Projection.Rectangular ? 0f : DEFAULT_FOV;
                 }
@@ -1784,9 +1949,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     break;
                 if (event.getBuffering() == 100f)
                     stopLoading();
-                else if (!mHandler.hasMessages(LOADING_ANIMATION) && !mIsLoading
-                        && mTouchAction != TOUCH_SEEK && !mDragging)
-                    mHandler.sendEmptyMessageDelayed(LOADING_ANIMATION, LOADING_ANIMATION_DELAY);
+//                else if (!mHandler.hasMessages(LOADING_ANIMATION) && !mIsLoading
+//                        && mTouchAction != TOUCH_SEEK && !mDragging)
+//                    mHandler.sendEmptyMessageDelayed(LOADING_ANIMATION, LOADING_ANIMATION_DELAY);
                 break;
         }
     }
@@ -1854,6 +2019,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private void onPlaying() {
         if (!mIsPlaying) {
             LogUtil.d(TAG, "first Playing");
+
+            mPlayerMediaThumbContainer.setVisibility(View.GONE);
+
             MediaWrapper mw = mService.getCurrentMediaWrapper();
             if (mw != null) {
                 String path = (mw.getUri() != null) ? mw.getUri().getPath() : "";
@@ -1880,7 +2048,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     StatisticsManager.submitVideoPlaySuccess(this, mw.getUri().getPath(), null);
                 }
             }
-            showOverlay();
+//            showOverlay();
         }
         mIsPlaying = true;
         setPlaybackParameters();
@@ -2057,11 +2225,13 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @Override
     public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
         super.onPictureInPictureModeChanged(isInPictureInPictureMode);
+        LogUtil.d(TAG, "onPictureInPictureModeChanged changeSurfaceLayout");
         changeSurfaceLayout();
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void changeSurfaceLayout() {
+        LogUtil.d(TAG, "changeSurfaceLayout");
         int sw;
         int sh;
 
@@ -2085,18 +2255,18 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             vlcVout.setWindowSize(sw, sh);
         }
 
-        SurfaceView surface;
+        TextureView surface;
         SurfaceView subtitlesSurface;
         FrameLayout surfaceFrame;
-        if (mPresentation == null) {
+//        if (mPresentation == null) {
             surface = mSurfaceView;
             subtitlesSurface = mSubtitlesSurfaceView;
             surfaceFrame = mSurfaceFrame;
-        } else {
-            surface = mPresentation.mSurfaceView;
-            subtitlesSurface = mPresentation.mSubtitlesSurfaceView;
-            surfaceFrame = mPresentation.mSurfaceFrame;
-        }
+//        } else {
+//            surface = mPresentation.mSurfaceView;
+//            subtitlesSurface = mPresentation.mSubtitlesSurfaceView;
+//            surfaceFrame = mPresentation.mSurfaceFrame;
+//        }
         LayoutParams lp = surface.getLayoutParams();
 
         if (mVideoWidth * mVideoHeight == 0 || isInPictureInPictureMode()) {
@@ -2194,6 +2364,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         lp = surfaceFrame.getLayoutParams();
         lp.width = (int) Math.floor(dw);
         lp.height = (int) Math.floor(dh);
+
+        LogUtil.d(TAG, "surfaceFrame setLayoutParams width=" + lp.width + ",height=" + lp.height);
         surfaceFrame.setLayoutParams(lp);
 
         surface.invalidate();
@@ -2649,11 +2821,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
                 if (Permissions.canDrawOverlays(this)) {
                     switchToPopupMode();
-//                    Intent intent = new Intent();
-//                    intent.setAction("smallWindow");
-//                    intent.putExtra("data", "Hi!I am broadcastData!");
-//                    sendBroadcast(intent);
-                }else {
+                    LogUtil.d(TAG, "switchToPopupMode try to show RateDialog");
+                    // 小窗提示评分
+                    RateDialog.tryToShow(this, 5);
+                } else {
                     Permissions.checkDrawOverlaysPermission(this);
                 }
                 break;
@@ -2890,6 +3061,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         } else {
             mCurrentSize = 0;
         }
+        LogUtil.d(TAG, "resizeVideo changeSurfaceLayout");
+
         changeSurfaceLayout();
         switch (mCurrentSize) {
             case SURFACE_BEST_FIT:
@@ -3420,7 +3593,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mService.loadLastPlaylist(PlaybackService.TYPE_VIDEO);
             MediaWrapper mw = mService.getCurrentMediaWrapper();
             if (mw == null) {
-                finish();
+//                finish();
+                supportFinishAfterTransition();
                 return;
             }
             mUri = mService.getCurrentMediaWrapper().getUri();
@@ -3853,8 +4027,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @Override
     public void onConnected(PlaybackService service) {
         mService = service;
-        if (!mSwitchingView)
-            mHandler.sendEmptyMessage(START_PLAYBACK);
+        if (!mSwitchingView && (!mWillTransition || mTransitionEnd))
+            mHandler.sendEmptyMessageDelayed(START_PLAYBACK, 20);
         mSwitchingView = false;
         mSettings.edit().putBoolean(PreferencesActivity.VIDEO_RESTORE, false).apply();
     }
@@ -3867,7 +4041,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     public void onNewVideoLayout(IVLCVout vlcVout, int width, int height, int visibleWidth, int visibleHeight, int sarNum, int sarDen) {
-        LogUtil.d("firstvideo", "VideoPlayerActivity onNewVideoLayout width=" + width + " height=" + height + " visibleWidth=" + visibleWidth + " visibleHeight=" + visibleHeight);
+        LogUtil.d(TAG, "VideoPlayerActivity onNewVideoLayout width=" + width + " height=" + height + " visibleWidth=" + visibleWidth + " visibleHeight=" + visibleHeight);
         // store video size
         mVideoWidth = width;
         mVideoHeight = height;
@@ -3875,15 +4049,19 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mVideoVisibleHeight = visibleHeight;
         mSarNum = sarNum;
         mSarDen = sarDen;
+        LogUtil.d(TAG, "onNewVideoLayout changeSurfaceLayout");
+
         changeSurfaceLayout();
     }
 
     @Override
     public void onSurfacesCreated(IVLCVout vlcVout) {
+        LogUtil.d(TAG, "onSurfacesCreated");
     }
 
     @Override
     public void onSurfacesDestroyed(IVLCVout vlcVout) {
+        LogUtil.d(TAG, "onSurfacesDestroyed");
     }
 
     private BroadcastReceiver mServiceReceiver = new BroadcastReceiver() {

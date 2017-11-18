@@ -8,9 +8,11 @@ import com.facebook.ads.AdError;
 import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdsManager;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
+import com.wenjoyai.tubeplayer.gui.video.VideoPlayerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by LiJiaZhi on 2017/9/23.
@@ -77,7 +79,7 @@ public class ADManager {
     private ADNumListener mListener;
 
     //准备好的，给上层的数据 3个
-    private LimitQueue<NativeAd> mReadyQueue = new LimitQueue<>(mNum);
+    private LimitQueue<NativeWrapper> mReadyQueue = new LimitQueue<>(mNum);
     public List<AdID> mAdIdList = new ArrayList<>();
     private int mIndex = 0;
     private int mFinished = 0;
@@ -89,6 +91,33 @@ public class ADManager {
         public AdID(String adId) {
             this.adId = adId;
         }
+    }
+
+    class NativeWrapper{
+        public String adId;
+        public NativeAd nativeAd;
+        public boolean isShown = false;
+        public int errorcode=0;//0是成功
+
+        public NativeWrapper(String adId, NativeAd nativeAd, int errorcode) {
+            this.adId = adId;
+            this.nativeAd = nativeAd;
+            this.errorcode = errorcode;
+        }
+    }
+
+    /**
+     * 没有显示的feed流广告个数
+     * @return
+     */
+    public List<NativeAd> getUnshownFeed(){
+        List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
+        for (int i = 0; i < mReadyQueue.size(); i++) {
+            if (!mReadyQueue.get(i).isShown) {
+                tempList.add(mReadyQueue.get(i).nativeAd);
+            }
+        }
+        return tempList;
     }
 
     /**
@@ -129,12 +158,12 @@ public class ADManager {
                     mFinished++;
                     Log.e("ADManager", "onLoadedSuccess " + adId);
                     if (null != ad) {
-                        mReadyQueue.offer(ad);
+                        mReadyQueue.offer(new NativeWrapper(adId,ad,0));
                         if (mReadyQueue.size() == 1) {//只要有了一个广告成功就通知上层展示
-                            callbackAD();
+                            callbackAD(false);
                         }
                         if (mFinished == mNum) {
-                            callbackAD();
+                            callbackAD(false);
                         }
                     }
                 }
@@ -142,9 +171,21 @@ public class ADManager {
                 @Override
                 public void onLoadedFailed(String msg, String adId, int errorcode) {
                     Log.e("ADManager", "onLoadedFailed ");
+                    mReadyQueue.offer(new NativeWrapper(adId,null, errorcode));
                     mFinished++;
                     if (mFinished == mNum) {
-                        callbackAD();
+                        int error1001 = 0;
+                        for (int i =0; i<mNum;i++){
+                            if (mReadyQueue.get(i).errorcode ==1001){
+                                error1001++;
+                            }
+                        }
+                        if (error1001==mNum){
+                            //如果三个广告都是1001
+                            loadInterstitial();
+                        } else {
+                            callbackAD(false);
+                        }
                     }
                 }
 
@@ -156,6 +197,12 @@ public class ADManager {
                 @Override
                 public void onAdImpression(NativeAd ad, String adId) {
                     Log.e("ADManager", "onAdImpression ");
+                    for (int i = 0;i <mReadyQueue.size();i++){
+                        if (mReadyQueue.get(i).adId.equals(adId)){
+                            mReadyQueue.get(i).isShown = true;
+                            return;
+                        }
+                    }
                 }
             });
         }
@@ -168,19 +215,21 @@ public class ADManager {
      */
     public void getNativeAdlist(ADNumListener listener) {
         mListener = listener;
-        callbackAD();
+        callbackAD(false);
     }
 
     //回调给上层广告数组
-    protected void callbackAD() {
-        Log.e("ADManager", "callbackAD " + mReadyQueue.size());
+    protected void callbackAD( boolean needGif) {
+        Log.e("ADManager", "callbackAD " + mReadyQueue.size()+" "+needGif);
         if (null != mListener && mReadyQueue.size() > 0) {
             List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
             for (int i = 0; i < mReadyQueue.size(); i++) {
-                tempList.add(mReadyQueue.get(i));
+                if (null!= mReadyQueue.get(i).nativeAd) {
+                    tempList.add(mReadyQueue.get(i).nativeAd);
+                }
             }
             if (tempList.size() > 0) {
-                mListener.onLoadedSuccess(tempList);
+                mListener.onLoadedSuccess(tempList, needGif);
             }
         }
     }
@@ -235,7 +284,34 @@ public class ADManager {
 
 
     public interface ADNumListener {
-        void onLoadedSuccess(List<NativeAd> list);
+        void onLoadedSuccess(List<NativeAd> list, boolean needGif);//是否需要展示小动画
+    }
+
+    public Interstitial mInterstitial;
+    public void loadInterstitial() {
+            mInterstitial = new Interstitial();
+            mInterstitial.loadAD(mContext, ADManager.AD_Google , ADConstants.google_video_back_interstitial1, new Interstitial.ADListener() {
+                @Override
+                public void onLoadedSuccess() {
+                    Log.e("ADManager", "loadInterstitial success" );
+                    callbackAD(true);
+                }
+
+                @Override
+                public void onLoadedFailed() {
+                    Log.e("ADManager", "loadInterstitial failed" );
+                }
+
+                @Override
+                public void onAdClick() {
+                    StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_BACK);
+                }
+
+                @Override
+                public void onAdClose() {
+
+                }
+            });
     }
 
 }

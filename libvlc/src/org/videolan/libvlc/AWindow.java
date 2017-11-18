@@ -26,7 +26,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.MainThread;
-import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -374,7 +373,9 @@ public class AWindow implements IVLCVout {
 
     @MainThread
     private void onSurfaceCreated() {
-        if (mSurfacesState.get() != SURFACE_STATE_ATTACHED)
+//        Log.d(TAG, "onSurfaceCreated mSurfacesState.get() = " + mSurfacesState.get());
+
+        if (mSurfacesState.get() != SURFACE_STATE_ATTACHED && mSurfacesState.get() != SURFACE_STATE_READY)
             throw new IllegalArgumentException("invalid state");
 
         final SurfaceHelper videoHelper = mSurfaceHelpers[ID_VIDEO];
@@ -550,7 +551,7 @@ public class AWindow implements IVLCVout {
             return false;
         if (width * height == 0)
             return false;
-        Log.d(TAG, "configureSurface: " + width + "x" + height);
+//        Log.d(TAG, "configureSurface: " + width + "x" + height);
 
         synchronized (mNativeLock) {
             if (mNativeLock.buffersGeometryConfigured || mNativeLock.buffersGeometryAbort)

@@ -41,7 +41,7 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
 
     public final static String TAG_ITEM = "ML_ITEM";
     public final static String TAG_FAB_VISIBILITY= "FAB";
-    public static final String EXTRA_MEDIA_THUMB_TRANSITION_NAME = "media_thumb_transition_name";
+    public static final String INFO_EXTRA_THUMB_TRANSITION_NAME = "info_thumb_transition_name";
 
     private MediaWrapper mItem;
     private MediaInfoAdapter mAdapter;
@@ -84,7 +84,7 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
 
         ImageView cover = (ImageView) findViewById(R.id.playlist_cover);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            String imageTransitionName = getIntent().getExtras().getString(EXTRA_MEDIA_THUMB_TRANSITION_NAME);
+            String imageTransitionName = getIntent().getExtras().getString(INFO_EXTRA_THUMB_TRANSITION_NAME);
             cover.setTransitionName(imageTransitionName);
         }
 
@@ -151,9 +151,14 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
     @Override
     public void onClick(View v) {
         if (mItem != null) {
+            ImageView imageView = (ImageView) findViewById(R.id.playlist_cover);
+            if (imageView != null) {
+                mService.setSharedImageView(imageView, this);
+            }
             mService.load(mItem.getTracks(VLCApplication.getMLInstance()), 0);
         }
-        finish();
+//        finish();
+        supportFinishAfterTransition();
     }
 
     @Override
@@ -301,7 +306,8 @@ public class InfoActivity extends AudioPlayerContainerActivity implements View.O
             switch (msg.what) {
                 case EXIT:
                     activity.setResult(PreferencesActivity.RESULT_RESCAN);
-                    activity.finish();
+//                    activity.finish();
+                    activity.supportFinishAfterTransition();
                     break;
                 case SHOW_SUBTITLES:
                     activity.mBinding.infoSubtitles.setVisibility(View.VISIBLE);
