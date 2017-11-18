@@ -588,7 +588,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         initPauseNative();
         //gif
-        mHandler.postDelayed(mGifRunnable,60*1000);
+        mHandler.postDelayed(mGifRunnable,30*1000);
 
         mTranstionAnimIn = AnimationUtils.loadAnimation(this, R.anim.pause_ad_left_in);
         mTranstionAnimOut = AnimationUtils.loadAnimation(this, R.anim.pause_ad_leave_right);
@@ -684,7 +684,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         public void run() {
             if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()&& !ADManager.getInstance().mIsPauseADShown) {
                 mGifImageView.setVisibility(View.VISIBLE);
-                mHandler.postDelayed(mGifHideRunnable,30*1000);
+                mHandler.postDelayed(mGifHideRunnable,60*1000);
             }
         }
     };

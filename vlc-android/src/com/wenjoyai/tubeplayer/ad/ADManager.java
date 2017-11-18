@@ -46,6 +46,9 @@ public class ADManager {
 
     public static boolean isShowExit = true;//是否显示退出广告位
 
+    //暂停广告---个数  默认1个
+    public static  long pasue_ad_count = 1;
+
 
     private static volatile ADManager instance;
 
@@ -114,7 +117,7 @@ public class ADManager {
     public List<NativeAd> getUnshownFeed(){
         List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
         for (int i = 0; i < mReadyQueue.size(); i++) {
-            if (!mReadyQueue.get(i).isShown) {
+            if (null!=mReadyQueue.get(i).nativeAd/**&& !mReadyQueue.get(i).isShown*/) {
                 tempList.add(mReadyQueue.get(i).nativeAd);
             }
         }
@@ -161,9 +164,7 @@ public class ADManager {
                             callbackAD(false);
                         }
                         if (mFinished == mNum) {
-//                            callbackAD(false);
-                            //如果三个广告都是1001
-                            loadInterstitial();
+                            callbackAD(true);
                         }
                     }
                 }
@@ -259,7 +260,7 @@ public class ADManager {
     public boolean mIsPauseADShown = false;
     public void loadPauseAD(final Context context) {
         mIsPauseADShown = false;
-        mPauseManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native5, 3);
+        mPauseManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native6, (int)pasue_ad_count);
         mPauseManager.setListener(new NativeAdsManager.Listener() {
             @Override
             public void onAdsLoaded() {

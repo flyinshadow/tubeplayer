@@ -992,16 +992,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             }
 
             if (needGif){
-                ((MainActivity)getActivity()).showGif(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Collections.reverse(mNativeAdList);
-                        mVideoAdapter.setNativeAd(mNativeAdList);
-                        //  改变顺序
-                        mVideoAdapter.resetAdIndex();
-                        mHandler.sendEmptyMessage(UPDATE_LIST);
-                    }
-                });
+                ((MainActivity)getActivity()).showGif();
             }
         }
     };

@@ -22,10 +22,10 @@
 
         <com.wenjoyai.tubeplayer.ad.GifAD
             android:id="@+id/main_gif_ad"
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_gravity="right"
             android:visibility="gone"
-            android:layout_height="wrap_content"/>
+            android:layout_height="40dp"/>
 
     </android.support.v7.widget.Toolbar>
 </android.support.design.widget.AppBarLayout>

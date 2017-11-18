@@ -1190,4 +1190,10 @@
         <item name="android:windowEnterAnimation">@anim/anim_enter_left</item>
         <item name="android:windowExitAnimation">@anim/anim_leave_right</item>
     </style>
+
+    <style name="dialog_gif_style">
+        <item name="android:windowEnterAnimation">@anim/gif_ad_top_in</item>
+        <item name="android:windowExitAnimation">@anim/gif_ad_bottom_out</item>
+    </style>
+
 </resources>
