@@ -82,6 +82,7 @@ import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.ad.ADManager;
 import com.wenjoyai.tubeplayer.ad.ExitDialog;
+import com.wenjoyai.tubeplayer.ad.GifAD;
 import com.wenjoyai.tubeplayer.ad.Interstitial;
 import com.wenjoyai.tubeplayer.ad.LoadingDialog;
 import com.wenjoyai.tubeplayer.ad.NetWorkUtil;
@@ -163,7 +164,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private long mOpenCount;//启动次数
     MyBroadcastReceiver mReceiver;
 
-    private GifImageView mGifImageView;
+    private GifAD mGifADView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,7 +187,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         //开始广告缓存
         ADManager.getInstance().startLoadAD(this);
         mDrawerLayout = (HackyDrawerLayout) findViewById(R.id.root_container);
-        mGifImageView = (GifImageView)findViewById(R.id.main_gif_iv);
+        mGifADView = (GifAD) findViewById(R.id.main_gif_ad);
         setupNavigationView();
 
         initAudioPlayerContainerActivity();
@@ -1476,13 +1477,13 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             mMenu.findItem(R.id.ml_menu_view_mode).setVisible(false);
         }
 
-        mGifImageView.setVisibility(View.VISIBLE);
-        mGifImageView.setOnClickListener(new View.OnClickListener() {
+        mGifADView.setVisibility(View.VISIBLE);
+        mGifADView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onClick(v);
                 ADManager.getInstance().mInterstitial.show();
-                mGifImageView.setVisibility(View.GONE);
+                mGifADView.setVisibility(View.GONE);
 
                 Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_placeholder);
                 mMenu.findItem(R.id.ml_menu_view_mode).setVisible(current instanceof VideoGridFragment &&

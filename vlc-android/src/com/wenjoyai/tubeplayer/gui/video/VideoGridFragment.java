@@ -90,6 +90,7 @@ import com.wenjoyai.tubeplayer.util.ShareUtils;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class VideoGridFragment extends MediaBrowserFragment implements MediaUpdatedCb, ISortable, SwipeRefreshLayout.OnRefreshListener, MediaAddedCb, Filterable, IEventsHandler {
@@ -994,8 +995,11 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 ((MainActivity)getActivity()).showGif(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO: 2017/11/18 改变顺序
-
+                        Collections.reverse(mNativeAdList);
+                        mVideoAdapter.setNativeAd(mNativeAdList);
+                        //  改变顺序
+                        mVideoAdapter.resetAdIndex();
+                        mHandler.sendEmptyMessage(UPDATE_LIST);
                     }
                 });
             }

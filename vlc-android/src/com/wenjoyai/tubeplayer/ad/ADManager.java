@@ -161,7 +161,9 @@ public class ADManager {
                             callbackAD(false);
                         }
                         if (mFinished == mNum) {
-                            callbackAD(false);
+//                            callbackAD(false);
+                            //如果三个广告都是1001
+                            loadInterstitial();
                         }
                     }
                 }
@@ -254,9 +256,9 @@ public class ADManager {
     }
 
     public NativeAdsManager mPauseManager;
-//    public boolean mIsPauseADShown = false;
+    public boolean mIsPauseADShown = false;
     public void loadPauseAD(final Context context) {
-//        mIsPauseADShown = false;
+        mIsPauseADShown = false;
         mPauseManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native5, 3);
         mPauseManager.setListener(new NativeAdsManager.Listener() {
             @Override

@@ -20,12 +20,12 @@
         app:layout_scrollFlags="scroll|enterAlways"
         app:titleMarginStart="@dimen/default_margin" >
 
-        <pl.droidsonroids.gif.GifImageView
-            android:id="@+id/main_gif_iv"
+        <com.wenjoyai.tubeplayer.ad.GifAD
+            android:id="@+id/main_gif_ad"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_gravity="right"
-            android:src="@drawable/icon_ad_gif"/>
+            android:visibility="gone"
+            android:layout_height="wrap_content"/>
+
     </android.support.v7.widget.Toolbar>
 </android.support.design.widget.AppBarLayout>

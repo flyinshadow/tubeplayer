@@ -172,5 +172,14 @@
             />
     </RelativeLayout>
 
+    <!--gif-->
+    <com.wenjoyai.tubeplayer.ad.GifAD
+        android:id="@+id/main_gif_ad"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:visibility="gone"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>
