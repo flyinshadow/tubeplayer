@@ -981,7 +981,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     private ADManager.ADNumListener mAdNumListener = new ADManager.ADNumListener() {
         @Override
-        public void onLoadedSuccess(List<NativeAd> list) {
+        public void onLoadedSuccess(List<NativeAd> list , boolean needGif){
             mNativeAdList = list;
             Log.e("yNativeAD", "aaaa onLoadedSuccess list:" + (list == null ? 0 : list.size()));
             if (checkAds()) {
@@ -989,6 +989,16 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 if (mParsingFinished || mParsed) {
                     mHandler.sendEmptyMessage(UPDATE_LIST);
                 }
+            }
+
+            if (needGif){
+                ((MainActivity)getActivity()).showGif(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // TODO: 2017/11/18 改变顺序
+
+                    }
+                });
             }
         }
     };

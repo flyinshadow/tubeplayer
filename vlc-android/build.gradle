@@ -258,9 +258,8 @@ dependencies {
     compile ('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
         exclude module: 'support-v4'
     }
-//    compile 'com.bobomee.android:scrollloopviewpager:2.1'
 
-//    compile 'com.github.czy1121:bannerview:1.0.2'
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
 }
 
 static def buildTime() {
