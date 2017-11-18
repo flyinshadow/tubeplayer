@@ -31,7 +31,7 @@ public class ADManager {
     public static final long Level_Little = 1;//只有feed流和pause的native
     public static final long Level_Normal = 2;//加上插屏
     public static final long Level_Big = 3;//加上banner
-    public static long sLevel = Level_Normal;
+    public static long sLevel = Level_None;
 
 
     //播放广告延迟加载时间

@@ -77,13 +77,30 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:paddingLeft="@dimen/default_margin"
-                        >
+                        android:paddingTop="@dimen/very_small_margin"
+                        android:paddingBottom="@dimen/very_small_margin">
 
-                        <ImageView
+                        <!--<ImageView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:src="@drawable/ic_directories"-->
+                            <!--/>-->
+                        <FrameLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_directories"
-                            />
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_folder_black_24dp"
+                                android:scaleType="centerCrop"/>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal|center_vertical"
+                                android:background="@drawable/ic_search_fold_icon"/>
+
+                        </FrameLayout>
 
                         <TextView
                             android:layout_width="wrap_content"

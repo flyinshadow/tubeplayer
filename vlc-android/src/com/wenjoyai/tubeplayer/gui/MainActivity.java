@@ -883,7 +883,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_placeholder);
         MenuItem item;
         // Disable the sort option if we can't use it on the current fragment.
-        if (current == null || !(current instanceof ISortable)) {
+        if (current == null || !(current instanceof ISortable) || mCurrentFragmentId == R.id.nav_directories) {
             item = menu.findItem(R.id.ml_menu_sortby);
             if (item == null)
                 return false;

@@ -55,6 +55,8 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/very_small_margin"
+        android:paddingBottom="@dimen/very_small_margin"
         >
 
         <!--ad item-->
@@ -169,11 +171,34 @@
             android:layout_marginLeft="@dimen/default_margin"
             >
 
-            <ImageView
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:src="@drawable/ic_browser_folder"-->
+                <!--/>-->
+            <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_browser_folder"
-                />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_folder_black_24dp"
+                    android:scaleType="centerCrop"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:background="@drawable/ic_play_circle_filled_black_24dp"/>
+                <!--<ImageView-->
+                    <!--android:id="@+id/ml_item_check"-->
+                    <!--android:layout_width="55dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:src="@drawable/ic_action_mode_select_1610"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:visibility="gone"-->
+                    <!--/>-->
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
