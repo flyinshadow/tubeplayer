@@ -166,6 +166,13 @@ public class AudioPlayerContainerActivity extends BaseActivity implements Playba
 //            mFragmentContainer.setPadding(mFragmentContainer.getPaddingLeft(), mFragmentContainer.getPaddingTop(), mFragmentContainer.getPaddingRight(), mBottomSheetBehavior.getPeekHeight());
             applyMarginToProgressBar(mBottomSheetBehavior.getPeekHeight());
         }
+
+        if (mService != null && mService.hasMedia() && !mService.isVideoPlaying()) {
+            showAudioPlayer();
+            if (mAudioPlayer != null) {
+                mAudioPlayer.update();
+            }
+        }
     }
 
     @Override

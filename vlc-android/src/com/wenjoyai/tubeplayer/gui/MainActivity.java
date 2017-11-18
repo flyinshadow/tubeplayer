@@ -68,7 +68,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FilterQueryProvider;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -260,6 +259,19 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         IntentFilter filter = new IntentFilter();
         filter.addAction("smallWindow");
         registerReceiver(mReceiver, filter);
+
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            boolean changeTheme = getIntent().getExtras().getBoolean(ThemeFragment.EXTRA_CHANGE_THEME);
+            if (changeTheme) {
+                LogUtil.d(TAG, "Theme changed, try to show RateDialog");
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        RateDialog.tryToShow(VLCApplication.getAppContext(), 5);
+                    }
+                }, 1500);
+            }
+        }
     }
 
     private void submitNetwork() {
@@ -1291,8 +1303,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                     shareApp();
                     break;
                 case R.id.nav_rate_app:
-                    startActivity(new Intent(MainActivity.this, DialogActivity.class).setAction(DialogActivity.KEY_RATE)
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    RateDialog.start(this, 5);
                     break;
                 case R.id.nav_directories:
                     if (TextUtils.equals(BuildConfig.FLAVOR_target, "chrome")) {

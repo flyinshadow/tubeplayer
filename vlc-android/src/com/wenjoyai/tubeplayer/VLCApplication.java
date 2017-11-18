@@ -39,18 +39,17 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.MobileAds;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.gui.DialogActivity;
-import com.wenjoyai.tubeplayer.gui.RateFragment;
+import com.wenjoyai.tubeplayer.gui.RateDialog;
 import com.wenjoyai.tubeplayer.gui.dialogs.VlcProgressDialog;
 import com.wenjoyai.tubeplayer.gui.helpers.AudioUtil;
 import com.wenjoyai.tubeplayer.gui.helpers.BitmapCache;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.Strings;
-import com.wenjoyai.tubeplayer.util.Util;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
 import org.videolan.libvlc.Dialog;
 import org.videolan.libvlc.util.AndroidUtil;
-import org.videolan.medialibrary.LogUtil;
 import org.videolan.medialibrary.Medialibrary;
 
 import java.io.BufferedInputStream;
@@ -58,7 +57,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
@@ -191,51 +189,18 @@ public class VLCApplication extends MultiDexApplication {
         });
     }
 
-    public static boolean sWillShowRate = false;
+//    public static boolean sWillShowRate = false;
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setLocale(this);
 
-        // 切换到横屏时提示
-        if (mAppForeground && !DialogActivity.sRateStarted && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            long lastTime = mSettings.getLong(RateFragment.KEY_RATE_SHOW_LAST, 0);
-            long nextTime = mSettings.getLong(RateFragment.KEY_RATE_SHOW_NEXT, 0);
-            int count = mSettings.getInt(RateFragment.KEY_RATE_SHOW_COUNT, 0);
-            int versionCode = mSettings.getInt(RateFragment.KEY_RATE_LAST_VERSION, 0);
-            long currentTime = new Date().getTime();
-            LogUtil.d(TAG, "rate tip, currentTime:" + currentTime + "(" + Util.millisToDate(currentTime) + ")" +
-                    " lastTime:" + lastTime + "(" + Util.millisToDate(lastTime) + ")" +
-                    " nextTime:" + nextTime + "(" + Util.millisToDate(nextTime) + ")" +
-                    " count:" + count
-                );
-
-            sWillShowRate = false;
-            if (nextTime == -1) {
-                // 本版本不提示
-                LogUtil.d(TAG, "rate tip will not show this version");
-            } else if (nextTime == 0) {
-                // 可以提示
-                LogUtil.d(TAG, "rate tip can show NOW");
-                sWillShowRate = true;
-                showRateDialog();
-            } else if (nextTime > 0) {
-                 // 到提示时间
-                if (currentTime - nextTime >= 0) {
-                    LogUtil.d(TAG, "rate tip reach time, can show NOW");
-                    sWillShowRate = true;
-                    showRateDialog();
-                } else {
-                    LogUtil.d(TAG, "rate tip not reach time");
-                }
-            }
+        // 切换到横屏时提示评分
+        if (mAppForeground && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            LogUtil.d(TAG, "orientation change to landscape, try to show RateDialog");
+            RateDialog.tryToShow(instance, 3);
         }
-    }
-
-    private void showRateDialog() {
-        startActivity(new Intent(instance, DialogActivity.class).setAction(DialogActivity.KEY_RATE)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
     /**

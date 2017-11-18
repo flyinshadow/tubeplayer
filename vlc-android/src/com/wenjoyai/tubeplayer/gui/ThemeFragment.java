@@ -34,12 +34,15 @@ public class ThemeFragment extends DialogFragment {
 
     private static SharedPreferences sSettings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
 
+    public static final String EXTRA_CHANGE_THEME = "extra_change_theme";
+
     private GridView mGridView;
     private ThemeAdapter mThemeAdapter;
+    private boolean mThemeChanged = false;
 
     public static final int[] sThemeStyles = {
-            R.style.Theme_VideoPlayer_Apearance_Black,
             R.style.Theme_VideoPlayer_Apearance_Red,
+            R.style.Theme_VideoPlayer_Apearance_Black,
             R.style.Theme_VideoPlayer_Apearance_Pink,
             R.style.Theme_VideoPlayer_Apearance_Purple,
             R.style.Theme_VideoPlayer_Apearance_DeepPurple,
@@ -57,8 +60,8 @@ public class ThemeFragment extends DialogFragment {
     };
 
     public static final int[] sThemeNightStyles = {
-            R.style.Theme_VideoPlayer_Apearance_Black_Night,
             R.style.Theme_VideoPlayer_Apearance_Red_Night,
+            R.style.Theme_VideoPlayer_Apearance_Black_Night,
             R.style.Theme_VideoPlayer_Apearance_Pink_Night,
             R.style.Theme_VideoPlayer_Apearance_Purple_Night,
             R.style.Theme_VideoPlayer_Apearance_DeepPurple_Night,
@@ -76,8 +79,8 @@ public class ThemeFragment extends DialogFragment {
     };
 
     public static final int[] sThemeActionBarStyles = {
-            R.style.Theme_VideoPlayer_Apearance_Black_ActionBar,
             R.style.Theme_VideoPlayer_Apearance_Red_ActionBar,
+            R.style.Theme_VideoPlayer_Apearance_Black_ActionBar,
             R.style.Theme_VideoPlayer_Apearance_Pink_ActionBar,
             R.style.Theme_VideoPlayer_Apearance_Purple_ActionBar,
             R.style.Theme_VideoPlayer_Apearance_DeepPurple_ActionBar,
@@ -95,7 +98,7 @@ public class ThemeFragment extends DialogFragment {
     };
 
     private final int[] mThemeColors = {
-            R.color.theme_color_black, R.color.theme_color_red, R.color.theme_color_pink, R.color.theme_color_purple,
+            R.color.theme_color_red, R.color.theme_color_black, R.color.theme_color_pink, R.color.theme_color_purple,
             R.color.theme_color_deep_purple, R.color.theme_color_indigo, R.color.theme_color_blue, R.color.theme_color_light_blue,
             R.color.theme_color_cyan, R.color.theme_color_teal, R.color.theme_color_green, R.color.theme_color_light_green,
             R.color.theme_color_lime, R.color.theme_color_amber, R.color.theme_color_orange, R.color.theme_color_deep_orange
@@ -119,27 +122,15 @@ public class ThemeFragment extends DialogFragment {
                 StatisticsManager.submitTheme(getActivity(), "theme_" + i);
 
                 if (sSettings.getInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, 0) == i) {
+                    mThemeChanged = false;
                     return;
                 }
+
+                mThemeChanged = true;
 
                 sSettings.edit().putInt(PreferencesActivity.KEY_CURRENT_THEME_INDEX, i).apply();
 
                 mThemeAdapter.notifyDataSetChanged();
-
-//                sHandler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        getActivity().setResult(RESULT_RESTART);
-//                        Intent intent = getActivity().getIntent();
-//
-//                        if (intent != null) {
-//                            getActivity().finish();
-////                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                            startActivity(intent);
-//                        }
-////                        finish();
-//                    }
-//                }, 200);
 
                 getActivity().setResult(RESULT_RESTART);
 
@@ -148,6 +139,7 @@ public class ThemeFragment extends DialogFragment {
 //                } else {
                     getActivity().finish();
                     Intent intent = new Intent(getContext(), MainActivity.class);
+                    intent.putExtra(EXTRA_CHANGE_THEME, true);
                     startActivity(intent);
 //                }
             }
@@ -155,9 +147,10 @@ public class ThemeFragment extends DialogFragment {
         return v;
     }
 
-//    private void finish() {
-//        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
-//    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 
     private class ThemeAdapter extends BaseAdapter {
         private Context mContext;
