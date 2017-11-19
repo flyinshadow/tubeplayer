@@ -290,7 +290,7 @@ public class ADManager {
     public Interstitial mInterstitial;
     public void loadInterstitial() {
             mInterstitial = new Interstitial();
-            mInterstitial.loadAD(mContext, ADManager.AD_Google , ADConstants.google_video_back_interstitial1, new Interstitial.ADListener() {
+            mInterstitial.loadAD(mContext, ADManager.AD_Google , ADConstants.google_video_back_interstitial, new Interstitial.ADListener() {
                 @Override
                 public void onLoadedSuccess() {
                     Log.e("ADManager", "loadInterstitial success" );

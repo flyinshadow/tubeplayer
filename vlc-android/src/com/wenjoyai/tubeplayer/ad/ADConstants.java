@@ -47,20 +47,15 @@ public class ADConstants {
 
 
     /***************  google      *********************/
-    public static final String GOOGLE_APP_ID = "ca-app-pub-1877164599441785~1893874403";
+    public static final String GOOGLE_APP_ID = "ca-app-pub-9920536185791139~1300308960";
     //播放返回
-    public static final String google_video_back_interstitial = "ca-app-pub-1877164599441785/8681153348";
-    public static final String google_video_back_interstitial1 = "ca-app-pub-1877164599441785/3008616691";
-    public static final String google_video_back_interstitial2 = "ca-app-pub-1877164599441785/7589546451";
-    public static final String google_video_back_interstitial3 = "ca-app-pub-1877164599441785/9215944150";
+    public static final String google_video_back_interstitial = "ca-app-pub-9920536185791139/1455333581";
     //首页第一次进入
-    public static final String google_first_open_interstitial = "ca-app-pub-1877164599441785/8440769750";
-    //viewer show
-//    public static final String google_viewer_interstitial = "ca-app-pub-1877164599441785/2205230558";
+    public static final String google_first_open_interstitial = "ca-app-pub-9920536185791139/3315210165";
     //视频列表banner
-    public static final String google_video_grid_bannar = "ca-app-pub-1877164599441785/5736275864";
+    public static final String google_video_grid_bannar = "ca-app-pub-9920536185791139/2925038360";
     //暂停-原生
-    public static final String google_video_pause_native = "ca-app-pub-1877164599441785/9970194023";
+//    public static final String google_video_pause_native = "ca-app-pub-1877164599441785/9970194023";
 
 
 

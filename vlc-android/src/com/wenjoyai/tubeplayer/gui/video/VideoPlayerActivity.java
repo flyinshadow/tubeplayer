@@ -4110,15 +4110,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         String adID = "";
         if (ADManager.sPlatForm == ADManager.AD_MobVista) {
         } else if (ADManager.sPlatForm == ADManager.AD_Google) {
-            Random random = new Random();
-            int i= random.nextInt(3)+1;
-            if (i%3==1){
-                adID = ADConstants.google_video_back_interstitial1;
-            } else  if (i%3==2){
-                adID = ADConstants.google_video_back_interstitial2;
-            } else {
-                adID = ADConstants.google_video_back_interstitial3;
-            }
+            adID = ADConstants.google_video_back_interstitial;
         } else if (ADManager.sPlatForm == ADManager.AD_Facebook) {
             adID = ADConstants.facebook_video_back_interstitial;
         }
