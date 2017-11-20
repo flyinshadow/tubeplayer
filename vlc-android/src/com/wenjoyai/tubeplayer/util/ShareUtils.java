@@ -15,8 +15,6 @@ import org.videolan.medialibrary.media.MediaWrapper;
 import java.io.File;
 import java.util.ArrayList;
 
-import static org.videolan.medialibrary.media.MediaWrapper.TYPE_AUDIO;
-
 /**
  * Created by LiJiaZhi on 16/12/18. share
  */
@@ -73,9 +71,11 @@ public class ShareUtils {
             return;
         }
         String mimeType = "*/*";
-//        if (media.getType() == TYPE_AUDIO) {
-//            mimeType = "audio/*";
-//        }
+        if (media.getType() == MediaWrapper.TYPE_AUDIO) {
+            mimeType = "audio/*";
+        } else if (media.getType() == MediaWrapper.TYPE_VIDEO) {
+            mimeType = "video/*";
+        }
         Intent intent = new Intent(Intent.ACTION_SEND);
         // intent.setType("image/*");
         // intent.setType("audio/*");//此处可发送多种文件
