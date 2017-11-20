@@ -31,6 +31,7 @@
         <item name="item_footer">@color/grey300</item>
         <item name="background_default">@color/grey100</item>
         <item name="background_default_darker">@color/grey200</item>
+        <item name="background_video_item">@color/white</item>
         <!--<item name="background_actionbar">@color/tube_background_actionbar</item>-->
         <item name="background_actionbar">?attr/theme_color</item>
         <!--<item name="background_actionbar">@color/orange500</item>-->
@@ -141,6 +142,7 @@
         <item name="actionModeBackground">@color/grey875</item>
         <item name="background_default">@color/grey850</item>
         <item name="background_default_darker">@color/grey875</item>
+        <item name="background_video_item">@color/grey700</item>
         <item name="background_actionbar">@color/grey875</item>
         <item name="background_menu_divider">@color/grey700</item>
         <item name="background_menu">@color/grey850</item>
@@ -360,8 +362,8 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeBackground">@color/theme_color_black</item>
         <item name="item_footer">@color/grey300</item>
-        <item name="background_default">@color/grey100</item>
-        <item name="background_default_darker">@color/grey200</item>
+        <item name="background_default">@color/grey50</item>
+        <item name="background_default_darker">@color/grey_bg</item>
         <!--<item name="background_actionbar">@color/theme_color_black</item>-->
         <item name="background_menu_divider">@color/grey400</item>
         <item name="background_menu">@color/grey200</item>

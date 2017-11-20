@@ -28,7 +28,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
-import android.view.KeyEvent;
 
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.AudioPlayerContainerActivity;
@@ -42,7 +41,7 @@ import com.wenjoyai.tubeplayer.gui.video.VideoGridFragment;
 import com.wenjoyai.tubeplayer.gui.video.VideoPlayerActivity;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
-import com.wenjoyai.tubeplayer.util.FileUtils;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.Permissions;
 
 import org.videolan.libvlc.util.AndroidUtil;
@@ -67,6 +66,9 @@ public class StartActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // long time = System.currentTimeMillis();
+
         super.onCreate(savedInstanceState);
 
 //        setContentView(R.layout.activity_welcome);
@@ -75,8 +77,8 @@ public class StartActivity extends BaseActivity {
 //        mContainer = (FrameLayout) findViewById(R.id.splash_container);
 
         Intent intent = getIntent();
-        boolean tv =  showTvUi();
-        String action = intent != null ? intent.getAction(): null;
+        boolean tv = showTvUi();
+        String action = intent != null ? intent.getAction() : null;
 
         if (Intent.ACTION_VIEW.equals(action) && intent.getData() != null) {
             intent.setDataAndType(intent.getData(), intent.getType());
@@ -111,7 +113,11 @@ public class StartActivity extends BaseActivity {
             settings.edit().putBoolean(VideoGridFragment.KEY_STAT_VIDEO_COUNT, false).apply();
             settings.edit().putBoolean(VideoGridFragment.KEY_PARSING_ONCE, false).apply();
         }
+
+//        long mltime = System.currentTimeMillis();
         startMedialibrary(firstRun, upgrade);
+//        LogUtil.d(TAG, "startMedialibrary costtime: " + (System.currentTimeMillis() - mltime));
+
         // Route search query
         if (Intent.ACTION_SEARCH.equals(action) || "com.google.android.gms.actions.SEARCH_ACTION".equals(action)) {
             startActivity(intent.setClass(this, tv ? com.wenjoyai.tubeplayer.gui.tv.SearchActivity.class : SearchActivity.class));
@@ -132,21 +138,6 @@ public class StartActivity extends BaseActivity {
             finish();
         }
     }
-
-//    /**
-//     * 禁用返回键
-//     * @param keyCode
-//     * @param event
-//     * @return
-//     */
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            return true;
-//        }
-//        return super.onKeyDown(keyCode, event);
-//
-//    }
 
     private void jump() {
 //        startActivity(new Intent(this, tv ? MainTvActivity.class : MainActivity.class)

@@ -39,12 +39,10 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.MobileAds;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.gui.DialogActivity;
-import com.wenjoyai.tubeplayer.gui.RateDialog;
 import com.wenjoyai.tubeplayer.gui.dialogs.VlcProgressDialog;
 import com.wenjoyai.tubeplayer.gui.helpers.AudioUtil;
 import com.wenjoyai.tubeplayer.gui.helpers.BitmapCache;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
-import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.Strings;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
@@ -187,6 +185,7 @@ public class VLCApplication extends MultiDexApplication {
                 Looper.loop();
             }
         });
+
     }
 
 //    public static boolean sWillShowRate = false;
@@ -196,11 +195,11 @@ public class VLCApplication extends MultiDexApplication {
         super.onConfigurationChanged(newConfig);
         setLocale(this);
 
-        // 切换到横屏时提示评分
-        if (mAppForeground && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            LogUtil.d(TAG, "orientation change to landscape, try to show RateDialog");
-            RateDialog.tryToShow(instance, 3);
-        }
+//        // 切换到横屏时提示评分
+//        if (mAppForeground && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            LogUtil.d(TAG, "orientation change to landscape, try to show RateDialog");
+//            RateDialog.tryToShow(instance, 3);
+//        }
     }
 
     /**

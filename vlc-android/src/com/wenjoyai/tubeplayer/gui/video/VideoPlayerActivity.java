@@ -824,9 +824,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mSurfaceXDisplayRange = Math.max(mScreen.widthPixels, mScreen.heightPixels);
         resetHudLayout();
 
-        if (mService != null && mService.isPlaying() && RateDialog.isShowing()) {
-            doPlayPause();
-        }
+//        if (mService != null && mService.isPlaying() && RateDialog.isShowing()) {
+//            doPlayPause();
+//        }
     }
 
     public void resetHudLayout() {
