@@ -30,6 +30,7 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.KeyEvent;
 
+import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.AudioPlayerContainerActivity;
 import com.wenjoyai.tubeplayer.gui.BaseActivity;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
@@ -41,6 +42,7 @@ import com.wenjoyai.tubeplayer.gui.video.VideoGridFragment;
 import com.wenjoyai.tubeplayer.gui.video.VideoPlayerActivity;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
+import com.wenjoyai.tubeplayer.util.FileUtils;
 import com.wenjoyai.tubeplayer.util.Permissions;
 
 import org.videolan.libvlc.util.AndroidUtil;
@@ -78,11 +80,14 @@ public class StartActivity extends BaseActivity {
 
         if (Intent.ACTION_VIEW.equals(action) && intent.getData() != null) {
             intent.setDataAndType(intent.getData(), intent.getType());
-            if (intent.getType() != null && intent.getType().startsWith("video"))
+            if (intent.getType() != null && intent.getType().startsWith("video")) {
                 startActivity(intent.setClass(this, VideoPlayerActivity.class));
-            else
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_FROM_OUTFILE, null, null);
+            } else {
                 MediaUtils.openMediaNoUi(intent.getData());
-//            finish();
+                StatisticsManager.submitAudioPlay(this, StatisticsManager.TYPE_VIDEO_FROM_OUTFILE, null);
+            }
+            finish();
             return;
         }
 
@@ -128,20 +133,20 @@ public class StartActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 禁用返回键
-     * @param keyCode
-     * @param event
-     * @return
-     */
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-
-    }
+//    /**
+//     * 禁用返回键
+//     * @param keyCode
+//     * @param event
+//     * @return
+//     */
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//
+//    }
 
     private void jump() {
 //        startActivity(new Intent(this, tv ? MainTvActivity.class : MainActivity.class)

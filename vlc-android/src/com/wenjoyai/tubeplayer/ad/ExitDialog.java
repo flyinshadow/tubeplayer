@@ -1,25 +1,25 @@
 package com.wenjoyai.tubeplayer.ad;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.ads.AdChoicesView;
 import com.facebook.ads.MediaView;
 import com.facebook.ads.NativeAd;
 import com.wenjoyai.tubeplayer.R;
-import com.wenjoyai.tubeplayer.gui.video.VideoPlayerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +33,10 @@ import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
  */
 
 public class ExitDialog extends Dialog {
-    AutoScrollViewPager viewPager;
-    TextView mCancelTv;
-    TextView mOkTv;
+    public AutoScrollViewPager viewPager;
+    ImageView mCloseTv;
     Context mContext;
+    MyViewPagerAdapter myViewPagerAdapter;
 
     public ExitDialog(Context context) {
         super(context);
@@ -48,28 +48,23 @@ public class ExitDialog extends Dialog {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_exit);
-        getWindow().setWindowAnimations(R.style.dialog_style);
+        getWindow().setWindowAnimations(R.style.dialog_gif_style);
+        getWindow().setBackgroundDrawable(new ColorDrawable(0x00000000));
+        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
 
         viewPager = (AutoScrollViewPager) findViewById(R.id.view_pager);
-        mCancelTv = (TextView) findViewById(R.id.exit_cancel);
-        mOkTv = (TextView) findViewById(R.id.exit_ok);
-        mCancelTv.setOnClickListener(new View.OnClickListener() {
+        viewPager.setOffscreenPageLimit(3);
+        mCloseTv = (ImageView) findViewById(R.id.exit_cancel);
+        mCloseTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
-        mOkTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-                if (null != mContext) {
-                    ((Activity) mContext).finish();
-                }
-            }
-        });
-
-        viewPager.setAdapter(new MyViewPagerAdapter(ADManager.getInstance().getUnshownFeed()));
+        myViewPagerAdapter = new MyViewPagerAdapter(ADManager.getInstance().getUnshownFeed());
+        viewPager.setAdapter(myViewPagerAdapter);
+        myViewPagerAdapter.notifyDataSetChanged();
         viewPager.setCycle(true);
         viewPager.setInterval(2000);
         viewPager.startAutoScroll();
@@ -87,13 +82,14 @@ public class ExitDialog extends Dialog {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
+            mDatas.get(position).unregisterView();
             container.removeView(views.get(position));//删除页卡
         }
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             LayoutInflater inflater = LayoutInflater.from(container.getContext());
-            RelativeLayout adView = (RelativeLayout) inflater.inflate(R.layout.layout_exit_native, container, false);
+            LinearLayout adView = (LinearLayout) inflater.inflate(R.layout.layout_pause_native_ad, null);
 
             NativeAd nativeAd = mDatas.get(position);
             // Create native UI using the ad_front metadata.
@@ -119,14 +115,18 @@ public class ExitDialog extends Dialog {
 
             // Add the AdChoices icon
             LinearLayout adChoicesContainer = (LinearLayout) adView.findViewById(R.id.ad_choices_container);
-            AdChoicesView adChoicesView = new AdChoicesView(container.getContext(), nativeAd, true);
+            AdChoicesView adChoicesView = new AdChoicesView(adView.getContext(), nativeAd, true);
             adChoicesContainer.addView(adChoicesView);
 
             // Register the Title and CTA button to listen for clicks.
             List<View> clickableViews = new ArrayList<>();
             clickableViews.add(nativeAdTitle);
+            clickableViews.add(nativeAdIcon);
+            clickableViews.add(nativeAdMedia);
+            clickableViews.add(nativeAdBody);
             clickableViews.add(nativeAdCallToAction);
-            nativeAd.registerViewForInteraction(container, clickableViews);
+            nativeAd.unregisterView();
+            nativeAd.registerViewForInteraction(adView, clickableViews);
 
             views.add(adView);
             //这个方法用来实例化页卡
@@ -146,3 +146,5 @@ public class ExitDialog extends Dialog {
         }
     }
 }
+
+

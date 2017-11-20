@@ -39,7 +39,6 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
-import android.graphics.SurfaceTexture;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.media.MediaRouter;
@@ -111,6 +110,7 @@ import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.ad.ADManager;
+import com.wenjoyai.tubeplayer.ad.GifAD;
 import com.wenjoyai.tubeplayer.ad.Interstitial;
 import com.wenjoyai.tubeplayer.ad.RotateAD;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
@@ -160,6 +160,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
+
+import pl.droidsonroids.gif.GifImageView;
 
 public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.Callback, IVLCVout.OnNewVideoLayoutListener,
         IPlaybackSettingsController, PlaybackService.Client.Callback, PlaybackService.Callback,
@@ -407,6 +409,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private long mPlayTime = 0;
     private long mPlayLength = 0;
 
+    private GifAD mGifImageView;
+
     private static LibVLC LibVLC() {
         return VLCInstance.get();
     }
@@ -464,6 +468,16 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         //Remove ActionBar extra space
         Toolbar toolbar = (Toolbar)mActionBarView.getParent();
         toolbar.setContentInsetsAbsolute(0, 0);
+        mGifImageView = (GifAD)findViewById(R.id.main_gif_ad);
+        mGifImageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mGifImageView.setVisibility(View.GONE);
+                mHandler.removeCallbacks(mGifRunnable);
+                loadPauseNative();
+                pause();
+            }
+        });
 
         mTitle = (TextView) mActionBarView.findViewById(R.id.player_overlay_title);
         if (!AndroidUtil.isJellyBeanOrLater) {
@@ -570,10 +584,13 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         }
         //返回广告
         if (ADManager.sLevel>=ADManager.Level_Big){//如果是level 3才会加载返回广告
-            mHandler.postDelayed(mRunnable,ADManager.back_ad_delay_time*1000);
+            mHandler.postDelayed(mBackInterstitialRunnable,ADManager.back_ad_delay_time*1000);
         }
 
         initPauseNative();
+        //gif
+        mHandler.postDelayed(mGifRunnable,30*1000);
+
         mTranstionAnimIn = AnimationUtils.loadAnimation(this, R.anim.pause_ad_left_in);
         mTranstionAnimOut = AnimationUtils.loadAnimation(this, R.anim.pause_ad_leave_right);
 
@@ -656,12 +673,30 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     private Animation mTranstionAnimIn;
     private Animation mTranstionAnimOut;
-    Runnable mRunnable = new Runnable() {
+    Runnable mBackInterstitialRunnable = new Runnable() {
         @Override
         public void run() {
             loadInterstitial();
         }
     };
+
+    Runnable mGifRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()&& !ADManager.getInstance().mIsPauseADShown) {
+                mGifImageView.setVisibility(View.VISIBLE);
+                mHandler.postDelayed(mGifHideRunnable,60*1000);
+            }
+        }
+    };
+
+    Runnable mGifHideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mGifImageView.setVisibility(View.GONE);
+        }
+    };
+
 
     @Override
     protected void onResume() {
@@ -927,7 +962,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             RateDialog.tryToShow(VLCApplication.getAppContext(), 5);
         }
 
-        mHandler.removeCallbacks(mRunnable);
+        mHandler.removeCallbacks(mBackInterstitialRunnable);
+        mHandler.removeCallbacks(mGifRunnable);
+        mHandler.removeCallbacks(mGifHideRunnable);
+
         super.onDestroy();
         if (mReceiver != null)
             unregisterReceiver(mReceiver);
@@ -4149,6 +4187,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 public void onClick(View v) {
                     mNativeFrameLayout.startAnimation(mTranstionAnimOut);
                     mNativeFrameLayout.setVisibility(View.GONE);
+                    play();
                 }
             });
         }
@@ -4157,7 +4196,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private void loadPauseNative(){
         if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()) {
             if (mNativeFrameLayout != null && mNativeContainer != null) {
-//                ADManager.getInstance().mIsPauseADShown = true;
+                ADManager.getInstance().mIsPauseADShown = true;
                 mNativeFrameLayout.setVisibility(View.VISIBLE);
                 if (scrollView != null) {
                     mNativeContainer.removeView(scrollView);

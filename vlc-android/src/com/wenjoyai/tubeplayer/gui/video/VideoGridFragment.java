@@ -94,6 +94,7 @@ import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class VideoGridFragment extends MediaBrowserFragment implements MediaUpdatedCb, ISortable, SwipeRefreshLayout.OnRefreshListener, MediaAddedCb, Filterable, IEventsHandler {
@@ -1008,12 +1009,11 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 }
             }
 
-            if (needGif){
-                ((MainActivity)getActivity()).showGif(new View.OnClickListener() {
+            if (needGif&& getActivity() instanceof MainActivity){
+                ((MainActivity)getActivity()).showGif(new NeedFreshListener() {
                     @Override
-                    public void onClick(View v) {
-                        // TODO: 2017/11/18 改变顺序
-
+                    public void fresh() {
+                        mVideoAdapter.notifyDataSetChanged();
                     }
                 });
             }
@@ -1030,5 +1030,9 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             mode = mVideoAdapter.getCurrentViewMode();
         }
         return mode;
+    }
+
+   public interface NeedFreshListener{
+        void fresh();
     }
 }
