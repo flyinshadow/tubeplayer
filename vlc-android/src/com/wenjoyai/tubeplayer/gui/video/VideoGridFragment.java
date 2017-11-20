@@ -995,7 +995,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 ((MainActivity)getActivity()).showGif(new NeedFreshListener() {
                     @Override
                     public void fresh() {
-                        updateList();
+                        mVideoAdapter.notifyDataSetChanged();
                     }
                 });
             }
