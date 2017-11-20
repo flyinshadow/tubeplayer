@@ -43,10 +43,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.videolan.medialibrary.Tools;
-import org.videolan.medialibrary.media.MediaLibraryItem;
-import org.videolan.medialibrary.media.MediaWrapper;
-
 import com.facebook.ads.AdChoicesView;
 import com.facebook.ads.MediaView;
 import com.facebook.ads.NativeAd;
@@ -57,11 +53,16 @@ import com.wenjoyai.tubeplayer.gui.helpers.AsyncImageLoader;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
 import com.wenjoyai.tubeplayer.interfaces.IEventsHandler;
 import com.wenjoyai.tubeplayer.media.AdItem;
-import com.wenjoyai.tubeplayer.media.MediaGroup;
+import com.wenjoyai.tubeplayer.media.FolderGroup;
+import com.wenjoyai.tubeplayer.media.Group;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.MediaItemFilter;
 import com.wenjoyai.tubeplayer.util.Strings;
 import com.wenjoyai.tubeplayer.util.Util;
+
+import org.videolan.medialibrary.Tools;
+import org.videolan.medialibrary.media.MediaLibraryItem;
+import org.videolan.medialibrary.media.MediaWrapper;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -99,7 +100,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     public final static int VIEW_MODE_GRID = 0;
     public final static int VIEW_MODE_LIST = 1;
-    public final static int VIEW_MODE_BIGPIC = 2;
+    public final static int VIEW_MODE_FOLDER = 2;
     public final static int VIEW_MODE_MAX = 3;
 
     public static final int VIEW_MODE_FULL_TITLE = 4;
@@ -141,8 +142,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             video_layout = R.layout.video_grid_card;
         } else if (mCurrentViewMode == VIEW_MODE_LIST) {
             video_layout = R.layout.video_list_card;
-        } else if (mCurrentViewMode == VIEW_MODE_BIGPIC) {
-            video_layout = R.layout.video_bigpic_card;
+        } else if (mCurrentViewMode == VIEW_MODE_FOLDER) {
+            video_layout = R.layout.video_folder_item;
         } else if (mCurrentViewMode == VIEW_MODE_FULL_TITLE) {
             video_layout = R.layout.video_full_title;
         }
@@ -185,6 +186,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             nativeAd.unregisterView();
             nativeAd.registerViewForInteraction(holder.adContainer);
         }
+        if (holder.adIcon != null) {
+            NativeAd.Image adIcon = nativeAd.getAdIcon();
+            NativeAd.downloadAndDisplayImage(adIcon, holder.adIcon);
+        }
+        if (holder.adTitle != null) {
+            holder.adTitle.setText(nativeAd.getAdTitle());
+        }
     }
 
     @Override
@@ -207,10 +215,6 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             holder.binding.setVariable(BR.selected, isSelected);
             if (holder.itemCheck != null) {
                 holder.itemCheck.setVisibility(isSelected ? View.VISIBLE : View.GONE);
-            }
-
-            if (holder.fileSize != null) {
-                holder.fileSize.setText(Strings.readableSize(media.getFileSize()));
             }
         }
 
@@ -334,8 +338,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         for (int i = 0; i < mVideos.size(); ++i) {
             MediaWrapper mw = mVideos.get(i);
             if (mw.hasStateFlags(MediaLibraryItem.FLAG_SELECTED)) {
-                if (mw instanceof MediaGroup)
-                    selection.addAll(((MediaGroup) mw).getAll());
+                if (mw instanceof Group)
+                    selection.addAll(((Group) mw).getAll());
                 else
                     selection.add(mw);
             }
@@ -389,6 +393,21 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     }
 
     @MainThread
+    public void updateFolder(final MediaWrapper[] items) {
+        final ArrayList<MediaWrapper> list = getAll();
+        for (MediaWrapper media : items) {
+            FolderGroup.getDummy().insertInto(list, media);
+        }
+//        FolderGroup.sort(list);
+        VLCApplication.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        });
+    }
+
+    @MainThread
     public void clear() {
         LogUtil.d(TAG, "xxxx clear");
         mVideos.clear();
@@ -405,9 +424,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             return;
         }
 
-        if ((media.getType() == MediaWrapper.TYPE_GROUP) && (media instanceof MediaGroup)) {
-            MediaGroup mediaGroup = (MediaGroup) media;
-            int size = mediaGroup.size();
+        if (media.getType() == MediaWrapper.TYPE_GROUP && media instanceof Group) {
+            Group group = (Group) media;
+            int size = group.size();
             text = VLCApplication.getAppResources().getQuantityString(R.plurals.videos_quantity, size, size);
         } else {
             /* Time / Duration */
@@ -481,13 +500,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             mw = mVideos.get(i);
             if (mw.getItemType() == MediaWrapper.TYPE_AD)
                 continue;
-            if (mw instanceof MediaGroup) {
-                for (MediaWrapper item : ((MediaGroup) mw).getAll()) {
+            if (mw instanceof Group) {
+                for (MediaWrapper item : ((Group) mw).getAll()) {
                     if (item.getItemType() != MediaWrapper.TYPE_AD)
                         list.add(item);
                 }
                 if (i < position)
-                    offset += ((MediaGroup)mw).size()-1;
+                    offset += ((Group)mw).size()-1;
             } else
                 list.add(mw);
         }
@@ -508,6 +527,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         private TextView adCallToAction;
         private TextView adBody;
         private MediaView adMedia;
+        private ImageView adIcon;
+        private TextView adTitle;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -524,6 +545,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             adCallToAction = (TextView) itemView.findViewById(R.id.ad_call_to_action);
             adBody = (TextView) itemView.findViewById(R.id.ad_body);
             adMedia = (MediaView) itemView.findViewById(R.id.ad_media);
+            adIcon = (ImageView) itemView.findViewById(R.id.ad_icon);
+            adTitle = (TextView) itemView.findViewById(R.id.ad_title);
 
             binding.setVariable(BR.holder, this);
             binding.setVariable(BR.cover, AsyncImageLoader.DEFAULT_COVER_VIDEO_DRAWABLE);

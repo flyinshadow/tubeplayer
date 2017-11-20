@@ -381,9 +381,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     }
 
     private void loadExitAD() {
-//        if (ADManager.getInstance().isShowExit) {
-//            ADManager.getInstance().loadExitAD(this);
-//        }
+        if (ADManager.sLevel == ADManager.Level_None) {
+            return;
+        }
         ADManager.getInstance().loadPauseAD(this);
     }
 
@@ -775,7 +775,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             visible = false;
             viewMode = VideoListAdapter.VIEW_MODE_GRID;
         }
-        if (fragment instanceof VideoGridFragment) {
+        if (fragment instanceof VideoGridFragment && !((VideoGridFragment)fragment).getFolderMain()) {
             if (mMenu != null)
                 mMenu.findItem(R.id.ml_menu_view_mode).setVisible(visible);
             if (viewMode != ((VideoGridFragment) fragment).getCurrentViewMode()) {
@@ -793,17 +793,22 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 
     @NonNull
     private Fragment getNewFragment(int id) {
+        VideoGridFragment fragment;
         switch (id) {
+            case R.id.nav_directories:
+                fragment = new VideoGridFragment();
+                fragment.setFolder(null, true);
+                return fragment;
             case R.id.nav_audio:
                 return new AudioBrowserFragment();
-            case R.id.nav_directories:
-                return new VideoFolderFragment();
             case R.id.nav_history:
                 return new HistoryFragment();
             case R.id.nav_network:
                 return new NetworkBrowserFragment();
             default:
-                return new VideoGridFragment();
+                fragment = new VideoGridFragment();
+                fragment.setFolder(null, false);
+                return fragment;
         }
     }
 
@@ -852,12 +857,12 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         slideDownAudioPlayer();
     }
 
-    public void showSecondaryFragment2(String fragmentTag, String param, String param2) {
+    public void showSecondaryFragment2(String fragmentTag, String param, boolean param2) {
         Intent i = new Intent(this, SecondaryActivity.class);
         i.putExtra("fragment", fragmentTag);
         if (param != null)
             i.putExtra("param", param);
-        if (param2 != null)
+        if (param2)
             i.putExtra("param2", param2);
         startActivityForResult(i, ACTIVITY_RESULT_SECONDARY);
         // Slide down the audio player if needed.
@@ -897,7 +902,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 viewModeItem.setIcon(R.drawable.ic_view_list);
             } else if (currentViewMode == VideoListAdapter.VIEW_MODE_GRID) {
                 viewModeItem.setIcon(R.drawable.ic_view_grid);
-            } else if (currentViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
+            } else if (currentViewMode == VideoListAdapter.VIEW_MODE_FOLDER) {
                 viewModeItem.setIcon(R.drawable.ic_view_bigpic);
             }
         }
@@ -912,7 +917,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_placeholder);
         MenuItem item;
         // Disable the sort option if we can't use it on the current fragment.
-        if (current == null || !(current instanceof ISortable)) {
+        if (current == null || !(current instanceof ISortable) || mCurrentFragmentId == R.id.nav_directories) {
             item = menu.findItem(R.id.ml_menu_sortby);
             if (item == null)
                 return false;
@@ -960,29 +965,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         menu.findItem(R.id.ml_menu_last_playlist).setVisible(showLast);
         menu.findItem(R.id.ml_menu_filter).setVisible(current instanceof Filterable && ((Filterable) current).enableSearchOption());
         LogUtil.d(TAG, "viewmode getScreenRotation:" + getScreenRotation());
-        menu.findItem(R.id.ml_menu_view_mode).setVisible(current instanceof VideoGridFragment &&
-                ((getScreenRotation() == Surface.ROTATION_0) || (getScreenRotation() == Surface.ROTATION_180))&&!mIsGifShow);
-//        if (viewModeMenu != null) {
-//            boolean screenVertical = (getScreenRotation() == Surface.ROTATION_0) || (getScreenRotation() == Surface.ROTATION_180);
-//            int currentViewMode = mSettings.getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE, VideoListAdapter.VIEW_MODE_DEFAULT);
-//            if (screenVertical) {
-//                if (currentViewMode == VideoListAdapter.VIEW_MODE_LIST) {
-//                    viewModeMenu.setIcon(R.drawable.ic_view_list);
-//                } else if (currentViewMode == VideoListAdapter.VIEW_MODE_GRID) {
-//                    viewModeMenu.setIcon(R.drawable.ic_view_grid);
-//                } else if (currentViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
-//                    viewModeMenu.setIcon(R.drawable.ic_view_bigpic);
-//                }
-//                if (current instanceof VideoGridFragment && currentViewMode != VideoListAdapter.VIEW_MODE_GRID) {
-//                    ((VideoGridFragment) current).toggleVideoMode(currentViewMode);
-//                }
-//            } else {
-//                if (current instanceof VideoGridFragment) {
-//                    ((VideoGridFragment) current).toggleVideoMode(VideoListAdapter.VIEW_MODE_GRID);
-//                }
-//            }
-//            viewModeMenu.setVisible(current instanceof VideoGridFragment && screenVertical);
-//        }
+        menu.findItem(R.id.ml_menu_view_mode).setVisible(current instanceof VideoGridFragment && !((VideoGridFragment)current).getFolderMain() &&
+                ((getScreenRotation() == Surface.ROTATION_0) || (getScreenRotation() == Surface.ROTATION_180)) && !mIsGifShow);
         return true;
     }
 

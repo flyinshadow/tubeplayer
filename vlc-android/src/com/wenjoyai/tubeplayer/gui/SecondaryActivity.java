@@ -156,13 +156,6 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
                 viewModeItem.setIcon(R.drawable.ic_view_list);
             } else if (currentViewMode == VideoListAdapter.VIEW_MODE_GRID) {
                 viewModeItem.setIcon(R.drawable.ic_view_grid);
-            } else if (currentViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
-                viewModeItem.setIcon(R.drawable.ic_view_bigpic);
-            } else {
-                viewModeItem.setVisible(false);
-            }
-            if (mFragment instanceof VideoGridFragment && (((VideoGridFragment) mFragment).getFolderGroup() != null)) {
-                viewModeItem.setVisible(false);
             }
         }
         return super.onCreateOptionsMenu(menu);
@@ -209,7 +202,7 @@ public class SecondaryActivity extends AudioPlayerContainerActivity {
             ((VideoGridFragment) mFragment).setGroup(getIntent().getStringExtra("param"));
         } else if (id.equals(VIDEO_FOLDER_GROUP)) {
             mFragment = new VideoGridFragment();
-            ((VideoGridFragment) mFragment).setFolderGroup(getIntent().getStringExtra("param"), getIntent().getStringExtra("param2"));
+            ((VideoGridFragment) mFragment).setFolder(getIntent().getStringExtra("param"), false);
         } else if (id.equals(STORAGE_BROWSER)){
             mFragment = new StorageBrowserFragment();
         } else if (id.equals(FILE_BROWSER)) {

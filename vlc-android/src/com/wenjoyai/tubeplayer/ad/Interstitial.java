@@ -23,6 +23,9 @@ public class Interstitial {
 //    MVInterstitialHandler mInterstitialHandler;
 
     public void loadAD(final Context context, long type, final String adId, final ADListener listener) {
+        if (ADManager.sLevel == ADManager.Level_None){
+            return;
+        }
         if (type == ADManager.AD_MobVista) {
         } else if (type == ADManager.AD_Facebook) {
             Log.e(TAG, "startloading ");

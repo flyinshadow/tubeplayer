@@ -36,6 +36,9 @@ public class NativeAD {
     }
 
     public void loadAD(final Context context, long type, final String adId, final ADListener listener) {
+        if (ADManager.sLevel == ADManager.Level_None){
+            return;
+        }
         mAdId = adId;
         mType = type;
         mListener = listener;

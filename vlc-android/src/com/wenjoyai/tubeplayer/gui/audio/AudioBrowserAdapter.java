@@ -25,7 +25,6 @@ package com.wenjoyai.tubeplayer.gui.audio;
 
 import android.app.Activity;
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.MainThread;
@@ -35,7 +34,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 
@@ -47,7 +45,6 @@ import org.videolan.medialibrary.media.MediaWrapper;
 import com.wenjoyai.tubeplayer.BR;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
-import com.wenjoyai.tubeplayer.databinding.AudioBrowserAlbumItemBinding;
 import com.wenjoyai.tubeplayer.databinding.AudioBrowserItemBinding;
 import com.wenjoyai.tubeplayer.databinding.AudioBrowserSeparatorBinding;
 import com.wenjoyai.tubeplayer.gui.BaseQueuedAdapter;
@@ -56,8 +53,8 @@ import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
 import com.wenjoyai.tubeplayer.gui.view.FastScroller;
 import com.wenjoyai.tubeplayer.interfaces.IEventsHandler;
 import com.wenjoyai.tubeplayer.media.FolderGroup;
+import com.wenjoyai.tubeplayer.media.Group;
 import com.wenjoyai.tubeplayer.util.FileUtils;
-import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.MediaItemDiffCallback;
 import com.wenjoyai.tubeplayer.util.MediaItemFilter;
 import com.wenjoyai.tubeplayer.util.Util;
@@ -272,15 +269,14 @@ public class AudioBrowserAdapter extends BaseQueuedAdapter<MediaLibraryItem[], A
 
         // generate folder list
         if (mType == MediaLibraryItem.TYPE_FOLDER) {
-            List<FolderGroup> mFolders = new ArrayList<>();
+            List<MediaWrapper> mFolders = new ArrayList<>();
             for (MediaLibraryItem item : items) {
                 if (item.getItemType() == MediaLibraryItem.TYPE_MEDIA) {
-                    FolderGroup.insertInto(mFolders, (MediaWrapper)item);
+                    FolderGroup.getDummy().insertInto(mFolders, (MediaWrapper)item);
                 }
             }
             FolderGroup.sort(mFolders);
-            for (FolderGroup folderGroup : mFolders) {
-                folderGroup.setTitle(FileUtils.getFileNameFromPath(folderGroup.getFolderPath()));
+            for (MediaWrapper folderGroup : mFolders) {
                 datalist.add(folderGroup);
             }
             return datalist.toArray(new MediaLibraryItem[datalist.size()]);
