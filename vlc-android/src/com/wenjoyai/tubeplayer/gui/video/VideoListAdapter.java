@@ -926,16 +926,16 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         }
 
         // append all left ads
-        if (added < mNativeAd.size()) {
-            while (mNextAdIndex < mNativeAd.size()) {
-                MediaWrapper media = items.get(items.size() - 1);
-                if (media != null) {
-                    AdItem ad = new AdItem(media);
-                    ad.setNativeAd(nextAd());
-                    items.add(ad);
-                }
-            }
-        }
+//        if (added < mNativeAd.size()) {
+//            while (mNextAdIndex < mNativeAd.size()) {
+//                MediaWrapper media = items.get(items.size() - 1);
+//                if (media != null) {
+//                    AdItem ad = new AdItem(media);
+//                    ad.setNativeAd(nextAd());
+//                    items.add(ad);
+//                }
+//            }
+//        }
     }
 
     private void removeAdItems(ArrayList<MediaWrapper> items) {

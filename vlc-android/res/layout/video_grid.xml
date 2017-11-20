@@ -43,7 +43,9 @@
                 android:padding="@dimen/default_margin"
                 android:scrollbarStyle="outsideOverlay"
                 android:scrollbars="vertical"
-                android:stretchMode="none"/>
+                android:stretchMode="none"
+                android:background="?attr/background_default_darker"
+                />
 
             <com.wenjoyai.tubeplayer.gui.helpers.RecyclerViewHeader
                 android:id="@+id/header"

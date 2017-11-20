@@ -42,6 +42,7 @@
     <color name="orange500transparent">#b4ff8800</color>
     <color name="orange200transparent">#64ffca7d</color>
 
+    <color name="grey_bg">#f4f4f4</color>
     <color name="grey50">#fafafa</color>
     <color name="grey100">#f6f6f6</color>
     <color name="grey200">#ebebeb</color>

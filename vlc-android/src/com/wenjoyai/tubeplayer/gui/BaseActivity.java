@@ -1,6 +1,7 @@
 package com.wenjoyai.tubeplayer.gui;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -11,11 +12,15 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 
 import java.util.Calendar;
 
 
 public class BaseActivity extends AppCompatActivity {
+
+    private static final String TAG = "BaseActivity";
+
     //firebase统计  https://firebase.google.com/docs/analytics/android/start/
     protected FirebaseAnalytics mFirebaseAnalytics;
 
@@ -46,6 +51,14 @@ public class BaseActivity extends AppCompatActivity {
             setTheme(ThemeFragment.sThemeNightStyles[themeIndex]);
         } else {
             setTheme(ThemeFragment.sThemeStyles[themeIndex]);
+        }
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            LogUtil.d(TAG, "orientation change to landscape, try to show RateDialog");
+            RateDialog.tryToShow(this, 5);
         }
     }
 }

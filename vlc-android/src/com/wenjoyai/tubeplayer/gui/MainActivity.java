@@ -185,7 +185,14 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         initConfig();
 //        initAD();
         //开始广告缓存
-        ADManager.getInstance().startLoadAD(this);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ADManager.getInstance().startLoadAD(MainActivity.this);
+            }
+        }, 500);
+
         mDrawerLayout = (HackyDrawerLayout) findViewById(R.id.root_container);
         mGifADView = (GifAD) findViewById(R.id.main_gif_ad);
         setupNavigationView();
@@ -1504,6 +1511,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                     ADManager.getInstance().mInterstitial.show();
                 }
                 mGifADView.setVisibility(View.GONE);
+                mIsGifShow = false;
 
                 Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_placeholder);
                 mMenu.findItem(R.id.ml_menu_view_mode).setVisible(current instanceof VideoGridFragment &&
