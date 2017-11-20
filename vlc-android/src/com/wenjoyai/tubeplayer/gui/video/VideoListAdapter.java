@@ -395,16 +395,22 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     @MainThread
     public void updateFolder(final MediaWrapper[] items) {
         final ArrayList<MediaWrapper> list = getAll();
+        boolean changed = false;
         for (MediaWrapper media : items) {
-            FolderGroup.getDummy().insertInto(list, media);
-        }
-//        FolderGroup.sort(list);
-        VLCApplication.runOnMainThread(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
+            if (media instanceof FolderGroup) {
+                FolderGroup.getDummy().insertInto(list, media);
+                changed = true;
             }
-        });
+        }
+        if (changed) {
+//        FolderGroup.sort(list);
+            VLCApplication.runOnMainThread(new Runnable() {
+                @Override
+                public void run() {
+                    notifyDataSetChanged();
+                }
+            });
+        }
     }
 
     @MainThread
