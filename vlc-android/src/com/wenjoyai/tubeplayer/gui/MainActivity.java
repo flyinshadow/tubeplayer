@@ -1504,6 +1504,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                     ADManager.getInstance().mInterstitial.show();
                 }
                 mGifADView.setVisibility(View.GONE);
+                mIsGifShow = false;
 
                 Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_placeholder);
                 mMenu.findItem(R.id.ml_menu_view_mode).setVisible(current instanceof VideoGridFragment &&
