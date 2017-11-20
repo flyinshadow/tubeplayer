@@ -185,7 +185,14 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         initConfig();
 //        initAD();
         //开始广告缓存
-        ADManager.getInstance().startLoadAD(this);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ADManager.getInstance().startLoadAD(MainActivity.this);
+            }
+        }, 500);
+
         mDrawerLayout = (HackyDrawerLayout) findViewById(R.id.root_container);
         mGifADView = (GifAD) findViewById(R.id.main_gif_ad);
         setupNavigationView();

@@ -83,9 +83,8 @@
             app:layout_constraintBottom_toTopOf="@+id/text"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
-            android:maxLines="1"
+            android:singleLine="true"
             android:text="@{item.title}"
-            android:fontFamily="sans-serif-light"
             android:textColor="?attr/list_title"
             android:textSize="16sp" />
 
@@ -94,8 +93,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
-            android:fontFamily="sans-serif-light"
-            android:maxLines="1"
+            android:singleLine="true"
             android:text="@{item.description}"
             android:textColor="?attr/list_subtitle"
             app:layout_constraintBottom_toBottomOf="parent"
