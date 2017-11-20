@@ -33,9 +33,10 @@ import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
  */
 
 public class ExitDialog extends Dialog {
-    public ViewPager viewPager;
+    public AutoScrollViewPager viewPager;
     ImageView mCloseTv;
     Context mContext;
+    MyViewPagerAdapter myViewPagerAdapter;
 
     public ExitDialog(Context context) {
         super(context);
@@ -52,8 +53,8 @@ public class ExitDialog extends Dialog {
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
 
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
-        viewPager.setOffscreenPageLimit(1);
+        viewPager = (AutoScrollViewPager) findViewById(R.id.view_pager);
+        viewPager.setOffscreenPageLimit(3);
         mCloseTv = (ImageView) findViewById(R.id.exit_cancel);
         mCloseTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,10 +62,12 @@ public class ExitDialog extends Dialog {
                 dismiss();
             }
         });
-        viewPager.setAdapter(new MyViewPagerAdapter(ADManager.getInstance().getUnshownFeed()));
-//        viewPager.setCycle(true);
-//        viewPager.setInterval(2000);
-//        viewPager.startAutoScroll();
+        myViewPagerAdapter = new MyViewPagerAdapter(ADManager.getInstance().getUnshownFeed());
+        viewPager.setAdapter(myViewPagerAdapter);
+        myViewPagerAdapter.notifyDataSetChanged();
+        viewPager.setCycle(true);
+        viewPager.setInterval(2000);
+        viewPager.startAutoScroll();
     }
 
     class MyViewPagerAdapter extends PagerAdapter {
@@ -86,7 +89,7 @@ public class ExitDialog extends Dialog {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             LayoutInflater inflater = LayoutInflater.from(container.getContext());
-            LinearLayout adView = (LinearLayout) inflater.inflate(R.layout.layout_pause_native_ad, container, false);
+            LinearLayout adView = (LinearLayout) inflater.inflate(R.layout.layout_pause_native_ad, null);
 
             NativeAd nativeAd = mDatas.get(position);
             // Create native UI using the ad_front metadata.
@@ -112,7 +115,7 @@ public class ExitDialog extends Dialog {
 
             // Add the AdChoices icon
             LinearLayout adChoicesContainer = (LinearLayout) adView.findViewById(R.id.ad_choices_container);
-            AdChoicesView adChoicesView = new AdChoicesView(container.getContext(), nativeAd, true);
+            AdChoicesView adChoicesView = new AdChoicesView(adView.getContext(), nativeAd, true);
             adChoicesContainer.addView(adChoicesView);
 
             // Register the Title and CTA button to listen for clicks.
@@ -123,7 +126,7 @@ public class ExitDialog extends Dialog {
             clickableViews.add(nativeAdBody);
             clickableViews.add(nativeAdCallToAction);
             nativeAd.unregisterView();
-            nativeAd.registerViewForInteraction(container, clickableViews);
+            nativeAd.registerViewForInteraction(adView, clickableViews);
 
             views.add(adView);
             //这个方法用来实例化页卡
@@ -143,3 +146,5 @@ public class ExitDialog extends Dialog {
         }
     }
 }
+
+

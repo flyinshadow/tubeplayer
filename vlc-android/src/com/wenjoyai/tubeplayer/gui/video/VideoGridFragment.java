@@ -992,7 +992,12 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             }
 
             if (needGif){
-                ((MainActivity)getActivity()).showGif();
+                ((MainActivity)getActivity()).showGif(new NeedFreshListener() {
+                    @Override
+                    public void fresh() {
+                        updateList();
+                    }
+                });
             }
         }
     };
@@ -1007,5 +1012,9 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             mode = mVideoAdapter.getCurrentViewMode();
         }
         return mode;
+    }
+
+   public interface NeedFreshListener{
+        void fresh();
     }
 }

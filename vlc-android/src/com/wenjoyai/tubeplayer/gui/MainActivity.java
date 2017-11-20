@@ -730,12 +730,12 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
 //                showExitDialog();
 //            }
         }
-//        finish();
-        showExitDialog();
+        finish();
     }
 
-    private void showExitDialog() {
-        if (mExitDialog == null) {
+    private void showExitDialog(final VideoGridFragment.NeedFreshListener listener) {
+        //每次都是新dialog，不然facebookad unregister，第二次展示对话框就不能点击了
+//        if (mExitDialog == null) {
             mExitDialog = new ExitDialog(MainActivity.this);
             mExitDialog.setCancelable(true);
             mExitDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -743,13 +743,14 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 public void onDismiss(DialogInterface dialog) {
                     // TODO: 2017/11/18
 //                    发消息通知重新binder
+                    if (null!= listener){
+                        listener.fresh();
+                    }
+
                 }
             });
-        }
+//        }
         if (null != mExitDialog && !isFinishing() && !mExitDialog.isShowing())
-            if (null!= mExitDialog.viewPager){
-            mExitDialog.viewPager.getAdapter().notifyDataSetChanged();
-            }
             mExitDialog.show();
     }
 
@@ -1484,7 +1485,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     /**
      * 显示小动画
      */
-    public void showGif(){
+    public void showGif(final VideoGridFragment.NeedFreshListener listener){
         if (mIsGifShow){
             return;
         }
@@ -1498,7 +1499,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             @Override
             public void onClick(View v) {
                 if (ADManager.getInstance().getUnshownFeed().size()>0){
-                    showExitDialog();
+                    showExitDialog(listener);
                 } else {
                     ADManager.getInstance().mInterstitial.show();
                 }
