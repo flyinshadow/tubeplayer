@@ -159,7 +159,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private Interstitial mFirstOpenInterstitialAd;
     private boolean mIsResumed = true;//当前页面是否在前台
     private boolean mIsOpenAdShown = false;//open广告是否展示
-    private  boolean mIsOpenLoadSuc = false;
+    private boolean mIsOpenLoadSuc = false;
     private static SharedPreferences sSettings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
     private long mOpenCount;//启动次数
     MyBroadcastReceiver mReceiver;
@@ -298,8 +298,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     ExitDialog mExitDialog;
     PauseDialog mPauseDialog;
 
-    private void showOpenAD(){
-        if (!mIsOpenLoadSuc){
+    private void showOpenAD() {
+        if (!mIsOpenLoadSuc) {
             return;
         }
         mIsOpenAdShown = true;
@@ -310,7 +310,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
-                    if (null!= mFirstOpenInterstitialAd) {
+                    if (null != mFirstOpenInterstitialAd) {
                         mFirstOpenInterstitialAd.show();
                         StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "show");
                     }
@@ -332,7 +332,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     //第一次打开
     private void loadOpenAD() {
         //nomral级别以上才展示插屏
-        if (ADManager.sLevel<ADManager.Level_Normal){
+        if (ADManager.sLevel < ADManager.Level_Normal) {
             return;
         }
         long second = mSettings.getLong(KEY_LAST_OPEN_TIME, 0);
@@ -356,7 +356,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                         StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "loaded");
                         if (mIsResumed) {
                             showOpenAD();
-                        }else {
+                        } else {
                             mIsOpenAdShown = false;
                         }
                     }
@@ -538,7 +538,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 }
             }, interval);
         }
-        if (!mIsOpenAdShown){
+        if (!mIsOpenAdShown) {
             showOpenAD();
         }
     }
@@ -555,7 +555,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         //init
         ADManager.sPlatForm = mSettings.getLong(PLATFOM, ADManager.AD_Facebook);
         ADManager.isShowExit = mSettings.getBoolean(SHOW_EIXT, true);
-        ADManager.pasue_ad_count  = mSettings.getLong(pasue_ad_count, ADManager.AD_Facebook);
+        ADManager.pasue_ad_count = mSettings.getLong(pasue_ad_count, ADManager.AD_Facebook);
 
         // Get Remote Config instance.
         // [START get_remote_config_instance]
@@ -618,7 +618,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                         ADManager.isShowExit = mFirebaseRemoteConfig.getBoolean("show_exit");
 
 
-                        ADManager.pasue_ad_count  = mFirebaseRemoteConfig.getLong("pasue_ad_count");
+                        ADManager.pasue_ad_count = mFirebaseRemoteConfig.getLong("pasue_ad_count");
                         sSettings.edit().putLong(PLATFOM, ADManager.sPlatForm).apply();
                         sSettings.edit().putBoolean(SHOW_EIXT, ADManager.isShowExit).apply();
                         sSettings.edit().putLong(pasue_ad_count, ADManager.pasue_ad_count).apply();
@@ -695,7 +695,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     protected void onDestroy() {
         super.onDestroy();
         mIsGifShow = false;
-        if (null!=mReceiver) {
+        if (null != mReceiver) {
             unregisterReceiver(mReceiver);
         }
     }
@@ -724,7 +724,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         }
         int unshownSize = ADManager.getInstance().getUnshownFeed().size();
 
-        if (unshownSize>0) {
+        if (unshownSize > 0) {
             StatisticsManager.submitAd(this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_UNSHOWN + String.valueOf(unshownSize));
 //            if (ADManager.getInstance().isShowExit) {
 //                showExitDialog();
@@ -736,25 +736,25 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private void showExitDialog(final VideoGridFragment.NeedFreshListener listener) {
         //每次都是新dialog，不然facebookad unregister，第二次展示对话框就不能点击了
 //        if (mExitDialog == null) {
-            mExitDialog = new ExitDialog(MainActivity.this);
-            mExitDialog.setCancelable(true);
-            mExitDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    // TODO: 2017/11/18
+        mExitDialog = new ExitDialog(MainActivity.this);
+        mExitDialog.setCancelable(true);
+        mExitDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                // TODO: 2017/11/18
 //                    发消息通知重新binder
-                    if (null!= listener){
-                        listener.fresh();
-                    }
-
+                if (null != listener) {
+                    listener.fresh();
                 }
-            });
+
+            }
+        });
 //        }
         if (null != mExitDialog && !isFinishing() && !mExitDialog.isShowing())
             mExitDialog.show();
     }
 
-    private void showPauseDialog(){
+    private void showPauseDialog() {
         if (mPauseDialog == null) {
             mPauseDialog = new PauseDialog(MainActivity.this);
             mPauseDialog.setCancelable(true);
@@ -775,7 +775,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             visible = false;
             viewMode = VideoListAdapter.VIEW_MODE_GRID;
         }
-        if (fragment instanceof VideoGridFragment && !((VideoGridFragment)fragment).getFolderMain()) {
+        if (fragment instanceof VideoGridFragment && !((VideoGridFragment) fragment).getFolderMain()) {
             if (mMenu != null)
                 mMenu.findItem(R.id.ml_menu_view_mode).setVisible(visible);
             if (viewMode != ((VideoGridFragment) fragment).getCurrentViewMode()) {
@@ -965,7 +965,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         menu.findItem(R.id.ml_menu_last_playlist).setVisible(showLast);
         menu.findItem(R.id.ml_menu_filter).setVisible(current instanceof Filterable && ((Filterable) current).enableSearchOption());
         LogUtil.d(TAG, "viewmode getScreenRotation:" + getScreenRotation());
-        menu.findItem(R.id.ml_menu_view_mode).setVisible(current instanceof VideoGridFragment && !((VideoGridFragment)current).getFolderMain() &&
+        menu.findItem(R.id.ml_menu_view_mode).setVisible(current instanceof VideoGridFragment &&
                 ((getScreenRotation() == Surface.ROTATION_0) || (getScreenRotation() == Surface.ROTATION_180)) && !mIsGifShow);
         return true;
     }
@@ -1207,6 +1207,21 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_placeholder);
         if (current instanceof Filterable)
             ((Filterable) current).setSearchVisibility(visible);
+    }
+
+    public void toggleFrgament(int id) {
+        FragmentManager fm = getSupportFragmentManager();
+        String tag = getTag(id);
+
+        /* Switch the fragment */
+        Fragment fragment = getFragment(id);
+        fm.beginTransaction()
+                .replace(R.id.fragment_placeholder, fragment, tag)
+                .addToBackStack(tag)
+                .commit();
+        mCurrentFragmentId = id;
+        mNavigationView.setCheckedItem(mCurrentFragmentId);
+//        mDrawerLayout.closeDrawer(mNavigationView);
     }
 
     @Override
@@ -1466,15 +1481,16 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     }
 
     private boolean mIsGifShow = false;
+
     /**
      * 显示小动画
      */
-    public void showGif(final VideoGridFragment.NeedFreshListener listener){
-        if (mIsGifShow){
+    public void showGif(final VideoGridFragment.NeedFreshListener listener) {
+        if (mIsGifShow) {
             return;
         }
         Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_placeholder);
-        if (current instanceof VideoGridFragment && ((getScreenRotation() == Surface.ROTATION_0) || (getScreenRotation() == Surface.ROTATION_180))){
+        if (current instanceof VideoGridFragment && ((getScreenRotation() == Surface.ROTATION_0) || (getScreenRotation() == Surface.ROTATION_180))) {
             mMenu.findItem(R.id.ml_menu_view_mode).setVisible(false);
         }
 
@@ -1482,7 +1498,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         mGifADView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ADManager.getInstance().getUnshownFeed().size()>0){
+                if (ADManager.getInstance().getUnshownFeed().size() > 0) {
                     showExitDialog(listener);
                 } else {
                     ADManager.getInstance().mInterstitial.show();

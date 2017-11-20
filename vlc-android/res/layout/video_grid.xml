@@ -58,19 +58,6 @@
                     android:orientation="vertical"
                     >
 
-                    <TextView
-                        android:id="@+id/header_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:paddingStart="@dimen/header_info_margin"
-                        android:paddingLeft="@dimen/header_info_margin"
-                        android:background="#d8d8d8"
-                        android:fontFamily="sans-serif"
-                        android:textColor="#4a4a4a"
-                        android:textSize="@dimen/default_text_size"
-                        android:textStyle="normal"
-                        />
-
                     <LinearLayout
                         android:id="@+id/folder_directories"
                         android:layout_width="match_parent"

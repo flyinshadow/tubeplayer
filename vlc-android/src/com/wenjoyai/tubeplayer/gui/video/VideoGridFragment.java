@@ -33,6 +33,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.annotation.MainThread;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.PopupMenu;
@@ -76,12 +77,10 @@ import com.wenjoyai.tubeplayer.interfaces.Filterable;
 import com.wenjoyai.tubeplayer.interfaces.IEventsHandler;
 import com.wenjoyai.tubeplayer.interfaces.ISortable;
 import com.wenjoyai.tubeplayer.media.FolderGroup;
-import com.wenjoyai.tubeplayer.media.Group;
 import com.wenjoyai.tubeplayer.media.MediaGroup;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
 import com.wenjoyai.tubeplayer.util.FileUtils;
 import com.wenjoyai.tubeplayer.util.LogUtil;
-import com.wenjoyai.tubeplayer.util.Strings;
 import com.wenjoyai.tubeplayer.util.ShareUtils;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
@@ -94,7 +93,6 @@ import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class VideoGridFragment extends MediaBrowserFragment implements MediaUpdatedCb, ISortable, SwipeRefreshLayout.OnRefreshListener, MediaAddedCb, Filterable, IEventsHandler {
@@ -130,7 +128,6 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     private RecyclerViewHeader mHeader;
     private LinearLayout mDirectories;
-    private TextView mHeaderText;
 
     /* All subclasses of Fragment must include a public empty constructor. */
     public VideoGridFragment() {
@@ -168,10 +165,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             mHeader.attachTo(mGridView);
             mHeader.setVisibility(View.VISIBLE);
 
-            mHeaderText = (TextView) mHeader.findViewById(R.id.header_text);
             mDirectories = (LinearLayout) mHeader.findViewById(R.id.folder_directories);
             if (mFolderMain) {
-                mHeaderText.setVisibility(View.GONE);
                 mDirectories.setVisibility(View.VISIBLE);
                 mDirectories.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -180,7 +175,6 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     }
                 });
             } else {
-                mHeaderText.setVisibility(View.VISIBLE);
                 mDirectories.setVisibility(View.GONE);
             }
         }
@@ -909,23 +903,46 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     public void toggleViewMode(MenuItem item) {
         if (mVideoAdapter != null) {
-            int targetViewMode = (mVideoAdapter.getCurrentViewMode() + 1) % VideoListAdapter.VIEW_MODE_MAX;
-            if (targetViewMode == VideoListAdapter.VIEW_MODE_GRID) {
-                item.setIcon(R.drawable.ic_view_grid);
+            int targetViewMode;
+            FragmentActivity activity = getActivity();
+            if (activity instanceof MainActivity) {
+                targetViewMode = (mVideoAdapter.getCurrentViewMode() + 1) % VideoListAdapter.VIEW_MODE_MAX;
+                if (targetViewMode == VideoListAdapter.VIEW_MODE_GRID) {
+                    item.setIcon(R.drawable.ic_view_grid);
 
-                StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER_GRID, null);
+                    StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER_GRID, null);
+                    PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).edit().putInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE, VideoListAdapter.VIEW_MODE_GRID).apply();
+                    ((MainActivity)activity).toggleFrgament(R.id.nav_video);
+                    return;
 
-            } else if (targetViewMode == VideoListAdapter.VIEW_MODE_LIST) {
-                item.setIcon(R.drawable.ic_view_list);
+                } else if (targetViewMode == VideoListAdapter.VIEW_MODE_LIST) {
+                    item.setIcon(R.drawable.ic_view_list);
 
-                StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER_LIST, null);
+                    StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER_LIST, null);
 
-//            } else if (targetViewMode == VideoListAdapter.VIEW_MODE_BIGPIC) {
-//                item.setIcon(R.drawable.ic_view_bigpic);
-//
-//                StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER_BIGPIC, null);
+                } else if (targetViewMode == VideoListAdapter.VIEW_MODE_FOLDER) {
+                    item.setIcon(R.drawable.ic_view_bigpic);
 
+                    StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER_BIGPIC, null);
+
+                    ((MainActivity)activity).toggleFrgament(R.id.nav_directories);
+                    return;
+                }
+            } else {
+                targetViewMode = (mVideoAdapter.getCurrentViewMode() + 1) % (VideoListAdapter.VIEW_MODE_MAX - 1);
+                if (targetViewMode == VideoListAdapter.VIEW_MODE_GRID) {
+                    item.setIcon(R.drawable.ic_view_grid);
+
+                    StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER_GRID, null);
+
+                } else if (targetViewMode == VideoListAdapter.VIEW_MODE_LIST) {
+                    item.setIcon(R.drawable.ic_view_list);
+
+                    StatisticsManager.submitHomeTab(getActivity(), StatisticsManager.TYPE_VIEWER_LIST, null);
+
+                }
             }
+
             toggleVideoMode(targetViewMode);
             PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).edit().putInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE, targetViewMode).apply();
         }
