@@ -577,7 +577,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     if (mFolderMain) {
                         displayList.addAll(FolderGroup.getDummy().group(itemList));
                     } else {
-                        displayList.addAll(MediaGroup.getDummy().group(itemList));
+                        for (MediaWrapper item : MediaGroup.getDummy().group(itemList))
+                            displayList.add(((MediaGroup)item).getMedia());
                     }
                 }
                 if (mGroup == null && mFolderGroup == null && mParsingFinished && !mSubmitVideoCount) {
