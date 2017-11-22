@@ -705,6 +705,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         if (null != mReceiver) {
             unregisterReceiver(mReceiver);
         }
+        if (mFirstOpenInterstitialAd != null){
+            mFirstOpenInterstitialAd.destroy();
+        }
     }
 
     @Override

@@ -20,7 +20,6 @@ public class Interstitial {
     //facebook
     com.facebook.ads.InterstitialAd mFacebookAd;
     com.google.android.gms.ads.InterstitialAd mGoogleAD;
-//    MVInterstitialHandler mInterstitialHandler;
 
     public void loadAD(final Context context, long type, final String adId, final ADListener listener) {
         if (ADManager.sLevel == ADManager.Level_None){
@@ -144,22 +143,22 @@ public class Interstitial {
     /**
      * 在activty的ondestroy里处理
      */
-//    public void destroy() {
-//        if (mFacebookAd != null) {
-//            mFacebookAd.destroy();
-//        } else if (mGoogleAD != null) {
-//        }
-//    }
+    public void destroy() {
+        if (mFacebookAd != null&&mFacebookAd.isAdLoaded()) {
+            mFacebookAd.destroy();
+        }
+    }
 
     public void show() {
-        if (mFacebookAd != null) {
-            mFacebookAd.show();
-        } else if (mGoogleAD != null && mGoogleAD.isLoaded()) {
-            mGoogleAD.show();
+        try {
+            if (mFacebookAd != null) {
+                mFacebookAd.show();
+            } else if (mGoogleAD != null && mGoogleAD.isLoaded()) {
+                mGoogleAD.show();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
         }
-//        else if (mInterstitialHandler != null) {
-//            mInterstitialHandler.show();
-//        }
     }
 
 

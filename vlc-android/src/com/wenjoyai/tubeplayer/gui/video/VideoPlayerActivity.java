@@ -465,15 +465,17 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mRootView = findViewById(R.id.player_root);
         mActionBarView = (ViewGroup) mActionBar.getCustomView();
         mGifImageView = (GifAD)findViewById(R.id.main_gif_ad);
-        mGifImageView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mGifImageView.setVisibility(View.GONE);
-                mHandler.removeCallbacks(mGifRunnable);
-                loadPauseNative();
-                pause();
-            }
-        });
+        if (null!= mGifImageView) {
+            mGifImageView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mGifImageView.setVisibility(View.GONE);
+                    mHandler.removeCallbacks(mGifRunnable);
+                    loadPauseNative();
+                    pause();
+                }
+            });
+        }
 //        Remove ActionBar extra space
 //        Toolbar toolbar = (Toolbar)mActionBarView.getParent();
 //        toolbar.setContentInsetsAbsolute(0, 0);
@@ -588,7 +590,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         initPauseNative();
         //gif
-        mHandler.postDelayed(mGifRunnable,30*1000);
+        if (null!= mGifImageView) {
+            mHandler.postDelayed(mGifRunnable, 30 * 1000);
+        }
 
         mTranstionAnimIn = AnimationUtils.loadAnimation(this, R.anim.pause_ad_left_in);
         mTranstionAnimOut = AnimationUtils.loadAnimation(this, R.anim.pause_ad_leave_right);
@@ -682,9 +686,11 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     Runnable mGifRunnable = new Runnable() {
         @Override
         public void run() {
-            if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()&& !ADManager.getInstance().mIsPauseADShown) {
-                mGifImageView.setVisibility(View.VISIBLE);
-                mHandler.postDelayed(mGifHideRunnable,60*1000);
+            if (null!= mGifImageView) {
+                if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded() && !ADManager.getInstance().mIsPauseADShown) {
+                    mGifImageView.setVisibility(View.VISIBLE);
+                    mHandler.postDelayed(mGifHideRunnable, 60 * 1000);
+                }
             }
         }
     };
@@ -692,7 +698,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     Runnable mGifHideRunnable = new Runnable() {
         @Override
         public void run() {
-            mGifImageView.setVisibility(View.GONE);
+            if (null!= mGifImageView) {
+                mGifImageView.setVisibility(View.GONE);
+            }
         }
     };
 
