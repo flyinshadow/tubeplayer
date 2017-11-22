@@ -1505,9 +1505,11 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         }
 
         mGifADView.setVisibility(View.VISIBLE);
+        StatisticsManager.submitAd(this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_MAIN_GIF + "shown");
         mGifADView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_MAIN_GIF + "click");
                 if (ADManager.getInstance().getUnshownFeed().size() > 0) {
                     showExitDialog(listener);
                 } else {

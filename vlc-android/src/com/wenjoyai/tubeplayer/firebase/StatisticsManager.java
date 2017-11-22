@@ -41,6 +41,10 @@ public class StatisticsManager {
     public static final String ITEM_AD_EXIT_ADS ="exit_ads_";
     public static final String ITEM_AD_PAUSE_ADS ="pause_ads_";
 
+    //gif
+    public static final String ITEM_AD_MAIN_GIF ="main_gif_";
+    public static final String ITEM_AD_PLAY_GIF ="play_gif_";
+
 
     //视频播放
     public static final String EVENT_VIDEO_PLAY = "videoplay";

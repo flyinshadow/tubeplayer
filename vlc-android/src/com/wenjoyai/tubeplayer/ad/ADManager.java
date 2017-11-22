@@ -177,14 +177,14 @@ public class ADManager {
                     mReadyQueue.offer(new NativeWrapper(adId,null, errorcode));
                     mFinished++;
                     if (mFinished == mNum) {
-                        int error1001 = 0;
+                        int failedCount = 0;
                         for (int i =0; i<mNum;i++){
-                            if (mReadyQueue.get(i).errorcode ==1001){
-                                error1001++;
+                            if (mReadyQueue.get(i).errorcode !=0){
+                                failedCount++;
                             }
                         }
-                        if (error1001==mNum){
-                            //如果三个广告都是1001
+                        if (failedCount==mNum){
+                            //三个都失败了
                             loadInterstitial();
                         } else {
                             callbackAD(false);
