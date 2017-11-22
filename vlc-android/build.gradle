@@ -244,7 +244,7 @@ dependencies {
 //    compile('com.mopub:mopub-sdk:4.16.1@aar') {
 //        transitive = true
 //    }
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true;
     }
     //facebook
