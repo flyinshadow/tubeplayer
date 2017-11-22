@@ -20,6 +20,7 @@
 
 package com.wenjoyai.tubeplayer.media;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Parcel;
 
@@ -37,12 +38,12 @@ public abstract class Group extends MediaWrapper {
 
     protected ArrayList<MediaWrapper> mMedias;
 
-    public Group(MediaWrapper media, Uri uri) {
+    public Group(MediaWrapper media, Uri uri, Bitmap picture) {
         super(uri == null ? media.getUri() : uri,
                 media.getTime(),
                 media.getLength(),
                 MediaWrapper.TYPE_GROUP,
-                BitmapUtil.getPicture(media),
+                picture,
                 media.getTitle(),
                 media.getArtist(),
                 media.getGenre(),
