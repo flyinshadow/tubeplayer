@@ -38,7 +38,7 @@ public class MediaGroup extends Group {
     public final static String TAG = "VLC/MediaGroup";
 
     public MediaGroup(MediaWrapper media) {
-        super(media, null);
+        super(media, null, BitmapUtil.getPicture(media));
     }
 
     public MediaGroup(Uri uri) {
