@@ -294,7 +294,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             mMediaLibrary.setMediaUpdatedCb(VideoGridFragment.this, Medialibrary.FLAG_MEDIA_UPDATED_VIDEO);
             mMediaLibrary.setMediaAddedCb(VideoGridFragment.this, Medialibrary.FLAG_MEDIA_ADDED_VIDEO);
         }
-        if (mFolderMain || mGroup != null || mFolderGroup != null || mParsingFinished) {
+        if (mFolderMain || mGroup != null || mFolderGroup != null || mParsingFinished || mParsed) {
             mHandler.sendEmptyMessage(UPDATE_LIST);
         }
     }
