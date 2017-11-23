@@ -93,6 +93,8 @@ import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class VideoGridFragment extends MediaBrowserFragment implements MediaUpdatedCb, ISortable, SwipeRefreshLayout.OnRefreshListener, MediaAddedCb, Filterable, IEventsHandler {
@@ -296,7 +298,9 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             mMediaLibrary.setMediaUpdatedCb(VideoGridFragment.this, Medialibrary.FLAG_MEDIA_UPDATED_VIDEO);
             mMediaLibrary.setMediaAddedCb(VideoGridFragment.this, Medialibrary.FLAG_MEDIA_ADDED_VIDEO);
         }
-        mHandler.sendEmptyMessage(UPDATE_LIST);
+        if (mFolderMain || mGroup != null || mFolderGroup != null || mParsingFinished || mParsed) {
+            mHandler.sendEmptyMessage(UPDATE_LIST);
+        }
     }
 
     protected String getTitle() {
@@ -338,10 +342,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     protected void playVideo(MediaWrapper media, boolean fromStart) {
         Activity activity = getActivity();
-        if (activity instanceof PlaybackService.Callback)
+        if (activity instanceof PlaybackService.Callback && mService != null)
             mService.removeCallback((PlaybackService.Callback) activity);
         media.removeFlags(MediaWrapper.MEDIA_FORCE_AUDIO);
-        if (mService.isPlayingPopup()) {
+        if (mService != null && mService.isPlayingPopup()) {
             mService.load(media);
         } else {
             VideoPlayerActivity.start(getActivity(), media.getUri(), fromStart);
@@ -581,8 +585,12 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     if (mFolderMain) {
                         displayList.addAll(FolderGroup.getDummy().group(itemList));
                     } else {
-                        for (MediaWrapper item : MediaGroup.getDummy().group(itemList))
-                            displayList.add(((MediaGroup)item).getMedia());
+                        if (mParsed) {
+                            for (MediaWrapper item : MediaGroup.getDummy().group(itemList))
+                                displayList.add(((MediaGroup) item).getMedia());
+                        } else {
+                            displayList.addAll(Arrays.asList(itemList));
+                        }
                     }
                 }
                 if (mGroup == null && mFolderGroup == null && mParsingFinished && !mSubmitVideoCount) {

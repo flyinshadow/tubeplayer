@@ -383,7 +383,7 @@ public class Medialibrary {
     }
 
     public void onBackgroundTasksIdleChanged(boolean isIdle) {
-        LogUtil.d(TAG, "aaaa onBackgroundTasksIdleChanged sendBroadcast ACTION_IDLE");
+        LogUtil.d(TAG, "aaaa onBackgroundTasksIdleChanged isIdle: " + isIdle);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent(ACTION_IDLE).putExtra(STATE_IDLE, isIdle));
         mIsWorking = !isIdle;
     }

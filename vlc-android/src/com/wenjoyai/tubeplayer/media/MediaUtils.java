@@ -143,7 +143,7 @@ public class MediaUtils {
     }
 
     public static String getMediaArtist(Context ctx, MediaWrapper media) {
-        final String artist = media.getArtist();
+        final String artist = media != null ? media.getArtist() : null;
         return artist != null ? artist : getMediaString(ctx, R.string.unknown_artist);
     }
 

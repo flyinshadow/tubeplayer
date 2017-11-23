@@ -39,6 +39,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
+import android.graphics.SurfaceTexture;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.media.MediaRouter;
@@ -405,6 +406,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private boolean mTransitionEnd = false;
     Transition mSharedElementEnterTransition;
     Transition.TransitionListener mTransitionListener;
+    private boolean mTextureViewCreated;
 
     private long mPlayTime = 0;
     private long mPlayLength = 0;
@@ -501,6 +503,35 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 mSettings.getString("screen_orientation", "99" /*SCREEN ORIENTATION SENSOR*/));
 
         mSurfaceView = (TextureView) findViewById(R.id.player_surface);
+        mSurfaceView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
+            @Override
+            public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+                LogUtil.d(TAG, "onSurfaceTextureAvailable mService="+ mService + ", mTransitionEnd=" + mTransitionEnd);
+                if (mService != null && mTransitionEnd) {
+                    if (!mSwitchingView) {
+                        mHandler.sendEmptyMessage(START_PLAYBACK);
+                    }
+                }
+                mTextureViewCreated = true;
+            }
+
+            @Override
+            public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+
+            }
+
+            @Override
+            public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+                LogUtil.d(TAG, "onSurfaceTextureDestroyed");
+                mTextureViewCreated = false;
+                return false;
+            }
+
+            @Override
+            public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+
+            }
+        });
 
         mSubtitlesSurfaceView = (SurfaceView) findViewById(R.id.subtitles_surface);
 //        mSubtitlesSurfaceView.setAlpha(0);
@@ -628,15 +659,16 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
             @Override
             public void onTransitionEnd(Transition transition) {
-                LogUtil.d(TAG, "onTransitionEnd");
+                LogUtil.d(TAG, "onTransitionEnd, mTextureViewCreated=" + mTextureViewCreated);
 
                 mPlayerVideoContainer.setVisibility(View.VISIBLE);
                 mSubtitlesSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
                 mSubtitlesSurfaceView.setZOrderOnTop(true);
-                mTransitionEnd = true;
 
-                if (!mSwitchingView)
+                if (mTextureViewCreated && !mSwitchingView) {
                     mHandler.sendEmptyMessage(START_PLAYBACK);
+                }
+                mTransitionEnd = true;
             }
 
             @Override
