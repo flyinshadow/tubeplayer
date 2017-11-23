@@ -48,10 +48,10 @@ public class FolderGroup extends Group implements Parcelable {
 //                media.getTrackNumber(),
 //                media.getDiscNumber(),
 //                0l);
-        super(media, Uri.parse(FileUtils.getParent(media.getUri().getPath())));
-//        mMedias.add(media);
+        super(media, Uri.parse(FileUtils.getParent(media.getUri().getPath())), null);
         mFolderPath = FileUtils.getParent(media.getUri().getPath());
-        mTitle = getFolderTitle(mFolderPath);
+        setTitle(getFolderTitle(mFolderPath));
+        setLastModified(0L);
     }
 
     public static String getFolderTitle(String folderPath) {

@@ -469,15 +469,18 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         Toolbar toolbar = (Toolbar)mActionBarView.getParent();
         toolbar.setContentInsetsAbsolute(0, 0);
         mGifImageView = (GifAD)findViewById(R.id.main_gif_ad);
-        mGifImageView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mGifImageView.setVisibility(View.GONE);
-                mHandler.removeCallbacks(mGifRunnable);
-                loadPauseNative();
-                pause();
-            }
-        });
+        if (null!= mGifImageView) {
+            mGifImageView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PLAY_GIF + "click");
+                    mGifImageView.setVisibility(View.GONE);
+                    mHandler.removeCallbacks(mGifRunnable);
+                    loadPauseNative();
+                    pause();
+                }
+            });
+        }
 
         mTitle = (TextView) mActionBarView.findViewById(R.id.player_overlay_title);
         if (!AndroidUtil.isJellyBeanOrLater) {
@@ -589,7 +592,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         initPauseNative();
         //gif
-        mHandler.postDelayed(mGifRunnable,30*1000);
+        if (null!= mGifImageView) {
+            mHandler.postDelayed(mGifRunnable, 10 * 1000);
+        }
 
         mTranstionAnimIn = AnimationUtils.loadAnimation(this, R.anim.pause_ad_left_in);
         mTranstionAnimOut = AnimationUtils.loadAnimation(this, R.anim.pause_ad_leave_right);
@@ -683,9 +688,12 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     Runnable mGifRunnable = new Runnable() {
         @Override
         public void run() {
-            if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()&& !ADManager.getInstance().mIsPauseADShown) {
-                mGifImageView.setVisibility(View.VISIBLE);
-                mHandler.postDelayed(mGifHideRunnable,60*1000);
+            if (null!= mGifImageView) {
+                if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded() && !ADManager.getInstance().mIsPauseADShown) {
+                    mGifImageView.setVisibility(View.VISIBLE);
+                    StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PLAY_GIF + "shown");
+                    mHandler.postDelayed(mGifHideRunnable, 60 * 1000);
+                }
             }
         }
     };
@@ -693,7 +701,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     Runnable mGifHideRunnable = new Runnable() {
         @Override
         public void run() {
-            mGifImageView.setVisibility(View.GONE);
+            if (null!= mGifImageView) {
+                StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PLAY_GIF + "gone");
+                mGifImageView.setVisibility(View.GONE);
+            }
         }
     };
 
@@ -825,9 +836,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mSurfaceXDisplayRange = Math.max(mScreen.widthPixels, mScreen.heightPixels);
         resetHudLayout();
 
-        if (mService != null && mService.isPlaying() && RateDialog.isShowing()) {
-            doPlayPause();
-        }
+//        if (mService != null && mService.isPlaying() && RateDialog.isShowing()) {
+//            doPlayPause();
+//        }
     }
 
     public void resetHudLayout() {

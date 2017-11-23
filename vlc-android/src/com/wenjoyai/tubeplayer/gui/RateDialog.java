@@ -25,6 +25,7 @@ import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.ad.MyToast;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
+import com.wenjoyai.tubeplayer.gui.video.VideoGridFragment;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.ShareUtils;
 import com.wenjoyai.tubeplayer.util.Util;
@@ -73,6 +74,10 @@ public class RateDialog extends DialogFragment implements View.OnClickListener, 
     }
 
     public static boolean willShow() {
+        if (!sSettings.getBoolean(VideoGridFragment.KEY_PARSING_ONCE, false)) {
+            LogUtil.d(TAG, "rate tip will not show when media parsing");
+            return false;
+        }
         long lastTime = sSettings.getLong(RateDialog.KEY_RATE_SHOW_LAST, 0);
         long nextTime = sSettings.getLong(RateDialog.KEY_RATE_SHOW_NEXT, 0);
         int count = sSettings.getInt(RateDialog.KEY_RATE_SHOW_COUNT, 0);
@@ -87,7 +92,7 @@ public class RateDialog extends DialogFragment implements View.OnClickListener, 
         boolean willShow = false;
         if (nextTime == -1) {
             // 本版本不提示
-            LogUtil.d(TAG, "rate tip will not start this version");
+            LogUtil.d(TAG, "rate tip will not show this version");
         } else if (nextTime == 0) {
             // 可以提示
             LogUtil.d(TAG, "rate tip can start NOW");

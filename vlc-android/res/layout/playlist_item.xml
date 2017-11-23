@@ -59,7 +59,6 @@
                 android:singleLine="true"
                 android:ellipsize="middle"
                 android:textColor="?attr/list_subtitle"
-                android:fontFamily="sans-serif-light"
                 android:textSize="12sp"
                 android:visibility="@{TextUtils.isEmpty(subTitle) ? View.GONE : View.VISIBLE}"/>
         </LinearLayout>

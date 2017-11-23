@@ -4,6 +4,7 @@
     <attr name="item_footer" format="reference|color" />
     <attr name="background_default" format="reference|color" />
     <attr name="background_default_darker" format="reference|color" />
+    <attr name="background_video_item" format="reference|color" />
     <attr name="background_actionbar" format="reference|color" />
     <attr name="background_menu_divider" format="reference|color" />
     <attr name="background_menu" format="reference|color" />

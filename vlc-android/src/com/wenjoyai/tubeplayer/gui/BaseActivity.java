@@ -1,6 +1,7 @@
 package com.wenjoyai.tubeplayer.gui;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -51,6 +52,14 @@ public class BaseActivity extends AppCompatActivity {
             setTheme(ThemeFragment.sThemeNightStyles[themeIndex]);
         } else {
             setTheme(ThemeFragment.sThemeStyles[themeIndex]);
+        }
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            LogUtil.d(TAG, "orientation change to landscape, try to show RateDialog");
+            RateDialog.tryToShow(this, 5);
         }
     }
 }

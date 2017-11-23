@@ -53,7 +53,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.wenjoyai.tubeplayer.gui.helpers.RecyclerViewHeader;
 import com.facebook.ads.NativeAd;
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.PlaybackService;
@@ -67,6 +66,7 @@ import com.wenjoyai.tubeplayer.gui.MainActivity;
 import com.wenjoyai.tubeplayer.gui.RenameFileFragment;
 import com.wenjoyai.tubeplayer.gui.SecondaryActivity;
 import com.wenjoyai.tubeplayer.gui.browser.MediaBrowserFragment;
+import com.wenjoyai.tubeplayer.gui.helpers.RecyclerViewHeader;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
 import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
 import com.wenjoyai.tubeplayer.gui.view.AutoFitRecyclerView;
@@ -76,13 +76,12 @@ import com.wenjoyai.tubeplayer.interfaces.Filterable;
 import com.wenjoyai.tubeplayer.interfaces.IEventsHandler;
 import com.wenjoyai.tubeplayer.interfaces.ISortable;
 import com.wenjoyai.tubeplayer.media.FolderGroup;
-import com.wenjoyai.tubeplayer.media.Group;
 import com.wenjoyai.tubeplayer.media.MediaGroup;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
 import com.wenjoyai.tubeplayer.util.FileUtils;
 import com.wenjoyai.tubeplayer.util.LogUtil;
-import com.wenjoyai.tubeplayer.util.Strings;
 import com.wenjoyai.tubeplayer.util.ShareUtils;
+import com.wenjoyai.tubeplayer.util.Strings;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 
 import org.videolan.libvlc.Media;
@@ -94,7 +93,6 @@ import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class VideoGridFragment extends MediaBrowserFragment implements MediaUpdatedCb, ISortable, SwipeRefreshLayout.OnRefreshListener, MediaAddedCb, Filterable, IEventsHandler {
@@ -583,7 +581,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     if (mFolderMain) {
                         displayList.addAll(FolderGroup.getDummy().group(itemList));
                     } else {
-                        displayList.addAll(MediaGroup.getDummy().group(itemList));
+                        for (MediaWrapper item : MediaGroup.getDummy().group(itemList))
+                            displayList.add(((MediaGroup)item).getMedia());
                     }
                 }
                 if (mGroup == null && mFolderGroup == null && mParsingFinished && !mSubmitVideoCount) {
