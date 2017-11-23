@@ -202,12 +202,12 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             return;
 
         LogUtil.d(TAG, "xxxx onBindViewHolder position: " + position + " " + (media.getUri() != null ? media.getUri().getPath() : "") +
-        " " + media.getArtworkMrl());
+                " " + media.getArtworkMrl());
 
         holder.binding.setVariable(BR.isAd, media.getItemType() == MediaWrapper.TYPE_AD);
 
         if (media.getItemType() == MediaWrapper.TYPE_AD && holder.adContainer != null) {
-            bindAd(holder, (AdItem)media);
+            bindAd(holder, (AdItem) media);
         } else {
             fillView(holder, media);
             holder.binding.setVariable(BR.media, media);
@@ -250,7 +250,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                         break;
                     case UPDATE_AD:
                         if (media != null && media.getItemType() == MediaWrapper.TYPE_AD) {
-                            bindAd(holder, ((AdItem)media));
+                            bindAd(holder, ((AdItem) media));
                         }
                         break;
                 }
@@ -395,22 +395,16 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     @MainThread
     public void updateFolder(final MediaWrapper[] items) {
         final ArrayList<MediaWrapper> list = getAll();
-        boolean changed = false;
         for (MediaWrapper media : items) {
-            if (media instanceof FolderGroup) {
-                FolderGroup.getDummy().insertInto(list, media);
-                changed = true;
-            }
+            FolderGroup.getDummy().insertInto(list, media);
         }
-        if (changed) {
 //        FolderGroup.sort(list);
-            VLCApplication.runOnMainThread(new Runnable() {
-                @Override
-                public void run() {
-                    notifyDataSetChanged();
-                }
-            });
-        }
+        VLCApplication.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @MainThread
@@ -515,11 +509,11 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                         list.add(item);
                 }
                 if (i < position)
-                    offset += ((Group)mw).size()-1;
+                    offset += ((Group) mw).size() - 1;
             } else
                 list.add(mw);
         }
-        return position+offset;
+        return position + offset;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnFocusChangeListener {
@@ -569,7 +563,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             }
         }
 
-        public void onMoreClick(View v){
+        public void onMoreClick(View v) {
             mEventsHandler.onCtxClick(v, getLayoutPosition(), null);
         }
 
@@ -594,6 +588,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             itemView.setBackgroundColor(highlight ? UiTools.ITEM_FOCUS_ON : UiTools.ITEM_FOCUS_OFF);
         }
     }
+
     int sortDirection(int sortDirection) {
         return mVideoComparator.sortDirection(sortDirection);
     }
@@ -604,8 +599,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     private class VideoComparator implements Comparator<MediaWrapper> {
 
-        private static final String KEY_SORT_BY =  "sort_by";
-        private static final String KEY_SORT_DIRECTION =  "sort_direction";
+        private static final String KEY_SORT_BY = "sort_by";
+        private static final String KEY_SORT_DIRECTION = "sort_direction";
 
         private int mSortDirection;
         private int mSortBy;
@@ -618,7 +613,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
         int sortDirection(int sortby) {
             if (sortby == mSortBy)
-                return  mSortDirection;
+                return mSortDirection;
             else
                 return -1;
         }
@@ -813,11 +808,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                     });
                 }
             });
-        } catch (RejectedExecutionException ignored) {} // Will be retried
+        } catch (RejectedExecutionException ignored) {
+        } // Will be retried
     }
 
     private class VideoItemDiffCallback extends DiffUtil.Callback {
         ArrayList<MediaWrapper> oldList, newList;
+
         VideoItemDiffCallback(ArrayList<MediaWrapper> oldList, ArrayList<MediaWrapper> newList) {
             this.oldList = new ArrayList<>(oldList);
             this.newList = new ArrayList<>(newList);
@@ -839,7 +836,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             MediaWrapper newItem = newList.get(newItemPosition);
             return oldItem == newItem ||
                     ((oldItem != null && newItem != null) && ((oldItem.getType() == newItem.getType() && oldItem.equals(newItem)) ||
-                    (oldItem.getItemType() == MediaWrapper.TYPE_AD && newItem.getItemType() == MediaWrapper.TYPE_AD)));
+                            (oldItem.getItemType() == MediaWrapper.TYPE_AD && newItem.getItemType() == MediaWrapper.TYPE_AD)));
         }
 
         @Override
@@ -847,8 +844,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             MediaWrapper oldItem = oldList.get(oldItemPosition);
             MediaWrapper newItem = newList.get(newItemPosition);
             if (oldItem != null && newItem != null && oldItem.getItemType() == MediaWrapper.TYPE_AD && newItem.getItemType() == MediaWrapper.TYPE_AD) {
-                String ad1 = ((AdItem)oldItem).getNativeAd().getAdBody();
-                String ad2 = ((AdItem)newItem).getNativeAd().getAdBody();
+                String ad1 = ((AdItem) oldItem).getNativeAd().getAdBody();
+                String ad2 = ((AdItem) newItem).getNativeAd().getAdBody();
                 return ad1.equals(ad2);
             } else {
                 return oldItem == newItem ||
@@ -891,6 +888,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     }
 
     private int mStartIndex = -1;
+
     private void addAdItems(ArrayList<MediaWrapper> items) {
         int index = 0;
         if (items.size() <= 0)
@@ -942,7 +940,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     }
 
     private void removeAdItems(ArrayList<MediaWrapper> items) {
-        for (ListIterator it = items.listIterator(); it.hasNext();) {
+        for (ListIterator it = items.listIterator(); it.hasNext(); ) {
             MediaWrapper item = (MediaWrapper) it.next();
             if (item != null && item.getItemType() == MediaWrapper.TYPE_AD) {
                 it.remove();
@@ -977,6 +975,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     }
 
     private int mNextAdIndex = 0;
+
     private NativeAd nextAd() {
         if (mNativeAd.size() <= 0) {
             return null;

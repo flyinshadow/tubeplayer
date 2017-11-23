@@ -144,6 +144,9 @@ public class FolderGroup extends Group implements Parcelable {
 
     public void insertInto(List<MediaWrapper> groups, MediaWrapper media) {
         for (MediaWrapper group : groups) {
+            if (!(group instanceof FolderGroup)) {
+                continue;
+            }
             FolderGroup folderGroup = (FolderGroup) group;
             String groupFolderPath = folderGroup.getFolderPath();
             String mediaFolderPath = FileUtils.getParent(media.getUri().getPath());
