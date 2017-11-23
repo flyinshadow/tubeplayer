@@ -31,7 +31,7 @@
             android:layout_gravity="center"
             android:foregroundGravity="clip_horizontal|clip_vertical"
             tools:ignore="true">
-            <SurfaceView
+            <TextureView
                 android:id="@+id/player_surface"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
