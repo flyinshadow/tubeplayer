@@ -2943,10 +2943,11 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_POPUP, null, null);
 
                 if (Permissions.canDrawOverlays(this)) {
-                    switchToPopupMode();
                     LogUtil.d(TAG, "switchToPopupMode try to show RateDialog");
                     // 小窗提示评分
                     RateDialog.tryToShow(this, 5);
+
+                    switchToPopupMode();
                 } else {
                     Permissions.checkDrawOverlaysPermission(this);
                 }

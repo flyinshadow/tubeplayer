@@ -25,6 +25,7 @@ package com.wenjoyai.tubeplayer;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
@@ -79,6 +80,12 @@ public class StartActivity extends BaseActivity {
         Intent intent = getIntent();
         boolean tv = showTvUi();
         String action = intent != null ? intent.getAction() : null;
+        String data = intent != null ? intent.getDataString() : null;
+        String type = intent != null ? intent.getType() : null;
+        String extraText = intent != null ? intent.getStringExtra(Intent.EXTRA_TEXT) : null;
+        Uri extraStream = (Uri)(intent != null ? intent.getParcelableExtra(Intent.EXTRA_STREAM) : null);
+
+        LogUtil.d(TAG, "action=" + action + ", data=" + data + ", type=" + type + ", extraText=" + extraText + ", extraStream=" + extraStream);
 
         if (Intent.ACTION_VIEW.equals(action) && intent.getData() != null) {
             intent.setDataAndType(intent.getData(), intent.getType());
@@ -87,6 +94,17 @@ public class StartActivity extends BaseActivity {
                 StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_FROM_OUTFILE, null, null);
             } else {
                 MediaUtils.openMediaNoUi(intent.getData());
+                StatisticsManager.submitAudioPlay(this, StatisticsManager.TYPE_VIDEO_FROM_OUTFILE, null);
+            }
+            finish();
+            return;
+        } else if (Intent.ACTION_SEND.equals(action) && extraStream != null) {
+            intent.setDataAndType(extraStream, type);
+            if (intent.getType() != null && intent.getType().startsWith("video")) {
+                startActivity(intent.setClass(this, VideoPlayerActivity.class));
+                StatisticsManager.submitVideoPlay(this, StatisticsManager.TYPE_VIDEO_FROM_OUTFILE, null, null);
+            } else {
+                MediaUtils.openMediaNoUi(extraStream);
                 StatisticsManager.submitAudioPlay(this, StatisticsManager.TYPE_VIDEO_FROM_OUTFILE, null);
             }
             finish();
