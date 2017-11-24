@@ -1501,7 +1501,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         }
         Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_placeholder);
         if (current instanceof VideoGridFragment && ((getScreenRotation() == Surface.ROTATION_0) || (getScreenRotation() == Surface.ROTATION_180))) {
-            mMenu.findItem(R.id.ml_menu_view_mode).setVisible(false);
+            if (mMenu != null && mMenu.findItem(R.id.ml_menu_view_mode) != null) {
+                mMenu.findItem(R.id.ml_menu_view_mode).setVisible(false);
+            }
         }
 
         mGifADView.setVisibility(View.VISIBLE);
@@ -1519,8 +1521,10 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 mIsGifShow = false;
 
                 Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_placeholder);
-                mMenu.findItem(R.id.ml_menu_view_mode).setVisible(current instanceof VideoGridFragment &&
-                        ((getScreenRotation() == Surface.ROTATION_0) || (getScreenRotation() == Surface.ROTATION_180)));
+                if (mMenu != null && mMenu.findItem(R.id.ml_menu_view_mode) != null) {
+                    mMenu.findItem(R.id.ml_menu_view_mode).setVisible(current instanceof VideoGridFragment &&
+                            ((getScreenRotation() == Surface.ROTATION_0) || (getScreenRotation() == Surface.ROTATION_180)));
+                }
             }
         });
         mIsGifShow = true;
