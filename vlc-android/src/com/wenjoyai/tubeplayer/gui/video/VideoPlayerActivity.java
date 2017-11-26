@@ -1016,9 +1016,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         }
 
         LogUtil.d(TAG, "onDestroy mPlayTime=" + mPlayTime + ", mPlayLength=" + mPlayLength);
-        // 视频时长10分钟以上播放进度5分钟以上提示评分
-        // 10分钟以下播放进度2分钟以上提示评分
-        if ((mPlayLength > 600000 && mPlayTime >= 300000) || (mPlayLength <= 600000 && mPlayTime >= 120000)) {
+        // 播放进度2分钟以上提示评分
+        if (mPlayTime >= 120000) {
             RateDialog.tryToShow(VLCApplication.getAppContext(), 5);
         }
 
