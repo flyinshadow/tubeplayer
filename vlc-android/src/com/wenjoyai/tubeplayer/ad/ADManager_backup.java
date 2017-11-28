@@ -176,7 +176,7 @@
 //                }
 //
 //                @Override
-//                public void onAdClick() {
+//                public void onAdDisplayed() {
 //
 //                }
 //
@@ -291,7 +291,7 @@
 ////                                }
 ////
 ////                                @Override
-////                                public void onAdClick() {
+////                                public void onAdDisplayed() {
 ////
 ////                                }
 ////                            });

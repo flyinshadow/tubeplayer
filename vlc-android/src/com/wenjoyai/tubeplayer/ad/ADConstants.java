@@ -50,11 +50,13 @@ public class ADConstants {
     public static final String GOOGLE_APP_ID = "ca-app-pub-1877164599441785~1893874403";
     //播放返回
     public static final String google_video_back_interstitial = "ca-app-pub-1877164599441785/8681153348";
-    public static final String google_video_back_interstitial1 = "ca-app-pub-1877164599441785/3008616691";
-    public static final String google_video_back_interstitial2 = "ca-app-pub-1877164599441785/7589546451";
-    public static final String google_video_back_interstitial3 = "ca-app-pub-1877164599441785/9215944150";
+//    public static final String google_video_back_interstitial1 = "ca-app-pub-1877164599441785/3008616691";
+//    public static final String google_video_back_interstitial2 = "ca-app-pub-1877164599441785/7589546451";
+//    public static final String google_video_back_interstitial3 = "ca-app-pub-1877164599441785/9215944150";
     //首页第一次进入
     public static final String google_first_open_interstitial = "ca-app-pub-1877164599441785/8440769750";
+    //gif小动画
+    public static final String google_gif_interstitial = "ca-app-pub-1877164599441785/7471448140";
     //viewer show
 //    public static final String google_viewer_interstitial = "ca-app-pub-1877164599441785/2205230558";
     //视频列表banner

@@ -45,6 +45,17 @@ public class StatisticsManager {
     public static final String ITEM_AD_MAIN_GIF ="main_gif_";
     public static final String ITEM_AD_PLAY_GIF ="play_gif_";
 
+    //Interstitial
+    public static final String ITEM_AD_INTERSTITIAL_REQUEST ="interstitial_request_";
+    public static final String ITEM_AD_INTERSTITIAL_IMPRESSION ="interstitial_impression_";
+    public static final String ITEM_AD_INTERSTITIAL_FAILED ="interstitial_failed_";
+    public static final String ITEM_AD_INTERSTITIAL_LOADED ="interstitial_loaded_";
+    public static final String ITEM_AD_INTERSTITIAL_SHOW ="interstitial_show_";//主动调用show函数
+    //banner
+    public static final String ITEM_AD_BANNER_REQUEST ="banner_request_";
+    public static final String ITEM_AD_BANNER_IMPRESSION ="banner_impression_";
+    public static final String ITEM_AD_BANNER_FAILED ="banner_failed_";
+    public static final String ITEM_AD_BANNER_LOADED ="banner_loaded_";
 
     //视频播放
     public static final String EVENT_VIDEO_PLAY = "videoplay";

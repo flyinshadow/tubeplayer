@@ -119,8 +119,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import pl.droidsonroids.gif.GifImageView;
-
 import static com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity.RESULT_RESTART;
 
 public class MainActivity extends AudioPlayerContainerActivity implements FilterQueryProvider, NavigationView.OnNavigationItemSelectedListener, ExtensionManagerService.ExtensionManagerActivity, SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener {
@@ -296,7 +294,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             preloadWall();
         }
         loadOpenAD();
-        loadExitAD();
+        loadPauseAD();
     }
 
     private Handler mHandler = new Handler();
@@ -319,7 +317,6 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 public void onDismiss(DialogInterface dialog) {
                     if (null != mFirstOpenInterstitialAd) {
                         mFirstOpenInterstitialAd.show();
-                        StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "show");
                     }
                 }
             });
@@ -355,14 +352,24 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             }
             if (!TextUtils.isEmpty(adID)) {
                 mFirstOpenInterstitialAd = new Interstitial();
-                StatisticsManager.submitAd(this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "request");
                 mFirstOpenInterstitialAd.loadAD(this, ADManager.sPlatForm, adID, new Interstitial.ADListener() {
                     @Override
                     public void onLoadedSuccess() {
                         mIsOpenLoadSuc = true;
-                        StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "loaded");
                         if (mIsResumed) {
-                            showOpenAD();
+                            int interval = 0;
+                            if (mOpenCount == 1) {
+                                interval = 12*1000;
+                            } else {
+                                interval = 0;
+                            }
+                            mHandler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showOpenAD();
+                                }
+                            }, interval);
+
                         } else {
                             mIsOpenAdShown = false;
                         }
@@ -374,8 +381,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                     }
 
                     @Override
-                    public void onAdClick() {
-                        StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_FIRST_OPEN + "click");
+                    public void onAdDisplayed() {
                     }
 
                     @Override
@@ -387,7 +393,10 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         }
     }
 
-    private void loadExitAD() {
+    /**
+     * 加载播放暂停广告
+     */
+    private void loadPauseAD() {
         if (ADManager.sLevel == ADManager.Level_None) {
             return;
         }
@@ -532,18 +541,12 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         mCurrentFragmentId = mSettings.getInt("fragment_id", R.id.nav_video);
         if (!isloadAD) {
             isloadAD = true;
-            int interval = 0;
-            if (mOpenCount == 1) {
-                interval = 15000;
-            } else {
-                interval = 500;
-            }
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     loadAD();
                 }
-            }, interval);
+            }, 500);
         }
         if (!mIsOpenAdShown) {
             showOpenAD();
@@ -732,14 +735,16 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             ((ExtensionBrowser) fragment).goBack();
             return;
         }
-        int unshownSize = ADManager.getInstance().getUnshownFeed().size();
+        if (mOpenCount == 1&&mIsOpenLoadSuc&&!mIsOpenAdShown) {
+            showOpenAD();
+            return;
+        }
+        int unshownSize = ADManager.getInstance().getFeeds().size();
 
         if (unshownSize > 0) {
             StatisticsManager.submitAd(this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_FEED_NATIVE_UNSHOWN + String.valueOf(unshownSize));
-//            if (ADManager.getInstance().isShowExit) {
-//                showExitDialog();
-//            }
         }
+
         finish();
     }
 
@@ -1512,7 +1517,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
             @Override
             public void onClick(View v) {
                 StatisticsManager.submitAd(MainActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_MAIN_GIF + "click");
-                if (ADManager.getInstance().getUnshownFeed().size() > 0) {
+                if (ADManager.getInstance().getFeeds().size() > 0) {
                     showExitDialog(listener);
                 } else {
                     ADManager.getInstance().mInterstitial.show();
