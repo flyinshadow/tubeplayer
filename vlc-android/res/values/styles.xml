@@ -216,7 +216,9 @@
        <item name="imageCardViewTitleStyle">@style/VLCardViewTitleStyle</item>
        <item name="imageCardViewStyle">@style/VLCardView</item>
        <item name="audio_player_background_tint">@color/grey900transparent</item>
-    </style>
+
+       <item name="progress_mini_player">@drawable/progress_mini_player_black</item>
+   </style>
     <style name="VLCardView" parent="Widget.Leanback.ImageCardViewStyle">
         <item name="cardType">infoUnderWithExtra</item>
         <item name="infoVisibility">always</item>

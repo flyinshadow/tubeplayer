@@ -20,7 +20,7 @@ import java.util.TimerTask;
  */
 
 public class NativeAD {
-    private static final String TAG = "NativeAD1";
+    private static final String TAG = "NativeAD";
     //facebook
     private NativeAd mFacebookAd;
     private String mAdId;

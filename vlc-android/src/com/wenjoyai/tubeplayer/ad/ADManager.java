@@ -110,10 +110,10 @@ public class ADManager {
     }
 
     /**
-     * 没有显示的feed流广告个数
+     * feed流广告个数
      * @return
      */
-    public List<NativeAd> getUnshownFeed(){
+    public List<NativeAd> getFeeds(){
         List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
         for (int i = 0; i < mReadyQueue.size(); i++) {
             if (null!=mReadyQueue.get(i).nativeAd/**&& !mReadyQueue.get(i).isShown*/) {
@@ -179,7 +179,7 @@ public class ADManager {
                     if (mFinished == mNum) {
                         int failedCount = 0;
                         for (int i =0; i<mNum;i++){
-                            if (mReadyQueue.get(i).errorcode !=0){
+                            if (null ==mReadyQueue.get(i).nativeAd){
                                 failedCount++;
                             }
                         }
@@ -293,7 +293,7 @@ public class ADManager {
     public Interstitial mInterstitial;
     public void loadInterstitial() {
             mInterstitial = new Interstitial();
-            mInterstitial.loadAD(mContext, ADManager.AD_Google , ADConstants.google_video_back_interstitial, new Interstitial.ADListener() {
+            mInterstitial.loadAD(mContext, ADManager.AD_Google , ADConstants.google_gif_interstitial, new Interstitial.ADListener() {
                 @Override
                 public void onLoadedSuccess() {
                     Log.e("ADManager", "loadInterstitial success" );
@@ -306,8 +306,7 @@ public class ADManager {
                 }
 
                 @Override
-                public void onAdClick() {
-                    StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_BACK);
+                public void onAdDisplayed() {
                 }
 
                 @Override

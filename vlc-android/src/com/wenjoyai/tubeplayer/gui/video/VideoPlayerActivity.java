@@ -655,9 +655,14 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (mWillTransition) {
             initTransition();
         } else {
-            mPlayerVideoContainer.setVisibility(View.VISIBLE);
-            mPlayerMediaThumbContainer.setVisibility(View.GONE);
+            if (mPlayerVideoContainer != null) {
+                mPlayerVideoContainer.setVisibility(View.VISIBLE);
+            }
+            if (mPlayerMediaThumbContainer != null) {
+                mPlayerMediaThumbContainer.setVisibility(View.GONE);
+            }
         }
+
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -1017,9 +1022,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         }
 
         LogUtil.d(TAG, "onDestroy mPlayTime=" + mPlayTime + ", mPlayLength=" + mPlayLength);
-        // 视频时长10分钟以上播放进度5分钟以上提示评分
-        // 10分钟以下播放进度2分钟以上提示评分
-        if ((mPlayLength > 600000 && mPlayTime >= 300000) || (mPlayLength <= 600000 && mPlayTime >= 120000)) {
+        // 播放进度2分钟以上提示评分
+        if (mPlayTime >= 120000) {
             RateDialog.tryToShow(VLCApplication.getAppContext(), 5);
         }
 
@@ -4252,8 +4256,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 }
 
                 @Override
-                public void onAdClick() {
-                    StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_BACK);
+                public void onAdDisplayed() {
                 }
 
                 @Override
@@ -4347,7 +4350,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 //            }
 //
 //            @Override
-//            public void onAdClick() {
+//            public void onAdDisplayed() {
 //
 //            }
 //

@@ -247,7 +247,7 @@ public class StartActivity extends BaseActivity {
 //            }
 //
 //            @Override
-//            public void onAdClick() {
+//            public void onAdDisplayed() {
 //
 //            }
 //

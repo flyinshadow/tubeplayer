@@ -11,6 +11,7 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 
 /**
  * Created by LiJiaZhi on 2017/9/26.
@@ -19,22 +20,23 @@ import com.google.android.gms.ads.AdView;
 
 public class BannerAD {
     private static final String TAG = "BannerAD";
-    //facebook
-    com.facebook.ads.AdView mFacebookAd;
-    AdView mGoogleAD;
+    private com.facebook.ads.AdView mFacebookAd;
+    private AdView mGoogleAD;
+    private Context mContext;
 
-    public void loadAD(final Context context, long type, String adId, final ADListener listener) {
+    public void loadAD(final Context context, long type, final String adId, final ADListener listener) {
         //nomral级别以上才展示插屏
         if (ADManager.sLevel<ADManager.Level_Big){
             return ;
         }
+        mContext = context;
         if (type == ADManager.AD_MobVista) {
         } else if (type == ADManager.AD_Facebook) {
             mFacebookAd = new com.facebook.ads.AdView(context, adId, com.facebook.ads.AdSize.BANNER_HEIGHT_50);
             mFacebookAd.setAdListener(new InterstitialAdListener() {
                 @Override
                 public void onInterstitialDisplayed(Ad ad) {
-
+                    submitImpression(adId,true);
                 }
 
                 @Override
@@ -49,6 +51,7 @@ public class BannerAD {
 
                 @Override
                 public void onError(Ad ad, AdError adError) {
+                    submitError(adId,true,adError.getErrorCode());
                     Log.e(TAG, "onAdLoaded "+adError.getErrorCode()+"  "+adError.getErrorMessage());
                     mFacebookAd = null;
                     loadAD(context,ADManager.AD_Google, ADConstants.google_video_grid_bannar,listener);
@@ -57,6 +60,7 @@ public class BannerAD {
                 @Override
                 public void onAdLoaded(Ad ad) {
                     listener.onLoadedSuccess(mFacebookAd);
+                    submitLoaded(adId, true);
                 }
 
                 @Override
@@ -71,6 +75,7 @@ public class BannerAD {
 
                 }
             });
+            submitRequest(adId, true);
             mFacebookAd.loadAd();
         } else if (type == ADManager.AD_Google) {
             mGoogleAD = new AdView(context);
@@ -82,6 +87,7 @@ public class BannerAD {
                     // Code to be executed when an ad finishes loading.
                     Log.e(TAG, "onAdLoaded");
                     listener.onLoadedSuccess(mGoogleAD);
+                    submitLoaded(adId, false);
                 }
 
                 @Override
@@ -89,12 +95,14 @@ public class BannerAD {
                     // Code to be executed when an ad request fails.
                     Log.e(TAG, "onAdFailedToLoad "+errorCode);
                     listener.onLoadedFailed();
+                    submitError(adId,false,errorCode);
                 }
 
                 @Override
                 public void onAdOpened() {
                     // Code to be executed when the ad is displayed.
                     Log.e(TAG, "onAdOpened");
+                    submitImpression(adId,false);
                     if (null != listener){
                         listener.onAdClick();
                     }
@@ -128,6 +136,7 @@ public class BannerAD {
                 }
             });
             AdRequest adRequest = new AdRequest.Builder().build();
+            submitRequest(adId, false);
             mGoogleAD.loadAd(adRequest);
         }
     }
@@ -141,9 +150,72 @@ public class BannerAD {
     }
     public interface ADListener {
         void onLoadedSuccess(View view);
-
         void onLoadedFailed();
         void onAdClick();
         void onAdClose();
+    }
+
+    private void submitRequest(String adId, boolean isFacebook) {
+        Log.e(TAG, isFacebook?"facebook":"google"+" adRequest ");
+        if (null == mContext) {
+            return;
+        }
+        if (isFacebook) {
+            if (adId == ADConstants.facebook_video_grid_bannar) {
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, "facebook_" + StatisticsManager.ITEM_AD_BANNER_REQUEST + "grid");
+            }
+        } else {
+            if (adId == ADConstants.google_video_grid_bannar) {
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, "google_" + StatisticsManager.ITEM_AD_BANNER_REQUEST + "grid");
+            }
+        }
+    }
+
+    private void submitLoaded(String adId, boolean isFacebook) {
+        Log.e(TAG, isFacebook?"facebook":"google"+" onAdLoaded ");
+        if (null == mContext) {
+            return;
+        }
+        if (isFacebook) {
+            if (adId == ADConstants.facebook_video_grid_bannar) {
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, "facebook_" + StatisticsManager.ITEM_AD_BANNER_LOADED + "grid");
+            } 
+        } else {
+            if (adId == ADConstants.google_video_grid_bannar) {
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, "google_" + StatisticsManager.ITEM_AD_BANNER_LOADED + "grid");
+            } 
+        }
+    }
+
+    private void submitError(String adId, boolean isFacebook, int error) {
+        Log.e(TAG, isFacebook?"facebook":"google"+" onError " + error);
+        if (null == mContext) {
+            return;
+        }
+        if (isFacebook) {
+            if (adId == ADConstants.facebook_video_grid_bannar) {
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, "facebook_" + StatisticsManager.ITEM_AD_BANNER_FAILED + "grid");
+            }
+        } else {
+            if (adId == ADConstants.google_video_grid_bannar) {
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, "google_" + StatisticsManager.ITEM_AD_BANNER_FAILED + "grid");
+            }
+        }
+    }
+
+    private void submitImpression(String adId, boolean isFacebook) {
+        Log.e(TAG, isFacebook?"facebook":"google"+" Impression ");
+        if (null == mContext) {
+            return;
+        }
+        if (isFacebook) {
+            if (adId == ADConstants.facebook_video_grid_bannar) {
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, "facebook_" + StatisticsManager.ITEM_AD_BANNER_IMPRESSION + "grid");
+            }
+        } else {
+            if (adId == ADConstants.google_video_grid_bannar) {
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, "google_" + StatisticsManager.ITEM_AD_BANNER_IMPRESSION + "grid");
+            }
+        }
     }
 }

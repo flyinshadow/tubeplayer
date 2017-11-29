@@ -52,6 +52,8 @@ public class ADConstants {
     public static final String google_video_back_interstitial = "ca-app-pub-9920536185791139/1455333581";
     //首页第一次进入
     public static final String google_first_open_interstitial = "ca-app-pub-9920536185791139/3315210165";
+    //gif小动画
+    public static final String google_gif_interstitial = "ca-app-pub-9920536185791139/6214098997";
     //视频列表banner
     public static final String google_video_grid_bannar = "ca-app-pub-9920536185791139/2925038360";
     //暂停-原生
