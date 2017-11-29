@@ -60,7 +60,6 @@
                     android:layout_marginBottom="@dimen/half_default_margin"
                     android:layout_marginTop="@dimen/half_default_margin"
                     android:focusable="true"
-
                     android:focusableInTouchMode="true"
                     android:indeterminate="false"
                     android:nextFocusDown="@+id/button_play"

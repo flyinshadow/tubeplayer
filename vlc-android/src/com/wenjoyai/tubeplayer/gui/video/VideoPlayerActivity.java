@@ -654,9 +654,14 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (mWillTransition) {
             initTransition();
         } else {
-            mPlayerVideoContainer.setVisibility(View.VISIBLE);
-            mPlayerMediaThumbContainer.setVisibility(View.GONE);
+            if (mPlayerVideoContainer != null) {
+                mPlayerVideoContainer.setVisibility(View.VISIBLE);
+            }
+            if (mPlayerMediaThumbContainer != null) {
+                mPlayerMediaThumbContainer.setVisibility(View.GONE);
+            }
         }
+
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
