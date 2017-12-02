@@ -136,9 +136,11 @@ import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.FileUtils;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.Permissions;
+import com.wenjoyai.tubeplayer.util.ScreenUtils;
 import com.wenjoyai.tubeplayer.util.Strings;
 import com.wenjoyai.tubeplayer.util.SubtitlesDownloader;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
+import com.wenjoyai.tubeplayer.widget.PlayerScrollview;
 
 import org.videolan.libvlc.IVLCVout;
 import org.videolan.libvlc.LibVLC;
@@ -158,9 +160,11 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import pl.droidsonroids.gif.GifImageView;
 
 public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.Callback, IVLCVout.OnNewVideoLayoutListener,
@@ -284,7 +288,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private ImageView mNavMenu;
     private ImageView mRewind;
     private ImageView mForward;
-    private ImageView mAdvOptions;
+//    private ImageView mAdvOptions;
     private ImageView mPlaybackSettingPlus;
     private ImageView mPlaybackSettingMinus;
     private View mObjectFocused;
@@ -295,7 +299,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private int mScreenOrientationLock;
     private int mCurrentScreenOrientation;
     private ImageView mLock;
-    private ImageView mSize;
+//    private ImageView mSize;
     private String KEY_REMAINING_TIME_DISPLAY = "remaining_time_display";
     private String KEY_BLUETOOTH_DELAY = "key_bluetooth_delay";
     private long mSpuDelay = 0L;
@@ -414,6 +418,16 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     private GifAD mGifImageView;
 
+
+    /**************************  new  *********************/
+    //菜单栏
+    private PlayerScrollview mMenuScrollview;
+    private LinearLayout mMenuLinearLayout;
+
+
+    /**************************  new  *********************/
+
+
     private static LibVLC LibVLC() {
         return VLCInstance.get();
     }
@@ -421,7 +435,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @Override
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     protected void onCreate(Bundle savedInstanceState) {
-        LogUtil.e(TAG,"--- onCreate");
+        LogUtil.e(TAG, "--- onCreate");
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
         applyTheme();
         super.onCreate(savedInstanceState);
@@ -478,8 +492,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         mRootView = findViewById(R.id.player_root);
         mActionBarView = (ViewGroup) mActionBar.getCustomView();
-        mGifImageView = (GifAD)findViewById(R.id.main_gif_ad);
-        if (null!= mGifImageView) {
+        mGifImageView = (GifAD) findViewById(R.id.main_gif_ad);
+        if (null != mGifImageView) {
             mGifImageView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -510,6 +524,14 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         mGoBack = (ImageView) findViewById(R.id.player_goback);
 
+
+        /**************************  new  *********************/
+        mMenuScrollview = (PlayerScrollview) findViewById(R.id.player_menu_scrollview);
+        mMenuLinearLayout = (LinearLayout) findViewById(R.id.player_menu_ll);
+        initMenu();
+
+
+        /**************************  new  *********************/
         mScreenOrientation = Integer.valueOf(
                 mSettings.getString("screen_orientation", "99" /*SCREEN ORIENTATION SENSOR*/));
 
@@ -518,7 +540,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mTextureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
                 @Override
                 public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-                    LogUtil.d(TAG, "onSurfaceTextureAvailable mService="+ mService + ", mTransitionEnd=" + mTransitionEnd);
+                    LogUtil.d(TAG, "onSurfaceTextureAvailable mService=" + mService + ", mTransitionEnd=" + mTransitionEnd);
                     if (mService != null && mTransitionEnd) {
                         if (!mSwitchingView) {
                             mHandler.sendEmptyMessage(START_PLAYBACK);
@@ -631,17 +653,17 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mMedialibrary = VLCApplication.getMLInstance();
 
         initAD();
-        if (ADManager.sLevel>=ADManager.Level_Big) {
+        if (ADManager.sLevel >= ADManager.Level_Big) {
             preloadWall();
         }
         //返回广告
-        if (ADManager.sLevel>=ADManager.Level_Big){//如果是level 3才会加载返回广告
-            mHandler.postDelayed(mBackInterstitialRunnable,ADManager.back_ad_delay_time*1000);
+        if (ADManager.sLevel >= ADManager.Level_Big) {//如果是level 3才会加载返回广告
+            mHandler.postDelayed(mBackInterstitialRunnable, ADManager.back_ad_delay_time * 1000);
         }
 
         initPauseNative();
         //gif
-        if (null!= mGifImageView) {
+        if (null != mGifImageView) {
             mHandler.postDelayed(mGifRunnable, 10 * 1000);
         }
 
@@ -662,6 +684,98 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             }
         }
 
+    }
+
+    class PlayerMenuModel {
+        public int drawableId;
+        public String name;
+        public MenuType menuType;
+        public boolean isSelected;//是否变颜色
+
+        public PlayerMenuModel(int drawableId, String name, MenuType menuType) {
+            this.drawableId = drawableId;
+            this.name = name;
+            this.menuType = menuType;
+        }
+    }
+    public enum MenuType {
+        mute, speed, audio_play, timer,volume,brightness,ratio,rotate,ic_arrow_back
+    }
+
+    private void initMenu() {
+        List<PlayerMenuModel> list = new ArrayList<>();
+        //mute audio
+        list.add(new PlayerMenuModel(R.drawable.mute, getString(R.string.mute),MenuType.mute));
+        //speed
+        list.add(new PlayerMenuModel(R.drawable.speed, getString(R.string.speed),MenuType.speed));
+        //后台播放 audio play
+        list.add(new PlayerMenuModel(R.drawable.audio_play, getString(R.string.audio_play),MenuType.audio_play));
+        //timer
+        list.add(new PlayerMenuModel(R.drawable.timer, getString(R.string.timer),MenuType.timer));
+        //volume
+        list.add(new PlayerMenuModel(R.drawable.volume, getString(R.string.volume),MenuType.volume));
+        //亮度
+        list.add(new PlayerMenuModel(R.drawable.brightness, getString(R.string.brightness),MenuType.brightness));
+        //ratio
+        list.add(new PlayerMenuModel(R.drawable.ratio, getString(R.string.ratio),MenuType.ratio));
+        //rotate
+        list.add(new PlayerMenuModel(R.drawable.rotate, getString(R.string.rotate),MenuType.rotate));
+        //小箭头
+        list.add(new PlayerMenuModel(R.drawable.ic_arrow_back, null,MenuType.ic_arrow_back));
+        fillMenu(list);
+    }
+
+    private void fillMenu(List<PlayerMenuModel> list) {
+        mMenuLinearLayout.removeAllViews();
+        for (int i = 0; i < list.size(); i++) {
+            PlayerMenuModel model = list.get(i);
+            //创建一个布局填充器，将我们写好的布局放入进去
+            View view = View.inflate(this, R.layout.player_menu_item, null);
+            //通过布局填充器找到控件
+            final CircleImageView imageView = (CircleImageView) view.findViewById(R.id.iv);
+            TextView textView = (TextView) view.findViewById(R.id.tv);
+            //给控件赋值
+            imageView.setImageResource(model.drawableId);
+            if (!TextUtils.isEmpty(model.name)) {
+                textView.setText(model.name);
+            }
+            view.setTag(model);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PlayerMenuModel model =(PlayerMenuModel)view.getTag();
+                    switch (model.menuType){
+                        case mute:
+                            break;
+                        case speed:
+                            break;
+                        case audio_play:
+                            break;
+                        case timer:
+                            break;
+                        case volume:
+                            break;
+                        case brightness:
+                            break;
+                        case ratio:
+                            resizeVideo();
+                            break;
+                        case rotate:
+                            break;
+                        case ic_arrow_back:
+                            mMenuScrollview.left();
+                            break;
+
+                    }
+                }
+            });
+            //将布局填充器加载到LinearLayout中进行显示
+            mMenuLinearLayout.addView(view);
+        }
+        //填充的view
+        View mView = new View(this);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ScreenUtils.dip2px(this, 200), ViewGroup.LayoutParams.MATCH_PARENT);
+        mMenuLinearLayout.addView(mView, layoutParams);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -742,7 +856,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     Runnable mGifRunnable = new Runnable() {
         @Override
         public void run() {
-            if (null!= mGifImageView) {
+            if (null != mGifImageView) {
                 if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded() && !ADManager.getInstance().mIsPauseADShown) {
                     mGifImageView.setVisibility(View.VISIBLE);
                     StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PLAY_GIF + "shown");
@@ -755,7 +869,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     Runnable mGifHideRunnable = new Runnable() {
         @Override
         public void run() {
-            if (null!= mGifImageView) {
+            if (null != mGifImageView) {
                 StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PLAY_GIF + "gone");
                 mGifImageView.setVisibility(View.GONE);
             }
@@ -789,8 +903,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mLength.setOnClickListener(this);
         if (mTime != null)
             mTime.setOnClickListener(this);
-        if (mSize != null)
-            mSize.setOnClickListener(this);
+//        if (mSize != null)
+//            mSize.setOnClickListener(this);
         if (mNavMenu != null)
             mNavMenu.setOnClickListener(this);
     }
@@ -862,8 +976,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mLength.setOnClickListener(null);
         if (mTime != null)
             mTime.setOnClickListener(null);
-        if (mSize != null)
-            mSize.setOnClickListener(null);
+//        if (mSize != null)
+//            mSize.setOnClickListener(null);
 
         /* Stop the earliest possible to avoid vout error */
         if (!isInPictureInPictureMode() && (isFinishing() || (AndroidDevices.isAndroidTv() && !requestVisibleBehind(true))))
@@ -898,26 +1012,27 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     public void resetHudLayout() {
         if (mOverlayButtons == null)
             return;
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mOverlayButtons.getLayoutParams();
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mOverlayButtons.getLayoutParams();
         int orientation = getScreenOrientation(100);
         boolean portrait = orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT ||
                 orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
-        if (portrait) {
-            layoutParams.addRule(RelativeLayout.BELOW, R.id.player_overlay_length);
-            layoutParams.addRule(RelativeLayout.RIGHT_OF, 0);
-            layoutParams.addRule(RelativeLayout.LEFT_OF, 0);
-        } else {
-            layoutParams.addRule(RelativeLayout.BELOW, R.id.player_overlay_seekbar);
-            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.player_overlay_time);
-            layoutParams.addRule(RelativeLayout.LEFT_OF, R.id.player_overlay_length);
-        }
+        // TODO: 2017/12/2
+//        if (portrait) {
+//            layoutParams.addRule(RelativeLayout.BELOW, R.id.player_overlay_length);
+//            layoutParams.addRule(RelativeLayout.RIGHT_OF, 0);
+//            layoutParams.addRule(RelativeLayout.LEFT_OF, 0);
+//        } else {
+//            layoutParams.addRule(RelativeLayout.BELOW, R.id.player_overlay_seekbar);
+//            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.player_overlay_time);
+//            layoutParams.addRule(RelativeLayout.LEFT_OF, R.id.player_overlay_length);
+//        }
         mOverlayButtons.setLayoutParams(layoutParams);
     }
 
 
     @Override
     protected void onStart() {
-        LogUtil.e(TAG,"---- onStart");
+        LogUtil.e(TAG, "---- onStart");
         super.onStart();
         mMedialibrary.pauseBackgroundOperations();
         mHelper.onStart();
@@ -940,7 +1055,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onStop() {
-        LogUtil.e(TAG,"---- onStop");
+        LogUtil.e(TAG, "---- onStop");
         super.onStop();
         mMedialibrary.resumeBackgroundOperations();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mServiceReceiver);
@@ -991,14 +1106,14 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private void restoreBrightness() {
         if (mRestoreAutoBrightness != -1f) {
             int brightness = (int) (mRestoreAutoBrightness * 255f);
-            try{
+            try {
                 Settings.System.putInt(getContentResolver(),
                         Settings.System.SCREEN_BRIGHTNESS,
                         brightness);
                 Settings.System.putInt(getContentResolver(),
                         Settings.System.SCREEN_BRIGHTNESS_MODE,
                         Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -1342,12 +1457,12 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     }
 
     private static void start(Context context, Uri uri, String title, boolean fromStart, int openedPosition, ImageView sharedImageView, MediaWrapper media) {
-            Intent intent = getIntent(context, uri, title, fromStart, openedPosition);
+        Intent intent = getIntent(context, uri, title, fromStart, openedPosition);
         if (sharedImageView != null && !TextUtils.isEmpty(ViewCompat.getTransitionName(sharedImageView))) {
             intent.putExtra(PLAY_EXTRA_ITEM, media);
             intent.putExtra(PLAY_EXTRA_THUMB_TRANSITION_NAME, ViewCompat.getTransitionName(sharedImageView));
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    (Activity)context,
+                    (Activity) context,
                     sharedImageView,
                     ViewCompat.getTransitionName(sharedImageView));
 
@@ -1827,7 +1942,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mTime.setEnabled(false);
         mSeekbar.setEnabled(false);
         mLength.setEnabled(false);
-        mSize.setEnabled(false);
+//        mSize.setEnabled(false);
         if (mPlaylistNext != null)
             mPlaylistNext.setEnabled(false);
         if (mPlaylistPrevious != null)
@@ -1848,7 +1963,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mTime.setEnabled(true);
         mSeekbar.setEnabled(mService == null || mService.isSeekable());
         mLength.setEnabled(true);
-        mSize.setEnabled(true);
+//        mSize.setEnabled(true);
         if (mPlaylistNext != null)
             mPlaylistNext.setEnabled(true);
         if (mPlaylistPrevious != null)
@@ -1981,7 +2096,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 if (mRotateAD != null) {
                     mRotateAD.setVisibility(View.INVISIBLE);
                 }
-                if (mNativeFrameLayout != null && mNativeFrameLayout.getVisibility()==View.VISIBLE) {
+                if (mNativeFrameLayout != null && mNativeFrameLayout.getVisibility() == View.VISIBLE) {
                     mNativeFrameLayout.startAnimation(mTranstionAnimOut);
                     mNativeFrameLayout.setVisibility(View.GONE);
                 }
@@ -2146,7 +2261,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     width = mVideoWidth;
                     height = mVideoHeight;
                 }
-                LogUtil.d(TAG, "TubeStatisticsManager path=" + path +", width=" + width + ", height=" + height);
+                LogUtil.d(TAG, "TubeStatisticsManager path=" + path + ", width=" + width + ", height=" + height);
                 if (mw.getType() == MediaWrapper.TYPE_VIDEO) {
                     String videoInfoType = StatisticsManager.getVideoInfoType(mService.getCurrentMediaWrapper(), width, height);
                     StatisticsManager.submitVideoPlaySuccess(this, FileUtils.getFileExt(path), videoInfoType);
@@ -2512,7 +2627,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (mNativeFrameLayout != null && mNativeFrameLayout.getVisibility()==View.VISIBLE) {
+        if (mNativeFrameLayout != null && mNativeFrameLayout.getVisibility() == View.VISIBLE) {
             mNativeFrameLayout.startAnimation(mTranstionAnimOut);
             mNativeFrameLayout.setVisibility(View.GONE);
         }
@@ -2740,7 +2855,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (mIsFirstBrightnessGesture) initBrightnessTouch();
         mTouchAction = TOUCH_BRIGHTNESS;
 
-        // Set delta : 2f is arbitrary for now, it possibly will change in the future
+        // Set delta : 2f is arbitrary for now, it possibly will fillMenu in the future
         float delta = -y_changed / mSurfaceYDisplayRange;
 
         changeBrightness(delta);
@@ -2906,9 +3021,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 else
                     lockScreen();
                 break;
-            case R.id.player_overlay_size:
-                resizeVideo();
-                break;
+//            case R.id.player_overlay_size:
+//                resizeVideo();
+//                break;
             case R.id.player_overlay_navmenu:
                 showNavMenu();
                 break;
@@ -2934,12 +3049,12 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 else if (mPlaybackSetting == DelayState.SPEED)
                     changeSpeed(0.05f);
                 break;
-            case R.id.player_overlay_adv_function:
-
-                StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_EXTEND, null, null);
-
-                showAdvancedOptions();
-                break;
+//            case R.id.player_overlay_adv_function:
+//
+//                StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_EXTEND, null, null);
+//
+//                showAdvancedOptions();
+//                break;
             case R.id.player_overlay_tracks:
                 onAudioSubClick(v);
                 break;
@@ -3275,8 +3390,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             if (!mIsLocked) {
                 mPlayPause.setVisibility(View.VISIBLE);
                 UiTools.setViewVisibility(mTracks, View.VISIBLE);
-                UiTools.setViewVisibility(mAdvOptions, View.VISIBLE);
-                UiTools.setViewVisibility(mSize, View.VISIBLE);
+//                UiTools.setViewVisibility(mAdvOptions, View.VISIBLE);
+//                UiTools.setViewVisibility(mSize, View.VISIBLE);
                 UiTools.setViewVisibility(mRewind, View.VISIBLE);
                 UiTools.setViewVisibility(mForward, View.VISIBLE);
                 UiTools.setViewVisibility(mPlaylistNext, View.VISIBLE);
@@ -3284,6 +3399,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             }
             dimStatusBar(false);
             mOverlayProgress.setVisibility(View.VISIBLE);
+            mMenuScrollview.setVisibility(View.VISIBLE);
             if (mPresentation != null) mOverlayBackground.setVisibility(View.VISIBLE);
         }
         mHandler.removeMessages(FADE_OUT);
@@ -3320,10 +3436,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 //            mTracks.setOnClickListener(this);
             mPopupPlayToggle = (ImageView) findViewById(R.id.popup_toggle);
             mPopupPlayToggle.setOnClickListener(this);
-            mAdvOptions = (ImageView) findViewById(R.id.player_overlay_adv_function);
-            mAdvOptions.setOnClickListener(this);
+//            mAdvOptions = (ImageView) findViewById(R.id.player_overlay_adv_function);
+//            mAdvOptions.setOnClickListener(this);
             mLock = (ImageView) findViewById(R.id.lock_overlay_button);
-            mSize = (ImageView) findViewById(R.id.player_overlay_size);
+//            mSize = (ImageView) findViewById(R.id.player_overlay_size);
             mNavMenu = (ImageView) findViewById(R.id.player_overlay_navmenu);
             if (mSettings.getBoolean("enable_seek_buttons", false))
                 initSeekButton();
@@ -3352,30 +3468,32 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             UiTools.setViewVisibility(mOverlayTips, View.INVISIBLE);
             if (!fromUser && !mIsLocked) {
                 mOverlayProgress.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                mPlayPause.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                if (mTracks != null)
-                    mTracks.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                if (mAdvOptions != null)
-                    mAdvOptions.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                if (mRewind != null)
-                    mRewind.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                if (mForward != null)
-                    mForward.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                if (mPlaylistNext != null)
-                    mPlaylistNext.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                if (mPlaylistPrevious != null)
-                    mPlaylistPrevious.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                mSize.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+                mMenuScrollview.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+//                mPlayPause.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+//                if (mTracks != null)
+//                    mTracks.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+////                if (mAdvOptions != null)
+////                    mAdvOptions.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+//                if (mRewind != null)
+//                    mRewind.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+//                if (mForward != null)
+//                    mForward.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+//                if (mPlaylistNext != null)
+//                    mPlaylistNext.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+//                if (mPlaylistPrevious != null)
+//                    mPlaylistPrevious.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+////                mSize.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
             }
             if (mPresentation != null) {
                 mOverlayBackground.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
                 mOverlayBackground.setVisibility(View.INVISIBLE);
             }
             mOverlayProgress.setVisibility(View.INVISIBLE);
+            mMenuScrollview.setVisibility(View.GONE);
             mPlayPause.setVisibility(View.INVISIBLE);
             UiTools.setViewVisibility(mTracks, View.INVISIBLE);
-            UiTools.setViewVisibility(mAdvOptions, View.INVISIBLE);
-            UiTools.setViewVisibility(mSize, View.INVISIBLE);
+//            UiTools.setViewVisibility(mAdvOptions, View.INVISIBLE);
+//            UiTools.setViewVisibility(mSize, View.INVISIBLE);
             UiTools.setViewVisibility(mRewind, View.INVISIBLE);
             UiTools.setViewVisibility(mForward, View.INVISIBLE);
             UiTools.setViewVisibility(mPlaylistNext, View.INVISIBLE);
@@ -4244,7 +4362,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         }
         if (!TextUtils.isEmpty(adID)) {
             mInterstitial = new Interstitial();
-            mInterstitial.loadAD(this, ADManager.sPlatForm , adID, new Interstitial.ADListener() {
+            mInterstitial.loadAD(this, ADManager.sPlatForm, adID, new Interstitial.ADListener() {
                 @Override
                 public void onLoadedSuccess() {
                 }
@@ -4260,15 +4378,15 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
                 @Override
                 public void onAdClose() {
-                    
+
                 }
             });
         }
     }
 
-    private void initPauseNative(){
-        mNativeFrameLayout = (FrameLayout)findViewById(R.id.ad_frame_layout);
-        mNativeContainer = (FrameLayout)findViewById(R.id.ad_container);
+    private void initPauseNative() {
+        mNativeFrameLayout = (FrameLayout) findViewById(R.id.ad_frame_layout);
+        mNativeContainer = (FrameLayout) findViewById(R.id.ad_container);
         ImageView adClose = (ImageView) findViewById(R.id.ad_close_iv);
         if (adClose != null) {
             adClose.setOnClickListener(new OnClickListener() {
@@ -4283,9 +4401,11 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             });
         }
     }
+
     NativeAdScrollView scrollView;
     private boolean mIsActive = true;
-    private void loadPauseNative( boolean isActive){//是否主动：主动的话，点x不要继续播放
+
+    private void loadPauseNative(boolean isActive) {//是否主动：主动的话，点x不要继续播放
         if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()) {
             if (mNativeFrameLayout != null && mNativeContainer != null) {
                 mIsActive = isActive;

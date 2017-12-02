@@ -1014,9 +1014,11 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             mNativeAdList = list;
             Log.e("yNativeAD", "aaaa onLoadedSuccess list:" + (list == null ? 0 : list.size()));
             if (checkAds()) {
-                mVideoAdapter.setNativeAd(mNativeAdList);
-                if (mParsingFinished || mParsed) {
-                    mHandler.sendEmptyMessage(UPDATE_LIST);
+                if (mNativeAdList.size()>0) {
+                    mVideoAdapter.setNativeAd(mNativeAdList);
+                    if (mParsingFinished || mParsed) {
+                        mHandler.sendEmptyMessage(UPDATE_LIST);
+                    }
                 }
             }
 
