@@ -19,6 +19,6 @@
         android:layout_marginLeft="@dimen/info_default_margin"
         android:layout_marginStart="@dimen/info_default_margin"
         android:textSize="@dimen/full_title_text_size"
-        android:textColor="#333333"
+        android:textColor="?attr/list_title"
         />
 </LinearLayout>

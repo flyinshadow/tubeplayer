@@ -92,6 +92,7 @@ import com.wenjoyai.tubeplayer.util.FileUtils;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.ShareUtils;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
+import com.wenjoyai.tubeplayer.widget.MyBottomSheetDialog;
 
 import org.videolan.libvlc.Media;
 import org.videolan.libvlc.util.AndroidUtil;
@@ -236,7 +237,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
         View popView = LayoutInflater.from(getContext()).inflate(R.layout.context_menu, null);
         ((TextView) popView.findViewById(R.id.title)).setText(media.getTitle());
-        final BottomSheetDialog dialog = new BottomSheetDialog(getContext());
+        final BottomSheetDialog dialog = new MyBottomSheetDialog(getContext());
+        dialog.setOwnerActivity(getActivity());
         dialog.setContentView(popView);
 
         MyMenuItem[] tmpMenus = media instanceof MediaGroup ? menusGroup : menusVideo;
