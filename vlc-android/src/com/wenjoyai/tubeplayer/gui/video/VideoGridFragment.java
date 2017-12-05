@@ -20,12 +20,15 @@
 
 package com.wenjoyai.tubeplayer.gui.video;
 
+import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,6 +36,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.annotation.MainThread;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DividerItemDecoration;
@@ -42,19 +47,24 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.wenjoyai.tubeplayer.gui.helpers.RecyclerViewHeader;
 import com.facebook.ads.NativeAd;
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.PlaybackService;
@@ -68,6 +78,8 @@ import com.wenjoyai.tubeplayer.gui.MainActivity;
 import com.wenjoyai.tubeplayer.gui.RenameFileFragment;
 import com.wenjoyai.tubeplayer.gui.SecondaryActivity;
 import com.wenjoyai.tubeplayer.gui.browser.MediaBrowserFragment;
+import com.wenjoyai.tubeplayer.gui.helpers.AnimUtil;
+import com.wenjoyai.tubeplayer.gui.helpers.RecyclerViewHeader;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
 import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
 import com.wenjoyai.tubeplayer.gui.view.AutoFitRecyclerView;
@@ -77,6 +89,7 @@ import com.wenjoyai.tubeplayer.interfaces.Filterable;
 import com.wenjoyai.tubeplayer.interfaces.IEventsHandler;
 import com.wenjoyai.tubeplayer.interfaces.ISortable;
 import com.wenjoyai.tubeplayer.media.FolderGroup;
+import com.wenjoyai.tubeplayer.media.Group;
 import com.wenjoyai.tubeplayer.media.MediaGroup;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
 import com.wenjoyai.tubeplayer.util.FileUtils;
@@ -94,7 +107,6 @@ import org.videolan.medialibrary.media.MediaWrapper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class VideoGridFragment extends MediaBrowserFragment implements MediaUpdatedCb, ISortable, SwipeRefreshLayout.OnRefreshListener, MediaAddedCb, Filterable, IEventsHandler {
@@ -131,6 +143,36 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     private RecyclerViewHeader mHeader;
     private LinearLayout mDirectories;
 
+    private AnimUtil animUtil = new AnimUtil();
+    private float bgAlpha = 1f;
+    private boolean bright = false;
+    private View parent;
+    private View popView;
+    private PopupWindow popupWindow;
+
+    final static int ID_PLAY_FROM_START = 1;
+    final static int ID_PLAY_ALL = 2;
+    final static int ID_APPEND = 3;
+    final static int ID_PLAY_AS_AUDIO = 4;
+    final static int ID_RENAME = 5;
+    final static int ID_DELETE = 6;
+    final static int ID_SHARE = 7;
+    final static int ID_INFO = 8;
+    final static int ID_GROUP_PLAY = 9;
+    final static MyMenuItem[] menusVideo = {
+            new MyMenuItem(ID_PLAY_ALL, R.string.play, R.drawable.ic_listmenu_play),
+            new MyMenuItem(ID_APPEND, R.string.append, R.drawable.ic_listmenu_append),
+            new MyMenuItem(ID_PLAY_AS_AUDIO, R.string.play_as_audio, R.drawable.ic_listmenu_audio),
+            new MyMenuItem(ID_RENAME, R.string.rename, R.drawable.ic_listmenu_rename),
+            new MyMenuItem(ID_DELETE, R.string.delete, R.drawable.ic_listmenu_delete),
+            new MyMenuItem(ID_SHARE, R.string.share, R.drawable.ic_listmenu_share),
+            new MyMenuItem(ID_INFO, R.string.info, R.drawable.ic_listmenu_info),
+            };
+    final static MyMenuItem[] menusGroup = {
+            new MyMenuItem(ID_GROUP_PLAY, R.string.play, R.drawable.ic_listmenu_play),
+            new MyMenuItem(ID_APPEND, R.string.append_all, R.drawable.ic_listmenu_append),
+    };
+
     /* All subclasses of Fragment must include a public empty constructor. */
     public VideoGridFragment() {
     }
@@ -149,6 +191,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.video_grid, container, false);
+        parent = v;
 
         // init the information for the scan (1/2)
         mLayoutFlipperLoading = (LinearLayout) v.findViewById(R.id.layout_flipper_loading);
@@ -181,15 +224,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             }
         }
 
-        int viewMode;
         if (mFolderMain) {
             mGridView.setPadding(0, 0, mGridView.getPaddingRight(), mGridView.getPaddingBottom());
-
-            viewMode = VideoListAdapter.VIEW_MODE_FOLDER;
-        } else {
-            viewMode = PreferenceManager.getDefaultSharedPreferences(
-                    VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
-                    VideoListAdapter.VIEW_MODE_DEFAULT);
         }
 
         if (mVideoAdapter == null) {
@@ -203,6 +239,181 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         mAdContainer = (FrameLayout) v.findViewById(R.id.adContainer);
         return v;
     }
+
+    /**
+     * 初始化popupWindow
+     */
+    private void initPopupWindow(MediaWrapper media) {
+        popView = LayoutInflater.from(getContext()).inflate(R.layout.context_menu, null);
+        ((TextView)popView.findViewById(R.id.title)).setText(media.getTitle());
+        popupWindow = new MyPopupWindow(popView,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        //点击空白处时，隐藏掉pop窗口
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setOutsideTouchable(true);
+        //为popWindow添加动画效果
+        popupWindow.setAnimationStyle(R.style.popWindow_animation);
+        //添加pop窗口关闭事件，主要是实现关闭时改变背景的透明度
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                toggleBright();
+            }
+        });
+    }
+
+    public void popMenu(final int position) {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            return;
+        }
+        if (position < 0)
+            return;
+
+        final MediaWrapper media = mVideoAdapter.getItem(position);
+        if (media == null)
+            return;
+
+        initPopupWindow(media);
+
+        MyMenuItem[] tmpMenus = media instanceof MediaGroup ? menusGroup : menusVideo;
+        MyMenuItem[] myMenus = Arrays.copyOf(tmpMenus, tmpMenus.length);
+        if (media instanceof MediaGroup) {
+            if (!AndroidUtil.isHoneycombOrLater) {
+//                menu.findItem(R.id.video_list_append).setVisible(false);
+//                menu.findItem(R.id.video_group_play).setVisible(false);
+                myMenus = new MyMenuItem[0];
+            }
+        } else {
+            myMenus = setPopupWindowItems(myMenus, media);
+        }
+
+        final MyMenuItem[] menus = myMenus;
+        ListView menuList = (ListView) popView.findViewById(R.id.menu_list);
+        menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int menuPos, long id) {
+                MyMenuItem myMenuItem = menus[menuPos];
+                switch (myMenuItem.getId()) {
+                    case ID_PLAY_FROM_START:
+                        playVideo(media, true);
+                        break;
+                    case ID_PLAY_AS_AUDIO:
+                        playAudio(media);
+                        break;
+                    case ID_PLAY_ALL:
+                        ArrayList<MediaWrapper> playList = new ArrayList<>();
+                        MediaUtils.openList(getActivity(), playList, mVideoAdapter.getListWithPosition(playList, position));
+                        break;
+                    case ID_INFO:
+                    {
+                        View itemView = mGridView.getLayoutManager().findViewByPosition(position);
+                        ImageView thumb = (ImageView) itemView.findViewById(R.id.ml_item_thumbnail);
+                        showInfoDialog(media, thumb);
+                    }
+                    break;
+                    case ID_RENAME:
+                        renameVideo(media);
+                        break;
+                    case ID_DELETE:
+                        removeVideo(media);
+                        break;
+                    case ID_GROUP_PLAY:
+                        MediaUtils.openList(getActivity(), ((Group) media).getAll(), 0);
+                        break;
+                    case ID_APPEND:
+                        if (media instanceof MediaGroup)
+                            mService.append(((MediaGroup) media).getAll());
+                        else
+                            mService.append(media);
+                        break;
+//                    case R.id.video_download_subtitles:
+//                        MediaUtils.getSubs(getActivity(), media);
+//                        break;
+                    case ID_SHARE:
+                        ShareUtils.shareMedia(getActivity() != null ? getActivity() : VLCApplication.getAppContext(), media);
+                        break;
+                }
+                popupWindow.dismiss();
+            }
+        });
+        menuList.setAdapter(new MenuAdapter(getContext(), R.layout.context_menu_item, Arrays.asList(menus)));
+
+        // 点击弹出窗口
+        popupWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
+        toggleBright();
+    }
+
+    private MyMenuItem[] setPopupWindowItems(MyMenuItem[] myMenus, MediaWrapper mediaWrapper) {
+//        long lastTime = mediaWrapper.getTime();
+//        if (lastTime > 0)
+//            menu.findItem(R.id.video_list_play_from_start).setVisible(true);
+
+        boolean hasInfo = false;
+        final Media media = new Media(VLCInstance.get(), mediaWrapper.getUri());
+        media.parse();
+        boolean canWrite = FileUtils.canWrite(mediaWrapper.getLocation());
+        if (media.getMeta(Media.Meta.Title) != null)
+            hasInfo = true;
+        media.release();
+        findItem(myMenus, ID_INFO).setValid(hasInfo);
+        findItem(myMenus, ID_DELETE).setValid(canWrite);
+        if (!AndroidUtil.isHoneycombOrLater) {
+            findItem(myMenus, ID_PLAY_ALL).setValid(false);
+            findItem(myMenus, ID_APPEND).setValid(false);
+        }
+        List<MyMenuItem> myMenuList = new ArrayList<>();
+        for (MyMenuItem myMenuItem : myMenus) {
+            if (myMenuItem.isValid()) {
+                myMenuList.add(myMenuItem);
+            }
+        }
+        return myMenuList.toArray(new MyMenuItem[myMenuList.size()]);
+    }
+
+    MyMenuItem findItem(MyMenuItem[] myMenus, int id) {
+        for (MyMenuItem myMenu : myMenus) {
+            if (myMenu.getId() == id) {
+                return myMenu;
+            }
+        }
+        return null;
+    }
+
+    private void toggleBright() {
+        //三个参数分别为： 起始值 结束值 时长  那么整个动画回调过来的值就是从0.5f--1f的
+        animUtil.setValueAnimator(0.5f, 1f, 200);
+        animUtil.addUpdateListener(new AnimUtil.UpdateListener() {
+            @Override
+            public void progress(float progress) {
+                //此处系统会根据上述三个值，计算每次回调的值是多少，我们根据这个值来改变透明度
+                bgAlpha = bright ? progress : (1.5f - progress);//三目运算，应该挺好懂的。
+                setBackgroundAlpha(bgAlpha);//在此处改变背景，这样就不用通过Handler去刷新了。
+            }
+        });
+        animUtil.addEndListner(new AnimUtil.EndListener() {
+            @Override
+            public void endUpdate(Animator animator) {
+                //在一次动画结束的时候，翻转状态
+                bright = !bright;
+            }
+        });
+        animUtil.startAnimator();
+    }
+
+    /**
+     * 设置添加屏幕的背景透明度
+     *
+     * @param bgAlpha 屏幕透明度0.0-1.0 1表示完全不透明
+     */
+    public void setBackgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = bgAlpha;
+        getActivity().getWindow().setAttributes(lp);
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+    }
+
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
@@ -398,7 +609,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 removeVideo(media);
                 return true;
             case R.id.video_group_play:
-                MediaUtils.openList(getActivity(), ((MediaGroup) media).getAll(), 0);
+                MediaUtils.openList(getActivity(), ((Group) media).getAll(), 0);
                 return true;
             case R.id.video_list_append:
                 if (media instanceof MediaGroup)
@@ -889,9 +1100,11 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     @Override
     public void onCtxClick(View v, final int position, MediaLibraryItem item) {
-        if (mActionMode != null)
-            return;
-        mGridView.openContextMenu(position);
+//        if (mActionMode != null)
+//            return;
+//        mGridView.openContextMenu(position);
+
+        popMenu(position);
     }
 
     private void showPopupMenu(View anchor, int menuRes, PopupMenu.OnMenuItemClickListener onMenuItemClickListener) {
@@ -1045,5 +1258,78 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
    public interface NeedFreshListener{
         void fresh();
+    }
+
+    public static class MyMenuItem {
+
+        private int id;
+        private int name;
+        private int imageId;
+        private boolean valid = true;
+
+        MyMenuItem(int id, int name, int imageId) {
+            this.id = id;
+            this.name = name;
+            this.imageId = imageId;
+        }
+
+        int getId() {
+            return id;
+        }
+
+        public int getName() {
+            return name;
+        }
+
+        int getImageId() {
+            return imageId;
+        }
+
+        boolean isValid() {
+            return valid;
+        }
+
+        void setValid(boolean valid) {
+            this.valid = valid;
+        }
+    }
+
+    public static class MyPopupWindow extends PopupWindow {
+        private int position;
+        MyPopupWindow(View contentView, int width, int height) {
+            super(contentView, width, height);
+        }
+        int getPosition() {
+            return position;
+        }
+        void setPosition(int position) {
+            this.position = position;
+        }
+    }
+
+    public static class MenuAdapter extends ArrayAdapter<MyMenuItem> {
+
+        private int resId;
+        public MenuAdapter(Context context, int resource, List<MyMenuItem> objects) {
+            super(context, resource, objects);
+            resId = resource;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            MyMenuItem item = getItem(position);
+            View view;
+            if (convertView == null) {
+                view = LayoutInflater.from(getContext()).inflate(resId, parent, false);
+            } else {
+                view = convertView;
+            }
+            ImageView itemImage = (ImageView) view.findViewById(R.id.image);
+            TextView itemName = (TextView) view.findViewById(R.id.name);
+            itemImage.setImageResource(item.getImageId());
+            itemName.setText(item.getName());
+            return view;
+        }
     }
 }
