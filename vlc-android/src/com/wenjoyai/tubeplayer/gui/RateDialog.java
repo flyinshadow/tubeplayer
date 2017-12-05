@@ -143,7 +143,7 @@ public class RateDialog extends DialogFragment implements View.OnClickListener, 
                              Bundle savedInstanceState) {
         if (getDialog() != null && getDialog().getWindow() != null) {
             getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            getDialog().getWindow().setWindowAnimations(R.style.DialogAnimation);
+            getDialog().getWindow().setWindowAnimations(R.style.RateDialogAnimation);
         }
 
         View v = inflater.inflate(R.layout.rate, container, false);

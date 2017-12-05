@@ -25,6 +25,7 @@ package com.wenjoyai.tubeplayer.gui.audio;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Message;
 import android.support.annotation.MainThread;
 import android.support.v4.app.Fragment;
@@ -35,17 +36,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
+
+import com.facebook.ads.MediaView;
+import com.wenjoyai.tubeplayer.BR;
 import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
-import com.wenjoyai.tubeplayer.databinding.PlaylistItemBinding;
 import com.wenjoyai.tubeplayer.gui.BaseQueuedAdapter;
+import com.wenjoyai.tubeplayer.gui.helpers.AsyncImageLoader;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
 import com.wenjoyai.tubeplayer.interfaces.SwipeDragHelperAdapter;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.MediaItemDiffCallback;
 import com.wenjoyai.tubeplayer.util.WeakHandler;
 
@@ -65,20 +74,26 @@ public class PlaylistAdapter extends BaseQueuedAdapter<ArrayList<MediaWrapper>, 
     private ArrayList<MediaWrapper> mOriginalDataSet;
     private int mCurrentIndex = 0;
 
+    private boolean mIsVideoPlayer;
+
     public interface IPlayer {
         void onPopupMenu(View view, int position);
         void updateList();
         void onSelectionSet(int position);
     }
 
-    public PlaylistAdapter(IPlayer audioPlayer) {
+    public PlaylistAdapter(IPlayer audioPlayer, boolean video) {
         mAudioPlayer = audioPlayer;
+        mIsVideoPlayer = video;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.playlist_item, parent, false);
+        int layout = R.layout.playlist_item;
+        if (mIsVideoPlayer) {
+            layout = R.layout.playlist_video_item;
+        }
+        View v = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
         return new ViewHolder(v);
     }
 
@@ -86,12 +101,47 @@ public class PlaylistAdapter extends BaseQueuedAdapter<ArrayList<MediaWrapper>, 
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Context ctx = holder.itemView.getContext();
         final MediaWrapper media = getItem(position);
-        holder.binding.setMedia(media);
-        holder.binding.setSubTitle(MediaUtils.getMediaSubtitle(media));
-        holder.binding.setTitleColor(mOriginalDataSet == null && mCurrentIndex == position
-                ? UiTools.getColorFromAttribute(ctx, R.attr.list_title_last)
-                : UiTools.getColorFromAttribute(ctx, R.attr.list_title));
-        holder.binding.executePendingBindings();
+        if (media.getItemType() == MediaLibraryItem.TYPE_AD && holder.adItem != null) {
+            if (holder.adItem != null) {
+                holder.adItem.setVisibility(View.VISIBLE);
+            }
+            if (holder.videoItem != null) {
+                holder.videoItem.setVisibility(View.GONE);
+            }
+//            bindAd(holder, (AdItem)media);
+        } else {
+            if (holder.adItem != null) {
+                holder.adItem.setVisibility(View.GONE);
+            }
+            if (holder.videoItem != null) {
+                holder.videoItem.setVisibility(View.VISIBLE);
+            }
+            holder.binding.setVariable(BR.media, media);
+            holder.binding.setVariable(BR.subTitle, MediaUtils.getMediaSubtitle(media));
+            LogUtil.d(TAG, "onBindViewHolder mCurrentIndex=" + mCurrentIndex + ", position=" + position);
+
+            int titleColor = UiTools.getColorFromAttribute(ctx, R.attr.list_title);
+            if (mIsVideoPlayer) {
+                holder.itemView.setBackgroundResource(R.color.black);
+            }
+            if ((mOriginalDataSet == null && mCurrentIndex == position)) {
+                titleColor = UiTools.getColorFromAttribute(ctx, R.attr.colorAccent);
+                if (mIsVideoPlayer) {
+                    holder.itemView.setBackgroundResource(R.color.video_playlist_selected_bg);
+                }
+            } else {
+                if (mIsVideoPlayer) {
+                    titleColor = VLCApplication.getAppResources().getColor(R.color.video_playlist_title_color);
+                }
+            }
+
+            holder.binding.setVariable(BR.titleColor, titleColor);
+            holder.binding.executePendingBindings();
+
+            if (holder.thumbnail != null) {
+                AsyncImageLoader.loadPicture(holder.thumbnail, media);
+            }
+        }
     }
 
     @Override
@@ -127,6 +177,9 @@ public class PlaylistAdapter extends BaseQueuedAdapter<ArrayList<MediaWrapper>, 
         VLCApplication.runBackground(new Runnable() {
             @Override
             public void run() {
+
+//                prepareAdItems(newList);
+
                 final DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MediaItemDiffCallback(mDataSet, newList), false);
                 VLCApplication.runOnMainThread(new Runnable() {
                     @Override
@@ -134,8 +187,10 @@ public class PlaylistAdapter extends BaseQueuedAdapter<ArrayList<MediaWrapper>, 
                         mDataSet.clear();
                         addAll(newList);
                         result.dispatchUpdatesTo(PlaylistAdapter.this);
-                        if (mService != null)
-                            setCurrentIndex(mService.getCurrentMediaPosition());
+                        if (mService != null) {
+//                            setCurrentIndex(mService.getCurrentMediaPosition());
+                            setCurrentMedia(mService.getCurrentMediaWrapper());
+                        }
                         processQueue();
                     }
                 });
@@ -163,6 +218,11 @@ public class PlaylistAdapter extends BaseQueuedAdapter<ArrayList<MediaWrapper>, 
         notifyItemChanged(former);
         notifyItemChanged(position);
         mAudioPlayer.onSelectionSet(position);
+    }
+
+    public void setCurrentMedia(MediaWrapper media) {
+        int pos = (mDataSet != null ? mDataSet.indexOf(media) : -1);
+        setCurrentIndex(pos);
     }
 
     private boolean validateIndex(int index) {
@@ -204,12 +264,31 @@ public class PlaylistAdapter extends BaseQueuedAdapter<ArrayList<MediaWrapper>, 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        PlaylistItemBinding binding;
+        ViewDataBinding binding;
+        private ImageView thumbnail;
+        private View adItem;
+        private View videoItem;
+        private LinearLayout adChoicesContainer;
+        private TextView adCallToAction;
+        private TextView adBody;
+        private MediaView adMedia;
 
         public ViewHolder(View v) {
             super(v);
             binding = DataBindingUtil.bind(v);
-            binding.setHolder(this);
+            binding.setVariable(BR.holder, this);
+
+            adItem = v.findViewById(R.id.pl_ad_item);
+            adChoicesContainer = (LinearLayout) itemView.findViewById(R.id.ad_choices_container);
+            adCallToAction = (TextView) itemView.findViewById(R.id.ad_call_to_action);
+            adBody = (TextView) itemView.findViewById(R.id.ad_body);
+            adMedia = (MediaView) itemView.findViewById(R.id.ad_media);
+
+            videoItem = v.findViewById(R.id.pl_video_item);
+            thumbnail = (ImageView) v.findViewById(R.id.pl_item_thumbnail);
+            if (mIsVideoPlayer && thumbnail != null) {
+                binding.setVariable(BR.cover, AsyncImageLoader.DEFAULT_COVER_VIDEO_DRAWABLE);
+            }
         }
         public void onClick(View v, MediaWrapper media){
             int position = getMediaPosition(media);
@@ -223,9 +302,16 @@ public class PlaylistAdapter extends BaseQueuedAdapter<ArrayList<MediaWrapper>, 
         }
 
         private int getMediaPosition(MediaWrapper media) {
-            if (mOriginalDataSet == null)
+            if (mOriginalDataSet == null) {
+                MediaWrapper mw;
+                ArrayList<MediaWrapper> medias = mService.getMedias();
+                for (int i = 0 ; i < medias.size() ; ++i) {
+                    mw = medias.get(i);
+                    if (mw.equals(media))
+                        return i;
+                }
                 return getLayoutPosition();
-            else {
+            } else {
                 MediaWrapper mw;
                 for (int i = 0 ; i < mOriginalDataSet.size() ; ++i) {
                     mw = mOriginalDataSet.get(i);

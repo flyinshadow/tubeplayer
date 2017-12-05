@@ -17,6 +17,7 @@ public abstract class MediaLibraryItem implements Parcelable {
     public static final int TYPE_STORAGE  = 1 << 7;
     public static final int TYPE_HISTORY  = 1 << 9;
     public static final int TYPE_FOLDER   = 1 << 10;
+    public static final int TYPE_AD   = 1 << 11;
 
     public static final int FLAG_NONE = 0;
     public static final int FLAG_SELECTED = 1;

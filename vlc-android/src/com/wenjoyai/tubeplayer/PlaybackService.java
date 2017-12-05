@@ -197,6 +197,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
     public static final int REPEAT_NONE = 0;
     public static final int REPEAT_ONE = 1;
     public static final int REPEAT_ALL = 2;
+    public static final int REPEAT_SHUFFLE = 3;
     private boolean mShuffling = false;
     private int mRepeating = REPEAT_NONE;
     private Random mRandom = null; // Used in shuffling process
@@ -1017,6 +1018,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
 
     private void determinePrevAndNextIndices() {
         determinePrevAndNextIndices(false);
+        LogUtil.d(TAG, "determinePrevAndNextIndices mNextIndex=" + mNextIndex);
     }
 
     private void determinePrevAndNextIndices(boolean expand) {
@@ -1434,6 +1436,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
         mShuffling = !mShuffling;
         savePosition();
         determinePrevAndNextIndices();
+        LogUtil.d(TAG, "shuffle mShuffling=" + mShuffling + ", mNextIndex=" + mNextIndex);
         publishState();
     }
 
@@ -1442,6 +1445,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
         mRepeating = repeatType;
         savePosition();
         determinePrevAndNextIndices();
+        LogUtil.d(TAG, "setRepeatType repeatType=" + repeatType + ", mNextIndex=" + mNextIndex);
         publishState();
     }
 
