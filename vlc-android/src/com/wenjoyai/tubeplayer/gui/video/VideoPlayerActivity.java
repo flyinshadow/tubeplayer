@@ -486,7 +486,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PLAY_GIF + "click");
                     mGifImageView.setVisibility(View.GONE);
                     mHandler.removeCallbacks(mGifRunnable);
-                    loadPauseNative();
+                    loadPauseNative(false);
                     pause();
                 }
             });
@@ -1992,7 +1992,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     mRotateAD.setVisibility(View.VISIBLE);
                 }
                 //pause 广告
-                loadPauseNative();
+                loadPauseNative(true);
                 break;
             case MediaPlayer.Event.Stopped:
                 exitOK();
@@ -4276,15 +4276,19 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 public void onClick(View v) {
                     mNativeFrameLayout.startAnimation(mTranstionAnimOut);
                     mNativeFrameLayout.setVisibility(View.GONE);
-                    play();
+                    if (!mIsActive) {
+                        play();
+                    }
                 }
             });
         }
     }
     NativeAdScrollView scrollView;
-    private void loadPauseNative(){
+    private boolean mIsActive = true;
+    private void loadPauseNative( boolean isActive){//是否主动：主动的话，点x不要继续播放
         if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()) {
             if (mNativeFrameLayout != null && mNativeContainer != null) {
+                mIsActive = isActive;
                 ADManager.getInstance().mIsPauseADShown = true;
                 mNativeFrameLayout.setVisibility(View.VISIBLE);
                 if (scrollView != null) {
