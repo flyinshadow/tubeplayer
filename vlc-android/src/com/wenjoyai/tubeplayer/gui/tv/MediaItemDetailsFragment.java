@@ -153,7 +153,7 @@ public class MediaItemDetailsFragment extends DetailsFragment implements Playbac
                             if (media.equals(mediaList.get(i)))
                                 position = i;
                         Activity activity = getActivity();
-                        MediaUtils.openList(activity, mediaList, position);
+                        MediaUtils.openList(activity, mediaList, position, null);
                         if (media.getType() == MediaWrapper.TYPE_AUDIO)
                             getActivity().startActivity(new Intent(activity, AudioPlayerActivity.class));
                         getActivity().finish();

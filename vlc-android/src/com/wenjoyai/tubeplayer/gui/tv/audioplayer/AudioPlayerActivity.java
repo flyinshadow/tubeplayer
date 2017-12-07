@@ -134,7 +134,7 @@ public class AudioPlayerActivity extends BaseTvActivity implements PlaybackServi
         mService.addCallback(this);
         ArrayList<MediaWrapper> medias = (ArrayList<MediaWrapper>) mService.getMedias();
         if (!mMediaList.isEmpty() && !mMediaList.equals(medias)) {
-            mService.load(mMediaList, mCurrentlyPlaying);
+            mService.load(mMediaList, mCurrentlyPlaying, null);
         } else {
             mMediaList = medias;
             if (mCurrentlyPlaying != mService.getCurrentMediaPosition())
@@ -360,7 +360,7 @@ public class AudioPlayerActivity extends BaseTvActivity implements PlaybackServi
         } else {
             Collections.sort(medias, MediaComparators.byTrackNumber);
         }
-        mService.load(medias, 0);
+        mService.load(medias, 0, null);
         mAdapter.updateList(medias);
         update();
     }

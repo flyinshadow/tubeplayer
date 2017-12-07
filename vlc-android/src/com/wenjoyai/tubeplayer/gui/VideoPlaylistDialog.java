@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,12 +21,15 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.ads.NativeAd;
 import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.gui.audio.PlaylistAdapter;
 import com.wenjoyai.tubeplayer.gui.helpers.SwipeDragItemTouchHelperCallback;
 
 import org.w3c.dom.Text;
+
+import java.util.List;
 
 /**
  * Created by yuqilin on 2017/12/2.
@@ -58,6 +62,11 @@ public class VideoPlaylistDialog extends DialogFragment
 //    public void setPlayer(PlaylistAdapter.IPlayer player) {
 //        mPlayer = player;
 //    }
+
+    private List<NativeAd> mNativeAds = null;
+    public void setNativeAds(List<NativeAd> nativeAds) {
+        mNativeAds = nativeAds;
+    }
 
     public void update() {
         if (mService != null && mPlaylistAdapter != null) {
@@ -98,12 +107,17 @@ public class VideoPlaylistDialog extends DialogFragment
 
         mPlaylistAdapter = new PlaylistAdapter(this, true);
         mPlaylistAdapter.setService(mService);
+        mPlaylistAdapter.setNativeAds(mNativeAds);
         mPlaylist.setAdapter(mPlaylistAdapter);
 
-        ItemTouchHelper.Callback callback = new SwipeDragItemTouchHelperCallback(mPlaylistAdapter);
-        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
-        touchHelper.attachToRecyclerView(mPlaylist);
+        if (!TextUtils.isEmpty(mService.getPlaylistTitle()))
+            mPlaylistTitle.setText(mService.getPlaylistTitle());
 
+        // TODO: 2017/12/7 暂时禁用拖动手势，需考虑广告处理逻辑
+//        ItemTouchHelper.Callback callback = new SwipeDragItemTouchHelperCallback(mPlaylistAdapter);
+//        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+//        touchHelper.attachToRecyclerView(mPlaylist);
+//
         return v;
     }
 

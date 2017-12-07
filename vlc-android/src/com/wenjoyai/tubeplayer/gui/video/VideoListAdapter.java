@@ -55,6 +55,7 @@ import com.wenjoyai.tubeplayer.interfaces.IEventsHandler;
 import com.wenjoyai.tubeplayer.media.AdItem;
 import com.wenjoyai.tubeplayer.media.FolderGroup;
 import com.wenjoyai.tubeplayer.media.Group;
+import com.wenjoyai.tubeplayer.media.MediaGroup;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.MediaItemFilter;
 import com.wenjoyai.tubeplayer.util.Strings;
@@ -511,6 +512,32 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                 list.add(mw);
         }
         return position + offset;
+    }
+
+    int getListWithPositionSkipAds(ArrayList<MediaWrapper> list, int position) {
+        MediaWrapper mw;
+        int offset = 0;
+        int adCount = 0;
+        for (int i = 0; i < getItemCount(); ++i) {
+            mw = mVideos.get(i);
+            if (mw.getItemType() == MediaLibraryItem.TYPE_AD) {
+                if (i < position) {
+                    adCount++;
+                }
+                continue;
+            }
+            if (mw instanceof MediaGroup) {
+                for (MediaWrapper item : ((MediaGroup) mw).getAll()) {
+                    if (item.getItemType() != MediaLibraryItem.TYPE_AD)
+                        list.add(item);
+                }
+                if (i < position)
+                    offset += ((MediaGroup)mw).size()-1;
+            } else {
+                list.add(mw);
+            }
+        }
+        return position + offset - adCount;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnFocusChangeListener {

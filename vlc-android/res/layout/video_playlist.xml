@@ -25,11 +25,14 @@
             android:id="@+id/video_playlist_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginLeft="@dimen/default_margin"
             android:layout_weight="1"
             android:textSize="16sp"
             android:ellipsize="end"
             android:gravity="start"
             android:singleLine="true"
+            android:layout_gravity="center_vertical"
             />
 
         <TextView

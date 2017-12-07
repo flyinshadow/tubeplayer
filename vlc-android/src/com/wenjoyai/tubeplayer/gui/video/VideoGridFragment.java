@@ -382,7 +382,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 return true;
             case R.id.video_list_play_all:
                 ArrayList<MediaWrapper> playList = new ArrayList<>();
-                MediaUtils.openList(getActivity(), playList, mVideoAdapter.getListWithPosition(playList, position));
+                MediaUtils.openList(getActivity(), playList, mVideoAdapter.getListWithPosition(playList, position), null);
                 return true;
             case R.id.video_list_info:
             {
@@ -398,7 +398,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 removeVideo(media);
                 return true;
             case R.id.video_group_play:
-                MediaUtils.openList(getActivity(), ((MediaGroup) media).getAll(), 0);
+                MediaUtils.openList(getActivity(), ((MediaGroup) media).getAll(), 0, null);
                 return true;
             case R.id.video_list_append:
                 if (media instanceof MediaGroup)
@@ -502,7 +502,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     @Override
     public void onFabPlayClick(View view) {
         ArrayList<MediaWrapper> playList = new ArrayList<>();
-        MediaUtils.openList(getActivity(), playList, mVideoAdapter.getListWithPosition(playList, 0));
+        MediaUtils.openList(getActivity(), playList, mVideoAdapter.getListWithPosition(playList, 0), getTitle());
     }
 
     @Override
@@ -770,7 +770,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         if (!list.isEmpty()) {
             switch (item.getItemId()) {
                 case R.id.action_video_play:
-                    MediaUtils.openList(getActivity(), list, 0);
+                    MediaUtils.openList(getActivity(), list, 0, getTitle());
                     break;
                 case R.id.action_video_append:
                     MediaUtils.appendMedia(getActivity(), list);
@@ -788,7 +788,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 case R.id.action_video_play_audio:
                     for (MediaWrapper media : list)
                         media.addFlags(MediaWrapper.MEDIA_FORCE_AUDIO);
-                    MediaUtils.openList(getActivity(), list, 0);
+                    MediaUtils.openList(getActivity(), list, 0, getTitle());
                     break;
                 default:
                     stopActionMode();
@@ -861,17 +861,23 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     ((FolderGroup) item).getFolderPath());
         } else if (media != null) {
             media.removeFlags(MediaWrapper.MEDIA_FORCE_AUDIO);
-            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
-            if (settings.getBoolean("force_play_all", false)) {
-                ArrayList<MediaWrapper> playList = new ArrayList<>();
-                MediaUtils.openList(activity, playList, mVideoAdapter.getListWithPosition(playList, position));
-            } else {
-                ImageView thumb = (ImageView) v.findViewById(R.id.ml_item_thumbnail);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && thumb != null) {
-                    playVideo(media, false, thumb);
-                } else {
-                    playVideo(media, false);
-                }
+//            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
+//            if (settings.getBoolean("force_play_all", false)) {
+//                ArrayList<MediaWrapper> playList = new ArrayList<>();
+//                MediaUtils.openList(activity, playList, mVideoAdapter.getListWithPosition(playList, position));
+//            } else {
+//                ImageView thumb = (ImageView) v.findViewById(R.id.ml_item_thumbnail);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && thumb != null) {
+//                    playVideo(media, false, thumb);
+//                } else {
+//                    playVideo(media, false);
+//                }
+//            }
+            ArrayList<MediaWrapper> playList = new ArrayList<>();
+            MediaUtils.openList(activity, playList, mVideoAdapter.getListWithPositionSkipAds(playList, position), getTitle());
+            ImageView imageView = (ImageView) v.findViewById(R.id.ml_item_thumbnail);
+            if (imageView != null) {
+                mService.setSharedImageView(imageView, getActivity());
             }
         }
     }

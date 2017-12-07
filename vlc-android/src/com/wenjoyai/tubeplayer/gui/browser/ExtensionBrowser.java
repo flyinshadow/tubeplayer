@@ -202,7 +202,7 @@ public class ExtensionBrowser extends Fragment implements View.OnClickListener, 
                 for (VLCExtensionItem vlcItem : items) {
                     medias.add(Utils.mediawrapperFromExtension(vlcItem));
                 }
-                MediaUtils.openList(getActivity(), medias, position);
+                MediaUtils.openList(getActivity(), medias, position, null);
                 return true;
             case R.id.extension_item_view_append:
                 MediaUtils.appendMedia(getActivity(), Utils.mediawrapperFromExtension(mAdapter.getItem(position)));

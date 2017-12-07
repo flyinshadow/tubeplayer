@@ -99,6 +99,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdScrollView;
 import com.facebook.ads.NativeAdView;
 import com.wenjoyai.tubeplayer.BuildConfig;
@@ -154,6 +155,7 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.Callback, IVLCVout.OnNewVideoLayoutListener,
@@ -407,7 +409,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     private GifAD mGifImageView;
 
-    private VideoPlaylistDialog mPlaylistDialog;
+    private VideoPlaylistDialog mPlaylistDialog = new VideoPlaylistDialog();
 
     private static LibVLC LibVLC() {
         return VLCInstance.get();
@@ -769,6 +771,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         if (mIsLocked && mScreenOrientation == 99)
             setRequestedOrientation(mScreenOrientationLock);
+
+        loadFeedNative();
     }
 
     private void setHudClickListeners() {
@@ -1162,9 +1166,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mPlaylistToggle.setVisibility(View.VISIBLE);
             mPlaylistPrevious.setVisibility(View.VISIBLE);
             mPlaylistNext.setVisibility(View.VISIBLE);
-            mPlaylistToggle.setOnClickListener(VideoPlayerActivity.this);
-            mPlaylistPrevious.setOnClickListener(VideoPlayerActivity.this);
-            mPlaylistNext.setOnClickListener(VideoPlayerActivity.this);
+            mPlaylistToggle.setOnClickListener(this);
+            mPlaylistPrevious.setOnClickListener(this);
+            mPlaylistNext.setOnClickListener(this);
             mSeekbar.setNextFocusUpId(mPlaylistToggle.getId());
 
 //            ItemTouchHelper.Callback callback = new SwipeDragItemTouchHelperCallback(mPlaylistAdapter);
@@ -4358,6 +4362,25 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 //                }
 //            });
 //        }
+    }
+
+    private List<NativeAd> mNativeAdList;
+    private boolean checkAds() {
+        return mNativeAdList != null && mNativeAdList.size() > 0;
+    }
+
+    private ADManager.ADNumListener mAdNumListener = new ADManager.ADNumListener() {
+        @Override
+        public void onLoadedSuccess(List<NativeAd> list, boolean needGif) {
+            mNativeAdList = list;
+            if (checkAds() && mPlaylistDialog != null) {
+                mPlaylistDialog.setNativeAds(mNativeAdList);
+            }
+        }
+    };
+
+    public void loadFeedNative() {
+        ADManager.getInstance().getNativeAdlist(mAdNumListener);
     }
 
 
