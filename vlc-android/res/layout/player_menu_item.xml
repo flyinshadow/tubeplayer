@@ -1,25 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="8dp"
+    android:layout_width="60dp"
+    android:layout_height="wrap_content"
     android:gravity="center_horizontal"
+    android:id="@+id/root"
     android:orientation="vertical">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        tools:src="@drawable/speed"/>
+    <FrameLayout
+        android:id="@+id/content_fl"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/grey50"
+            tools:src="@drawable/ic_player_mute"
+            app:borderWidth="0dp"
+            android:scaleType="center"
+            tools:backgroundTint="@color/bg_player_item"
+            app:rippleColor="@color/ripple_color" />
+
+        <TextView
+            android:id="@+id/content_tv"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:background="@drawable/shape_circle"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            tools:text="29:00" />
+
+    </FrameLayout>
 
     <TextView
-        android:id="@+id/tv"
+        android:id="@+id/title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
         android:textColor="#ffffff"
-        tools:text="Speed"
-        />
+        android:textSize="12sp"
+        tools:text="Audio play" />
 
 </LinearLayout>

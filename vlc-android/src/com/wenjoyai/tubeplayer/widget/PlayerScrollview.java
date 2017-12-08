@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.Scroller;
 
 /**
@@ -32,31 +33,31 @@ public class PlayerScrollview extends HorizontalScrollView {
         mTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-
-                break;
-            case MotionEvent.ACTION_MOVE:
-                int scrollX=getScrollX();
-                int width=getWidth();
-                int scrollViewMeasuredWidth=getChildAt(0).getMeasuredWidth();
-                if(scrollX==0){
-                    System.out.println("滑动到了顶端 view.getScrollY()="+scrollX);
-                }
-                if((scrollX+width)==scrollViewMeasuredWidth){
-                    System.out.println("滑动到了底部 scrollY="+scrollX);
-                    System.out.println("滑动到了底部 height="+width);
-                    System.out.println("滑动到了底部 scrollViewMeasuredHeight="+scrollViewMeasuredWidth);
-                }
-                break;
-
-            default:
-                break;
-        }
-        return super.onTouchEvent(ev);
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent ev) {
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                int scrollX=getScrollX();
+//                int width=getWidth();
+//                int scrollViewMeasuredWidth=getChildAt(0).getMeasuredWidth();
+//                if(scrollX==0){
+//                    System.out.println("滑动到了顶端 view.getScrollY()="+scrollX);
+//                }
+//                if((scrollX+width)==scrollViewMeasuredWidth){
+//                    System.out.println("滑动到了底部 scrollY="+scrollX);
+//                    System.out.println("滑动到了底部 height="+width);
+//                    System.out.println("滑动到了底部 scrollViewMeasuredHeight="+scrollViewMeasuredWidth);
+//                }
+//                break;
+//
+//            default:
+//                break;
+//        }
+//        return super.onTouchEvent(ev);
+//    }
 
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
@@ -67,12 +68,33 @@ public class PlayerScrollview extends HorizontalScrollView {
         if (l-oldl<-mTouchSlop){//左滑
             left();
         }
+        if (getScrollX() == 0) {    // 小心踩坑1: 这里不能是getScrollY() <= 0
+            isScrolledToTop = true;
+            isScrolledToBottom = false;
+        } else if (getScrollX() + getWidth() - getPaddingLeft()-getPaddingRight() == getChildAt(0).getWidth()) {
+            isScrolledToBottom = true;
+            isScrolledToTop = false;
+
+        } else {
+            isScrolledToTop = false;
+            isScrolledToBottom = false;
+        }
+        notifyScrollChangedListeners();
     }
     private void notifyScrollChangedListeners() {
+        LinearLayout layout = (LinearLayout)getChildAt(0);
+        if (isScrolledToBottom){
+            layout.getChildAt(layout.getChildCount()-2).setVisibility(VISIBLE);
+        }else {
+            layout.getChildAt(layout.getChildCount()-2).setVisibility(INVISIBLE);
+        }
+
+
         if (isScrolledToTop) {
             Log.e("tag", "isScrolledToTop");
             if (mSmartScrollChangedListener != null) {
                 mSmartScrollChangedListener.onScrolledToTop();
+
             }
         } else if (isScrolledToBottom) {
             Log.e("tag", "isScrolledToBottom");

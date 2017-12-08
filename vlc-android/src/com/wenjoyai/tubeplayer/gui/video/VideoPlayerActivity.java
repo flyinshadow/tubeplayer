@@ -56,6 +56,7 @@ import android.provider.Settings.SettingNotFoundException;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GestureDetectorCompat;
@@ -76,6 +77,7 @@ import android.view.Display;
 import android.view.GestureDetector;
 import android.view.InputDevice;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -122,6 +124,12 @@ import com.wenjoyai.tubeplayer.gui.audio.PlaylistAdapter;
 import com.wenjoyai.tubeplayer.gui.browser.FilePickerActivity;
 import com.wenjoyai.tubeplayer.gui.browser.FilePickerFragment;
 import com.wenjoyai.tubeplayer.gui.dialogs.AdvOptionsDialog;
+import com.wenjoyai.tubeplayer.gui.dialogs.BrightnessDialog;
+import com.wenjoyai.tubeplayer.gui.dialogs.JumpToTimeDialog;
+import com.wenjoyai.tubeplayer.gui.dialogs.PlaybackSpeedDialog;
+import com.wenjoyai.tubeplayer.gui.dialogs.SelectChapterDialog;
+import com.wenjoyai.tubeplayer.gui.dialogs.SleepTimerDialog;
+import com.wenjoyai.tubeplayer.gui.dialogs.VolumeDialog;
 import com.wenjoyai.tubeplayer.gui.helpers.AsyncImageLoader;
 import com.wenjoyai.tubeplayer.gui.helpers.AudioUtil;
 import com.wenjoyai.tubeplayer.gui.helpers.OnRepeatListener;
@@ -140,6 +148,7 @@ import com.wenjoyai.tubeplayer.util.ScreenUtils;
 import com.wenjoyai.tubeplayer.util.Strings;
 import com.wenjoyai.tubeplayer.util.SubtitlesDownloader;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
+import com.wenjoyai.tubeplayer.widget.PlayerItemLayout;
 import com.wenjoyai.tubeplayer.widget.PlayerScrollview;
 
 import org.videolan.libvlc.IVLCVout;
@@ -160,12 +169,10 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-import pl.droidsonroids.gif.GifImageView;
+import java.util.Map;
 
 public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.Callback, IVLCVout.OnNewVideoLayoutListener,
         IPlaybackSettingsController, PlaybackService.Client.Callback, PlaybackService.Callback,
@@ -423,8 +430,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     //菜单栏
     private PlayerScrollview mMenuScrollview;
     private LinearLayout mMenuLinearLayout;
-
-
     /**************************  new  *********************/
 
 
@@ -686,7 +691,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     }
 
-    class PlayerMenuModel {
+    public class PlayerMenuModel {
         public int drawableId;
         public String name;
         public MenuType menuType;
@@ -702,79 +707,100 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mute, speed, audio_play, timer,volume,brightness,ratio,rotate,ic_arrow_back
     }
 
+    private Map<MenuType, PlayerItemLayout> mItemMap = new HashMap<>();
+
     private void initMenu() {
         List<PlayerMenuModel> list = new ArrayList<>();
         //mute audio
-        list.add(new PlayerMenuModel(R.drawable.mute, getString(R.string.mute),MenuType.mute));
+        list.add(new PlayerMenuModel(R.drawable.ic_player_mute, getString(R.string.mute),MenuType.mute));
         //speed
-        list.add(new PlayerMenuModel(R.drawable.speed, getString(R.string.speed),MenuType.speed));
+        list.add(new PlayerMenuModel(R.drawable.ic_player_speed, getString(R.string.speed),MenuType.speed));
         //后台播放 audio play
-        list.add(new PlayerMenuModel(R.drawable.audio_play, getString(R.string.audio_play),MenuType.audio_play));
+        list.add(new PlayerMenuModel(R.drawable.ic_player_audio, getString(R.string.audio_play),MenuType.audio_play));
         //timer
-        list.add(new PlayerMenuModel(R.drawable.timer, getString(R.string.timer),MenuType.timer));
+        list.add(new PlayerMenuModel(R.drawable.ic_player_timer, getString(R.string.timer),MenuType.timer));
         //volume
-        list.add(new PlayerMenuModel(R.drawable.volume, getString(R.string.volume),MenuType.volume));
+        list.add(new PlayerMenuModel(R.drawable.ic_player_volume, getString(R.string.volume),MenuType.volume));
         //亮度
-        list.add(new PlayerMenuModel(R.drawable.brightness, getString(R.string.brightness),MenuType.brightness));
+        list.add(new PlayerMenuModel(R.drawable.ic_player_brightness, getString(R.string.brightness),MenuType.brightness));
         //ratio
-        list.add(new PlayerMenuModel(R.drawable.ratio, getString(R.string.ratio),MenuType.ratio));
+        list.add(new PlayerMenuModel(R.drawable.ic_player_ratio, getString(R.string.ratio),MenuType.ratio));
         //rotate
-        list.add(new PlayerMenuModel(R.drawable.rotate, getString(R.string.rotate),MenuType.rotate));
-        //小箭头
-        list.add(new PlayerMenuModel(R.drawable.ic_arrow_back, null,MenuType.ic_arrow_back));
+        list.add(new PlayerMenuModel(R.drawable.ic_player_rotate, getString(R.string.rotate),MenuType.rotate));
         fillMenu(list);
     }
 
+    private boolean isMux = false;
     private void fillMenu(List<PlayerMenuModel> list) {
         mMenuLinearLayout.removeAllViews();
         for (int i = 0; i < list.size(); i++) {
             PlayerMenuModel model = list.get(i);
-            //创建一个布局填充器，将我们写好的布局放入进去
-            View view = View.inflate(this, R.layout.player_menu_item, null);
-            //通过布局填充器找到控件
-            final CircleImageView imageView = (CircleImageView) view.findViewById(R.id.iv);
-            TextView textView = (TextView) view.findViewById(R.id.tv);
-            //给控件赋值
-            imageView.setImageResource(model.drawableId);
-            if (!TextUtils.isEmpty(model.name)) {
-                textView.setText(model.name);
-            }
-            view.setTag(model);
-            view.setOnClickListener(new View.OnClickListener() {
+            PlayerItemLayout playerItemLayout = new PlayerItemLayout(this);
+            playerItemLayout.init(model);
+            playerItemLayout.setTag(model);
+            playerItemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     PlayerMenuModel model =(PlayerMenuModel)view.getTag();
                     switch (model.menuType){
-                        case mute:
+                        case mute://静音
+                            mItemMap.get(model.menuType).setSelected(false);
+                            // TODO: 2017/12/2 后去当前是否静音模式，设置
+                            if (!isMux) {
+
+                            } else {
+
+                            }
                             break;
                         case speed:
+                            showFragment(ID_PLAYBACK_SPEED);
                             break;
                         case audio_play:
+                            mItemMap.get(model.menuType).setSelected(false);
+                            StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_EXTEND_PLAY_AS_AUDIO, null, null);
+                            switchToAudioMode(true);
                             break;
                         case timer:
+                            showFragment(ID_SLEEP);
+                            mItemMap.get(model.menuType).setSelected(true);
+                            mItemMap.get(model.menuType).getContentTv().setText("22:00");
                             break;
                         case volume:
+                            showFragment(ID_VOLUME);
                             break;
                         case brightness:
+                            showFragment(ID_BRIGHTNESS);
                             break;
                         case ratio:
                             resizeVideo();
                             break;
                         case rotate:
-                            break;
-                        case ic_arrow_back:
-                            mMenuScrollview.left();
+                            if(getRequestedOrientation()!=ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
+                                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                            } else {
+                                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                            }
                             break;
 
                     }
                 }
             });
+            mItemMap.put(model.menuType,playerItemLayout);
             //将布局填充器加载到LinearLayout中进行显示
-            mMenuLinearLayout.addView(view);
+            mMenuLinearLayout.addView(playerItemLayout);
         }
+        //back view
+        View backView = LayoutInflater.from(VideoPlayerActivity.this).inflate(R.layout.player_menu_item_back, null);
+        backView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMenuScrollview.left();
+            }
+        });
+        mMenuLinearLayout.addView(backView, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
         //填充的view
         View mView = new View(this);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ScreenUtils.dip2px(this, 200), ViewGroup.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ScreenUtils.dip2px(this, 180), ViewGroup.LayoutParams.MATCH_PARENT);
         mMenuLinearLayout.addView(mView, layoutParams);
     }
 
@@ -2100,6 +2126,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     mNativeFrameLayout.startAnimation(mTranstionAnimOut);
                     mNativeFrameLayout.setVisibility(View.GONE);
                 }
+                changeSpeedMenu(mService.getRate());
                 break;
             case MediaPlayer.Event.Paused:
                 updateOverlayPausePlay();
@@ -4277,6 +4304,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mHandler.sendEmptyMessage(START_PLAYBACK);
         mSwitchingView = false;
         mSettings.edit().putBoolean(PreferencesActivity.VIDEO_RESTORE, false).apply();
+
     }
 
     @Override
@@ -4514,5 +4542,74 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 //        }
     }
 
+    private void changeSpeedMenu(float speed){
+        String str=String.format("%.1f", speed);
+        if (!"1.0".equals(str)){
+            if (null!= mItemMap.get(MenuType.speed)) {
+                mItemMap.get(MenuType.speed).setSelected(true);
+                mItemMap.get(MenuType.speed).getContentTv().setText(String.format("%.1f", speed));
+            }
+        } else {
+            if (null!= mItemMap.get(MenuType.speed)) {
+                mItemMap.get(MenuType.speed).reset();
+            }
+        }
+    }
+
+    private static final int ID_VOLUME = 11 ;
+    private static final int ID_BRIGHTNESS = 12;
+    private static final int ID_SLEEP = 1 ;
+    private static final int ID_JUMP_TO = 2 ;
+    private static final int ID_CHAPTER_TITLE = 5 ;
+    private static final int ID_PLAYBACK_SPEED = 6 ;
+    private static final int ID_SAVE_PLAYLIST = 8 ;
+
+    private void showFragment(int id) {
+        int mTheme = (UiTools.isBlackThemeEnabled()) ?
+                R.style.Theme_VLC_Black :
+                R.style.Theme_VLC;
+
+        DialogFragment newFragment;
+        String tag;
+        switch (id) {
+            case ID_VOLUME:
+                newFragment = VolumeDialog.newInstance(mTheme);
+                tag = "playback_speed";
+                break;
+            case ID_BRIGHTNESS:
+                newFragment = BrightnessDialog.newInstance(mTheme);
+                tag = "playback_speed";
+                break;
+            case ID_PLAYBACK_SPEED:
+                newFragment = PlaybackSpeedDialog.newInstance(mTheme);
+                ((PlaybackSpeedDialog)newFragment).setListener(new PlaybackSpeedDialog.SpeedListener() {
+                    @Override
+                    public void speedChanged(float speed) {
+                        changeSpeedMenu(speed);
+                    }
+                });
+                tag = "playback_speed";
+                break;
+            case ID_JUMP_TO:
+                newFragment = JumpToTimeDialog.newInstance(mTheme);
+                tag = "time";
+                break;
+            case ID_SLEEP:
+                newFragment = SleepTimerDialog.newInstance(mTheme);
+                tag = "time";
+                break;
+            case ID_CHAPTER_TITLE:
+                newFragment = SelectChapterDialog.newInstance(mTheme);
+                tag = "select_chapter";
+                break;
+            case ID_SAVE_PLAYLIST:
+                UiTools.addToPlaylist(this, mService.getMedias());
+                return;
+            default:
+                return;
+        }
+        if (newFragment != null)
+            newFragment.show(getSupportFragmentManager(), tag);
+    }
 
 }

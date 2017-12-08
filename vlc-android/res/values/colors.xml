@@ -160,4 +160,8 @@
     <color name="video_cover_background">#bdbdbd</color>
     <color name="video_folder_list_grey">#8b000000</color>
 
+
+    <color name="bg_player_item">#cc191919</color>
+
+
 </resources>

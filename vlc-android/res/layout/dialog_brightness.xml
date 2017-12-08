@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:background="#cc000000"
@@ -21,7 +20,7 @@
             android:layout_marginLeft="@dimen/half_default_margin"
             android:layout_marginRight="@dimen/half_default_margin"
             android:layout_weight="1"
-            android:text="@string/playback_speed"
+            android:text="@string/brightness"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
 
@@ -33,58 +32,36 @@
 
     </LinearLayout>
 
-    <com.wenjoyai.tubeplayer.widget.MSeekBar
-        android:id="@+id/seekbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="false"
-        android:max="100"
-        android:maxHeight="@dimen/seekbar_height"
-        android:minHeight="@dimen/seekbar_height"
-        android:progress="50"
-        app:textBackground="@mipmap/bg_seekbar_display1"
-        app:textOrientation="top"
-        app:textSize="14sp"
-        android:progressDrawable="?attr/po_seekbar"
-        android:splitTrack="false"
-        android:thumb="?attr/seekbar_thumb" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="58dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="#e6e6e6"
-            android:text="0.5" />
-        <TextView
-            android:layout_width="wrap_content"
+            android:src="@drawable/ic_player_brightness_0" />
+
+
+        <SeekBar
+            android:id="@+id/seekbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="#e6e6e6"
-            android:gravity="right"
             android:layout_weight="1"
-            android:text="1.0" />
-        <TextView
+            android:indeterminate="false"
+            android:max="200"
+            android:maxHeight="@dimen/seekbar_height"
+            android:minHeight="@dimen/seekbar_height"
+            android:progress="100"
+            android:progressDrawable="?attr/po_seekbar"
+            android:splitTrack="false"
+            android:thumb="?attr/seekbar_thumb" />
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="#e6e6e6"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="1.5" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:textColor="#e6e6e6"
-            android:text="2.0" />
+            android:src="@drawable/ic_player_brightness_1" />
 
     </LinearLayout>
 

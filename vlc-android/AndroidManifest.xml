@@ -23,7 +23,8 @@
         com.google.android.gms.gass,
         com.google.android.gms.tasks,
         com.google.android.gms.measurement,
-        com.google.android.gms.measurement.impl
+        com.google.android.gms.measurement.impl,
+        com.xw.repo.bubbleseekbar
           "/>
         <!--com.mobvista.msdk,-->
         <!--com.mobvista.msdk.appwall,-->
