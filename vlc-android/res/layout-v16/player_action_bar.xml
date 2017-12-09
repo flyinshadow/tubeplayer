@@ -20,7 +20,7 @@
         android:id="@+id/player_overlay_title"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="8"
+        android:layout_weight="7"
         android:gravity="center"
         android:layout_gravity="start"
         android:background="@color/transparent"
@@ -45,7 +45,6 @@
         android:src="@drawable/ic_playlist_circle"
         android:scaleType="center"
         android:focusable="true"
-        android:visibility="gone"
         />
 
     <!--<ImageView-->

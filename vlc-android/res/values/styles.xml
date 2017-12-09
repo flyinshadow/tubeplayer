@@ -1190,8 +1190,18 @@
         <item name="android:windowExitAnimation">@anim/pause_ad_leave_right</item>
     </style>
 
-    <style name="DialogAnimation">
+    <style name="RateDialogAnimation">
         <item name="android:windowEnterAnimation">@anim/anim_enter_left</item>
+        <item name="android:windowExitAnimation">@anim/anim_leave_right</item>
+    </style>
+
+    <style name="PlaylistPortraitAnimation">
+        <item name="android:windowEnterAnimation">@anim/anim_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_bottom_out</item>
+    </style>
+
+    <style name="PlaylistLandscapeAnimation">
+        <item name="android:windowEnterAnimation">@anim/anim_enter_right</item>
         <item name="android:windowExitAnimation">@anim/anim_leave_right</item>
     </style>
 
