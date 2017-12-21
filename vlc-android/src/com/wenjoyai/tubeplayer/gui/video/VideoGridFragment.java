@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
@@ -397,7 +398,11 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     VLCApplication.getAppContext()).getInt(PreferencesActivity.KEY_CURRENT_VIEW_MODE,
                     VideoListAdapter.VIEW_MODE_DEFAULT);
         }
-        toggleVideoMode(viewMode);
+        int currentOrientation = getResources().getConfiguration().orientation;
+        if (currentOrientation != Configuration.ORIENTATION_LANDSCAPE) {
+            toggleVideoMode(viewMode);
+        }
+//        toggleVideoMode(viewMode);
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
 //            public void run() {
