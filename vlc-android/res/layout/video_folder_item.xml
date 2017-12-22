@@ -227,7 +227,7 @@
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="6sp"
                     android:text="@{time}"
-                    android:textColor="@color/video_folder_list_grey"
+                    android:textColor="?attr/list_subtitle"
                     android:textSize="@dimen/default_text_size"
                     />
             </LinearLayout>
