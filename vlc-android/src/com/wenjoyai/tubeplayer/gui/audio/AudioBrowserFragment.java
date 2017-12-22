@@ -124,7 +124,7 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
 //        mGenresAdapter = new AudioBrowserAdapter(getActivity(), MediaLibraryItem.TYPE_GENRE, this, true);
         mPlaylistAdapter = new AudioBrowserAdapter(getActivity(), MediaLibraryItem.TYPE_PLAYLIST, this, true);
         mFolderAdapter = new AudioBrowserAdapter(getActivity(), MediaLibraryItem.TYPE_FOLDER, this, false);
-        mAdapters = new AudioBrowserAdapter[]{mSongsAdapter, mArtistsAdapter, mAlbumsAdapter, mPlaylistAdapter, mFolderAdapter};
+        mAdapters = new AudioBrowserAdapter[]{mFolderAdapter, mSongsAdapter, mArtistsAdapter, mAlbumsAdapter, mPlaylistAdapter};
     }
 
     @Override
@@ -140,8 +140,8 @@ public class AudioBrowserFragment extends BaseAudioBrowser implements SwipeRefre
         for (int i = 0; i < MODE_TOTAL; i++)
             mLists[i] = (ContextMenuRecyclerView) mViewPager.getChildAt(i);
 
-        String[] titles = new String[] {getString(R.string.songs), getString(R.string.artists), getString(R.string.albums),
-                 getString(R.string.playlists), getString(R.string.folders)};
+        String[] titles = new String[] {getString(R.string.folders), getString(R.string.songs), getString(R.string.artists), getString(R.string.albums),
+                 getString(R.string.playlists)};
         mViewPager.setOffscreenPageLimit(MODE_TOTAL - 1);
         mViewPager.setAdapter(new AudioPagerAdapter(mLists, titles));
 
