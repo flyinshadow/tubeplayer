@@ -904,8 +904,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mLength.setOnClickListener(this);
         if (mTime != null)
             mTime.setOnClickListener(this);
-        if (mSize != null)
-            mSize.setOnClickListener(this);
+//        if (mSize != null)
+//            mSize.setOnClickListener(this);
         if (mNavMenu != null)
             mNavMenu.setOnClickListener(this);
     }
@@ -1941,7 +1941,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mTime.setEnabled(false);
         mSeekbar.setEnabled(false);
         mLength.setEnabled(false);
-        mSize.setEnabled(false);
+//        mSize.setEnabled(false);
         if (mPlaylistNext != null)
             mPlaylistNext.setEnabled(false);
         if (mPlaylistPrevious != null)
@@ -1962,7 +1962,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mTime.setEnabled(true);
         mSeekbar.setEnabled(mService == null || mService.isSeekable());
         mLength.setEnabled(true);
-        mSize.setEnabled(true);
+//        mSize.setEnabled(true);
         if (mPlaylistNext != null)
             mPlaylistNext.setEnabled(true);
         if (mPlaylistPrevious != null)
@@ -3358,8 +3358,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             if (!mIsLocked) {
                 mPlayPause.setVisibility(View.VISIBLE);
                 UiTools.setViewVisibility(mTracks, View.VISIBLE);
-                UiTools.setViewVisibility(mAdvOptions, View.VISIBLE);
-                UiTools.setViewVisibility(mSize, View.VISIBLE);
+//                UiTools.setViewVisibility(mAdvOptions, View.VISIBLE);
+//                UiTools.setViewVisibility(mSize, View.VISIBLE);
                 UiTools.setViewVisibility(mRewind, View.VISIBLE);
                 UiTools.setViewVisibility(mForward, View.VISIBLE);
                 UiTools.setViewVisibility(mPlaylistNext, View.VISIBLE);
@@ -3403,10 +3403,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 //            mTracks.setOnClickListener(this);
             mPopupPlayToggle = (ImageView) findViewById(R.id.popup_toggle);
             mPopupPlayToggle.setOnClickListener(this);
-            mAdvOptions = (ImageView) findViewById(R.id.player_overlay_adv_function);
-            mAdvOptions.setOnClickListener(this);
+//            mAdvOptions = (ImageView) findViewById(R.id.player_overlay_adv_function);
+//            mAdvOptions.setOnClickListener(this);
             mLock = (ImageView) findViewById(R.id.lock_overlay_button);
-            mSize = (ImageView) findViewById(R.id.player_overlay_size);
+//            mSize = (ImageView) findViewById(R.id.player_overlay_size);
             mNavMenu = (ImageView) findViewById(R.id.player_overlay_navmenu);
             if (mSettings.getBoolean("enable_seek_buttons", false))
                 initSeekButton();
@@ -3438,8 +3438,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 mPlayPause.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
                 if (mTracks != null)
                     mTracks.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                if (mAdvOptions != null)
-                    mAdvOptions.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+//                if (mAdvOptions != null)
+//                    mAdvOptions.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
                 if (mRewind != null)
                     mRewind.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
                 if (mForward != null)
@@ -3448,7 +3448,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     mPlaylistNext.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
                 if (mPlaylistPrevious != null)
                     mPlaylistPrevious.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                mSize.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+//                mSize.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
             }
             if (mPresentation != null) {
                 mOverlayBackground.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
@@ -3457,8 +3457,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mOverlayProgress.setVisibility(View.INVISIBLE);
             mPlayPause.setVisibility(View.INVISIBLE);
             UiTools.setViewVisibility(mTracks, View.INVISIBLE);
-            UiTools.setViewVisibility(mAdvOptions, View.INVISIBLE);
-            UiTools.setViewVisibility(mSize, View.INVISIBLE);
+//            UiTools.setViewVisibility(mAdvOptions, View.INVISIBLE);
+//            UiTools.setViewVisibility(mSize, View.INVISIBLE);
             UiTools.setViewVisibility(mRewind, View.INVISIBLE);
             UiTools.setViewVisibility(mForward, View.INVISIBLE);
             UiTools.setViewVisibility(mPlaylistNext, View.INVISIBLE);
