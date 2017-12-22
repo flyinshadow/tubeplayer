@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minWidth="320dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:background="#cc000000"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/half_default_margin"
+            android:layout_marginRight="@dimen/half_default_margin"
+            android:layout_weight="1"
+            android:text="@string/sleep_title"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_playlist_close" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/timer_off"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="left|center"
+        android:layout_marginLeft="37dp"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:textStyle="normal"
+        android:textColor="#ffffff"
+        android:lineSpacingExtra="4sp"
+        android:text="Off"
+        />
+    <TextView
+        android:id="@+id/timer_15"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="left|center"
+        android:layout_marginLeft="37dp"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:textStyle="normal"
+        android:textColor="#ffffff"
+        android:lineSpacingExtra="4sp"
+        android:text="15 minutes later"
+        />
+    <TextView
+        android:id="@+id/timer_30"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="left|center"
+        android:layout_marginLeft="37dp"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:textStyle="normal"
+        android:textColor="#ffffff"
+        android:lineSpacingExtra="4sp"
+        android:text="30 minutes later"
+        />
+    <TextView
+        android:id="@+id/timer_45"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="left|center"
+        android:layout_marginLeft="37dp"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:textStyle="normal"
+        android:textColor="#ffffff"
+        android:lineSpacingExtra="4sp"
+        android:text="45 minutes later"
+        />
+    <TextView
+        android:id="@+id/timer_60"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="left|center"
+        android:layout_marginLeft="37dp"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:textStyle="normal"
+        android:textColor="#ffffff"
+        android:lineSpacingExtra="4sp"
+        android:text="60 minutes later"
+        />
+    <TextView
+        android:id="@+id/timer_end"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="left|center"
+        android:layout_marginLeft="37dp"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:textStyle="normal"
+        android:textColor="#ffffff"
+        android:lineSpacingExtra="4sp"
+        android:text="Stop when current video ends"
+        />
+</LinearLayout>

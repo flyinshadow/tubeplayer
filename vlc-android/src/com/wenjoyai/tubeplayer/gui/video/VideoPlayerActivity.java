@@ -47,6 +47,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -129,6 +130,7 @@ import com.wenjoyai.tubeplayer.gui.dialogs.JumpToTimeDialog;
 import com.wenjoyai.tubeplayer.gui.dialogs.PlaybackSpeedDialog;
 import com.wenjoyai.tubeplayer.gui.dialogs.SelectChapterDialog;
 import com.wenjoyai.tubeplayer.gui.dialogs.SleepTimerDialog;
+import com.wenjoyai.tubeplayer.gui.dialogs.TimerDialog;
 import com.wenjoyai.tubeplayer.gui.dialogs.VolumeDialog;
 import com.wenjoyai.tubeplayer.gui.helpers.AsyncImageLoader;
 import com.wenjoyai.tubeplayer.gui.helpers.AudioUtil;
@@ -295,7 +297,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private ImageView mNavMenu;
     private ImageView mRewind;
     private ImageView mForward;
-//    private ImageView mAdvOptions;
+    //    private ImageView mAdvOptions;
     private ImageView mPlaybackSettingPlus;
     private ImageView mPlaybackSettingMinus;
     private View mObjectFocused;
@@ -306,7 +308,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private int mScreenOrientationLock;
     private int mCurrentScreenOrientation;
     private ImageView mLock;
-//    private ImageView mSize;
+    //    private ImageView mSize;
     private String KEY_REMAINING_TIME_DISPLAY = "remaining_time_display";
     private String KEY_BLUETOOTH_DELAY = "key_bluetooth_delay";
     private long mSpuDelay = 0L;
@@ -430,6 +432,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     //菜单栏
     private PlayerScrollview mMenuScrollview;
     private LinearLayout mMenuLinearLayout;
+
     /**************************  new  *********************/
 
 
@@ -703,8 +706,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             this.menuType = menuType;
         }
     }
+
     public enum MenuType {
-        mute, speed, audio_play, timer,volume,brightness,ratio,rotate,ic_arrow_back
+        mute, speed, audio_play, timer, volume, brightness, ratio, rotate, ic_arrow_back
     }
 
     private Map<MenuType, PlayerItemLayout> mItemMap = new HashMap<>();
@@ -712,25 +716,26 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private void initMenu() {
         List<PlayerMenuModel> list = new ArrayList<>();
         //mute audio
-        list.add(new PlayerMenuModel(R.drawable.ic_player_mute, getString(R.string.mute),MenuType.mute));
+        list.add(new PlayerMenuModel(R.drawable.ic_player_mute, getString(R.string.mute), MenuType.mute));
         //speed
-        list.add(new PlayerMenuModel(R.drawable.ic_player_speed, getString(R.string.speed),MenuType.speed));
+        list.add(new PlayerMenuModel(R.drawable.ic_player_speed, getString(R.string.speed), MenuType.speed));
         //后台播放 audio play
-        list.add(new PlayerMenuModel(R.drawable.ic_player_audio, getString(R.string.audio_play),MenuType.audio_play));
+        list.add(new PlayerMenuModel(R.drawable.ic_player_audio, getString(R.string.audio_play), MenuType.audio_play));
         //timer
-        list.add(new PlayerMenuModel(R.drawable.ic_player_timer, getString(R.string.timer),MenuType.timer));
+        list.add(new PlayerMenuModel(R.drawable.ic_player_timer, getString(R.string.timer), MenuType.timer));
         //volume
-        list.add(new PlayerMenuModel(R.drawable.ic_player_volume, getString(R.string.volume),MenuType.volume));
+        list.add(new PlayerMenuModel(R.drawable.ic_player_volume, getString(R.string.volume), MenuType.volume));
         //亮度
-        list.add(new PlayerMenuModel(R.drawable.ic_player_brightness, getString(R.string.brightness),MenuType.brightness));
+        list.add(new PlayerMenuModel(R.drawable.ic_player_brightness, getString(R.string.brightness), MenuType.brightness));
         //ratio
-        list.add(new PlayerMenuModel(R.drawable.ic_player_ratio, getString(R.string.ratio),MenuType.ratio));
+        list.add(new PlayerMenuModel(R.drawable.ic_player_ratio, getString(R.string.ratio), MenuType.ratio));
         //rotate
-        list.add(new PlayerMenuModel(R.drawable.ic_player_rotate, getString(R.string.rotate),MenuType.rotate));
+        list.add(new PlayerMenuModel(R.drawable.ic_player_rotate, getString(R.string.rotate), MenuType.rotate));
         fillMenu(list);
     }
 
     private boolean isMux = false;
+
     private void fillMenu(List<PlayerMenuModel> list) {
         mMenuLinearLayout.removeAllViews();
         for (int i = 0; i < list.size(); i++) {
@@ -741,8 +746,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             playerItemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    PlayerMenuModel model =(PlayerMenuModel)view.getTag();
-                    switch (model.menuType){
+                    PlayerMenuModel model = (PlayerMenuModel) view.getTag();
+                    switch (model.menuType) {
                         case mute://静音
                             mItemMap.get(model.menuType).setSelected(false);
                             // TODO: 2017/12/2 后去当前是否静音模式，设置
@@ -762,8 +767,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                             break;
                         case timer:
                             showFragment(ID_SLEEP);
-                            mItemMap.get(model.menuType).setSelected(true);
-                            mItemMap.get(model.menuType).getContentTv().setText("22:00");
                             break;
                         case volume:
                             showFragment(ID_VOLUME);
@@ -775,7 +778,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                             resizeVideo();
                             break;
                         case rotate:
-                            if(getRequestedOrientation()!=ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
+                            if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
                                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                             } else {
                                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -785,7 +788,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     }
                 }
             });
-            mItemMap.put(model.menuType,playerItemLayout);
+            mItemMap.put(model.menuType, playerItemLayout);
             //将布局填充器加载到LinearLayout中进行显示
             mMenuLinearLayout.addView(playerItemLayout);
         }
@@ -797,11 +800,12 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 mMenuScrollview.left();
             }
         });
-        mMenuLinearLayout.addView(backView, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
+        mMenuLinearLayout.addView(backView, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         //填充的view
         View mView = new View(this);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ScreenUtils.dip2px(this, 180), ViewGroup.LayoutParams.MATCH_PARENT);
         mMenuLinearLayout.addView(mView, layoutParams);
+        mMenuScrollview.right();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -4542,27 +4546,30 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 //        }
     }
 
-    private void changeSpeedMenu(float speed){
-        String str=String.format("%.1f", speed);
-        if (!"1.0".equals(str)){
-            if (null!= mItemMap.get(MenuType.speed)) {
+    private void changeSpeedMenu(float speed) {
+        String str = String.format("%.1f", speed);
+        if (!"1.0".equals(str)) {
+            if (null != mItemMap.get(MenuType.speed)) {
                 mItemMap.get(MenuType.speed).setSelected(true);
                 mItemMap.get(MenuType.speed).getContentTv().setText(String.format("%.1f", speed));
             }
         } else {
-            if (null!= mItemMap.get(MenuType.speed)) {
+            if (null != mItemMap.get(MenuType.speed)) {
                 mItemMap.get(MenuType.speed).reset();
             }
         }
     }
 
-    private static final int ID_VOLUME = 11 ;
+    private static final int ID_VOLUME = 11;
     private static final int ID_BRIGHTNESS = 12;
-    private static final int ID_SLEEP = 1 ;
-    private static final int ID_JUMP_TO = 2 ;
-    private static final int ID_CHAPTER_TITLE = 5 ;
-    private static final int ID_PLAYBACK_SPEED = 6 ;
-    private static final int ID_SAVE_PLAYLIST = 8 ;
+    private static final int ID_SLEEP = 1;
+    private static final int ID_JUMP_TO = 2;
+    private static final int ID_CHAPTER_TITLE = 5;
+    private static final int ID_PLAYBACK_SPEED = 6;
+    private static final int ID_SAVE_PLAYLIST = 8;
+
+    //当前模式是否是播放完当前一个就停止播放
+    private boolean mTimeEnd = false;
 
     private void showFragment(int id) {
         int mTheme = (UiTools.isBlackThemeEnabled()) ?
@@ -4582,7 +4589,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 break;
             case ID_PLAYBACK_SPEED:
                 newFragment = PlaybackSpeedDialog.newInstance(mTheme);
-                ((PlaybackSpeedDialog)newFragment).setListener(new PlaybackSpeedDialog.SpeedListener() {
+                ((PlaybackSpeedDialog) newFragment).setListener(new PlaybackSpeedDialog.SpeedListener() {
                     @Override
                     public void speedChanged(float speed) {
                         changeSpeedMenu(speed);
@@ -4595,7 +4602,39 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 tag = "time";
                 break;
             case ID_SLEEP:
-                newFragment = SleepTimerDialog.newInstance(mTheme);
+                newFragment = TimerDialog.newInstance(mTheme);
+                ((TimerDialog) newFragment).setListener(new TimerDialog.TimerListener() {
+                    @Override
+                    public void timer(int timeType) {
+                        if (timeType == 0) {
+                            if (null != mItemMap.get(MenuType.timer)) {
+                                mItemMap.get(MenuType.timer).reset();
+                            }
+                            mTimeEnd = false;
+                        } else {
+                            if (null != mItemMap.get(MenuType.timer)) {
+                                mItemMap.get(MenuType.timer).setSelected(true);
+                                mTimeEnd = false;
+                                if (timeType == 1) {
+                                    restart(15);
+                                } else if (timeType == 2) {
+                                    restart(30);
+                                } else if (timeType == 3) {
+                                    restart(45);
+                                } else if (timeType == 4) {
+                                    restart(60);
+                                } else if (timeType == 5) {
+                                    // TODO: 2017/12/22
+                                    //当前视频播放完成，怎么显示？seek的时候还要重新
+                                    if (null != mItemMap.get(MenuType.timer)) {
+                                        mItemMap.get(MenuType.timer).getContentTv().setText("End");
+                                    }
+                                    mTimeEnd = true;
+                                }
+                            }
+                        }
+                    }
+                });
                 tag = "time";
                 break;
             case ID_CHAPTER_TITLE:
@@ -4612,4 +4651,67 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             newFragment.show(getSupportFragmentManager(), tag);
     }
 
+    CountDownTimer timer;
+
+    /**
+     * 取消倒计时
+     */
+    public void oncancel() {
+        if (null != timer) {
+            timer.cancel();
+        }
+    }
+
+    /**
+     * 开始倒计时
+     */
+    public void restart(int min) {
+        oncancel();
+        timer =  new CountDownTimer(1000 * min*60, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (null != mItemMap.get(MenuType.timer)) {
+                    mItemMap.get(MenuType.timer).getContentTv().setText(change((int) (millisUntilFinished / 1000)));
+                }
+            }
+            @Override
+            public void onFinish() {
+                if (null != mItemMap.get(MenuType.timer)) {
+                    mItemMap.get(MenuType.timer).reset();
+                }
+                exitOK();
+            }
+        };
+        timer.start();
+    }
+
+    public String change(int second) {
+        int h = 0;
+        int d = 0;
+        int s = 0;
+        int temp = second % 3600;
+        if (second > 3600) {
+            h = second / 3600;
+            if (temp != 0) {
+                if (temp > 60) {
+                    d = temp / 60;
+                    if (temp % 60 != 0) {
+                        s = temp % 60;
+                    }
+                } else {
+                    s = temp;
+                }
+            }
+        } else {
+            d = second / 60;
+            if (second % 60 != 0) {
+                s = second % 60;
+            }
+        }
+        if (h <= 0) {
+            return d + ":" +s;
+        }
+        return h + ":" + d + ":"+ s;
+    }
 }
