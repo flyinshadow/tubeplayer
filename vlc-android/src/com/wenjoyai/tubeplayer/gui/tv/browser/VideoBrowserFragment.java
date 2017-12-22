@@ -91,7 +91,7 @@ public class VideoBrowserFragment extends SortedBrowserFragment implements Media
     @Override
     public void onItemClicked(Presenter.ViewHolder viewHolder, Object item, RowPresenter.ViewHolder viewHolder1, Row row) {
         MediaWrapper media = (MediaWrapper) item;
-        MediaUtils.openArray(getActivity(), mVideos, mMediaIndex.get(media.getLocation()));
+        MediaUtils.openArray(getActivity(), mVideos, mMediaIndex.get(media.getLocation()), null);
     }
 
     @Override

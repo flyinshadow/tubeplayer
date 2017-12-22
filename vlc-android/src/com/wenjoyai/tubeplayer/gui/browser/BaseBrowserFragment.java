@@ -519,7 +519,7 @@ public abstract class BaseBrowserFragment extends MediaBrowserFragment implement
                     if (mediaItem.getType() == MediaWrapper.TYPE_AUDIO || (AndroidUtil.isHoneycombOrLater && mediaItem.getType() == MediaWrapper.TYPE_VIDEO))
                         mediaList.add(mediaItem);
                 }
-                MediaUtils.openList(getActivity(), mediaList, 0);
+                MediaUtils.openList(getActivity(), mediaList, 0, null);
                 return true;
             case R.id.directory_view_add_playlist:
                 FragmentManager fm = getActivity().getSupportFragmentManager();
@@ -566,7 +566,7 @@ public abstract class BaseBrowserFragment extends MediaBrowserFragment implement
                         positionInPlaylist = mediaLocations.size() - 1;
                 }
             }
-        MediaUtils.openList(getActivity(), mediaLocations, positionInPlaylist);
+        MediaUtils.openList(getActivity(), mediaLocations, positionInPlaylist, null);
     }
 
     ArrayList<MediaLibraryItem> currentMediaList = new ArrayList<>();
@@ -754,7 +754,7 @@ public abstract class BaseBrowserFragment extends MediaBrowserFragment implement
         if (!list.isEmpty()) {
             switch (item.getItemId()) {
                 case R.id.action_mode_file_play:
-                    mService.load(list, 0);
+                    mService.load(list, 0, null);
                     break;
                 case R.id.action_mode_file_append:
                     mService.append(list);

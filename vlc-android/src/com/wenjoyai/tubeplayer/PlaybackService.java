@@ -197,6 +197,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
     public static final int REPEAT_NONE = 0;
     public static final int REPEAT_ONE = 1;
     public static final int REPEAT_ALL = 2;
+    public static final int REPEAT_SHUFFLE = 3;
     private boolean mShuffling = false;
     private int mRepeating = REPEAT_NONE;
     private Random mRandom = null; // Used in shuffling process
@@ -1017,6 +1018,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
 
     private void determinePrevAndNextIndices() {
         determinePrevAndNextIndices(false);
+        LogUtil.d(TAG, "determinePrevAndNextIndices mNextIndex=" + mNextIndex);
     }
 
     private void determinePrevAndNextIndices(boolean expand) {
@@ -1434,6 +1436,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
         mShuffling = !mShuffling;
         savePosition();
         determinePrevAndNextIndices();
+        LogUtil.d(TAG, "shuffle mShuffling=" + mShuffling + ", mNextIndex=" + mNextIndex);
         publishState();
     }
 
@@ -1442,6 +1445,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
         mRepeating = repeatType;
         savePosition();
         determinePrevAndNextIndices();
+        LogUtil.d(TAG, "setRepeatType repeatType=" + repeatType + ", mNextIndex=" + mNextIndex);
         publishState();
     }
 
@@ -1569,7 +1573,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
                             position = mSettings.getInt(audio ? "position_in_audio_list" : "position_in_media_list", 0);
                             mSavedTime = mSettings.getLong(audio ? "position_in_song" : "position_in_media", -1);
                         }
-                        load(playList, position);
+                        load(playList, position, null);
                         if (!audio) {
                             boolean paused = mSettings.getBoolean(PreferencesActivity.VIDEO_PAUSED, !isPlaying());
                             float rate = mSettings.getFloat(PreferencesActivity.VIDEO_SPEED, getRate());
@@ -1699,7 +1703,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
 
     @MainThread
     public boolean hasPlaylist()  {
-        return getMediaListSize() > 1;
+        return getMediaListSize() > 0;
     }
 
     @MainThread
@@ -1840,7 +1844,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
             }
             mediaList.add(mediaWrapper);
         }
-        load(mediaList, position);
+        load(mediaList, position, null);
     }
 
     @MainThread
@@ -1859,12 +1863,14 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
 
     @MainThread
     public void load(MediaWrapper[] mediaList, int position) {
-        load(Arrays.asList(mediaList), position);
+        load(Arrays.asList(mediaList), position, null);
     }
 
     @MainThread
-    public void load(List<MediaWrapper> mediaList, int position) {
+    public void load(List<MediaWrapper> mediaList, int position, String title) {
         LogUtil.v(TAG, "Loading position " + ((Integer) position).toString() + " in " + mediaList.toString());
+
+        mPlaylistTitle = title;
 
         if (hasCurrentMedia())
             savePosition();
@@ -1899,6 +1905,15 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
         updateMediaQueue();
     }
 
+    private String mPlaylistTitle;
+
+    public void setPlaylistTitle(String title) {
+        mPlaylistTitle = title;
+    }
+    public String getPlaylistTitle() {
+        return mPlaylistTitle;
+    }
+
     private void updateMediaQueue() {
         LinkedList<MediaSessionCompat.QueueItem> queue = new LinkedList<>();
         long position = -1;
@@ -1921,7 +1936,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
     public void load(MediaWrapper media) {
         ArrayList<MediaWrapper> arrayList = new ArrayList<>();
         arrayList.add(media);
-        load(arrayList, 0);
+        load(arrayList, 0, null);
     }
 
     /**
@@ -2131,7 +2146,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
     public void append(List<MediaWrapper> mediaList) {
         if (!hasCurrentMedia())
         {
-            load(mediaList, 0);
+            load(mediaList, 0, null);
             return;
         }
 
@@ -2162,7 +2177,7 @@ public class PlaybackService extends MediaBrowserServiceCompat implements IVLCVo
     @MainThread
     public void insertNext(List<MediaWrapper> mediaList) {
         if (!hasCurrentMedia()) {
-            load(mediaList, 0);
+            load(mediaList, 0, null);
             return;
         }
 

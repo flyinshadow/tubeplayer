@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import com.facebook.ads.NativeAd;
 
 import org.videolan.libvlc.Media;
+import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
 
 /**
@@ -52,7 +53,7 @@ public class AdItem extends MediaWrapper implements Parcelable {
 
     @Override
     public int getItemType() {
-        return TYPE_AD;
+        return MediaLibraryItem.TYPE_AD;
     }
 
     public void setNativeAd(NativeAd nativeAd) {

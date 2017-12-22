@@ -65,11 +65,8 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ViewStubCompat;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.transition.Transition;
@@ -105,6 +102,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdScrollView;
 import com.facebook.ads.NativeAdView;
 import com.wenjoyai.tubeplayer.BuildConfig;
@@ -119,9 +117,9 @@ import com.wenjoyai.tubeplayer.ad.RotateAD;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
 import com.wenjoyai.tubeplayer.gui.PlaybackServiceActivity;
+import com.wenjoyai.tubeplayer.gui.VideoPlaylistDialog;
 import com.wenjoyai.tubeplayer.gui.RateDialog;
 import com.wenjoyai.tubeplayer.gui.ThemeFragment;
-import com.wenjoyai.tubeplayer.gui.audio.PlaylistAdapter;
 import com.wenjoyai.tubeplayer.gui.browser.FilePickerActivity;
 import com.wenjoyai.tubeplayer.gui.browser.FilePickerFragment;
 import com.wenjoyai.tubeplayer.gui.dialogs.AdvOptionsDialog;
@@ -135,7 +133,6 @@ import com.wenjoyai.tubeplayer.gui.dialogs.VolumeDialog;
 import com.wenjoyai.tubeplayer.gui.helpers.AsyncImageLoader;
 import com.wenjoyai.tubeplayer.gui.helpers.AudioUtil;
 import com.wenjoyai.tubeplayer.gui.helpers.OnRepeatListener;
-import com.wenjoyai.tubeplayer.gui.helpers.SwipeDragItemTouchHelperCallback;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
 import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
 import com.wenjoyai.tubeplayer.gui.tv.audioplayer.AudioPlayerActivity;
@@ -175,10 +172,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import pl.droidsonroids.gif.GifImageView;
 
 public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.Callback, IVLCVout.OnNewVideoLayoutListener,
         IPlaybackSettingsController, PlaybackService.Client.Callback, PlaybackService.Callback,
-        PlaylistAdapter.IPlayer, OnClickListener, View.OnLongClickListener, ScaleGestureDetector.OnScaleGestureListener {
+        OnClickListener, View.OnLongClickListener, ScaleGestureDetector.OnScaleGestureListener {
 
     public final static String TAG = "VLC/VideoPlayerActivity";
 
@@ -229,8 +230,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private GestureDetectorCompat mDetector = null;
 
     private ImageView mPlaylistToggle;
-    private RecyclerView mPlaylist;
-    private PlaylistAdapter mPlaylistAdapter;
+//    private RecyclerView mPlaylist;
+//    private PlaylistAdapter mPlaylistAdapter;
     private ImageView mPlaylistNext;
     private ImageView mPlaylistPrevious;
 
@@ -436,6 +437,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     /**************************  new  *********************/
 
 
+    private VideoPlaylistDialog mPlaylistDialog = new VideoPlaylistDialog();
+
     private static LibVLC LibVLC() {
         return VLCInstance.get();
     }
@@ -443,7 +446,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @Override
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     protected void onCreate(Bundle savedInstanceState) {
-        LogUtil.e(TAG, "--- onCreate");
+        LogUtil.e(TAG,"--- onCreate");
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
         applyTheme();
         super.onCreate(savedInstanceState);
@@ -524,7 +527,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         }
 
         mPlaylistToggle = (ImageView) findViewById(R.id.playlist_toggle);
-        mPlaylist = (RecyclerView) findViewById(R.id.video_playlist);
+//        mPlaylist = (RecyclerView) findViewById(R.id.video_playlist);
 
 //        mPopupPlayToggle = (ImageView) findViewById(R.id.popup_toggle);
         mTracks = (ImageView) findViewById(R.id.player_overlay_tracks);
@@ -548,7 +551,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mTextureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
                 @Override
                 public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-                    LogUtil.d(TAG, "onSurfaceTextureAvailable mService=" + mService + ", mTransitionEnd=" + mTransitionEnd);
+                    LogUtil.d(TAG, "onSurfaceTextureAvailable mService="+ mService + ", mTransitionEnd=" + mTransitionEnd);
                     if (mService != null && mTransitionEnd) {
                         if (!mSwitchingView) {
                             mHandler.sendEmptyMessage(START_PLAYBACK);
@@ -661,17 +664,17 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mMedialibrary = VLCApplication.getMLInstance();
 
         initAD();
-        if (ADManager.sLevel >= ADManager.Level_Big) {
+        if (ADManager.sLevel>=ADManager.Level_Big) {
             preloadWall();
         }
         //返回广告
-        if (ADManager.sLevel >= ADManager.Level_Big) {//如果是level 3才会加载返回广告
-            mHandler.postDelayed(mBackInterstitialRunnable, ADManager.back_ad_delay_time * 1000);
+        if (ADManager.sLevel>=ADManager.Level_Big){//如果是level 3才会加载返回广告
+            mHandler.postDelayed(mBackInterstitialRunnable,ADManager.back_ad_delay_time*1000);
         }
 
         initPauseNative();
         //gif
-        if (null != mGifImageView) {
+        if (null!= mGifImageView) {
             mHandler.postDelayed(mGifRunnable, 10 * 1000);
         }
 
@@ -886,7 +889,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     Runnable mGifRunnable = new Runnable() {
         @Override
         public void run() {
-            if (null != mGifImageView) {
+            if (null!= mGifImageView) {
                 if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded() && !ADManager.getInstance().mIsPauseADShown) {
                     mGifImageView.setVisibility(View.VISIBLE);
                     StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PLAY_GIF + "shown");
@@ -899,7 +902,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     Runnable mGifHideRunnable = new Runnable() {
         @Override
         public void run() {
-            if (null != mGifImageView) {
+            if (null!= mGifImageView) {
                 StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PLAY_GIF + "gone");
                 mGifImageView.setVisibility(View.GONE);
             }
@@ -918,6 +921,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         if (mIsLocked && mScreenOrientation == 99)
             setRequestedOrientation(mScreenOrientationLock);
+
+        loadFeedNative();
     }
 
     private void setHudClickListeners() {
@@ -976,10 +981,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             }
             mUri = uri;
             mTitle.setText(mService.getCurrentMediaWrapper().getTitle());
-            if (mPlaylist.getVisibility() == View.VISIBLE) {
-                mPlaylistAdapter.setCurrentIndex(mService.getCurrentMediaPosition());
-                mPlaylist.setVisibility(View.GONE);
-            }
+//            if (mPlaylist.getVisibility() == View.VISIBLE) {
+//                mPlaylistAdapter.setCurrentIndex(mService.getCurrentMediaPosition());
+//                mPlaylist.setVisibility(View.GONE);
+//            }
             showTitle();
             initUI();
             setPlaybackParameters();
@@ -1042,7 +1047,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     public void resetHudLayout() {
         if (mOverlayButtons == null)
             return;
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mOverlayButtons.getLayoutParams();
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mOverlayButtons.getLayoutParams();
         int orientation = getScreenOrientation(100);
         boolean portrait = orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT ||
                 orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
@@ -1085,7 +1090,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onStop() {
-        LogUtil.e(TAG, "---- onStop");
+        LogUtil.e(TAG,"---- onStop");
         super.onStop();
         mMedialibrary.resumeBackgroundOperations();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mServiceReceiver);
@@ -1136,14 +1141,14 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private void restoreBrightness() {
         if (mRestoreAutoBrightness != -1f) {
             int brightness = (int) (mRestoreAutoBrightness * 255f);
-            try {
+            try{
                 Settings.System.putInt(getContentResolver(),
                         Settings.System.SCREEN_BRIGHTNESS,
                         brightness);
                 Settings.System.putInt(getContentResolver(),
                         Settings.System.SCREEN_BRIGHTNESS_MODE,
                         Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
-            } catch (Exception e) {
+            } catch (Exception e){
                 e.printStackTrace();
             }
         }
@@ -1304,22 +1309,22 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             if (mPlaylistPrevious == null)
                 return; //player HUD not yet inflated
             mPlaylistNext = (ImageView) findViewById(R.id.playlist_next);
-            mPlaylistAdapter = new PlaylistAdapter(this);
-            mPlaylistAdapter.setService(mService);
-            final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            mPlaylist.setLayoutManager(layoutManager);
+//            mPlaylistAdapter = new PlaylistAdapter(this);
+//            mPlaylistAdapter.setService(mService);
+//            final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//            mPlaylist.setLayoutManager(layoutManager);
             mPlaylistToggle.setVisibility(View.VISIBLE);
             mPlaylistPrevious.setVisibility(View.VISIBLE);
             mPlaylistNext.setVisibility(View.VISIBLE);
-            mPlaylistToggle.setOnClickListener(VideoPlayerActivity.this);
-            mPlaylistPrevious.setOnClickListener(VideoPlayerActivity.this);
-            mPlaylistNext.setOnClickListener(VideoPlayerActivity.this);
+            mPlaylistToggle.setOnClickListener(this);
+            mPlaylistPrevious.setOnClickListener(this);
+            mPlaylistNext.setOnClickListener(this);
             mSeekbar.setNextFocusUpId(mPlaylistToggle.getId());
 
-            ItemTouchHelper.Callback callback = new SwipeDragItemTouchHelperCallback(mPlaylistAdapter);
-            ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
-            touchHelper.attachToRecyclerView(mPlaylist);
+//            ItemTouchHelper.Callback callback = new SwipeDragItemTouchHelperCallback(mPlaylistAdapter);
+//            ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+//            touchHelper.attachToRecyclerView(mPlaylist);
             if (AndroidUtil.isJellyBeanMR1OrLater && TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == View.LAYOUT_DIRECTION_RTL) {
                 mPlaylistPrevious.setImageResource(R.drawable.ic_playlist_next_circle);
                 mPlaylistNext.setImageResource(R.drawable.ic_playlist_previous_circle);
@@ -1487,12 +1492,12 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     }
 
     private static void start(Context context, Uri uri, String title, boolean fromStart, int openedPosition, ImageView sharedImageView, MediaWrapper media) {
-        Intent intent = getIntent(context, uri, title, fromStart, openedPosition);
+            Intent intent = getIntent(context, uri, title, fromStart, openedPosition);
         if (sharedImageView != null && !TextUtils.isEmpty(ViewCompat.getTransitionName(sharedImageView))) {
             intent.putExtra(PLAY_EXTRA_ITEM, media);
             intent.putExtra(PLAY_EXTRA_THUMB_TRANSITION_NAME, ViewCompat.getTransitionName(sharedImageView));
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    (Activity) context,
+                    (Activity)context,
                     sharedImageView,
                     ViewCompat.getTransitionName(sharedImageView));
 
@@ -1639,8 +1644,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mLockBackButton = false;
             mHandler.sendEmptyMessageDelayed(RESET_BACK_LOCK, 2000);
             Toast.makeText(VLCApplication.getAppContext(), getString(R.string.back_quit_lock), Toast.LENGTH_SHORT).show();
-        } else if (mPlaylist.getVisibility() == View.VISIBLE) {
-            togglePlaylist();
         } else if (mPlaybackSetting != DelayState.OFF) {
             endPlaybackSetting();
         } else if (VLCApplication.showTvUi() && mShowing && !mIsLocked) {
@@ -1667,24 +1670,24 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             return false;
         }
         //Handle playlist d-pad navigation
-        if (mPlaylist.hasFocus()) {
-            switch (keyCode) {
-                case KeyEvent.KEYCODE_DPAD_UP:
-                case KeyEvent.KEYCODE_DPAD_LEFT:
-                    mPlaylistAdapter.setCurrentIndex(mPlaylistAdapter.getCurrentIndex() - 1);
-                    break;
-                case KeyEvent.KEYCODE_DPAD_DOWN:
-                case KeyEvent.KEYCODE_DPAD_RIGHT:
-                    mPlaylistAdapter.setCurrentIndex(mPlaylistAdapter.getCurrentIndex() + 1);
-                    break;
-                case KeyEvent.KEYCODE_ENTER:
-                case KeyEvent.KEYCODE_DPAD_CENTER:
-                case KeyEvent.KEYCODE_BUTTON_A:
-                    mService.playIndex(mPlaylistAdapter.getCurrentIndex());
-                    break;
-            }
-            return true;
-        }
+//        if (mPlaylist.hasFocus()) {
+//            switch (keyCode) {
+//                case KeyEvent.KEYCODE_DPAD_UP:
+//                case KeyEvent.KEYCODE_DPAD_LEFT:
+//                    mPlaylistAdapter.setCurrentIndex(mPlaylistAdapter.getCurrentIndex() - 1);
+//                    break;
+//                case KeyEvent.KEYCODE_DPAD_DOWN:
+//                case KeyEvent.KEYCODE_DPAD_RIGHT:
+//                    mPlaylistAdapter.setCurrentIndex(mPlaylistAdapter.getCurrentIndex() + 1);
+//                    break;
+//                case KeyEvent.KEYCODE_ENTER:
+//                case KeyEvent.KEYCODE_DPAD_CENTER:
+//                case KeyEvent.KEYCODE_BUTTON_A:
+//                    mService.playIndex(mPlaylistAdapter.getCurrentIndex());
+//                    break;
+//            }
+//            return true;
+//        }
         if (mShowing || (mFov == 0f && keyCode == KeyEvent.KEYCODE_DPAD_DOWN))
             showOverlayTimeout(OVERLAY_TIMEOUT);
         switch (keyCode) {
@@ -2085,7 +2088,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     public void update() {
-        updateList();
+        if (mPlaylistDialog != null) {
+            mPlaylistDialog.updateList();
+        }
     }
 
     @Override
@@ -2126,7 +2131,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 if (mRotateAD != null) {
                     mRotateAD.setVisibility(View.INVISIBLE);
                 }
-                if (mNativeFrameLayout != null && mNativeFrameLayout.getVisibility() == View.VISIBLE) {
+                if (mNativeFrameLayout != null && mNativeFrameLayout.getVisibility()==View.VISIBLE) {
                     mNativeFrameLayout.startAnimation(mTranstionAnimOut);
                     mNativeFrameLayout.setVisibility(View.GONE);
                 }
@@ -2658,7 +2663,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (mNativeFrameLayout != null && mNativeFrameLayout.getVisibility() == View.VISIBLE) {
+        if (mNativeFrameLayout != null && mNativeFrameLayout.getVisibility()==View.VISIBLE) {
             mNativeFrameLayout.startAnimation(mTranstionAnimOut);
             mNativeFrameLayout.setVisibility(View.GONE);
         }
@@ -2674,10 +2679,11 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             if (event.getAction() == MotionEvent.ACTION_UP)
                 endPlaybackSetting();
             return true;
-        } else if (mPlaylist.getVisibility() == View.VISIBLE) {
-            togglePlaylist();
-            return true;
         }
+//        else if (mPlaylist.getVisibility() == View.VISIBLE) {
+//            togglePlaylist();
+//            return true;
+//        }
         if (mTouchControls == 0 || mIsLocked) {
             // locked or swipe disabled, only handle show/hide & ignore all actions
             if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -2983,40 +2989,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         });
         popupMenu.show();
         showOverlay();
-    }
-
-    @Override
-    public void onPopupMenu(View anchor, final int position) {
-        PopupMenu popupMenu = new PopupMenu(this, anchor);
-        popupMenu.getMenuInflater().inflate(R.menu.audio_player, popupMenu.getMenu());
-
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.audio_player_mini_remove) {
-                    if (mService != null) {
-                        mPlaylistAdapter.remove(position);
-                        mService.remove(position);
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
-        popupMenu.show();
-    }
-
-    @Override
-    public void updateList() {
-        if (mService == null || mPlaylistAdapter == null)
-            return;
-
-        mPlaylistAdapter.update(mService.getMedias());
-    }
-
-    @Override
-    public void onSelectionSet(int position) {
-        mPlaylist.scrollToPosition(position);
     }
 
     @Override
@@ -4057,15 +4029,23 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     }
 
     private void togglePlaylist() {
-        if (mPlaylist.getVisibility() == View.VISIBLE) {
-            mPlaylist.setVisibility(View.GONE);
-            mPlaylist.setOnClickListener(null);
-            return;
+//        if (mPlaylist.getVisibility() == View.VISIBLE) {
+//            mPlaylist.setVisibility(View.GONE);
+//            mPlaylist.setOnClickListener(null);
+//            return;
+//        }
+//        hideOverlay(true);
+//        mPlaylist.setVisibility(View.VISIBLE);
+//        mPlaylist.setAdapter(mPlaylistAdapter);
+//        updateList();
+        if (mPlaylistDialog == null)
+            mPlaylistDialog = new VideoPlaylistDialog();
+        mPlaylistDialog.setPlaybackService(mService);
+        if (mPlaylistDialog.getDialog() != null && mPlaylistDialog.getDialog().isShowing()) {
+            mPlaylistDialog.dismiss();
+        } else {
+            mPlaylistDialog.show(getSupportFragmentManager(), VideoPlaylistDialog.KEY);
         }
-        hideOverlay(true);
-        mPlaylist.setVisibility(View.VISIBLE);
-        mPlaylist.setAdapter(mPlaylistAdapter);
-        updateList();
     }
 
     private BroadcastReceiver mBtReceiver = AndroidUtil.isICSOrLater ? new BroadcastReceiver() {
@@ -4545,6 +4525,25 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 //            });
 //        }
     }
+    private List<NativeAd> mNativeAdList;
+    private boolean checkAds() {
+        return mNativeAdList != null && mNativeAdList.size() > 0;
+    }
+
+    private ADManager.ADNumListener mAdNumListener = new ADManager.ADNumListener() {
+        @Override
+        public void onLoadedSuccess(List<NativeAd> list, boolean needGif) {
+            mNativeAdList = list;
+            if (checkAds() && mPlaylistDialog != null) {
+                mPlaylistDialog.setNativeAds(mNativeAdList);
+            }
+        }
+    };
+
+    public void loadFeedNative() {
+        ADManager.getInstance().getNativeAdlist(mAdNumListener);
+    }
+
 
     private void changeSpeedMenu(float speed) {
         String str = String.format("%.1f", speed);
@@ -4686,6 +4685,11 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         timer.start();
     }
 
+    /**
+     * 倒计时--显示分秒
+     * @param second
+     * @return
+     */
     public String change(int second) {
         int h = 0;
         int d = 0;
