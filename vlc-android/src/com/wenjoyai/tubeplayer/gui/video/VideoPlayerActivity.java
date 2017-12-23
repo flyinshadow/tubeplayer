@@ -536,13 +536,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mGoBack = (ImageView) findViewById(R.id.player_goback);
 
 
-        /**************************  new  *********************/
-        mMenuScrollview = (PlayerScrollview) findViewById(R.id.player_menu_scrollview);
-        mMenuLinearLayout = (LinearLayout) findViewById(R.id.player_menu_ll);
-        initMenu();
-
-
-        /**************************  new  *********************/
         mScreenOrientation = Integer.valueOf(
                 mSettings.getString("screen_orientation", "99" /*SCREEN ORIENTATION SENSOR*/));
 
@@ -662,6 +655,17 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mCurrentSize = mSettings.getInt(PreferencesActivity.VIDEO_RATIO, SURFACE_BEST_FIT);
         }
         mMedialibrary = VLCApplication.getMLInstance();
+
+
+        /**************************  new  *********************/
+        mScreenWidth = mScreen.widthPixels;
+        mScreenHeight = mScreen.heightPixels;
+        mMenuScrollview = (PlayerScrollview) findViewById(R.id.player_menu_scrollview);
+        mMenuLinearLayout = (LinearLayout) findViewById(R.id.player_menu_ll);
+        initMenu();
+
+
+        /**************************  new  *********************/
 
         initAD();
         if (ADManager.sLevel>=ADManager.Level_Big) {
@@ -793,7 +797,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             });
             mItemMap.put(model.menuType, playerItemLayout);
             //将布局填充器加载到LinearLayout中进行显示
-            mMenuLinearLayout.addView(playerItemLayout);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mScreenWidth/6, ViewGroup.LayoutParams.MATCH_PARENT);
+            mMenuLinearLayout.addView(playerItemLayout,layoutParams);
         }
         //back view
         View backView = LayoutInflater.from(VideoPlayerActivity.this).inflate(R.layout.player_menu_item_back, null);
@@ -803,13 +808,16 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 mMenuScrollview.left();
             }
         });
-        mMenuLinearLayout.addView(backView, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        mMenuLinearLayout.addView(backView, new LinearLayout.LayoutParams(mScreenWidth/6, ViewGroup.LayoutParams.MATCH_PARENT));
         //填充的view
-        View mView = new View(this);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ScreenUtils.dip2px(this, 180), ViewGroup.LayoutParams.MATCH_PARENT);
+        mView = new View(this);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mScreenWidth/2, ViewGroup.LayoutParams.MATCH_PARENT);
         mMenuLinearLayout.addView(mView, layoutParams);
         mMenuScrollview.right();
     }
+    View mView;
+    private int mScreenWidth = 0;
+    private int mScreenHeight = 0;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void initTransition() {
@@ -1042,6 +1050,20 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 //        if (mService != null && mService.isPlaying() && RateDialog.isShowing()) {
 //            doPlayPause();
 //        }
+
+        // 横竖屏切换----更新图标列表的长度
+        try {
+            // Checks the orientation of the screen
+            if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                mView.getLayoutParams().width = mScreenHeight -mScreenWidth/2;
+                mView.setLayoutParams(mView.getLayoutParams());
+            } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                mView.getLayoutParams().width = mScreenWidth/2;
+                mView.setLayoutParams(mView.getLayoutParams());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void resetHudLayout() {
