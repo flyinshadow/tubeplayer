@@ -102,7 +102,7 @@ public class ADManager {
         public boolean isShown = false;
         public int errorcode = 0;//0是成功
 
-        public NativeWrapper(String adId, NativeAd nativeAd, int errorcode {
+        public NativeWrapper(String adId, NativeAd nativeAd, int errorcode) {
             this.adId = adId;
             this.nativeAd = nativeAd;
             this.errorcode = errorcode;

@@ -741,7 +741,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         fillMenu(list);
     }
 
-    private boolean isMux = false;
 
     private void fillMenu(List<PlayerMenuModel> list) {
         mMenuLinearLayout.removeAllViews();
@@ -757,12 +756,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     switch (model.menuType) {
                         case mute://静音
                             mItemMap.get(model.menuType).setSelected(false);
-                            // TODO: 2017/12/2 后去当前是否静音模式，设置
-                            if (!isMux) {
-
-                            } else {
-
-                            }
+                            // 后去当前是否静音模式，设置
+                            mute(!mMute);
                             break;
                         case speed:
                             showFragment(ID_PLAYBACK_SPEED);
@@ -1069,7 +1064,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     public void resetHudLayout() {
         if (mOverlayButtons == null)
             return;
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mOverlayButtons.getLayoutParams();
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mOverlayButtons.getLayoutParams();
         int orientation = getScreenOrientation(100);
         boolean portrait = orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT ||
                 orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
@@ -2157,6 +2152,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     mNativeFrameLayout.startAnimation(mTranstionAnimOut);
                     mNativeFrameLayout.setVisibility(View.GONE);
                 }
+                //根据当前播放速度更新菜单列表
                 changeSpeedMenu(mService.getRate());
                 break;
             case MediaPlayer.Event.Paused:
@@ -2173,6 +2169,12 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             case MediaPlayer.Event.EndReached:
                 /* Don't end the activity if the media has subitems since the next child will be
                  * loaded by the PlaybackService */
+                //定时器选择---播放完当前video即退出
+                if (mTimeEnd){
+                    // TODO: 2017/12/23
+                    exitOK();
+                    break;
+                }
                 if (!mHasSubItems)
                     endReached();
                 break;
@@ -4646,6 +4648,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                                     restart(60);
                                 } else if (timeType == 5) {
                                     // TODO: 2017/12/22
+                                    oncancel();
                                     //当前视频播放完成，怎么显示？seek的时候还要重新
                                     if (null != mItemMap.get(MenuType.timer)) {
                                         mItemMap.get(MenuType.timer).getContentTv().setText("End");

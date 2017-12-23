@@ -52,7 +52,7 @@
             <com.wenjoyai.tubeplayer.widget.PlayerScrollview
                 android:id="@+id/player_menu_scrollview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:overScrollMode="never"
                 android:fitsSystemWindows="false"
                 android:visibility="gone"
@@ -102,7 +102,7 @@
             android:id="@+id/player_hud_stub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout="@layout/player_hud"
+            android:layout="@layout/player_control"
             android:layout_marginBottom="@dimen/overlay_margin"
             android:layout_marginRight="@dimen/overlay_margin"
             android:layout_marginLeft="@dimen/overlay_margin"
