@@ -102,7 +102,7 @@ public class ADManager {
         public boolean isShown = false;
         public int errorcode = 0;//0是成功
 
-        public NativeWrapper(String adId, NativeAd nativeAd, int errorcode) {
+        public NativeWrapper(String adId, NativeAd nativeAd, int errorcode {
             this.adId = adId;
             this.nativeAd = nativeAd;
             this.errorcode = errorcode;
@@ -232,6 +232,7 @@ public class ADManager {
                     tempList.add(mReadyQueue.get(i).nativeAd);
                 }
             }
+            //bugfix 不管加载个数是否大于0都要给上层，因为gif的时候广告成功个数就是0
             mListener.onLoadedSuccess(tempList, needGif);
         }
     }
