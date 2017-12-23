@@ -359,7 +359,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                         if (mIsResumed) {
                             int interval = 0;
                             if (mOpenCount == 1) {
-                                interval = 12*1000;
+                                interval = 15*1000;
                             } else {
                                 interval = 0;
                             }
