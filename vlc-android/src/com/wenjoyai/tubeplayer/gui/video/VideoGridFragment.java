@@ -345,28 +345,6 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         return null;
     }
 
-
-    /**
-     * 设置添加屏幕的背景透明度
-     *
-     * @param bgAlpha 屏幕透明度0.0-1.0 1表示完全不透明
-     */
-    public void setBackgroundAlpha(float bgAlpha) {
-        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-        lp.alpha = bgAlpha;
-        getActivity().getWindow().setAttributes(lp);
-        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-    }
-
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-//        if (mFolderGroup != null) {
-//            menu.findItem(R.id.ml_menu_view_mode).setVisible(false);
-//        }
-    }
-
     public void onStart() {
         LogUtil.d(TAG, "aaaa onStart video size:" + mVideoAdapter.getItemCount());
 
