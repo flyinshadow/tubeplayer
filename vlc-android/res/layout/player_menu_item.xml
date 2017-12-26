@@ -22,7 +22,7 @@
             android:tint="@color/grey50"
             tools:src="@drawable/ic_player_mute"
             app:borderWidth="0dp"
-            android:scaleType="center"
+            app:fabSize="normal"
             tools:backgroundTint="@color/bg_player_item"
             app:rippleColor="@color/ripple_color" />
 

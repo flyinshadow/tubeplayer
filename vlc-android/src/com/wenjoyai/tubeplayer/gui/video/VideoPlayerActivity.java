@@ -127,7 +127,6 @@ import com.wenjoyai.tubeplayer.gui.dialogs.BrightnessDialog;
 import com.wenjoyai.tubeplayer.gui.dialogs.JumpToTimeDialog;
 import com.wenjoyai.tubeplayer.gui.dialogs.PlaybackSpeedDialog;
 import com.wenjoyai.tubeplayer.gui.dialogs.SelectChapterDialog;
-import com.wenjoyai.tubeplayer.gui.dialogs.SleepTimerDialog;
 import com.wenjoyai.tubeplayer.gui.dialogs.TimerDialog;
 import com.wenjoyai.tubeplayer.gui.dialogs.VolumeDialog;
 import com.wenjoyai.tubeplayer.gui.helpers.AsyncImageLoader;
@@ -143,7 +142,6 @@ import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.FileUtils;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.Permissions;
-import com.wenjoyai.tubeplayer.util.ScreenUtils;
 import com.wenjoyai.tubeplayer.util.Strings;
 import com.wenjoyai.tubeplayer.util.SubtitlesDownloader;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
@@ -172,10 +170,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-import pl.droidsonroids.gif.GifImageView;
 
 public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.Callback, IVLCVout.OnNewVideoLayoutListener,
         IPlaybackSettingsController, PlaybackService.Client.Callback, PlaybackService.Callback,
@@ -755,7 +749,11 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     PlayerMenuModel model = (PlayerMenuModel) view.getTag();
                     switch (model.menuType) {
                         case mute://静音
-                            mItemMap.get(model.menuType).setSelected(false);
+                            if (!mMute) {
+                                mItemMap.get(model.menuType).setSelected(false);
+                            }else {
+                                mItemMap.get(model.menuType).reset();
+                            }
                             // 后去当前是否静音模式，设置
                             mute(!mMute);
                             break;

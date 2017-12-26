@@ -34,21 +34,37 @@
 
     </LinearLayout>
 
+    <!--<com.wenjoyai.tubeplayer.widget.MSeekBar-->
+        <!--android:id="@+id/seekbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:indeterminate="false"-->
+        <!--android:max="100"-->
+        <!--android:maxHeight="@dimen/seekbar_height"-->
+        <!--android:minHeight="@dimen/seekbar_height"-->
+        <!--android:progress="50"-->
+        <!--app:textBackground="@mipmap/bg_seekbar_display1"-->
+        <!--app:textOrientation="top"-->
+        <!--app:textSize="14sp"-->
+        <!---->
+        <!--android:progressDrawable="?attr/po_seekbar"-->
+        <!--android:splitTrack="false"-->
+        <!--android:thumb="?attr/seekbar_thumb" />-->
+
     <com.wenjoyai.tubeplayer.widget.MSeekBar
         android:id="@+id/seekbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:indeterminate="false"
+        android:layout_marginTop="10dp"
         android:max="100"
-        android:maxHeight="@dimen/seekbar_height"
-        android:minHeight="@dimen/seekbar_height"
         android:progress="50"
-        app:textBackground="@mipmap/bg_seekbar_display1"
-        app:textOrientation="top"
-        app:textSize="14sp"
+        android:maxHeight="2dp"
+        android:minHeight="2dp"
         android:progressDrawable="?attr/po_seekbar"
-        android:splitTrack="false"
-        android:thumb="?attr/seekbar_thumb" />
+        app:textBackground="@mipmap/bg_seekbar_display1"
+        app:textColor="@color/common_accent"
+        app:textOrientation="top"
+        app:textSize="16sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

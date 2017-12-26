@@ -21,7 +21,6 @@ import com.wenjoyai.tubeplayer.R;
  * @org mtime.com
  */
 public class MSeekBar extends SeekBar {
-
     /**
      * SeekBar数值文字颜色
      */
@@ -112,7 +111,6 @@ public class MSeekBar extends SeekBar {
         }
         ta.recycle();
 
-
         //设置画笔
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -127,15 +125,6 @@ public class MSeekBar extends SeekBar {
             //设置SeekBar顶部数值文字预留空间，左右为数值背景图片的一半，底部为数值背景图片高度加五的间隔
             setPadding((int) Math.ceil(mBgWidth) / 2, 0, (int) Math.ceil(mBgWidth) / 2, (int) Math.ceil(mBgHeight) + 5);
         }
-    }
-    /**
-     * 获取主题颜色
-     * @return
-     */
-    private int getColorPrimary(){
-        TypedValue typedValue = new  TypedValue();
-        getContext().getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
-        return typedValue.data;
     }
 
     @Override
@@ -157,15 +146,17 @@ public class MSeekBar extends SeekBar {
         float textY = (float) (mTextBaseLineY + bgY + (0.16 * mBgHeight / 2) - 10);
 
         //绘制文字和背景
-        canvas.drawBitmap(mBackgroundBitmap, bgX, bgY, mPaint);
+//        canvas.drawBitmap(mBackgroundBitmap, bgX, bgY, mPaint);
         canvas.drawText(mText, textX, textY, mPaint);
     }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         invalidate();
         return super.onTouchEvent(event);
     }
+
     /**
      * 计算SeekBar数值文字的显示位置
      */
