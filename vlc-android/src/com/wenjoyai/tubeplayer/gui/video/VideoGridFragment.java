@@ -22,7 +22,6 @@ package com.wenjoyai.tubeplayer.gui.video;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,13 +34,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -53,9 +49,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -94,6 +88,7 @@ import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.ShareUtils;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
 import com.wenjoyai.tubeplayer.widget.MyBottomSheetDialog;
+import com.wenjoyai.tubeplayer.widget.MyMenuItem;
 
 import org.videolan.libvlc.Media;
 import org.videolan.libvlc.util.AndroidUtil;
@@ -106,6 +101,10 @@ import org.videolan.medialibrary.media.MediaWrapper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.wenjoyai.tubeplayer.widget.MyMenuItem.findItem;
+import static com.wenjoyai.tubeplayer.widget.MyMenuItem.makeValidMenu;
+import static com.wenjoyai.tubeplayer.widget.MyMenuItem.resetMenu;
 
 public class VideoGridFragment extends MediaBrowserFragment implements MediaUpdatedCb, ISortable, SwipeRefreshLayout.OnRefreshListener, MediaAddedCb, Filterable, IEventsHandler {
 
@@ -143,7 +142,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     final static int ID_PLAY_FROM_START = 1;
     final static int ID_PLAY_ALL = 2;
-    //    final static int ID_APPEND = 3;
+    //    final static int ID_AUDIO_APPEND = 3;
     final static int ID_PLAY_AS_AUDIO = 4;
     final static int ID_RENAME = 5;
     final static int ID_DELETE = 6;
@@ -242,8 +241,8 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         dialog.setOwnerActivity(getActivity());
         dialog.setContentView(popView);
 
-        MyMenuItem[] tmpMenus = media instanceof MediaGroup ? menusGroup : menusVideo;
-        MyMenuItem[] myMenus = Arrays.copyOf(tmpMenus, tmpMenus.length);
+        MyMenuItem[] myMenus = media instanceof MediaGroup ? menusGroup : menusVideo;
+        resetMenu(myMenus);
         if (media instanceof Group) {
             if (!AndroidUtil.isHoneycombOrLater) {
 //                menu.findItem(R.id.video_list_append).setVisible(false);
@@ -286,7 +285,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     case ID_GROUP_PLAY:
                         MediaUtils.openList(getActivity(), ((Group) media).getAll(), 0, null);
                         break;
-//                    case ID_APPEND:
+//                    case ID_AUDIO_APPEND:
 //                        if (media instanceof MediaGroup)
 //                            mService.append(((MediaGroup) media).getAll());
 //                        else
@@ -303,13 +302,13 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                 dialog.dismiss();
             }
         });
-        menuList.setAdapter(new MenuAdapter(getContext(), R.layout.context_menu_item, Arrays.asList(menus)));
+        menuList.setAdapter(new MyMenuItem.MyMenuAdapter(getContext(), R.layout.context_menu_item, Arrays.asList(menus)));
 
         // 点击弹出窗口
         dialog.show();
     }
 
-    private MyMenuItem[] setPopupWindowItems(MyMenuItem[] myMenus, MediaWrapper mediaWrapper) {
+    private MyMenuItem[] setPopupWindowItems(MyMenuItem[] myMenu, MediaWrapper mediaWrapper) {
 //        long lastTime = mediaWrapper.getTime();
 //        if (lastTime > 0)
 //            menu.findItem(R.id.video_list_play_from_start).setVisible(true);
@@ -321,50 +320,14 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         if (media.getMeta(Media.Meta.Title) != null)
             hasInfo = true;
         media.release();
-        findItem(myMenus, ID_INFO).setValid(hasInfo);
-        findItem(myMenus, ID_DELETE).setValid(canWrite);
+        findItem(myMenu, ID_INFO).setValid(hasInfo);
+        findItem(myMenu, ID_DELETE).setValid(canWrite);
         if (!AndroidUtil.isHoneycombOrLater) {
-            findItem(myMenus, ID_PLAY_ALL).setValid(false);
-//            findItem(myMenus, ID_APPEND).setValid(false);
+            findItem(myMenu, ID_PLAY_ALL).setValid(false);
+//            findItem(myMenus, ID_AUDIO_APPEND).setValid(false);
         }
-        List<MyMenuItem> myMenuList = new ArrayList<>();
-        for (MyMenuItem myMenuItem : myMenus) {
-            if (myMenuItem.isValid()) {
-                myMenuList.add(myMenuItem);
-            }
-        }
-        return myMenuList.toArray(new MyMenuItem[myMenuList.size()]);
-    }
 
-    MyMenuItem findItem(MyMenuItem[] myMenus, int id) {
-        for (MyMenuItem myMenu : myMenus) {
-            if (myMenu.getId() == id) {
-                return myMenu;
-            }
-        }
-        return null;
-    }
-
-
-    /**
-     * 设置添加屏幕的背景透明度
-     *
-     * @param bgAlpha 屏幕透明度0.0-1.0 1表示完全不透明
-     */
-    public void setBackgroundAlpha(float bgAlpha) {
-        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-        lp.alpha = bgAlpha;
-        getActivity().getWindow().setAttributes(lp);
-        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-    }
-
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-//        if (mFolderGroup != null) {
-//            menu.findItem(R.id.ml_menu_view_mode).setVisible(false);
-//        }
+        return makeValidMenu(myMenu);
     }
 
     public void onStart() {
@@ -1052,18 +1015,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     @Override
     public void onCtxClick(View v, final int position, MediaLibraryItem item) {
-//        if (mActionMode != null)
-//            return;
+        if (mActionMode != null)
+            return;
 //        mGridView.openContextMenu(position);
-
         popMenu(position);
-    }
-
-    private void showPopupMenu(View anchor, int menuRes, PopupMenu.OnMenuItemClickListener onMenuItemClickListener) {
-        PopupMenu popup = new PopupMenu(getActivity(), anchor);
-        popup.getMenuInflater().inflate(menuRes, popup.getMenu());
-        popup.setOnMenuItemClickListener(onMenuItemClickListener);
-        popup.show();
     }
 
     @Override
@@ -1214,64 +1169,4 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         void fresh();
     }
 
-    public static class MyMenuItem {
-
-        private int id;
-        private int name;
-        private int imageId;
-        private boolean valid = true;
-
-        MyMenuItem(int id, int name, int imageId) {
-            this.id = id;
-            this.name = name;
-            this.imageId = imageId;
-        }
-
-        int getId() {
-            return id;
-        }
-
-        public int getName() {
-            return name;
-        }
-
-        int getImageId() {
-            return imageId;
-        }
-
-        boolean isValid() {
-            return valid;
-        }
-
-        void setValid(boolean valid) {
-            this.valid = valid;
-        }
-    }
-
-    public static class MenuAdapter extends ArrayAdapter<MyMenuItem> {
-
-        private int resId;
-
-        public MenuAdapter(Context context, int resource, List<MyMenuItem> objects) {
-            super(context, resource, objects);
-            resId = resource;
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            MyMenuItem item = getItem(position);
-            View view;
-            if (convertView == null) {
-                view = LayoutInflater.from(getContext()).inflate(resId, parent, false);
-            } else {
-                view = convertView;
-            }
-            ImageView itemImage = (ImageView) view.findViewById(R.id.image);
-            TextView itemName = (TextView) view.findViewById(R.id.name);
-            itemImage.setImageResource(item.getImageId());
-            itemName.setText(item.getName());
-            return view;
-        }
-    }
 }

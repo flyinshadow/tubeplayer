@@ -33,6 +33,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewCompat;
@@ -42,13 +43,18 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import org.videolan.medialibrary.Medialibrary;
 import org.videolan.medialibrary.media.MediaLibraryItem;
 import org.videolan.medialibrary.media.MediaWrapper;
+
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.databinding.PlaylistActivityBinding;
@@ -63,16 +69,21 @@ import com.wenjoyai.tubeplayer.interfaces.IEventsHandler;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.FileUtils;
 import com.wenjoyai.tubeplayer.util.ShareUtils;
+import com.wenjoyai.tubeplayer.widget.MyBottomSheetDialog;
+import com.wenjoyai.tubeplayer.widget.MyMenuItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.wenjoyai.tubeplayer.widget.MyMenuItem.*;
+import static com.wenjoyai.tubeplayer.widget.MyMenuItem.MenuAudioListBrowser.*;
+
 public class PlaylistActivity extends AudioPlayerContainerActivity implements IEventsHandler, ActionMode.Callback, View.OnClickListener {
 
     public final static String TAG = "VLC/PlaylistActivity";
-    public final static String TAG_FAB_VISIBILITY= "FAB";
+    public final static String TAG_FAB_VISIBILITY = "FAB";
 
     private AudioBrowserAdapter mAdapter;
     private MediaLibraryItem mPlaylist;
@@ -97,8 +108,8 @@ public class PlaylistActivity extends AudioPlayerContainerActivity implements IE
 
         mBinding.songs.setLayoutManager(new LinearLayoutManager(this));
         mBinding.songs.setAdapter(mAdapter);
-        final int fabVisibility =  savedInstanceState != null
-            ? savedInstanceState.getInt(TAG_FAB_VISIBILITY) : -1;
+        final int fabVisibility = savedInstanceState != null
+                ? savedInstanceState.getInt(TAG_FAB_VISIBILITY) : -1;
 
         if (mPlaylist != null && !TextUtils.isEmpty(mPlaylist.getArtworkMrl())) {
             VLCApplication.runBackground(new Runnable() {
@@ -129,7 +140,7 @@ public class PlaylistActivity extends AudioPlayerContainerActivity implements IE
         ViewCompat.setNestedScrollingEnabled(mBinding.songs, false);
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) mBinding.fab.getLayoutParams();
         lp.setAnchorId(mBinding.songs.getId());
-        lp.anchorGravity = Gravity.BOTTOM|Gravity.RIGHT|Gravity.END;
+        lp.anchorGravity = Gravity.BOTTOM | Gravity.RIGHT | Gravity.END;
         lp.bottomMargin = getResources().getDimensionPixelSize(R.dimen.default_margin);
         lp.setBehavior(new FloatingActionButtonBehavior(PlaylistActivity.this, null));
         mBinding.fab.setLayoutParams(lp);
@@ -193,11 +204,14 @@ public class PlaylistActivity extends AudioPlayerContainerActivity implements IE
     @Override
     public void onCtxClick(View anchor, final int position, final MediaLibraryItem mediaItem) {
         if (mActionMode == null)
-            mBinding.songs.openContextMenu(position);
+//            mBinding.songs.openContextMenu(position);
+            popMenu(position);
+
     }
 
     @Override
-    public void onUpdateFinished(RecyclerView.Adapter adapter) {}
+    public void onUpdateFinished(RecyclerView.Adapter adapter) {
+    }
 
     @Override
     protected void onPlayerStateChanged(View bottomSheet, int newState) {
@@ -259,7 +273,8 @@ public class PlaylistActivity extends AudioPlayerContainerActivity implements IE
             case R.id.action_mode_audio_append:
                 mService.append(tracks);
                 break;
-            case R.id.action_mode_audio_add_playlist:;
+            case R.id.action_mode_audio_add_playlist:
+                ;
                 UiTools.addToPlaylist(this, tracks);
                 break;
             case R.id.action_mode_audio_info:
@@ -295,12 +310,81 @@ public class PlaylistActivity extends AudioPlayerContainerActivity implements IE
         startActivity(i);
     }
 
+    public void popMenu(final int position) {
+        final MediaWrapper media = (MediaWrapper) mAdapter.getItem(position);
+
+        View popView = LayoutInflater.from(this).inflate(R.layout.context_menu, null);
+        ((TextView) popView.findViewById(R.id.title)).setText(media.getTitle());
+        final BottomSheetDialog dialog = new MyBottomSheetDialog(this);
+        dialog.setOwnerActivity(this);
+        dialog.setContentView(popView);
+
+        resetMenu(menuAudio);
+        final MyMenuItem[] menus = setPopupWindowItems(menuAudio, media);
+
+        ListView menuList = (ListView) popView.findViewById(R.id.menu_list);
+        menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int menuPos, long id) {
+                MyMenuItem myMenuItem = menus[menuPos];
+                int menuId = myMenuItem.getId();
+                if (menuId == ID_AUDIO_SET_SONG) {
+                    AudioUtil.setRingtone(media, PlaylistActivity.this);
+                } else if (menuId == ID_AUDIO_APPEND) {
+                    mService.append(media);
+                } else if (menuId == ID_AUDIO_INSERT_NEXT) {
+                    mService.insertNext(media);
+                } else if (menuId == ID_AUDIO_DELETE) {
+                    mAdapter.remove(media);
+                    UiTools.snackerWithCancel(getWindow().getDecorView(), getString(R.string.file_deleted), new Runnable() {
+                        @Override
+                        public void run() {
+                            deleteMedia(media);
+                        }
+                    }, new Runnable() {
+                        @Override
+                        public void run() {
+                            mAdapter.addItem(position, media);
+                        }
+                    });
+                } else if (menuId == ID_AUDIO_INFO) {
+                    showInfoDialog(media);
+                } else if (menuId == ID_AUDIO_ADD_PLAYLIST) {
+                    FragmentManager fm = getSupportFragmentManager();
+                    SavePlaylistDialog savePlaylistDialog = new SavePlaylistDialog();
+                    Bundle args = new Bundle();
+                    args.putParcelableArray(SavePlaylistDialog.KEY_NEW_TRACKS, media.getTracks(mMediaLibrary));
+                    savePlaylistDialog.setArguments(args);
+                    savePlaylistDialog.show(fm, "fragment_add_to_playlist");
+                } else if (menuId == ID_AUDIO_SHARE) {
+                    ShareUtils.shareMedia(PlaylistActivity.this, media);
+                }
+                dialog.dismiss();
+            }
+        });
+        menuList.setAdapter(new MyMenuItem.MyMenuAdapter(this, R.layout.context_menu_item, Arrays.asList(menus)));
+
+        // 点击弹出窗口
+        dialog.show();
+    }
+
+    private MyMenuItem[] setPopupWindowItems(MyMenuItem[] myMenu, MediaLibraryItem mediaItem) {
+        findItem(myMenu, ID_AUDIO_PLAY_ALL).setValid(true);
+        findItem(myMenu, ID_AUDIO_INFO).setValid(true);
+        findItem(myMenu, ID_AUDIO_PLAY_ALL).setValid(false);
+        findItem(myMenu, ID_AUDIO_SET_SONG).setValid(AndroidDevices.isPhone());
+        //Hide delete if we cannot
+        String location = ((MediaWrapper) mediaItem).getLocation();
+        findItem(myMenu, ID_AUDIO_DELETE).setValid(FileUtils.canWrite(location));
+        return makeValidMenu(myMenu);
+    }
+
     protected void setContextMenuItems(Menu menu, int position) {
         menu.setGroupVisible(R.id.songs_view_only, true);
         menu.findItem(R.id.audio_list_browser_play_all).setVisible(false);
         menu.setGroupVisible(R.id.phone_only, AndroidDevices.isPhone());
         //Hide delete if we cannot
-        String location = ((MediaWrapper)mAdapter.getItem(position)).getLocation();
+        String location = ((MediaWrapper) mAdapter.getItem(position)).getLocation();
         menu.findItem(R.id.audio_list_browser_delete).setVisible(FileUtils.canWrite(location));
     }
 
@@ -354,7 +438,7 @@ public class PlaylistActivity extends AudioPlayerContainerActivity implements IE
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         if (menuInfo == null)
             return;
-        ContextMenuRecyclerView.RecyclerContextMenuInfo info = (ContextMenuRecyclerView.RecyclerContextMenuInfo)menuInfo;
+        ContextMenuRecyclerView.RecyclerContextMenuInfo info = (ContextMenuRecyclerView.RecyclerContextMenuInfo) menuInfo;
         getMenuInflater().inflate(R.menu.audio_list_browser, menu);
 
         setContextMenuItems(menu, info.position);

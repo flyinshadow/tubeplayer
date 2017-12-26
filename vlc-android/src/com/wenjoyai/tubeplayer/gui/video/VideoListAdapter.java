@@ -532,7 +532,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                         list.add(item);
                 }
                 if (i < position)
-                    offset += ((MediaGroup)mw).size()-1;
+                    offset += ((MediaGroup) mw).size() - 1;
             } else {
                 list.add(mw);
             }
@@ -973,6 +973,10 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     }
 
     private void prepareAdItems(ArrayList<MediaWrapper> items) {
+        if (mCurrentViewMode == VIEW_MODE_FOLDER) {
+            //文件夹视图不展示广告
+            return;
+        }
         synchronized (mNativeAd) {
             if (mNativeAd.size() > 0 && items.size() > 0) {
                 removeAdItems(items);
