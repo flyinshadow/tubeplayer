@@ -46,7 +46,7 @@ public class ADManager {
     public static boolean isShowExit = true;//是否显示退出广告位
 
     //暂停广告---个数  默认1个
-    public static  long pasue_ad_count = 1;
+    public static long pasue_ad_count = 1;
 
 
     private static volatile ADManager instance;
@@ -96,11 +96,11 @@ public class ADManager {
         }
     }
 
-    class NativeWrapper{
+    class NativeWrapper {
         public String adId;
         public NativeAd nativeAd;
         public boolean isShown = false;
-        public int errorcode=0;//0是成功
+        public int errorcode = 0;//0是成功
 
         public NativeWrapper(String adId, NativeAd nativeAd, int errorcode) {
             this.adId = adId;
@@ -111,12 +111,13 @@ public class ADManager {
 
     /**
      * feed流广告个数
+     *
      * @return
      */
-    public List<NativeAd> getFeeds(){
+    public List<NativeAd> getFeeds() {
         List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
         for (int i = 0; i < mReadyQueue.size(); i++) {
-            if (null!=mReadyQueue.get(i).nativeAd/**&& !mReadyQueue.get(i).isShown*/) {
+            if (null != mReadyQueue.get(i).nativeAd/**&& !mReadyQueue.get(i).isShown*/) {
                 tempList.add(mReadyQueue.get(i).nativeAd);
             }
         }
@@ -161,7 +162,7 @@ public class ADManager {
                     mFinished++;
                     Log.e("ADManager", "onLoadedSuccess " + adId);
                     if (null != ad) {
-                        mReadyQueue.offer(new NativeWrapper(adId,ad,0));
+                        mReadyQueue.offer(new NativeWrapper(adId, ad, 0));
                         if (mReadyQueue.size() == 1) {//只要有了一个广告成功就通知上层展示
                             callbackAD(false);
                         }
@@ -174,16 +175,16 @@ public class ADManager {
                 @Override
                 public void onLoadedFailed(String msg, String adId, int errorcode) {
                     Log.e("ADManager", "onLoadedFailed ");
-                    mReadyQueue.offer(new NativeWrapper(adId,null, errorcode));
+                    mReadyQueue.offer(new NativeWrapper(adId, null, errorcode));
                     mFinished++;
                     if (mFinished == mNum) {
                         int failedCount = 0;
-                        for (int i =0; i<mNum;i++){
-                            if (null ==mReadyQueue.get(i).nativeAd){
+                        for (int i = 0; i < mNum; i++) {
+                            if (null == mReadyQueue.get(i).nativeAd) {
                                 failedCount++;
                             }
                         }
-                        if (failedCount==mNum){
+                        if (failedCount == mNum) {
                             //三个都失败了
                             loadInterstitial();
                         } else {
@@ -200,8 +201,8 @@ public class ADManager {
                 @Override
                 public void onAdImpression(NativeAd ad, String adId) {
                     Log.e("ADManager", "onAdImpression ");
-                    for (int i = 0;i <mReadyQueue.size();i++){
-                        if (mReadyQueue.get(i).adId.equals(adId)){
+                    for (int i = 0; i < mReadyQueue.size(); i++) {
+                        if (mReadyQueue.get(i).adId.equals(adId)) {
                             mReadyQueue.get(i).isShown = true;
                             return;
                         }
@@ -222,23 +223,23 @@ public class ADManager {
     }
 
     //回调给上层广告数组
-    protected void callbackAD( boolean needGif) {
-        Log.e("ADManager", "callbackAD " + mReadyQueue.size()+" "+needGif);
-        if (null != mListener && mReadyQueue.size() > 0) {
+    protected void callbackAD(boolean needGif) {
+        Log.e("ADManager", "callbackAD " + mReadyQueue.size() + " " + needGif);
+        if (null != mListener) {
             List<com.facebook.ads.NativeAd> tempList = new ArrayList<>();
             for (int i = 0; i < mReadyQueue.size(); i++) {
-                if (null!= mReadyQueue.get(i).nativeAd) {
+                if (null != mReadyQueue.get(i).nativeAd) {
                     tempList.add(mReadyQueue.get(i).nativeAd);
                 }
             }
-            if (tempList.size() > 0) {
-                mListener.onLoadedSuccess(tempList, needGif);
-            }
+            //bugfix 不管加载个数是否大于0都要给上层，因为gif的时候广告成功个数就是0
+            mListener.onLoadedSuccess(tempList, needGif);
         }
     }
 
     public NativeAdsManager mExitManager = null;
     public boolean mExitAdsLoaded = false;
+
     public void loadExitAD(final Context context) {
         if (sLevel == Level_None) {
             return;
@@ -254,8 +255,8 @@ public class ADManager {
 
             @Override
             public void onAdError(AdError adError) {
-                Log.e("ADManager", "onAdError exit " + adError.getErrorCode()+" "+adError.getErrorMessage());
-                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "error "+adError.getErrorCode());
+                Log.e("ADManager", "onAdError exit " + adError.getErrorCode() + " " + adError.getErrorMessage());
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_EXIT_ADS + "error " + adError.getErrorCode());
             }
         });
         mExitManager.loadAds(NativeAd.MediaCacheFlag.ALL);
@@ -263,12 +264,13 @@ public class ADManager {
 
     public NativeAdsManager mPauseManager;
     public boolean mIsPauseADShown = false;
+
     public void loadPauseAD(final Context context) {
         if (sLevel == Level_None) {
             return;
         }
         mIsPauseADShown = false;
-        mPauseManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native6, (int)pasue_ad_count);
+        mPauseManager = new NativeAdsManager(context, ADConstants.facebook_video_feed_native6, (int) pasue_ad_count);
         mPauseManager.setListener(new NativeAdsManager.Listener() {
             @Override
             public void onAdsLoaded() {
@@ -278,8 +280,8 @@ public class ADManager {
 
             @Override
             public void onAdError(AdError adError) {
-                Log.e("ADManager", "onAdError pause " + adError.getErrorCode()+" "+adError.getErrorMessage());
-                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "error "+adError.getErrorCode());
+                Log.e("ADManager", "onAdError pause " + adError.getErrorCode() + " " + adError.getErrorMessage());
+                StatisticsManager.submitAd(mContext, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "error " + adError.getErrorCode());
             }
         });
         mPauseManager.loadAds(NativeAd.MediaCacheFlag.ALL);
@@ -291,29 +293,30 @@ public class ADManager {
     }
 
     public Interstitial mInterstitial;
+
     public void loadInterstitial() {
-            mInterstitial = new Interstitial();
-            mInterstitial.loadAD(mContext, ADManager.AD_Google , ADConstants.google_gif_interstitial, new Interstitial.ADListener() {
-                @Override
-                public void onLoadedSuccess() {
-                    Log.e("ADManager", "loadInterstitial success" );
-                    callbackAD(true);
-                }
+        mInterstitial = new Interstitial();
+        mInterstitial.loadAD(mContext, ADManager.AD_Google, ADConstants.google_gif_interstitial, new Interstitial.ADListener() {
+            @Override
+            public void onLoadedSuccess() {
+                Log.e("ADManager", "loadInterstitial success");
+                callbackAD(true);
+            }
 
-                @Override
-                public void onLoadedFailed() {
-                    Log.e("ADManager", "loadInterstitial failed" );
-                }
+            @Override
+            public void onLoadedFailed() {
+                Log.e("ADManager", "loadInterstitial failed");
+            }
 
-                @Override
-                public void onAdDisplayed() {
-                }
+            @Override
+            public void onAdDisplayed() {
+            }
 
-                @Override
-                public void onAdClose() {
+            @Override
+            public void onAdClose() {
 
-                }
-            });
+            }
+        });
     }
 
 }

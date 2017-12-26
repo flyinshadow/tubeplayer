@@ -47,6 +47,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -56,6 +57,7 @@ import android.provider.Settings.SettingNotFoundException;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GestureDetectorCompat;
@@ -73,6 +75,7 @@ import android.view.Display;
 import android.view.GestureDetector;
 import android.view.InputDevice;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -120,6 +123,13 @@ import com.wenjoyai.tubeplayer.gui.ThemeFragment;
 import com.wenjoyai.tubeplayer.gui.browser.FilePickerActivity;
 import com.wenjoyai.tubeplayer.gui.browser.FilePickerFragment;
 import com.wenjoyai.tubeplayer.gui.dialogs.AdvOptionsDialog;
+import com.wenjoyai.tubeplayer.gui.dialogs.BrightnessDialog;
+import com.wenjoyai.tubeplayer.gui.dialogs.JumpToTimeDialog;
+import com.wenjoyai.tubeplayer.gui.dialogs.PlaybackSpeedDialog;
+import com.wenjoyai.tubeplayer.gui.dialogs.SelectChapterDialog;
+import com.wenjoyai.tubeplayer.gui.dialogs.SleepTimerDialog;
+import com.wenjoyai.tubeplayer.gui.dialogs.TimerDialog;
+import com.wenjoyai.tubeplayer.gui.dialogs.VolumeDialog;
 import com.wenjoyai.tubeplayer.gui.helpers.AsyncImageLoader;
 import com.wenjoyai.tubeplayer.gui.helpers.AudioUtil;
 import com.wenjoyai.tubeplayer.gui.helpers.OnRepeatListener;
@@ -133,9 +143,12 @@ import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.FileUtils;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.Permissions;
+import com.wenjoyai.tubeplayer.util.ScreenUtils;
 import com.wenjoyai.tubeplayer.util.Strings;
 import com.wenjoyai.tubeplayer.util.SubtitlesDownloader;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
+import com.wenjoyai.tubeplayer.widget.PlayerItemLayout;
+import com.wenjoyai.tubeplayer.widget.PlayerScrollview;
 
 import org.videolan.libvlc.IVLCVout;
 import org.videolan.libvlc.LibVLC;
@@ -155,8 +168,14 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Random;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import pl.droidsonroids.gif.GifImageView;
 
 public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.Callback, IVLCVout.OnNewVideoLayoutListener,
         IPlaybackSettingsController, PlaybackService.Client.Callback, PlaybackService.Callback,
@@ -279,7 +298,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private ImageView mNavMenu;
     private ImageView mRewind;
     private ImageView mForward;
-    private ImageView mAdvOptions;
+    //    private ImageView mAdvOptions;
     private ImageView mPlaybackSettingPlus;
     private ImageView mPlaybackSettingMinus;
     private View mObjectFocused;
@@ -290,7 +309,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private int mScreenOrientationLock;
     private int mCurrentScreenOrientation;
     private ImageView mLock;
-    private ImageView mSize;
+    //    private ImageView mSize;
     private String KEY_REMAINING_TIME_DISPLAY = "remaining_time_display";
     private String KEY_BLUETOOTH_DELAY = "key_bluetooth_delay";
     private long mSpuDelay = 0L;
@@ -409,6 +428,15 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     private GifAD mGifImageView;
 
+
+    /**************************  new  *********************/
+    //菜单栏
+    private PlayerScrollview mMenuScrollview;
+    private LinearLayout mMenuLinearLayout;
+
+    /**************************  new  *********************/
+
+
     private VideoPlaylistDialog mPlaylistDialog = new VideoPlaylistDialog();
 
     private static LibVLC LibVLC() {
@@ -475,8 +503,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         mRootView = findViewById(R.id.player_root);
         mActionBarView = (ViewGroup) mActionBar.getCustomView();
-        mGifImageView = (GifAD)findViewById(R.id.main_gif_ad);
-        if (null!= mGifImageView) {
+        mGifImageView = (GifAD) findViewById(R.id.main_gif_ad);
+        if (null != mGifImageView) {
             mGifImageView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -506,6 +534,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mTracks.setOnClickListener(this);
 
         mGoBack = (ImageView) findViewById(R.id.player_goback);
+
 
         mScreenOrientation = Integer.valueOf(
                 mSettings.getString("screen_orientation", "99" /*SCREEN ORIENTATION SENSOR*/));
@@ -627,6 +656,17 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         }
         mMedialibrary = VLCApplication.getMLInstance();
 
+
+        /**************************  new  *********************/
+        mScreenWidth = mScreen.widthPixels;
+        mScreenHeight = mScreen.heightPixels;
+        mMenuScrollview = (PlayerScrollview) findViewById(R.id.player_menu_scrollview);
+        mMenuLinearLayout = (LinearLayout) findViewById(R.id.player_menu_ll);
+        initMenu();
+
+
+        /**************************  new  *********************/
+
         initAD();
         if (ADManager.sLevel>=ADManager.Level_Big) {
             preloadWall();
@@ -660,6 +700,119 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         }
 
     }
+
+    public class PlayerMenuModel {
+        public int drawableId;
+        public String name;
+        public MenuType menuType;
+        public boolean isSelected;//是否变颜色
+
+        public PlayerMenuModel(int drawableId, String name, MenuType menuType) {
+            this.drawableId = drawableId;
+            this.name = name;
+            this.menuType = menuType;
+        }
+    }
+
+    public enum MenuType {
+        mute, speed, audio_play, timer, volume, brightness, ratio, rotate, ic_arrow_back
+    }
+
+    private Map<MenuType, PlayerItemLayout> mItemMap = new HashMap<>();
+
+    private void initMenu() {
+        List<PlayerMenuModel> list = new ArrayList<>();
+        //mute audio
+        list.add(new PlayerMenuModel(R.drawable.ic_player_mute, getString(R.string.mute), MenuType.mute));
+        //speed
+        list.add(new PlayerMenuModel(R.drawable.ic_player_speed, getString(R.string.speed), MenuType.speed));
+        //后台播放 audio play
+        list.add(new PlayerMenuModel(R.drawable.ic_player_audio, getString(R.string.audio_play), MenuType.audio_play));
+        //timer
+        list.add(new PlayerMenuModel(R.drawable.ic_player_timer, getString(R.string.timer), MenuType.timer));
+        //volume
+        list.add(new PlayerMenuModel(R.drawable.ic_player_volume, getString(R.string.volume), MenuType.volume));
+        //亮度
+        list.add(new PlayerMenuModel(R.drawable.ic_player_brightness, getString(R.string.brightness), MenuType.brightness));
+        //ratio
+        list.add(new PlayerMenuModel(R.drawable.ic_player_ratio, getString(R.string.ratio), MenuType.ratio));
+        //rotate
+        list.add(new PlayerMenuModel(R.drawable.ic_player_rotate, getString(R.string.rotate), MenuType.rotate));
+        fillMenu(list);
+    }
+
+
+    private void fillMenu(List<PlayerMenuModel> list) {
+        mMenuLinearLayout.removeAllViews();
+        for (int i = 0; i < list.size(); i++) {
+            PlayerMenuModel model = list.get(i);
+            PlayerItemLayout playerItemLayout = new PlayerItemLayout(this);
+            playerItemLayout.init(model);
+            playerItemLayout.setTag(model);
+            playerItemLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PlayerMenuModel model = (PlayerMenuModel) view.getTag();
+                    switch (model.menuType) {
+                        case mute://静音
+                            mItemMap.get(model.menuType).setSelected(false);
+                            // 后去当前是否静音模式，设置
+                            mute(!mMute);
+                            break;
+                        case speed:
+                            showFragment(ID_PLAYBACK_SPEED);
+                            break;
+                        case audio_play:
+                            mItemMap.get(model.menuType).setSelected(false);
+                            StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_EXTEND_PLAY_AS_AUDIO, null, null);
+                            switchToAudioMode(true);
+                            break;
+                        case timer:
+                            showFragment(ID_SLEEP);
+                            break;
+                        case volume:
+                            showFragment(ID_VOLUME);
+                            break;
+                        case brightness:
+                            showFragment(ID_BRIGHTNESS);
+                            break;
+                        case ratio:
+                            resizeVideo();
+                            break;
+                        case rotate:
+                            if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+                                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                            } else {
+                                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                            }
+                            break;
+
+                    }
+                }
+            });
+            mItemMap.put(model.menuType, playerItemLayout);
+            //将布局填充器加载到LinearLayout中进行显示
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mScreenWidth/6, ViewGroup.LayoutParams.MATCH_PARENT);
+            mMenuLinearLayout.addView(playerItemLayout,layoutParams);
+        }
+        //back view
+        View backView = LayoutInflater.from(VideoPlayerActivity.this).inflate(R.layout.player_menu_item_back, null);
+        backView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMenuScrollview.left();
+            }
+        });
+        mMenuLinearLayout.addView(backView, new LinearLayout.LayoutParams(mScreenWidth/6, ViewGroup.LayoutParams.MATCH_PARENT));
+        //填充的view
+        mView = new View(this);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mScreenWidth/2, ViewGroup.LayoutParams.MATCH_PARENT);
+        mMenuLinearLayout.addView(mView, layoutParams);
+        mMenuScrollview.right();
+    }
+    View mView;
+    private int mScreenWidth = 0;
+    private int mScreenHeight = 0;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void initTransition() {
@@ -788,8 +941,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mLength.setOnClickListener(this);
         if (mTime != null)
             mTime.setOnClickListener(this);
-        if (mSize != null)
-            mSize.setOnClickListener(this);
+//        if (mSize != null)
+//            mSize.setOnClickListener(this);
         if (mNavMenu != null)
             mNavMenu.setOnClickListener(this);
     }
@@ -861,8 +1014,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mLength.setOnClickListener(null);
         if (mTime != null)
             mTime.setOnClickListener(null);
-        if (mSize != null)
-            mSize.setOnClickListener(null);
+//        if (mSize != null)
+//            mSize.setOnClickListener(null);
 
         /* Stop the earliest possible to avoid vout error */
         if (!isInPictureInPictureMode() && (isFinishing() || (AndroidDevices.isAndroidTv() && !requestVisibleBehind(true))))
@@ -892,31 +1045,46 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 //        if (mService != null && mService.isPlaying() && RateDialog.isShowing()) {
 //            doPlayPause();
 //        }
+
+        // 横竖屏切换----更新图标列表的长度
+        try {
+            // Checks the orientation of the screen
+            if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                mView.getLayoutParams().width = mScreenHeight -mScreenWidth/2;
+                mView.setLayoutParams(mView.getLayoutParams());
+            } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                mView.getLayoutParams().width = mScreenWidth/2;
+                mView.setLayoutParams(mView.getLayoutParams());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void resetHudLayout() {
         if (mOverlayButtons == null)
             return;
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mOverlayButtons.getLayoutParams();
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mOverlayButtons.getLayoutParams();
         int orientation = getScreenOrientation(100);
         boolean portrait = orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT ||
                 orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
-        if (portrait) {
-            layoutParams.addRule(RelativeLayout.BELOW, R.id.player_overlay_length);
-            layoutParams.addRule(RelativeLayout.RIGHT_OF, 0);
-            layoutParams.addRule(RelativeLayout.LEFT_OF, 0);
-        } else {
-            layoutParams.addRule(RelativeLayout.BELOW, R.id.player_overlay_seekbar);
-            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.player_overlay_time);
-            layoutParams.addRule(RelativeLayout.LEFT_OF, R.id.player_overlay_length);
-        }
+        // TODO: 2017/12/2
+//        if (portrait) {
+//            layoutParams.addRule(RelativeLayout.BELOW, R.id.player_overlay_length);
+//            layoutParams.addRule(RelativeLayout.RIGHT_OF, 0);
+//            layoutParams.addRule(RelativeLayout.LEFT_OF, 0);
+//        } else {
+//            layoutParams.addRule(RelativeLayout.BELOW, R.id.player_overlay_seekbar);
+//            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.player_overlay_time);
+//            layoutParams.addRule(RelativeLayout.LEFT_OF, R.id.player_overlay_length);
+//        }
         mOverlayButtons.setLayoutParams(layoutParams);
     }
 
 
     @Override
     protected void onStart() {
-        LogUtil.e(TAG,"---- onStart");
+        LogUtil.e(TAG, "---- onStart");
         super.onStart();
         mMedialibrary.pauseBackgroundOperations();
         mHelper.onStart();
@@ -1824,7 +1992,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mTime.setEnabled(false);
         mSeekbar.setEnabled(false);
         mLength.setEnabled(false);
-        mSize.setEnabled(false);
+//        mSize.setEnabled(false);
         if (mPlaylistNext != null)
             mPlaylistNext.setEnabled(false);
         if (mPlaylistPrevious != null)
@@ -1845,7 +2013,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mTime.setEnabled(true);
         mSeekbar.setEnabled(mService == null || mService.isSeekable());
         mLength.setEnabled(true);
-        mSize.setEnabled(true);
+//        mSize.setEnabled(true);
         if (mPlaylistNext != null)
             mPlaylistNext.setEnabled(true);
         if (mPlaylistPrevious != null)
@@ -1984,6 +2152,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     mNativeFrameLayout.startAnimation(mTranstionAnimOut);
                     mNativeFrameLayout.setVisibility(View.GONE);
                 }
+                //根据当前播放速度更新菜单列表
+                changeSpeedMenu(mService.getRate());
                 break;
             case MediaPlayer.Event.Paused:
                 updateOverlayPausePlay();
@@ -1999,6 +2169,12 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             case MediaPlayer.Event.EndReached:
                 /* Don't end the activity if the media has subitems since the next child will be
                  * loaded by the PlaybackService */
+                //定时器选择---播放完当前video即退出
+                if (mTimeEnd){
+                    // TODO: 2017/12/23
+                    exitOK();
+                    break;
+                }
                 if (!mHasSubItems)
                     endReached();
                 break;
@@ -2145,7 +2321,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     width = mVideoWidth;
                     height = mVideoHeight;
                 }
-                LogUtil.d(TAG, "TubeStatisticsManager path=" + path +", width=" + width + ", height=" + height);
+                LogUtil.d(TAG, "TubeStatisticsManager path=" + path + ", width=" + width + ", height=" + height);
                 if (mw.getType() == MediaWrapper.TYPE_VIDEO) {
                     String videoInfoType = StatisticsManager.getVideoInfoType(mService.getCurrentMediaWrapper(), width, height);
                     StatisticsManager.submitVideoPlaySuccess(this, FileUtils.getFileExt(path), videoInfoType);
@@ -2740,7 +2916,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (mIsFirstBrightnessGesture) initBrightnessTouch();
         mTouchAction = TOUCH_BRIGHTNESS;
 
-        // Set delta : 2f is arbitrary for now, it possibly will change in the future
+        // Set delta : 2f is arbitrary for now, it possibly will fillMenu in the future
         float delta = -y_changed / mSurfaceYDisplayRange;
 
         changeBrightness(delta);
@@ -2872,9 +3048,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 else
                     lockScreen();
                 break;
-            case R.id.player_overlay_size:
-                resizeVideo();
-                break;
+//            case R.id.player_overlay_size:
+//                resizeVideo();
+//                break;
             case R.id.player_overlay_navmenu:
                 showNavMenu();
                 break;
@@ -2900,12 +3076,12 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 else if (mPlaybackSetting == DelayState.SPEED)
                     changeSpeed(0.05f);
                 break;
-            case R.id.player_overlay_adv_function:
-
-                StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_EXTEND, null, null);
-
-                showAdvancedOptions();
-                break;
+//            case R.id.player_overlay_adv_function:
+//
+//                StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_EXTEND, null, null);
+//
+//                showAdvancedOptions();
+//                break;
             case R.id.player_overlay_tracks:
                 onAudioSubClick(v);
                 break;
@@ -3241,8 +3417,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             if (!mIsLocked) {
                 mPlayPause.setVisibility(View.VISIBLE);
                 UiTools.setViewVisibility(mTracks, View.VISIBLE);
-                UiTools.setViewVisibility(mAdvOptions, View.VISIBLE);
-                UiTools.setViewVisibility(mSize, View.VISIBLE);
+//                UiTools.setViewVisibility(mAdvOptions, View.VISIBLE);
+//                UiTools.setViewVisibility(mSize, View.VISIBLE);
                 UiTools.setViewVisibility(mRewind, View.VISIBLE);
                 UiTools.setViewVisibility(mForward, View.VISIBLE);
                 UiTools.setViewVisibility(mPlaylistNext, View.VISIBLE);
@@ -3250,6 +3426,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             }
             dimStatusBar(false);
             mOverlayProgress.setVisibility(View.VISIBLE);
+            mMenuScrollview.setVisibility(View.VISIBLE);
             if (mPresentation != null) mOverlayBackground.setVisibility(View.VISIBLE);
         }
         mHandler.removeMessages(FADE_OUT);
@@ -3286,10 +3463,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 //            mTracks.setOnClickListener(this);
             mPopupPlayToggle = (ImageView) findViewById(R.id.popup_toggle);
             mPopupPlayToggle.setOnClickListener(this);
-            mAdvOptions = (ImageView) findViewById(R.id.player_overlay_adv_function);
-            mAdvOptions.setOnClickListener(this);
+//            mAdvOptions = (ImageView) findViewById(R.id.player_overlay_adv_function);
+//            mAdvOptions.setOnClickListener(this);
             mLock = (ImageView) findViewById(R.id.lock_overlay_button);
-            mSize = (ImageView) findViewById(R.id.player_overlay_size);
+//            mSize = (ImageView) findViewById(R.id.player_overlay_size);
             mNavMenu = (ImageView) findViewById(R.id.player_overlay_navmenu);
             if (mSettings.getBoolean("enable_seek_buttons", false))
                 initSeekButton();
@@ -3318,30 +3495,32 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             UiTools.setViewVisibility(mOverlayTips, View.INVISIBLE);
             if (!fromUser && !mIsLocked) {
                 mOverlayProgress.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                mPlayPause.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                if (mTracks != null)
-                    mTracks.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                if (mAdvOptions != null)
-                    mAdvOptions.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                if (mRewind != null)
-                    mRewind.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                if (mForward != null)
-                    mForward.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                if (mPlaylistNext != null)
-                    mPlaylistNext.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                if (mPlaylistPrevious != null)
-                    mPlaylistPrevious.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                mSize.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+                mMenuScrollview.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+//                mPlayPause.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+//                if (mTracks != null)
+//                    mTracks.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+////                if (mAdvOptions != null)
+////                    mAdvOptions.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+//                if (mRewind != null)
+//                    mRewind.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+//                if (mForward != null)
+//                    mForward.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+//                if (mPlaylistNext != null)
+//                    mPlaylistNext.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+//                if (mPlaylistPrevious != null)
+//                    mPlaylistPrevious.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+////                mSize.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
             }
             if (mPresentation != null) {
                 mOverlayBackground.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
                 mOverlayBackground.setVisibility(View.INVISIBLE);
             }
             mOverlayProgress.setVisibility(View.INVISIBLE);
+            mMenuScrollview.setVisibility(View.GONE);
             mPlayPause.setVisibility(View.INVISIBLE);
             UiTools.setViewVisibility(mTracks, View.INVISIBLE);
-            UiTools.setViewVisibility(mAdvOptions, View.INVISIBLE);
-            UiTools.setViewVisibility(mSize, View.INVISIBLE);
+//            UiTools.setViewVisibility(mAdvOptions, View.INVISIBLE);
+//            UiTools.setViewVisibility(mSize, View.INVISIBLE);
             UiTools.setViewVisibility(mRewind, View.INVISIBLE);
             UiTools.setViewVisibility(mForward, View.INVISIBLE);
             UiTools.setViewVisibility(mPlaylistNext, View.INVISIBLE);
@@ -4133,6 +4312,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mHandler.sendEmptyMessage(START_PLAYBACK);
         mSwitchingView = false;
         mSettings.edit().putBoolean(PreferencesActivity.VIDEO_RESTORE, false).apply();
+
     }
 
     @Override
@@ -4218,7 +4398,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         }
         if (!TextUtils.isEmpty(adID)) {
             mInterstitial = new Interstitial();
-            mInterstitial.loadAD(this, ADManager.sPlatForm , adID, new Interstitial.ADListener() {
+            mInterstitial.loadAD(this, ADManager.sPlatForm, adID, new Interstitial.ADListener() {
                 @Override
                 public void onLoadedSuccess() {
                 }
@@ -4234,15 +4414,15 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
                 @Override
                 public void onAdClose() {
-                    
+
                 }
             });
         }
     }
 
-    private void initPauseNative(){
-        mNativeFrameLayout = (FrameLayout)findViewById(R.id.ad_frame_layout);
-        mNativeContainer = (FrameLayout)findViewById(R.id.ad_container);
+    private void initPauseNative() {
+        mNativeFrameLayout = (FrameLayout) findViewById(R.id.ad_frame_layout);
+        mNativeContainer = (FrameLayout) findViewById(R.id.ad_container);
         ImageView adClose = (ImageView) findViewById(R.id.ad_close_iv);
         if (adClose != null) {
             adClose.setOnClickListener(new OnClickListener() {
@@ -4257,9 +4437,11 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             });
         }
     }
+
     NativeAdScrollView scrollView;
     private boolean mIsActive = true;
-    private void loadPauseNative( boolean isActive){//是否主动：主动的话，点x不要继续播放
+
+    private void loadPauseNative(boolean isActive) {//是否主动：主动的话，点x不要继续播放
         if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()) {
             if (mNativeFrameLayout != null && mNativeContainer != null) {
                 mIsActive = isActive;
@@ -4367,7 +4549,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 //            });
 //        }
     }
-
     private List<NativeAd> mNativeAdList;
     private boolean checkAds() {
         return mNativeAdList != null && mNativeAdList.size() > 0;
@@ -4388,4 +4569,178 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     }
 
 
+    private void changeSpeedMenu(float speed) {
+        String str = String.format("%.1f", speed);
+        if (!"1.0".equals(str)) {
+            if (null != mItemMap.get(MenuType.speed)) {
+                mItemMap.get(MenuType.speed).setSelected(true);
+                mItemMap.get(MenuType.speed).getContentTv().setText(String.format("%.1f", speed));
+            }
+        } else {
+            if (null != mItemMap.get(MenuType.speed)) {
+                mItemMap.get(MenuType.speed).reset();
+            }
+        }
+    }
+
+    private static final int ID_VOLUME = 11;
+    private static final int ID_BRIGHTNESS = 12;
+    private static final int ID_SLEEP = 1;
+    private static final int ID_JUMP_TO = 2;
+    private static final int ID_CHAPTER_TITLE = 5;
+    private static final int ID_PLAYBACK_SPEED = 6;
+    private static final int ID_SAVE_PLAYLIST = 8;
+
+    //当前模式是否是播放完当前一个就停止播放
+    private boolean mTimeEnd = false;
+
+    private void showFragment(int id) {
+        int mTheme = (UiTools.isBlackThemeEnabled()) ?
+                R.style.Theme_VLC_Black :
+                R.style.Theme_VLC;
+
+        DialogFragment newFragment;
+        String tag;
+        switch (id) {
+            case ID_VOLUME:
+                newFragment = VolumeDialog.newInstance(mTheme);
+                tag = "playback_speed";
+                break;
+            case ID_BRIGHTNESS:
+                newFragment = BrightnessDialog.newInstance(mTheme);
+                tag = "playback_speed";
+                break;
+            case ID_PLAYBACK_SPEED:
+                newFragment = PlaybackSpeedDialog.newInstance(mTheme);
+                ((PlaybackSpeedDialog) newFragment).setListener(new PlaybackSpeedDialog.SpeedListener() {
+                    @Override
+                    public void speedChanged(float speed) {
+                        changeSpeedMenu(speed);
+                    }
+                });
+                tag = "playback_speed";
+                break;
+            case ID_JUMP_TO:
+                newFragment = JumpToTimeDialog.newInstance(mTheme);
+                tag = "time";
+                break;
+            case ID_SLEEP:
+                newFragment = TimerDialog.newInstance(mTheme);
+                ((TimerDialog) newFragment).setListener(new TimerDialog.TimerListener() {
+                    @Override
+                    public void timer(int timeType) {
+                        if (timeType == 0) {
+                            if (null != mItemMap.get(MenuType.timer)) {
+                                mItemMap.get(MenuType.timer).reset();
+                            }
+                            mTimeEnd = false;
+                        } else {
+                            if (null != mItemMap.get(MenuType.timer)) {
+                                mItemMap.get(MenuType.timer).setSelected(true);
+                                mTimeEnd = false;
+                                if (timeType == 1) {
+                                    restart(15);
+                                } else if (timeType == 2) {
+                                    restart(30);
+                                } else if (timeType == 3) {
+                                    restart(45);
+                                } else if (timeType == 4) {
+                                    restart(60);
+                                } else if (timeType == 5) {
+                                    // TODO: 2017/12/22
+                                    oncancel();
+                                    //当前视频播放完成，怎么显示？seek的时候还要重新
+                                    if (null != mItemMap.get(MenuType.timer)) {
+                                        mItemMap.get(MenuType.timer).getContentTv().setText("End");
+                                    }
+                                    mTimeEnd = true;
+                                }
+                            }
+                        }
+                    }
+                });
+                tag = "time";
+                break;
+            case ID_CHAPTER_TITLE:
+                newFragment = SelectChapterDialog.newInstance(mTheme);
+                tag = "select_chapter";
+                break;
+            case ID_SAVE_PLAYLIST:
+                UiTools.addToPlaylist(this, mService.getMedias());
+                return;
+            default:
+                return;
+        }
+        if (newFragment != null)
+            newFragment.show(getSupportFragmentManager(), tag);
+    }
+
+    CountDownTimer timer;
+
+    /**
+     * 取消倒计时
+     */
+    public void oncancel() {
+        if (null != timer) {
+            timer.cancel();
+        }
+    }
+
+    /**
+     * 开始倒计时
+     */
+    public void restart(int min) {
+        oncancel();
+        timer =  new CountDownTimer(1000 * min*60, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (null != mItemMap.get(MenuType.timer)) {
+                    mItemMap.get(MenuType.timer).getContentTv().setText(change((int) (millisUntilFinished / 1000)));
+                }
+            }
+            @Override
+            public void onFinish() {
+                if (null != mItemMap.get(MenuType.timer)) {
+                    mItemMap.get(MenuType.timer).reset();
+                }
+                exitOK();
+            }
+        };
+        timer.start();
+    }
+
+    /**
+     * 倒计时--显示分秒
+     * @param second
+     * @return
+     */
+    public String change(int second) {
+        int h = 0;
+        int d = 0;
+        int s = 0;
+        int temp = second % 3600;
+        if (second > 3600) {
+            h = second / 3600;
+            if (temp != 0) {
+                if (temp > 60) {
+                    d = temp / 60;
+                    if (temp % 60 != 0) {
+                        s = temp % 60;
+                    }
+                } else {
+                    s = temp;
+                }
+            }
+        } else {
+            d = second / 60;
+            if (second % 60 != 0) {
+                s = second % 60;
+            }
+        }
+        if (h <= 0) {
+            return d + ":" +s;
+        }
+        return h + ":" + d + ":"+ s;
+    }
 }

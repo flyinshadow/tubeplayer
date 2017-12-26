@@ -43,11 +43,28 @@
         </FrameLayout>
     </FrameLayout>
 
-    <RelativeLayout
-        android:id="@+id/player_ui_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true" >
+        <RelativeLayout
+            android:id="@+id/player_ui_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
+            <!--滑动菜单栏-->
+            <com.wenjoyai.tubeplayer.widget.PlayerScrollview
+                android:id="@+id/player_menu_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:overScrollMode="never"
+                android:fitsSystemWindows="false"
+                android:visibility="gone"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/player_menu_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"/>
+            </com.wenjoyai.tubeplayer.widget.PlayerScrollview>
+
 
         <android.support.v7.widget.ViewStubCompat
             android:id="@+id/player_overlay_tips"
@@ -85,7 +102,7 @@
             android:id="@+id/player_hud_stub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout="@layout/player_hud"
+            android:layout="@layout/player_control"
             android:layout_marginBottom="@dimen/overlay_margin"
             android:layout_marginRight="@dimen/overlay_margin"
             android:layout_marginLeft="@dimen/overlay_margin"
@@ -104,13 +121,13 @@
 
     </RelativeLayout>
 
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/video_playlist"-->
-        <!--android:layout_width="480dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:background="@drawable/rounded_corners"-->
-        <!--android:visibility="gone"/>-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/video_playlist"
+        android:layout_width="480dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/rounded_corners"
+        android:visibility="gone"/>
 
     <FrameLayout
         android:id="@+id/ad_frame_layout"

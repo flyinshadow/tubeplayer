@@ -163,4 +163,6 @@
     <color name="video_playlist_title_color">#808080</color>
     <color name="video_playlist_selected_bg">#191919</color>
 
+    <color name="bg_player_item">#cc191919</color>
+
 </resources>
