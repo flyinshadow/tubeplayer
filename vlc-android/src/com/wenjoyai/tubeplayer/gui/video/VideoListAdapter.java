@@ -870,7 +870,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             if (oldItem != null && newItem != null && oldItem.getItemType() == MediaLibraryItem.TYPE_AD && newItem.getItemType() == MediaLibraryItem.TYPE_AD) {
                 String ad1 = ((AdItem) oldItem).getNativeAd().getAdBody();
                 String ad2 = ((AdItem) newItem).getNativeAd().getAdBody();
-                return ad1.equals(ad2);
+                if (TextUtils.isEmpty(ad1) && TextUtils.isEmpty(ad2)) {
+                    return true;
+                } else if (TextUtils.isEmpty(ad1) || TextUtils.isEmpty(ad2)) {
+                    return false;
+                } else {
+                    return ad1.equals(ad2);
+                }
             } else {
                 return oldItem == newItem ||
                         ((oldItem != null && newItem != null) && ((oldItem.getTime() == newItem.getTime() && TextUtils.equals(oldItem.getArtworkMrl(), newItem.getArtworkMrl()))));

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/player_root"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:keepScreenOn="true">
+                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/player_root"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:keepScreenOn="true">
 
     <RelativeLayout
         android:id="@+id/player_video_container"
@@ -14,85 +14,102 @@
         >
 
 
-    <!--
-     the double FrameLayout is necessary here to do cropping on the bottom right
-     (which requires the surface not be centered), while keeping the result centered
-    -->
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="false" >
+        <!--
+         the double FrameLayout is necessary here to do cropping on the bottom right
+         (which requires the surface not be centered), while keeping the result centered
+        -->
 
         <FrameLayout
-            android:id="@+id/player_surface_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:foregroundGravity="clip_horizontal|clip_vertical"
-            tools:ignore="true">
-            <SurfaceView
-                android:id="@+id/player_surface"
+            android:fitsSystemWindows="false" >
+
+            <FrameLayout
+                android:id="@+id/player_surface_frame"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:foregroundGravity="clip_horizontal|clip_vertical"
+                tools:ignore="true">
+                <SurfaceView
+                    android:id="@+id/player_surface"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
-            <SurfaceView
-                android:id="@+id/subtitles_surface"
-                android:layout_width="1dp"
-                android:layout_height="1dp" />
+                <SurfaceView
+                    android:id="@+id/subtitles_surface"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp" />
+            </FrameLayout>
         </FrameLayout>
-    </FrameLayout>
 
-    <RelativeLayout
-        android:id="@+id/player_ui_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true" >
-
-        <android.support.v7.widget.ViewStubCompat
-            android:id="@+id/player_overlay_tips"
+        <RelativeLayout
+            android:id="@+id/player_ui_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout="@layout/player_tips" />
+            android:fitsSystemWindows="true">
+            <!--滑动菜单栏-->
+            <com.wenjoyai.tubeplayer.widget.PlayerScrollview
+                android:id="@+id/player_menu_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:fitsSystemWindows="false"
+                android:visibility="gone"
+                android:scrollbars="none">
 
-        <ImageView
-            android:id="@+id/player_overlay_loading"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            android:visibility="invisible"
-            android:src="@drawable/ic_cone_o" />
+                <LinearLayout
+                    android:id="@+id/player_menu_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"/>
+            </com.wenjoyai.tubeplayer.widget.PlayerScrollview>
 
-        <android.support.v7.widget.ViewStubCompat
-            android:id="@+id/player_info_stub"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="@dimen/default_margin"
-            android:layout="@layout/player_overlay_info"/>
 
-        <android.support.v7.widget.ViewStubCompat
-            android:id="@+id/player_overlay_settings_stub"
-            android:layout="@layout/player_overlay_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/default_margin" />
+            <android.support.v7.widget.ViewStubCompat
+                android:id="@+id/player_overlay_tips"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout="@layout/player_tips" />
 
-        <android.support.v7.widget.ViewStubCompat
-            android:id="@+id/player_hud_stub"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout="@layout/player_hud"
-            android:layout_marginBottom="@dimen/overlay_margin"
-            android:layout_marginRight="@dimen/overlay_margin"
-            android:layout_marginLeft="@dimen/overlay_margin"
-            android:layout_alignParentBottom="true" />
+            <ImageView
+                android:id="@+id/player_overlay_loading"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:visibility="invisible"
+                android:src="@drawable/ic_cone_o" />
 
-        <!--旋转广告-->
-        <!--<com.wenjoyai.tubeplayer.ad.RotateAD-->
+            <android.support.v7.widget.ViewStubCompat
+                android:id="@+id/player_info_stub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:layout="@layout/player_overlay_info"/>
+
+            <android.support.v7.widget.ViewStubCompat
+                android:id="@+id/player_overlay_settings_stub"
+                android:layout="@layout/player_overlay_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/default_margin" />
+
+            <android.support.v7.widget.ViewStubCompat
+                android:id="@+id/player_hud_stub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout="@layout/player_hud"
+                android:layout_marginBottom="@dimen/overlay_margin"
+                android:layout_marginRight="@dimen/overlay_margin"
+                android:layout_marginLeft="@dimen/overlay_margin"
+                android:layout_alignParentBottom="true" />
+
+            <!--旋转广告-->
+            <!--<com.wenjoyai.tubeplayer.ad.RotateAD-->
             <!--android:id="@+id/player_roate_ad"-->
             <!--android:layout_width="72dp"-->
             <!--android:visibility="invisible"-->
@@ -102,60 +119,60 @@
             <!--android:layout_alignParentRight="true"-->
             <!--android:layout_height="72dp"/>-->
 
-    </RelativeLayout>
+        </RelativeLayout>
 
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/video_playlist"-->
-        <!--android:layout_width="480dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:background="@drawable/rounded_corners"-->
-        <!--android:visibility="gone"/>-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/video_playlist"
+            android:layout_width="480dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/rounded_corners"
+            android:visibility="gone"/>
 
-    <FrameLayout
-        android:id="@+id/ad_frame_layout"
-        android:visibility="gone"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <!--<com.google.android.gms.ads.NativeExpressAdView-->
+        <FrameLayout
+            android:id="@+id/ad_frame_layout"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <!--<com.google.android.gms.ads.NativeExpressAdView-->
             <!--android:id="@+id/native_ad"-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:layout_margin="10dp"-->
             <!--ads:adUnitId="ca-app-pub-1877164599441785/9970194023"-->
             <!--ads:adSize="320x300"/>-->
-        <FrameLayout
-            android:id="@+id/ad_container"
-            android:layout_width="330dp"
-            android:background="@color/white"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            <FrameLayout
+                android:id="@+id/ad_container"
+                android:layout_width="330dp"
+                android:background="@color/white"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+            </FrameLayout>
+            <ImageView
+                android:id="@+id/ad_close_iv"
+                android:layout_gravity="top|right"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_close"/>
         </FrameLayout>
-        <ImageView
-            android:id="@+id/ad_close_iv"
-            android:layout_gravity="top|right"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_close"/>
-    </FrameLayout>
 
     </RelativeLayout>
 
     <!--<android.support.constraint.ConstraintLayout-->
-        <!--android:id="@+id/player_media_thumb_container"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--&gt;-->
-        <!--<ImageView-->
-            <!--android:id="@+id/player_media_thumb"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--vlc:layout_constraintDimensionRatio="H,16:10"-->
-            <!--vlc:layout_constraintStart_toStartOf="parent"-->
-            <!--vlc:layout_constraintEnd_toEndOf="parent"-->
-            <!--android:scaleType="centerCrop"/>-->
+    <!--android:id="@+id/player_media_thumb_container"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--&gt;-->
+    <!--<ImageView-->
+    <!--android:id="@+id/player_media_thumb"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="0dp"-->
+    <!--vlc:layout_constraintDimensionRatio="H,16:10"-->
+    <!--vlc:layout_constraintStart_toStartOf="parent"-->
+    <!--vlc:layout_constraintEnd_toEndOf="parent"-->
+    <!--android:scaleType="centerCrop"/>-->
     <!--</android.support.constraint.ConstraintLayout>-->
 
     <RelativeLayout
