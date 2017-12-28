@@ -306,8 +306,6 @@ public class RateDialog extends DialogFragment implements View.OnClickListener, 
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
 
-        LogUtil.d(TAG, "onDismiss");
-
         long currentTime = new Date().getTime();
         long lastTime = sSettings.getLong(KEY_RATE_SHOW_LAST, 0);
         int count = sSettings.getInt(KEY_RATE_SHOW_COUNT, 0);
@@ -317,23 +315,31 @@ public class RateDialog extends DialogFragment implements View.OnClickListener, 
                 " count:" + count);
         // 未点击任意按钮
         if (mNextTime == 0) {
-            if (lastTime == 0 || currentTime - lastTime >= CHECK_COUNT_PERIOD) {
-                lastTime = currentTime;
-                count = 0;
-                sSettings.edit().putLong(KEY_RATE_SHOW_LAST, lastTime).apply();
-            }
-            // 上次提示在一天内
-            if (currentTime - lastTime < CHECK_COUNT_PERIOD) {
-                // 最多5次
-                if (count < 5) {
-                    count++;
-                    sSettings.edit().putInt(KEY_RATE_SHOW_COUNT, count).apply();
-                } else {
-                    // 超过5次，下次提示在一天后
-                    mNextTime = lastTime + CHECK_COUNT_PERIOD;
-                    LogUtil.d(TAG, "onDismiss, reach 5 times nextTime:" + mNextTime + "(" + Util.millisToDate(mNextTime) + ")");
-                }
-            }
+//            if (lastTime == 0 || currentTime - lastTime >= CHECK_COUNT_PERIOD) {
+//                lastTime = currentTime;
+//                count = 0;
+//                sSettings.edit().putLong(KEY_RATE_SHOW_LAST, lastTime).apply();
+//            }
+//            // 上次提示在一天内
+//            if (currentTime - lastTime < CHECK_COUNT_PERIOD) {
+//                // 最多5次
+//                if (count < 5) {
+//                    count++;
+//                    sSettings.edit().putInt(KEY_RATE_SHOW_COUNT, count).apply();
+//                } else {
+//                    // 超过5次，下次提示在一天后
+//                    mNextTime = lastTime + CHECK_COUNT_PERIOD;
+//                    LogUtil.d(TAG, "onDismiss, reach 5 times nextTime:" + mNextTime + "(" + Util.millisToDate(mNextTime) + ")");
+//                }
+//            }
+
+            // 等同于Cancel
+            long time = new Date().getTime();
+            LogUtil.d(TAG, "rate_cancel last time:" + time + "(" + Util.millisToDate(time) + ")");
+            time = Util.getDateNext(1);
+            LogUtil.d(TAG, "rate_cancel next time:" + time + "(" + Util.millisToDate(time) + ")");
+            mNextTime = time;
+
         } else {
             // 重置计数
             sSettings.edit().putInt(KEY_RATE_SHOW_COUNT, 0).apply();
