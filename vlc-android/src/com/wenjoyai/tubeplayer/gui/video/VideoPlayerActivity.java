@@ -1329,9 +1329,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 //            final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 //            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 //            mPlaylist.setLayoutManager(layoutManager);
-            mPlaylistToggle.setVisibility(View.VISIBLE);
-            mPlaylistPrevious.setVisibility(View.VISIBLE);
-            mPlaylistNext.setVisibility(View.VISIBLE);
+//            mPlaylistToggle.setVisibility(View.VISIBLE);
+//            mPlaylistPrevious.setVisibility(View.VISIBLE);
+//            mPlaylistNext.setVisibility(View.VISIBLE);
             mPlaylistToggle.setOnClickListener(this);
             mPlaylistPrevious.setOnClickListener(this);
             mPlaylistNext.setOnClickListener(this);
@@ -3421,10 +3421,11 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 UiTools.setViewVisibility(mForward, View.VISIBLE);
                 UiTools.setViewVisibility(mPlaylistNext, View.VISIBLE);
                 UiTools.setViewVisibility(mPlaylistPrevious, View.VISIBLE);
+                UiTools.setViewVisibility(mPopupPlayToggle, View.VISIBLE);
+                UiTools.setViewVisibility(mMenuScrollview, View.VISIBLE);
             }
             dimStatusBar(false);
             mOverlayProgress.setVisibility(View.VISIBLE);
-            mMenuScrollview.setVisibility(View.VISIBLE);
             if (mPresentation != null) mOverlayBackground.setVisibility(View.VISIBLE);
         }
         mHandler.removeMessages(FADE_OUT);
@@ -3514,7 +3515,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 mOverlayBackground.setVisibility(View.INVISIBLE);
             }
             mOverlayProgress.setVisibility(View.INVISIBLE);
-            mMenuScrollview.setVisibility(View.GONE);
+
             mPlayPause.setVisibility(View.INVISIBLE);
             UiTools.setViewVisibility(mTracks, View.INVISIBLE);
 //            UiTools.setViewVisibility(mAdvOptions, View.INVISIBLE);
@@ -3523,6 +3524,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             UiTools.setViewVisibility(mForward, View.INVISIBLE);
             UiTools.setViewVisibility(mPlaylistNext, View.INVISIBLE);
             UiTools.setViewVisibility(mPlaylistPrevious, View.INVISIBLE);
+            UiTools.setViewVisibility(mPopupPlayToggle, View.INVISIBLE);
+            UiTools.setViewVisibility(mMenuScrollview, View.GONE);
             mShowing = false;
             dimStatusBar(true);
         } else if (!fromUser) {
