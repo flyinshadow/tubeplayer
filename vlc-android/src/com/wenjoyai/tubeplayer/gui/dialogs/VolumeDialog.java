@@ -35,6 +35,7 @@ import android.widget.SeekBar;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
+import com.wenjoyai.tubeplayer.util.LogUtil;
 
 import static android.content.Context.AUDIO_SERVICE;
 
@@ -94,6 +95,9 @@ public class VolumeDialog extends DialogFragment{
         window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
         mSeekSpeed.setProgress(100*mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC)/mAudioMax);
+
+        LogUtil.d(TAG, "mAudioMax=" + mAudioMax + ", currentVolume=" + mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
+
         return view;
     }
 
@@ -101,6 +105,7 @@ public class VolumeDialog extends DialogFragment{
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             if (fromUser) {
+                LogUtil.d(TAG, "onProgressChanged setStreamVolume=" + progress*mAudioMax/100);
                 mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress*mAudioMax/100, 0);
             }
         }

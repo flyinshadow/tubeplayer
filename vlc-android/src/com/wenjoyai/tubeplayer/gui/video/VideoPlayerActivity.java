@@ -42,6 +42,7 @@ import android.graphics.PixelFormat;
 import android.graphics.SurfaceTexture;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
+import android.media.AudioTrack;
 import android.media.MediaRouter;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -749,13 +750,16 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     PlayerMenuModel model = (PlayerMenuModel) view.getTag();
                     switch (model.menuType) {
                         case mute://静音
+                            long cost = System.currentTimeMillis();
                             if (!mMute) {
                                 mItemMap.get(model.menuType).setSelected(false);
-                            }else {
+                            } else {
                                 mItemMap.get(model.menuType).reset();
                             }
                             // 后去当前是否静音模式，设置
-                            mute(!mMute);
+                            mute2(!mMute);
+                            cost = System.currentTimeMillis() - cost;
+                            LogUtil.d(TAG, "audio mute cost:" + cost);
                             break;
                         case speed:
                             showFragment(ID_PLAYBACK_SPEED);
@@ -1038,7 +1042,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mCurrentScreenOrientation = newConfig.orientation;
         mSurfaceYDisplayRange = Math.min(mScreen.widthPixels, mScreen.heightPixels);
         mSurfaceXDisplayRange = Math.max(mScreen.widthPixels, mScreen.heightPixels);
-        resetHudLayout();
+//        resetHudLayout();
 
 //        if (mService != null && mService.isPlaying() && RateDialog.isShowing()) {
 //            doPlayPause();
@@ -1187,7 +1191,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
         LogUtil.d(TAG, "onDestroy mPlayTime=" + mPlayTime + ", mPlayLength=" + mPlayLength);
         // 播放进度2分钟以上提示评分
-        if (mPlayTime >= 120000) {
+        if (mPlayTime >= 120000 && !mSwitchingView) {
             RateDialog.tryToShow(VLCApplication.getAppContext(), 5);
         }
 
@@ -1752,8 +1756,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 return true;
             case KeyEvent.KEYCODE_M:
             case KeyEvent.KEYCODE_VOLUME_MUTE:
-                updateMute();
-                return true;
+//                updateMute();
+                return false;
             case KeyEvent.KEYCODE_S:
             case KeyEvent.KEYCODE_MEDIA_STOP:
                 exitOK();
@@ -1811,10 +1815,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 return true;
             case KeyEvent.KEYCODE_VOLUME_DOWN:
             case KeyEvent.KEYCODE_VOLUME_UP:
-                if (mMute) {
-                    updateMute();
-                    return true;
-                } else
+//                if (mMute) {
+////                    updateMute();
+//                    return true;
+//                } else
                     return false;
             case KeyEvent.KEYCODE_CAPTIONS:
                 selectSubtitles();
@@ -2873,7 +2877,19 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mMute = mute;
         if (mMute)
             mVolSave = mService.getVolume();
+        LogUtil.d(TAG, "audio mute mMute=" + mMute + ", mVolSave=" + mVolSave);
         mService.setVolume(mMute ? 0 : mVolSave);
+    }
+
+    // TODO: 2017/12/30  静音开关效果不佳
+    private int mAudioTrack = -1;
+    private void mute2(boolean mute) {
+        mMute = mute;
+        if (mMute) {
+            mAudioTrack = mService.getAudioTrack();
+        }
+        LogUtil.d(TAG, "audio mute2 mMute=" + mMute + ", mAudioTrack=" + mAudioTrack);
+        mService.setAudioTrack(mMute ? -1 : mAudioTrack);
     }
 
     private void updateMute() {
@@ -3470,7 +3486,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             if (mSettings.getBoolean("enable_seek_buttons", false))
                 initSeekButton();
             mSeekbar = (SeekBar) findViewById(R.id.player_overlay_seekbar);
-            resetHudLayout();
+//            resetHudLayout();
             updateOverlayPausePlay();
             updateSeekable(mService.isSeekable());
             updatePausable(mService.isPausable());

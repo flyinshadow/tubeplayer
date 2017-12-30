@@ -21,7 +21,9 @@
  */
 package com.wenjoyai.tubeplayer.gui.dialogs;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +35,7 @@ import android.widget.SeekBar;
 
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
+import com.wenjoyai.tubeplayer.util.Permissions;
 
 /**
  * 亮度对话框
@@ -84,16 +87,46 @@ public class BrightnessDialog extends DialogFragment{
         window.setBackgroundDrawableResource(UiTools.getResourceFromAttribute(getActivity(), R.attr.rounded_bg));
         window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
-        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-        mSeekBar.setProgress((int)lp.screenBrightness);
+        initBrightness();
         return view;
+    }
+
+    private void initBrightness() {
+        Activity activity = getActivity();
+        if (activity == null)
+            return;
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        float brightnesstemp = lp.screenBrightness != -1f ? lp.screenBrightness : 0.6f;
+        // Initialize the layoutParams screen brightness
+        try {
+            if (Settings.System.getInt(getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE) == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) {
+                if (!Permissions.canWriteSettings(getActivity())) {
+                    Permissions.checkWriteSettingsPermission(getActivity(), Permissions.PERMISSION_SYSTEM_BRIGHTNESS);
+                    return;
+                }
+                Settings.System.putInt(activity.getContentResolver(),
+                        Settings.System.SCREEN_BRIGHTNESS_MODE,
+                        Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+//                mRestoreAutoBrightness = android.provider.Settings.System.getInt(getContentResolver(),
+//                        android.provider.Settings.System.SCREEN_BRIGHTNESS) / 255.0f;
+            } else if (brightnesstemp == 0.6f) {
+                brightnesstemp = android.provider.Settings.System.getInt(activity.getContentResolver(),
+                        android.provider.Settings.System.SCREEN_BRIGHTNESS) / 255.0f;
+            }
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+        lp.screenBrightness = brightnesstemp;
+        activity.getWindow().setAttributes(lp);
+
+        mSeekBar.setProgress((int)(lp.screenBrightness * 100));
     }
 
     private SeekBar.OnSeekBarChangeListener mSeekBarListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             if (fromUser) {
-                setWindowBrightness(progress);
+                setWindowBrightness((float)progress / 100);
             }
         }
 
