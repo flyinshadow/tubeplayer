@@ -314,7 +314,7 @@ public class RateDialog extends DialogFragment implements View.OnClickListener, 
                 " nextTime:" + mNextTime + "(" + Util.millisToDate(mNextTime) + ")" +
                 " count:" + count);
         // 未点击任意按钮
-        if (mNextTime == 0) {
+        if (mNextTime < currentTime) {
 //            if (lastTime == 0 || currentTime - lastTime >= CHECK_COUNT_PERIOD) {
 //                lastTime = currentTime;
 //                count = 0;
@@ -335,9 +335,9 @@ public class RateDialog extends DialogFragment implements View.OnClickListener, 
 
             // 等同于Cancel
             long time = new Date().getTime();
-            LogUtil.d(TAG, "rate_cancel last time:" + time + "(" + Util.millisToDate(time) + ")");
+            LogUtil.d(TAG, "rate dismiss last time:" + time + "(" + Util.millisToDate(time) + ")");
             time = Util.getDateNext(1);
-            LogUtil.d(TAG, "rate_cancel next time:" + time + "(" + Util.millisToDate(time) + ")");
+            LogUtil.d(TAG, "rate dismiss next time:" + time + "(" + Util.millisToDate(time) + ")");
             mNextTime = time;
 
         } else {
