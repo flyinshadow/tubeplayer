@@ -67,6 +67,8 @@
     <color name="whitetransparent">#b4ffffff</color>
     <color name="white87transparent">#ddffffff</color>
     <color name="transparent">#00000000</color>
+    <color name="transparent_dark">#80000000</color>
+    <color name="transparent_mid">#40000000</color>
 
 
     <color name="tv_bg">#235f69</color>

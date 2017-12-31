@@ -3,8 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/rounded_corners"
+    android:background="@drawable/transparent_gradient"
     android:gravity="center_vertical"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
     >
 
     <ImageView

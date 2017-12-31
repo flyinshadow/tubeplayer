@@ -4,9 +4,9 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_alignParentTop="true"
-    android:background="@drawable/rounded_corners"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp" >
+    android:background="@drawable/transparent_gradient"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp" >
 
     <ImageView
         android:id="@+id/player_goback"

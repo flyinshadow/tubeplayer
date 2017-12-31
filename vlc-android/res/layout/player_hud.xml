@@ -3,7 +3,7 @@
     android:id="@+id/progress_overlay"
     android:layout_width="800dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/rounded_corners"
+    android:background="@color/transparent"
     android:paddingTop="@dimen/overlay_padding_top"
     android:paddingBottom="@dimen/overlay_padding_bottom"
     android:visibility="invisible" >

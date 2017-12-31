@@ -66,6 +66,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.ViewStubCompat;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -511,8 +512,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             });
         }
 //        Remove ActionBar extra space
-//        Toolbar toolbar = (Toolbar)mActionBarView.getParent();
-//        toolbar.setContentInsetsAbsolute(0, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Toolbar toolbar = (Toolbar)mActionBarView.getParent();
+            toolbar.setContentInsetsAbsolute(0, 0);
+        }
 
         mTitle = (TextView) mActionBarView.findViewById(R.id.player_overlay_title);
         if (!AndroidUtil.isJellyBeanOrLater) {
@@ -594,7 +597,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mDisplayRemainingTime = mSettings.getBoolean(KEY_REMAINING_TIME_DISPLAY, false);
         // Clear the resume time, since it is only used for resumes in external
         // videos.
-        SharedPreferences.Editor editor = mSettings.edit();
+        Editor editor = mSettings.edit();
         editor.putLong(PreferencesActivity.VIDEO_RESUME_TIME, -1);
         // Also clear the subs list, because it is supposed to be per session
         // only (like desktop VLC). We don't want the custom subtitle files
@@ -691,6 +694,16 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             if (mPlayerMediaThumbContainer != null) {
                 mPlayerMediaThumbContainer.setVisibility(View.GONE);
             }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.transparent_dark));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.transparent_dark));
         }
 
     }
@@ -990,6 +1003,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 //                mPlaylist.setVisibility(View.GONE);
 //            }
             showTitle();
+            showOverlay();
             initUI();
             setPlaybackParameters();
             mForcedTime = mLastTime = -1;
@@ -3616,7 +3630,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (AndroidDevices.hasNavBar())
             visibility |= navbar;
         getWindow().getDecorView().setSystemUiVisibility(visibility);
-
     }
 
     private void updateOverlayPausePlay() {

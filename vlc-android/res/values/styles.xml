@@ -937,7 +937,8 @@
         <item name="list_title_last">?attr/colorAccent</item>
         <item name="list_title">@color/whitetransparent</item>
 
-        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorPrimaryDark">@color/transparent_dark</item>
+
     </style>
 
     <style name="Theme.VideoPlayer.Apearance.Black.ActionBar" parent="Theme.VideoPlayer.Apearance.ActionBar">
