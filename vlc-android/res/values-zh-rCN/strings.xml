@@ -456,4 +456,11 @@
     <string name="file_name">文件名</string>
     <string name="folders">文件夹</string>
     <string name="rate">评分</string>
+
+    <string name="mute">静音</string>
+    <string name="speed">速度</string>
+    <string name="background_play">后台播放</string>
+    <string name="timer">定时器</string>
+    <string name="ratio">画面比例</string>
+    <string name="rotate">旋转</string>
 </resources>

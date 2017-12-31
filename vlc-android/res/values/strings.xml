@@ -742,7 +742,7 @@
 
     <string name="mute">Mute</string>
     <string name="speed">Speed</string>
-    <string name="audio_play">Audio play</string>
+    <string name="background_play">Background Play</string>
     <string name="timer">Timer</string>
     <string name="ratio">Ratio</string>
     <string name="rotate">Rotate</string>

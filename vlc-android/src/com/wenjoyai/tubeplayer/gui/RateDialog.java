@@ -244,7 +244,7 @@ public class RateDialog extends DialogFragment implements View.OnClickListener, 
                 StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_RATE_CANCEL);
 
                 LogUtil.d(TAG, "rate_cancel last time:" + time + "(" + Util.millisToDate(time) + ")");
-                time = Util.getDateNext(1);
+                time = Util.getDateNext(3);
                 LogUtil.d(TAG, "rate_cancel next time:" + time + "(" + Util.millisToDate(time) + ")");
                 mNextTime = time;
                 dismissRate(R.anim.anim_leave_right);
@@ -336,7 +336,7 @@ public class RateDialog extends DialogFragment implements View.OnClickListener, 
             // 等同于Cancel
             long time = new Date().getTime();
             LogUtil.d(TAG, "rate dismiss last time:" + time + "(" + Util.millisToDate(time) + ")");
-            time = Util.getDateNext(1);
+            time = Util.getDateNext(3);
             LogUtil.d(TAG, "rate dismiss next time:" + time + "(" + Util.millisToDate(time) + ")");
             mNextTime = time;
 

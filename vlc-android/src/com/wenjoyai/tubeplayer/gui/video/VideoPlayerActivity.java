@@ -42,7 +42,6 @@ import android.graphics.PixelFormat;
 import android.graphics.SurfaceTexture;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
-import android.media.AudioTrack;
 import android.media.MediaRouter;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -710,7 +709,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     }
 
     public enum MenuType {
-        mute, speed, audio_play, timer, volume, brightness, ratio, rotate, ic_arrow_back
+        mute, speed, background_play, timer, volume, brightness, ratio, rotate, ic_arrow_back
     }
 
     private Map<MenuType, PlayerItemLayout> mItemMap = new HashMap<>();
@@ -722,7 +721,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         //speed
         list.add(new PlayerMenuModel(R.drawable.ic_player_speed, getString(R.string.speed), MenuType.speed));
         //后台播放 audio play
-        list.add(new PlayerMenuModel(R.drawable.ic_player_audio, getString(R.string.audio_play), MenuType.audio_play));
+        list.add(new PlayerMenuModel(R.drawable.ic_player_background_play, getString(R.string.background_play), MenuType.background_play));
         //timer
         list.add(new PlayerMenuModel(R.drawable.ic_player_timer, getString(R.string.timer), MenuType.timer));
         //volume
@@ -764,7 +763,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                         case speed:
                             showFragment(ID_PLAYBACK_SPEED);
                             break;
-                        case audio_play:
+                        case background_play:
                             mItemMap.get(model.menuType).setSelected(false);
                             StatisticsManager.submitVideoPlay(VideoPlayerActivity.this, StatisticsManager.TYPE_VIDEO_EXTEND_PLAY_AS_AUDIO, null, null);
                             switchToAudioMode(true);
@@ -3045,7 +3044,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 mService.next();
                 break;
             case R.id.playlist_previous:
-                mService.previous(false);
+                mService.previous(true);
                 break;
             case R.id.player_overlay_forward:
                 seekDelta(10000);
@@ -4621,11 +4620,11 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         switch (id) {
             case ID_VOLUME:
                 newFragment = VolumeDialog.newInstance(mTheme);
-                tag = "playback_speed";
+                tag = "playback_volume";
                 break;
             case ID_BRIGHTNESS:
                 newFragment = BrightnessDialog.newInstance(mTheme);
-                tag = "playback_speed";
+                tag = "playback_brightness";
                 break;
             case ID_PLAYBACK_SPEED:
                 newFragment = PlaybackSpeedDialog.newInstance(mTheme);
@@ -4639,7 +4638,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 break;
             case ID_JUMP_TO:
                 newFragment = JumpToTimeDialog.newInstance(mTheme);
-                tag = "time";
+                tag = "playback_jumpto";
                 break;
             case ID_SLEEP:
                 newFragment = TimerDialog.newInstance(mTheme);
@@ -4676,7 +4675,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                         }
                     }
                 });
-                tag = "time";
+                tag = "playback_sleep";
                 break;
             case ID_CHAPTER_TITLE:
                 newFragment = SelectChapterDialog.newInstance(mTheme);
@@ -4684,6 +4683,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 break;
             case ID_SAVE_PLAYLIST:
                 UiTools.addToPlaylist(this, mService.getMedias());
+                tag = "save_playlist";
                 return;
             default:
                 return;
