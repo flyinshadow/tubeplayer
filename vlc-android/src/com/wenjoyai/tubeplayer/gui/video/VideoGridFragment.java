@@ -41,7 +41,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -335,11 +334,9 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
         if (mMediaLibrary.isInitiated()) {
             LogUtil.d(TAG, "aaaa onStart mMediaLibrary isInitiated");
-            Log.e("yNativeAD", "aaaa onStart mMediaLibrary isInitiated onMedialibraryReady");
             onMedialibraryReady();
         } else if (mGroup == null && mFolderGroup == null) {
             LogUtil.d(TAG, "aaaa onStart setupMediaLibraryReceiver");
-            Log.e("yNativeAD", "aaaa onStart setupMediaLibraryReceiver");
             setupMediaLibraryReceiver();
         }
         super.onStart();
@@ -631,7 +628,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 //        for (MediaWrapper media : mediaList) {
 //            LogUtil.d(TAG, "xxxx onMediaUpdated [" + count++ + "] " + media.getUri().getPath() + " " + media.getArtworkMrl());
 //        }
-        Log.e("yNativeAD", "onMediaUpdated mediaList:" + mediaList.length);
+        LogUtil.d(TAG, "onMediaUpdated mediaList:" + mediaList.length);
 
         if (!mFolderMain && !mParsingFinished && mediaList.length > 0) {
             updateItems(mediaList);
@@ -725,6 +722,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     }
                 });
 
+                LogUtil.d(TAG, "yRefresh updateList UNSET_REFRESHING");
                 mHandler.sendEmptyMessage(UNSET_REFRESHING);
             }
         });
@@ -781,10 +779,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     private Runnable mSwipeRefreshRunnable = new Runnable() {
         @Override
         public void run() {
-            LogUtil.d(TAG, "aaaa onRefresh mParsingStarted:" + mParsingStarted + ", mParsingFinished:" +
+            LogUtil.d(TAG, "mSwipeRefreshRunnable mParsingStarted:" + mParsingStarted + ", mParsingFinished:" +
                     mParsingFinished + ", isRefreshing:" + mSwipeRefreshLayout.isRefreshing());
             if (mParsingFinished && mSwipeRefreshLayout.isRefreshing()) {
-                LogUtil.d(TAG, "aaaa onRefresh setRefreshing false");
+                LogUtil.d(TAG, "yRefresh mSwipeRefreshRunnable setRefreshing false");
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         }
@@ -792,7 +790,9 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     @Override
     public void onRefresh() {
-        LogUtil.d(TAG, "aaaa onRefresh");
+        LogUtil.d(TAG, "yRefresh onRefresh");
+        mHandler.removeMessages(UNSET_REFRESHING);
+        loadFeedNative();
         mVideoAdapter.resetAdIndex();
         if (mHandler != null) {
             mHandler.postDelayed(mSwipeRefreshRunnable, 5000);
@@ -819,7 +819,6 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     @Override
     protected void onParsingServiceStarted() {
         LogUtil.d(TAG, "aaaa onParsingServiceStarted");
-        Log.e("yNativeAD", "aaaa onParsingServiceStarted");
         mParsingStarted = true;
         mParsingFinished = false;
 //        Log.e("yNativeAD", "aaaa onParsingServiceStarted");
@@ -829,7 +828,6 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     @Override
     protected void onParsingServiceFinished() {
         LogUtil.d(TAG, "aaaa onParsingServiceFinished");
-        Log.e("yNativeAD", "aaaa onParsingServiceFinished");
         mParsingStarted = false;
         mParsingFinished = true;
         if (checkAds() && !mShowAd) {
@@ -943,16 +941,16 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case UPDATE_LIST:
-                    LogUtil.d(TAG, "aaaa handleMessage UPDATE_LIST");
+                    LogUtil.d(TAG, "yRefresh handleMessage UPDATE_LIST");
                     removeMessages(UPDATE_LIST);
                     updateList();
                     break;
                 case SET_REFRESHING:
-                    LogUtil.d(TAG, "aaaa handleMessage SET_REFRESHING");
+                    LogUtil.d(TAG, "yRefresh handleMessage SET_REFRESHING");
                     mSwipeRefreshLayout.setRefreshing(true);
                     break;
                 case UNSET_REFRESHING:
-                    LogUtil.d(TAG, "aaaa handleMessage UNSET_REFRESHING");
+                    LogUtil.d(TAG, "yRefresh handleMessage UNSET_REFRESHING");
                     removeMessages(SET_REFRESHING);
                     mSwipeRefreshLayout.setRefreshing(false);
                     break;
@@ -1023,9 +1021,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     @Override
     public void onUpdateFinished(RecyclerView.Adapter adapter) {
-        LogUtil.d(TAG, "aaaa onUpdateFinished mMediaLibrary.isWorking() : " + mMediaLibrary.isWorking());
-        if (!mMediaLibrary.isWorking())
+        LogUtil.d(TAG, "yRefresh onUpdateFinished mMediaLibrary.isWorking() : " + mMediaLibrary.isWorking());
+        if (!mMediaLibrary.isWorking()) {
             mHandler.sendEmptyMessage(UNSET_REFRESHING);
+        }
         updateEmptyView();
         setFabPlayVisibility(true);
     }
@@ -1131,14 +1130,13 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
     private ADManager.ADNumListener mAdNumListener = new ADManager.ADNumListener() {
         @Override
         public void onLoadedSuccess(List<NativeAd> list, boolean needGif) {
-            mNativeAdList = list;
-            Log.e("yNativeAD", "aaaa onLoadedSuccess list:" + (list == null ? 0 : list.size()));
-            if (checkAds()) {
-                if (mNativeAdList.size()>0) {
-                    mVideoAdapter.setNativeAd(mNativeAdList);
-                    if (mParsingFinished || mParsed) {
-                        mHandler.sendEmptyMessage(UPDATE_LIST);
-                    }
+            LogUtil.d(TAG, "yADNative onLoadedSuccess list.size=" + list.size() + ", needGif=" + needGif);
+            for (NativeAd ad : list) {
+                LogUtil.d(TAG, "yADNative onLoadedSuccess adId=" + ad.getPlacementId());
+            }
+            if (onFeedLoaded(list)) {
+                if (mParsingFinished || mParsed) {
+                    mHandler.sendEmptyMessage(UPDATE_LIST);
                 }
             }
 
@@ -1155,6 +1153,15 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     public void loadFeedNative() {
         ADManager.getInstance().getNativeAdlist(mAdNumListener);
+    }
+
+    private boolean onFeedLoaded(List<NativeAd> list) {
+        mNativeAdList = list;
+        if (checkAds()) {
+            mVideoAdapter.setNativeAd(mNativeAdList);
+            return true;
+        }
+        return false;
     }
 
     public int getCurrentViewMode() {

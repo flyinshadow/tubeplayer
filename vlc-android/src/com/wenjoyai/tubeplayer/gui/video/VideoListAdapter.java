@@ -33,7 +33,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -945,6 +944,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             if ((index - mStartIndex) % AD_STEPS == 0) {
                 NativeAd nativeAd = nextAd();
                 if (nativeAd != null) {
+                    LogUtil.d(TAG, "yADNative addAdItems adId=" + nativeAd.getPlacementId());
                     AdItem ad = new AdItem(item);
                     ad.setNativeAd(nativeAd);
                     it.previous();
@@ -997,7 +997,6 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     public void setShowAds(boolean showAds) {
         LogUtil.d(TAG, "facebookAD setShowAds : " + showAds);
-        Log.e("yNativeAD", "facebookAD setShowAds : " + showAds);
         mShowAds = showAds;
     }
 
