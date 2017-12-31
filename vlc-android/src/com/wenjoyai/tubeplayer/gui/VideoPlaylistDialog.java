@@ -78,7 +78,7 @@ public class VideoPlaylistDialog extends DialogFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        setStyle(DialogFragment.STYLE_NO_TITLE, );
+        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.dialog);
     }
 
     @Override
