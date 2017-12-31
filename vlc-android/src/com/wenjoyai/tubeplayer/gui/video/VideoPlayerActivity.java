@@ -3617,19 +3617,19 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (!AndroidUtil.isHoneycombOrLater || mIsNavMenu)
             return;
         int visibility = 0;
-        int navbar = 0;
+//        int navbar = 0;
         mActionBar.show();
 
-        if (AndroidUtil.isJellyBeanOrLater) {
-            visibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-            navbar = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
-        }
-        if (AndroidUtil.isICSOrLater)
-            navbar |= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+//        if (AndroidUtil.isJellyBeanOrLater) {
+//            visibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+//            navbar = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+//        }
+//        if (AndroidUtil.isICSOrLater)
+//            navbar |= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
 
-        if (AndroidDevices.hasNavBar())
-            visibility |= navbar;
-        getWindow().getDecorView().setSystemUiVisibility(visibility);
+//        if (AndroidDevices.hasNavBar())
+//            visibility |= navbar;
+//        getWindow().getDecorView().setSystemUiVisibility(visibility);
     }
 
     private void updateOverlayPausePlay() {
