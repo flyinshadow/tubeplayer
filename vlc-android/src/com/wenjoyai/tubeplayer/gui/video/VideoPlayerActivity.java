@@ -1431,7 +1431,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             if (mSwitchToPopup) {
                 mService.switchToPopup(mService.getCurrentMediaPosition());
             } else {
-                mService.getCurrentMediaWrapper().addFlags(MediaWrapper.MEDIA_FORCE_AUDIO);
+                if (mService.getCurrentMediaWrapper() != null) {
+                    mService.getCurrentMediaWrapper().addFlags(MediaWrapper.MEDIA_FORCE_AUDIO);
+                }
                 mService.showWithoutParse(mService.getCurrentMediaPosition());
             }
             return;
