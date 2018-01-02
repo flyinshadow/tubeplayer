@@ -57,6 +57,7 @@
     <attr name="po_seekbar" format="reference" />
     <attr name="seekbar_thumb" format="reference" />
     <attr name="button_oval" format="reference" />
+    <attr name="shape_circle" format="reference" />
 
     <!--Advance Options Icons-->
     <attr name="ic_speed_normal_style" format="reference" />

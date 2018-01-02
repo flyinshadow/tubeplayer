@@ -95,6 +95,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_black</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_black</item>
         <item name="button_oval">@drawable/button_oval_black</item>
+        <item name="shape_circle">@drawable/shape_circle_black</item>
 
     </style>
 
@@ -204,6 +205,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_black</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_black</item>
         <item name="button_oval">@drawable/button_oval_black</item>
+        <item name="shape_circle">@drawable/shape_circle_black</item>
 
     </style>
    <style name="Theme.VLC.TV" parent="Theme.Leanback">
@@ -428,6 +430,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_black</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_black</item>
         <item name="button_oval">@drawable/button_oval_black</item>
+        <item name="shape_circle">@drawable/shape_circle_black</item>
 
     </style>
 
@@ -447,6 +450,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_red</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_red</item>
         <item name="button_oval">@drawable/button_oval_red</item>
+        <item name="shape_circle">@drawable/shape_circle_red</item>
 
     </style>
 
@@ -466,6 +470,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_pink</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_pink</item>
         <item name="button_oval">@drawable/button_oval_pink</item>
+        <item name="shape_circle">@drawable/shape_circle_pink</item>
 
     </style>
 
@@ -485,6 +490,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_purple</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_purple</item>
         <item name="button_oval">@drawable/button_oval_purple</item>
+        <item name="shape_circle">@drawable/shape_circle_purple</item>
 
     </style>
 
@@ -504,6 +510,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_deep_purple</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_purple</item>
         <item name="button_oval">@drawable/button_oval_deep_purple</item>
+        <item name="shape_circle">@drawable/shape_circle_deep_purple</item>
 
     </style>
 
@@ -523,6 +530,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_indigo</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_indigo</item>
         <item name="button_oval">@drawable/button_oval_indigo</item>
+        <item name="shape_circle">@drawable/shape_circle_indigo</item>
 
     </style>
 
@@ -542,6 +550,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_blue</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_blue</item>
         <item name="button_oval">@drawable/button_oval_blue</item>
+        <item name="shape_circle">@drawable/shape_circle_blue</item>
 
     </style>
 
@@ -561,6 +570,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_light_blue</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_light_blue</item>
         <item name="button_oval">@drawable/button_oval_light_blue</item>
+        <item name="shape_circle">@drawable/shape_circle_light_blue</item>
 
     </style>
 
@@ -580,6 +590,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_cyan</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_cyan</item>
         <item name="button_oval">@drawable/button_oval_cyan</item>
+        <item name="shape_circle">@drawable/shape_circle_cyan</item>
 
     </style>
 
@@ -599,6 +610,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_teal</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_teal</item>
         <item name="button_oval">@drawable/button_oval_teal</item>
+        <item name="shape_circle">@drawable/shape_circle_teal</item>
 
     </style>
 
@@ -618,6 +630,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_green</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_green</item>
         <item name="button_oval">@drawable/button_oval_green</item>
+        <item name="shape_circle">@drawable/shape_circle_green</item>
 
     </style>
 
@@ -637,6 +650,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_light_green</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_light_green</item>
         <item name="button_oval">@drawable/button_oval_light_green</item>
+        <item name="shape_circle">@drawable/shape_circle_light_green</item>
 
     </style>
 
@@ -656,6 +670,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_lime</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_lime</item>
         <item name="button_oval">@drawable/button_oval_lime</item>
+        <item name="shape_circle">@drawable/shape_circle_lime</item>
 
     </style>
 
@@ -675,6 +690,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_amber</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_amber</item>
         <item name="button_oval">@drawable/button_oval_amber</item>
+        <item name="shape_circle">@drawable/shape_circle_amber</item>
 
     </style>
 
@@ -694,6 +710,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_orange</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_orange</item>
         <item name="button_oval">@drawable/button_oval_orange</item>
+        <item name="shape_circle">@drawable/shape_circle_orange</item>
 
     </style>
 
@@ -713,6 +730,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_deep_orange</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_orange</item>
         <item name="button_oval">@drawable/button_oval_deep_orange</item>
+        <item name="shape_circle">@drawable/shape_circle_deep_orange</item>
 
     </style>
 
@@ -730,6 +748,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_red</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_red</item>
         <item name="button_oval">@drawable/button_oval_red</item>
+        <item name="shape_circle">@drawable/shape_circle_red</item>
 
     </style>
 
@@ -744,6 +763,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_pink</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_pink</item>
         <item name="button_oval">@drawable/button_oval_pink</item>
+        <item name="shape_circle">@drawable/shape_circle_pink</item>
 
     </style>
 
@@ -758,6 +778,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_purple</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_purple</item>
         <item name="button_oval">@drawable/button_oval_purple</item>
+        <item name="shape_circle">@drawable/shape_circle_purple</item>
 
     </style>
 
@@ -772,6 +793,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_deep_purple</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_purple</item>
         <item name="button_oval">@drawable/button_oval_deep_purple</item>
+        <item name="shape_circle">@drawable/shape_circle_deep_purple</item>
 
     </style>
 
@@ -786,6 +808,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_indigo</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_indigo</item>
         <item name="button_oval">@drawable/button_oval_indigo</item>
+        <item name="shape_circle">@drawable/shape_circle_indigo</item>
 
     </style>
 
@@ -800,6 +823,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_blue</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_blue</item>
         <item name="button_oval">@drawable/button_oval_blue</item>
+        <item name="shape_circle">@drawable/shape_circle_blue</item>
 
     </style>
 
@@ -814,6 +838,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_light_blue</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_light_blue</item>
         <item name="button_oval">@drawable/button_oval_light_blue</item>
+        <item name="shape_circle">@drawable/shape_circle_light_blue</item>
 
     </style>
 
@@ -828,6 +853,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_cyan</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_cyan</item>
         <item name="button_oval">@drawable/button_oval_cyan</item>
+        <item name="shape_circle">@drawable/shape_circle_cyan</item>
 
     </style>
 
@@ -842,6 +868,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_teal</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_teal</item>
         <item name="button_oval">@drawable/button_oval_teal</item>
+        <item name="shape_circle">@drawable/shape_circle_teal</item>
 
     </style>
 
@@ -856,6 +883,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_green</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_green</item>
         <item name="button_oval">@drawable/button_oval_green</item>
+        <item name="shape_circle">@drawable/shape_circle_green</item>
 
     </style>
 
@@ -870,6 +898,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_light_green</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_light_green</item>
         <item name="button_oval">@drawable/button_oval_light_green</item>
+        <item name="shape_circle">@drawable/shape_circle_light_green</item>
 
     </style>
 
@@ -884,6 +913,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_lime</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_lime</item>
         <item name="button_oval">@drawable/button_oval_lime</item>
+        <item name="shape_circle">@drawable/shape_circle_lime</item>
 
     </style>
 
@@ -898,6 +928,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_amber</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_amber</item>
         <item name="button_oval">@drawable/button_oval_amber</item>
+        <item name="shape_circle">@drawable/shape_circle_amber</item>
 
     </style>
 
@@ -912,6 +943,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_orange</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_orange</item>
         <item name="button_oval">@drawable/button_oval_orange</item>
+        <item name="shape_circle">@drawable/shape_circle_orange</item>
 
     </style>
 
@@ -926,6 +958,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_deep_orange</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_orange</item>
         <item name="button_oval">@drawable/button_oval_deep_orange</item>
+        <item name="shape_circle">@drawable/shape_circle_deep_orange</item>
 
     </style>
 
@@ -952,6 +985,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_black</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_black</item>
         <item name="button_oval">@drawable/button_oval_black</item>
+        <item name="shape_circle">@drawable/shape_circle_black</item>
 
     </style>
 
@@ -966,6 +1000,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_red</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_red</item>
         <item name="button_oval">@drawable/button_oval_red</item>
+        <item name="shape_circle">@drawable/shape_circle_red</item>
 
     </style>
 
@@ -980,6 +1015,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_pink</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_pink</item>
         <item name="button_oval">@drawable/button_oval_pink</item>
+        <item name="shape_circle">@drawable/shape_circle_pink</item>
 
     </style>
 
@@ -994,6 +1030,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_purple</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_purple</item>
         <item name="button_oval">@drawable/button_oval_purple</item>
+        <item name="shape_circle">@drawable/shape_circle_purple</item>
 
     </style>
 
@@ -1008,6 +1045,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_deep_purple</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_purple</item>
         <item name="button_oval">@drawable/button_oval_deep_purple</item>
+        <item name="shape_circle">@drawable/shape_circle_deep_purple</item>
 
     </style>
 
@@ -1022,6 +1060,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_indigo</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_indigo</item>
         <item name="button_oval">@drawable/button_oval_indigo</item>
+        <item name="shape_circle">@drawable/shape_circle_indigo</item>
 
     </style>
 
@@ -1036,6 +1075,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_blue</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_blue</item>
         <item name="button_oval">@drawable/button_oval_blue</item>
+        <item name="shape_circle">@drawable/shape_circle_blue</item>
 
     </style>
 
@@ -1050,6 +1090,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_light_blue</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_light_blue</item>
         <item name="button_oval">@drawable/button_oval_light_blue</item>
+        <item name="shape_circle">@drawable/shape_circle_light_blue</item>
 
     </style>
 
@@ -1064,6 +1105,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_cyan</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_cyan</item>
         <item name="button_oval">@drawable/button_oval_cyan</item>
+        <item name="shape_circle">@drawable/shape_circle_cyan</item>
 
     </style>
 
@@ -1078,6 +1120,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_teal</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_teal</item>
         <item name="button_oval">@drawable/button_oval_teal</item>
+        <item name="shape_circle">@drawable/shape_circle_teal</item>
 
     </style>
 
@@ -1092,6 +1135,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_green</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_green</item>
         <item name="button_oval">@drawable/button_oval_green</item>
+        <item name="shape_circle">@drawable/shape_circle_green</item>
 
     </style>
 
@@ -1106,6 +1150,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_light_green</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_light_green</item>
         <item name="button_oval">@drawable/button_oval_light_green</item>
+        <item name="shape_circle">@drawable/shape_circle_light_green</item>
 
     </style>
 
@@ -1120,6 +1165,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_lime</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_lime</item>
         <item name="button_oval">@drawable/button_oval_lime</item>
+        <item name="shape_circle">@drawable/shape_circle_lime</item>
 
     </style>
 
@@ -1134,6 +1180,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_amber</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_amber</item>
         <item name="button_oval">@drawable/button_oval_amber</item>
+        <item name="shape_circle">@drawable/shape_circle_amber</item>
 
     </style>
 
@@ -1148,6 +1195,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_orange</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_orange</item>
         <item name="button_oval">@drawable/button_oval_orange</item>
+        <item name="shape_circle">@drawable/shape_circle_orange</item>
 
     </style>
 
@@ -1162,6 +1210,7 @@
         <item name="po_seekbar">@drawable/po_seekbar_deep_orange</item>
         <item name="seekbar_thumb">@drawable/seekbar_thumb_deep_orange</item>
         <item name="button_oval">@drawable/button_oval_deep_orange</item>
+        <item name="shape_circle">@drawable/shape_circle_deep_orange</item>
 
     </style>
 

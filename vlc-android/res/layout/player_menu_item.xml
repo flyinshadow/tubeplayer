@@ -32,7 +32,7 @@
             android:layout_height="44dp"
             android:gravity="center"
             android:visibility="gone"
-            android:background="@drawable/shape_circle"
+            android:background="?attr/shape_circle"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             tools:text="29:00" />

@@ -750,7 +750,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
 
     private void fillMenu(List<PlayerMenuModel> list) {
-        mMenuLinearLayout.removeAllViews();
+        if (mMenuLinearLayout != null) {
+            mMenuLinearLayout.removeAllViews();
+        }
         for (int i = 0; i < list.size(); i++) {
             PlayerMenuModel model = list.get(i);
             PlayerItemLayout playerItemLayout = new PlayerItemLayout(this);
