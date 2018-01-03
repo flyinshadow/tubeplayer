@@ -519,6 +519,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         int adCount = 0;
         for (int i = 0; i < getItemCount(); ++i) {
             mw = mVideos.get(i);
+            if (mw == null)
+                continue;
             if (mw.getItemType() == MediaLibraryItem.TYPE_AD) {
                 if (i < position) {
                     adCount++;

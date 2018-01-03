@@ -994,7 +994,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             ArrayList<MediaWrapper> playList = new ArrayList<>();
             MediaUtils.openList(activity, playList, mVideoAdapter.getListWithPositionSkipAds(playList, position), getTitle());
             ImageView imageView = (ImageView) v.findViewById(R.id.ml_item_thumbnail);
-            if (imageView != null) {
+            if (imageView != null && mService != null) {
                 mService.setSharedImageView(imageView, getActivity());
             }
         }

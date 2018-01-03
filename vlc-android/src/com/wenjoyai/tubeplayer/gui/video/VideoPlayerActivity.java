@@ -809,7 +809,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mItemMap.put(model.menuType, playerItemLayout);
             //将布局填充器加载到LinearLayout中进行显示
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mScreenWidth/6, ViewGroup.LayoutParams.MATCH_PARENT);
-            mMenuLinearLayout.addView(playerItemLayout,layoutParams);
+            if (mMenuLinearLayout != null) {
+                mMenuLinearLayout.addView(playerItemLayout, layoutParams);
+            }
         }
         //back view
         View backView = LayoutInflater.from(VideoPlayerActivity.this).inflate(R.layout.player_menu_item_back, null);
@@ -819,12 +821,18 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 mMenuScrollview.left();
             }
         });
-        mMenuLinearLayout.addView(backView, new LinearLayout.LayoutParams(mScreenWidth/6, ViewGroup.LayoutParams.MATCH_PARENT));
+        if (mMenuLinearLayout != null) {
+            mMenuLinearLayout.addView(backView, new LinearLayout.LayoutParams(mScreenWidth / 6, ViewGroup.LayoutParams.MATCH_PARENT));
+        }
         //填充的view
         mView = new View(this);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mScreenWidth/2, ViewGroup.LayoutParams.MATCH_PARENT);
-        mMenuLinearLayout.addView(mView, layoutParams);
-        mMenuScrollview.right();
+        if (mMenuLinearLayout != null) {
+            mMenuLinearLayout.addView(mView, layoutParams);
+        }
+        if (mMenuScrollview != null) {
+            mMenuScrollview.right();
+        }
     }
     View mView;
     private int mScreenWidth = 0;
@@ -3285,6 +3293,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     }
 
     private void doPlayPause() {
+        if (mService == null)
+            return;
         if (!mService.isPausable())
             return;
 
@@ -3527,7 +3537,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             UiTools.setViewVisibility(mOverlayTips, View.INVISIBLE);
             if (!fromUser && !mIsLocked) {
                 mOverlayProgress.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-                mMenuScrollview.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+                if (mMenuScrollview != null) {
+                    mMenuScrollview.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+                }
 //                mPlayPause.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
 //                if (mTracks != null)
 //                    mTracks.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
