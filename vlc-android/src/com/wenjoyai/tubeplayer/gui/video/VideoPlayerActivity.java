@@ -2331,7 +2331,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (!mIsPlaying) {
             LogUtil.d(TAG, "first Playing");
 
-            mPlayerMediaThumbContainer.setVisibility(View.GONE);
+            if (mPlayerMediaThumbContainer != null) {
+                mPlayerMediaThumbContainer.setVisibility(View.GONE);
+            }
 
             MediaWrapper mw = mService.getCurrentMediaWrapper();
             if (mw != null) {

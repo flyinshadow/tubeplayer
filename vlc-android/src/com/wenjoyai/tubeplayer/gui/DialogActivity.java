@@ -25,6 +25,7 @@ package com.wenjoyai.tubeplayer.gui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.ViewGroup;
@@ -133,6 +134,17 @@ public class DialogActivity extends AppCompatActivity {
                 }, 300);
             }
         });
-        rateDialog.show(getSupportFragmentManager(), "rate_fragment");
+
+        // http://blog.csdn.net/s003603u/article/details/50427323
+        // 这里直接调用show方法会报java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState
+        // 因为show方法中是通过commit进行的提交(通过查看源码)
+        // 这里为了修复这个问题，使用commitAllowingStateLoss()方法
+        // 注意：DialogFragment是继承自android.app.Fragment，这里要注意同v4包中的Fragment区分，别调用串了
+        // DialogFragment有自己的好处，可能也会带来别的问题
+//        rateDialog.show(getSupportFragmentManager(), "rate_fragment");
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.add(rateDialog, "rate_fragment");
+        ft.commitAllowingStateLoss();
     }
 }
