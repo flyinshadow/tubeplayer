@@ -128,7 +128,7 @@ public class AudioPlayer extends PlaybackServiceFragment implements PlaybackServ
             DEFAULT_BACKGROUND_DARKER_ID = UiTools.getResourceFromAttribute(view.getContext(), R.attr.background_default_darker);
             DEFAULT_BACKGROUND_ID = UiTools.getResourceFromAttribute(view.getContext(), R.attr.background_default_darker);
         }
-        mPlaylistAdapter = new PlaylistAdapter(this);
+        mPlaylistAdapter = new PlaylistAdapter(this, false);
         mBinding.header.setBackgroundResource(DEFAULT_BACKGROUND_DARKER_ID);
         mBinding.songsList.setLayoutManager(new LinearLayoutManager(mBinding.getRoot().getContext()));
         mBinding.songsList.setAdapter(mPlaylistAdapter);

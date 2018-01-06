@@ -33,7 +33,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +54,7 @@ import com.wenjoyai.tubeplayer.interfaces.IEventsHandler;
 import com.wenjoyai.tubeplayer.media.AdItem;
 import com.wenjoyai.tubeplayer.media.FolderGroup;
 import com.wenjoyai.tubeplayer.media.Group;
+import com.wenjoyai.tubeplayer.media.MediaGroup;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.MediaItemFilter;
 import com.wenjoyai.tubeplayer.util.Strings;
@@ -204,9 +204,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         LogUtil.d(TAG, "xxxx onBindViewHolder position: " + position + " " + (media.getUri() != null ? media.getUri().getPath() : "") +
                 " " + media.getArtworkMrl());
 
-        holder.binding.setVariable(BR.isAd, media.getItemType() == MediaWrapper.TYPE_AD);
+        holder.binding.setVariable(BR.isAd, media.getItemType() == MediaLibraryItem.TYPE_AD);
 
-        if (media.getItemType() == MediaWrapper.TYPE_AD && holder.adContainer != null) {
+        if (media.getItemType() == MediaLibraryItem.TYPE_AD && holder.adContainer != null) {
             bindAd(holder, (AdItem) media);
         } else {
             fillView(holder, media);
@@ -249,7 +249,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                         holder.binding.setVariable(BR.bgColor, ContextCompat.getColor(holder.itemView.getContext(), mListMode && isSelected ? R.color.orange200transparent : R.color.transparent));
                         break;
                     case UPDATE_AD:
-                        if (media != null && media.getItemType() == MediaWrapper.TYPE_AD) {
+                        if (media != null && media.getItemType() == MediaLibraryItem.TYPE_AD) {
                             bindAd(holder, ((AdItem) media));
                         }
                         break;
@@ -501,11 +501,11 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         int offset = 0;
         for (int i = 0; i < getItemCount(); ++i) {
             mw = mVideos.get(i);
-            if (mw.getItemType() == MediaWrapper.TYPE_AD)
+            if (mw.getItemType() == MediaLibraryItem.TYPE_AD)
                 continue;
             if (mw instanceof Group) {
                 for (MediaWrapper item : ((Group) mw).getAll()) {
-                    if (item.getItemType() != MediaWrapper.TYPE_AD)
+                    if (item.getItemType() != MediaLibraryItem.TYPE_AD)
                         list.add(item);
                 }
                 if (i < position)
@@ -514,6 +514,34 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                 list.add(mw);
         }
         return position + offset;
+    }
+
+    int getListWithPositionSkipAds(ArrayList<MediaWrapper> list, int position) {
+        MediaWrapper mw;
+        int offset = 0;
+        int adCount = 0;
+        for (int i = 0; i < getItemCount(); ++i) {
+            mw = mVideos.get(i);
+            if (mw == null)
+                continue;
+            if (mw.getItemType() == MediaLibraryItem.TYPE_AD) {
+                if (i < position) {
+                    adCount++;
+                }
+                continue;
+            }
+            if (mw instanceof MediaGroup) {
+                for (MediaWrapper item : ((MediaGroup) mw).getAll()) {
+                    if (item.getItemType() != MediaLibraryItem.TYPE_AD)
+                        list.add(item);
+                }
+                if (i < position)
+                    offset += ((MediaGroup) mw).size() - 1;
+            } else {
+                list.add(mw);
+            }
+        }
+        return position + offset - adCount;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnFocusChangeListener {
@@ -569,7 +597,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
         public boolean onLongClick(View v) {
             int position = getLayoutPosition();
-            if (position >= 0 && position < mVideos.size() && mVideos.get(position).getItemType() != MediaWrapper.TYPE_AD) {
+            if (position >= 0 && position < mVideos.size() && mVideos.get(position).getItemType() != MediaLibraryItem.TYPE_AD) {
                 return mEventsHandler.onLongClick(v, position, mVideos.get(position));
             }
             return false;
@@ -702,7 +730,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             if (mOriginalData == null) {
                 mOriginalData = new ArrayList<>(mVideos.size());
                 for (int i = 0; i < mVideos.size(); ++i) {
-                    if (mVideos.get(i).getItemType() != MediaWrapper.TYPE_AD) {
+                    if (mVideos.get(i).getItemType() != MediaLibraryItem.TYPE_AD) {
                         mOriginalData.add(mVideos.get(i));
                     }
                 }
@@ -836,17 +864,23 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             MediaWrapper newItem = newList.get(newItemPosition);
             return oldItem == newItem ||
                     ((oldItem != null && newItem != null) && ((oldItem.getType() == newItem.getType() && oldItem.equals(newItem)) ||
-                            (oldItem.getItemType() == MediaWrapper.TYPE_AD && newItem.getItemType() == MediaWrapper.TYPE_AD)));
+                            (oldItem.getItemType() == MediaLibraryItem.TYPE_AD && newItem.getItemType() == MediaLibraryItem.TYPE_AD)));
         }
 
         @Override
         public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
             MediaWrapper oldItem = oldList.get(oldItemPosition);
             MediaWrapper newItem = newList.get(newItemPosition);
-            if (oldItem != null && newItem != null && oldItem.getItemType() == MediaWrapper.TYPE_AD && newItem.getItemType() == MediaWrapper.TYPE_AD) {
+            if (oldItem != null && newItem != null && oldItem.getItemType() == MediaLibraryItem.TYPE_AD && newItem.getItemType() == MediaLibraryItem.TYPE_AD) {
                 String ad1 = ((AdItem) oldItem).getNativeAd().getAdBody();
                 String ad2 = ((AdItem) newItem).getNativeAd().getAdBody();
-                return ad1.equals(ad2);
+                if (TextUtils.isEmpty(ad1) && TextUtils.isEmpty(ad2)) {
+                    return true;
+                } else if (TextUtils.isEmpty(ad1) || TextUtils.isEmpty(ad2)) {
+                    return false;
+                } else {
+                    return ad1.equals(ad2);
+                }
             } else {
                 return oldItem == newItem ||
                         ((oldItem != null && newItem != null) && ((oldItem.getTime() == newItem.getTime() && TextUtils.equals(oldItem.getArtworkMrl(), newItem.getArtworkMrl()))));
@@ -860,7 +894,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             MediaWrapper newItem = newList.get(newItemPosition);
             if (oldItem != null && newItem != null && oldItem.getTime() != newItem.getTime())
                 return UPDATE_TIME;
-            else if (oldItem != null && newItem != null && oldItem.getItemType() == MediaWrapper.TYPE_AD && newItem.getItemType() == MediaWrapper.TYPE_AD) {
+            else if (oldItem != null && newItem != null && oldItem.getItemType() == MediaLibraryItem.TYPE_AD && newItem.getItemType() == MediaLibraryItem.TYPE_AD) {
                 LogUtil.d(TAG, "xxxx getChangePayload UPDATE_AD oldItem:" + oldItemPosition + " newItem:" + newItemPosition);
                 return UPDATE_AD;
             } else {
@@ -915,6 +949,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             if ((index - mStartIndex) % AD_STEPS == 0) {
                 NativeAd nativeAd = nextAd();
                 if (nativeAd != null) {
+                    LogUtil.d(TAG, "yADNative addAdItems adId=" + nativeAd.getPlacementId());
                     AdItem ad = new AdItem(item);
                     ad.setNativeAd(nativeAd);
                     it.previous();
@@ -942,7 +977,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     private void removeAdItems(ArrayList<MediaWrapper> items) {
         for (ListIterator it = items.listIterator(); it.hasNext(); ) {
             MediaWrapper item = (MediaWrapper) it.next();
-            if (item != null && item.getItemType() == MediaWrapper.TYPE_AD) {
+            if (item != null && item.getItemType() == MediaLibraryItem.TYPE_AD) {
                 it.remove();
             }
         }
@@ -967,7 +1002,6 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     public void setShowAds(boolean showAds) {
         LogUtil.d(TAG, "facebookAD setShowAds : " + showAds);
-        Log.e("yNativeAD", "facebookAD setShowAds : " + showAds);
         mShowAds = showAds;
     }
 

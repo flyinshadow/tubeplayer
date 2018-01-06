@@ -59,7 +59,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             LogUtil.d(TAG, "orientation change to landscape, try to show RateDialog");
-            RateDialog.tryToShow(this, 3);
+            RateDialog.tryToShow(this, 5);
         }
     }
 }

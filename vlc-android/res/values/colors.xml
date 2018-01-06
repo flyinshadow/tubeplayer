@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="black">#000001</color>
+    <color name="black">#000000</color>
     <color name="white">#ffffff</color>
 
     <color name="tube_primary">#e62117</color>
@@ -67,6 +67,8 @@
     <color name="whitetransparent">#b4ffffff</color>
     <color name="white87transparent">#ddffffff</color>
     <color name="transparent">#00000000</color>
+    <color name="transparent_dark">#80000000</color>
+    <color name="transparent_mid">#40000000</color>
 
 
     <color name="tv_bg">#235f69</color>
@@ -159,5 +161,10 @@
 
     <color name="video_cover_background">#bdbdbd</color>
     <color name="video_folder_list_grey">#8b000000</color>
+
+    <color name="video_playlist_title_color">#808080</color>
+    <color name="video_playlist_selected_bg">#191919</color>
+
+    <color name="bg_player_item">#cc191919</color>
 
 </resources>

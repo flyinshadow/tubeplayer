@@ -3,7 +3,7 @@
     android:id="@+id/progress_overlay"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/rounded_corners"
+    android:background="@color/transparent"
     android:paddingTop="@dimen/overlay_padding_top"
     android:paddingBottom="@dimen/overlay_padding_bottom"
     android:visibility="invisible"
@@ -79,15 +79,15 @@
             <!--android:scaleType="center"-->
             <!--android:focusable="true"/>-->
 
-        <ImageView
-            android:id="@+id/player_overlay_size"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:src="@drawable/ic_crop_circle_o"
-            android:scaleType="center"
-            android:focusable="true" />
+        <!--<ImageView-->
+            <!--android:id="@+id/player_overlay_size"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:clickable="true"-->
+            <!--android:src="@drawable/ic_crop_circle_o"-->
+            <!--android:scaleType="center"-->
+            <!--android:focusable="true" />-->
 
         <ImageView
             android:id="@+id/playlist_previous"
@@ -147,15 +147,15 @@
             android:focusable="true"
             android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/player_overlay_adv_function"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:src="@drawable/ic_more_circle"
-            android:scaleType="center"
-            android:focusable="true"/>
+        <!--<ImageView-->
+            <!--android:id="@+id/player_overlay_adv_function"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:clickable="true"-->
+            <!--android:src="@drawable/ic_more_circle"-->
+            <!--android:scaleType="center"-->
+            <!--android:focusable="true"/>-->
 
         <!--<ImageView-->
             <!--android:id="@+id/player_overlay_size"-->

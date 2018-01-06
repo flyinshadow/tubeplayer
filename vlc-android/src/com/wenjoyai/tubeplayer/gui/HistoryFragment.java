@@ -182,7 +182,7 @@ public class HistoryFragment extends MediaBrowserFragment implements IRefreshabl
         if (!selection.isEmpty()) {
             switch (item.getItemId()) {
                 case R.id.action_history_play:
-                    MediaUtils.openList(getActivity(), selection, 0);
+                    MediaUtils.openList(getActivity(), selection, 0, null);
                     break;
                 case R.id.action_history_append:
                     MediaUtils.appendMedia(getActivity(), selection);

@@ -105,17 +105,17 @@ public class MediaUtils {
         };
     }
 
-    public static void openArray(final Context context, final MediaWrapper[] array, final int position){
-        openList(context, Arrays.asList(array), position);
+    public static void openArray(final Context context, final MediaWrapper[] array, final int position, final String title){
+        openList(context, Arrays.asList(array), position, title);
     }
 
-    public static void openList(final Context context, final List<MediaWrapper> list, final int position){
+    public static void openList(final Context context, final List<MediaWrapper> list, final int position, final String title){
         if (Util.isListEmpty(list))
             return;
         new DialogCallback(context, new DialogCallback.Runnable() {
             @Override
             public void run(PlaybackService service) {
-                service.load(list, position);
+                service.load(list, position, title);
             }
         });
     }
