@@ -44,6 +44,7 @@ import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.databinding.PlaylistItemBinding;
 import com.wenjoyai.tubeplayer.gui.BaseQueuedAdapter;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
+import com.wenjoyai.tubeplayer.gui.video.VideoPlayerActivity;
 import com.wenjoyai.tubeplayer.interfaces.SwipeDragHelperAdapter;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
 import com.wenjoyai.tubeplayer.util.MediaItemDiffCallback;
@@ -65,11 +66,19 @@ public class PlaylistAdapter extends BaseQueuedAdapter<ArrayList<MediaWrapper>, 
     private ArrayList<MediaWrapper> mOriginalDataSet;
     private int mCurrentIndex = 0;
 
+    private boolean mIsVideoPlayer;
+
     public interface IPlayer {
         void onPopupMenu(View view, int position);
         void updateList();
         void onSelectionSet(int position);
     }
+
+    public interface RemoveAdRequest {
+        void requestRemoveAd();
+    }
+
+    private RemoveAdRequest removeAdRequest;
 
     public PlaylistAdapter(IPlayer audioPlayer) {
         mAudioPlayer = audioPlayer;

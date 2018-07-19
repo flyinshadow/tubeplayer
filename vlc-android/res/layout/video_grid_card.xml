@@ -63,32 +63,31 @@
             android:visibility="@{isAd ? View.VISIBLE : View.GONE}"
             >
 
-            <com.facebook.ads.MediaView
-                android:id="@+id/ad_media"
+            <FrameLayout
+                android:id="@+id/ad_cover_container"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 vlc:layout_constraintDimensionRatio="H,4:3"
                 vlc:layout_constraintStart_toStartOf="parent"
                 vlc:layout_constraintEnd_toEndOf="parent"
-                android:gravity="center"
-                />
+                android:gravity="center"/>
 
             <LinearLayout
                 android:id="@+id/ad_choices_container"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:gravity="start"
                 android:orientation="horizontal"
-                vlc:layout_constraintStart_toStartOf="@+id/ad_media"
-                vlc:layout_constraintTop_toTopOf="@+id/ad_media"
+                vlc:layout_constraintStart_toStartOf="@+id/ad_cover_container"
+                vlc:layout_constraintTop_toTopOf="@+id/ad_cover_container"
                 />
 
             <TextView
-                android:id="@+id/ad_call_to_action"
+                android:id="@+id/ad_action_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                vlc:layout_constraintEnd_toEndOf="@+id/ad_media"
-                vlc:layout_constraintBottom_toBottomOf="@+id/ad_media"
+                vlc:layout_constraintEnd_toEndOf="@+id/ad_cover_container"
+                vlc:layout_constraintBottom_toBottomOf="@+id/ad_cover_container"
                 android:layout_gravity="center_vertical"
                 android:background="@color/greytransparent"
                 android:padding="@dimen/half_default_margin"
@@ -97,23 +96,50 @@
                 android:textSize="@dimen/ad_call_to_action_text_size"/>
 
             <TextView
-                android:id="@+id/ad_body"
+                android:id="@+id/ad_body_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 vlc:layout_constraintStart_toStartOf="parent"
                 vlc:layout_constraintEnd_toEndOf="parent"
-                vlc:layout_constraintTop_toBottomOf="@+id/ad_media"
+                vlc:layout_constraintTop_toBottomOf="@+id/ad_cover_container"
                 android:layout_marginTop="@dimen/default_margin"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginRight="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
+                android:layout_marginRight="@dimen/half_default_margin"
+                android:layout_marginEnd="@dimen/half_default_margin"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:textColor="?attr/list_title"
                 android:textSize="@dimen/ad_body_text_size"
                 tools:targetApi="jelly_bean" />
+
+            <!--<ImageView-->
+                <!--android:id="@+id/ad_more"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--vlc:layout_constraintTop_toTopOf="@+id/ad_body_tv"-->
+                <!--vlc:layout_constraintBottom_toBottomOf="@+id/ad_body_tv"-->
+                <!--vlc:layout_constraintStart_toEndOf="@+id/ad_body_tv"-->
+                <!--vlc:layout_constraintEnd_toEndOf="parent"-->
+                <!--android:clickable="true"-->
+                <!--android:contentDescription="@string/more_actions"-->
+                <!--android:onClick="@{holder::onMoreClick}"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--android:src="@drawable/ic_more"-->
+                <!--/>-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                vlc:layout_constraintStart_toStartOf="@+id/ad_cover_container"
+                vlc:layout_constraintBottom_toBottomOf="@+id/ad_cover_container"
+                android:padding="@dimen/half_default_margin"
+                android:text="AD"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@color/grey900transparent"
+                />
 
         </android.support.constraint.ConstraintLayout>
 

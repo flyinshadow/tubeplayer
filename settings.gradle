@@ -1,3 +1,8 @@
 include ':libvlc', ':api', ':axmlrpc', ':medialibrary'
 include ':vlc-android'
 project(':axmlrpc').projectDir = new File('java-libs/axmlrpc')
+
+include 'ad'
+project(':ad').projectDir = new File('../ad-all-in-one/ad')
+include 'buy'
+project(':buy').projectDir = new File('../ad-all-in-one/buy')

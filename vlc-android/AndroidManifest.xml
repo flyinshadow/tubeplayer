@@ -4,32 +4,39 @@
     package="com.wenjoyai.tubeplayer"
     android:installLocation="auto">
 
-    <uses-sdk tools:overrideLibrary="
-        android.support.v17.leanback,
-        android.support.v14.preference,
-        android.support.v17.preference,
-        com.alphab,
-        com.duapps.trigger,
-        com.facebook.ads,
-        com.google.firebase,
-        com.google.firebase.firebase_ads,
-        com.google.firebase.firebase_core,
-        com.google.firebase.iid,
-        com.google.firebase.remoteconfig,
-        com.google.android.gms,
-        com.google.android.gms.ads,
-        com.google.android.gms.ads.impl,
-        com.google.android.gms.base,
-        com.google.android.gms.gass,
-        com.google.android.gms.tasks,
-        com.google.android.gms.measurement,
-        com.google.android.gms.measurement.impl
-          "/>
-        <!--com.mobvista.msdk,-->
-        <!--com.mobvista.msdk.appwall,-->
-        <!--com.mobvista.msdk.interstitial,-->
-        <!--com.mobvista.msdk.mvjscommon-->
-        <!--"/>-->
+    <uses-sdk tools:overrideLibrary="         android.support.v17.leanback,         android.support.v14.preference,         android.support.v17.preference,         com.alphab,         com.duapps.trigger,         com.facebook.ads,         com.google.firebase,         com.google.firebase.firebase_ads,         com.google.firebase.firebase_core,         com.google.firebase.iid,         com.google.firebase.remoteconfig,         com.google.android.gms,         com.google.android.gms.ads,         com.google.android.gms.ads.impl,         com.google.android.gms.base,         com.google.android.gms.gass,         com.google.android.gms.tasks,         com.google.android.gms.measurement,         com.google.android.gms.measurement.impl,           com.google.ads.mediation.facebook,  com.example.ad, com.google.firebase.config,com.google.android.gms.base.license,com.google.firebase.config.license,com.google.android.gms.admob,com.google.android.gms.admob.license,
+    com.cloudtech.ads,
+    com.google.android.gms.gass.license,
+    com.google.android.gms.admob.impl.license,
+    com.google.firebase.measurement_impl,
+    com.google.firebase.firebase.iid.license,
+    com.google.firebase.measurement,
+    com.google.firebase.firebase_common,
+    com.google.firebase.firebase.common.license,
+    com.google.android.gms.common.license,
+    com.google.android.gms.tasks.license,
+    com.google.firebase.measurement.impl.license,
+    com.google.firebase.measurement.license,
+    jp.wasabeef.glide.transformations,
+    com.bumptech.glide,
+    com.bumptech.glide.gifdecoder,
+    android.support.v7.cardview,
+    android.support.coreui,
+    android.support.fragment,
+    android.support.coreutils,
+    android.support.compat,
+    android.arch.lifecycle,
+    android.support.v7.appcompat,
+     android.support.design,
+    android.support.v7.preference,
+    android.support.graphics.drawable,
+    android.support.v7.recyclerview,
+    android.support.v4,
+    android.support.mediacompat,
+    android.support.fragment,
+    android.support.coreutils,
+    com.wenjoyai.buy,
+    com.daps.weather"/>
 
     <uses-permission
         android:name="android.permission.READ_LOGS"

@@ -43,12 +43,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.ad.nativead.AbsNativeAd;
 import com.facebook.ads.AdChoicesView;
 import com.facebook.ads.MediaView;
 import com.facebook.ads.NativeAd;
 import com.wenjoyai.tubeplayer.BR;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
+import com.wenjoyai.tubeplayer.gui.audio.PlaylistAdapter;
 import com.wenjoyai.tubeplayer.gui.helpers.AsyncImageLoader;
 import com.wenjoyai.tubeplayer.gui.helpers.UiTools;
 import com.wenjoyai.tubeplayer.interfaces.IEventsHandler;
@@ -134,6 +136,11 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         return mVideoComparator;
     }
 
+    private PlaylistAdapter.RemoveAdRequest removeAdRequest;
+    public void setRemoveAdRequest(PlaylistAdapter.RemoveAdRequest removeAdRequest) {
+        this.removeAdRequest = removeAdRequest;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -161,37 +168,18 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     private void bindAd(ViewHolder holder, AdItem adItem) {
         if (adItem == null || adItem.getNativeAd() == null)
             return;
-        NativeAd nativeAd = adItem.getNativeAd();
-        if (holder.adBody != null) {
-            holder.adBody.setText(TextUtils.isEmpty(nativeAd.getAdBody()) ? nativeAd.getAdTitle() : nativeAd.getAdBody());
-        }
-        if (holder.adCallToAction != null) {
-            holder.adCallToAction.setText(nativeAd.getAdCallToAction());
-        }
 
-        // Download and display the cover image.
-        if (holder.adMedia != null) {
-            holder.adMedia.setNativeAd(nativeAd);
-        }
-
-        // Add the AdChoices icon
-        if (holder.adChoicesContainer != null) {
-            AdChoicesView adChoicesView = new AdChoicesView(holder.itemView.getContext(), nativeAd, true);
-            holder.adChoicesContainer.removeAllViews();
-            holder.adChoicesContainer.addView(adChoicesView);
-        }
-
-        // Register the Title and CTA button to listen for clicks.
-        if (holder.adContainer != null) {
-            nativeAd.unregisterView();
-            nativeAd.registerViewForInteraction(holder.adContainer);
-        }
-        if (holder.adIcon != null) {
-            NativeAd.Image adIcon = nativeAd.getAdIcon();
-            NativeAd.downloadAndDisplayImage(adIcon, holder.adIcon);
-        }
-        if (holder.adTitle != null) {
-            holder.adTitle.setText(nativeAd.getAdTitle());
+        AbsNativeAd nativeAd = adItem.getNativeAd();
+        nativeAd.bindView(holder.adContainer);
+        if (holder.adClose !=null){
+            holder.adClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(null!=removeAdRequest){
+                        removeAdRequest.requestRemoveAd();
+                    }
+                }
+            });
         }
     }
 
@@ -526,12 +514,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         private View itemProgress;
 
         private View adContainer;
-        private LinearLayout adChoicesContainer;
-        private TextView adCallToAction;
-        private TextView adBody;
-        private MediaView adMedia;
-        private ImageView adIcon;
-        private TextView adTitle;
+        private ImageView adClose;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -544,12 +527,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             itemProgress = itemView.findViewById(R.id.ml_item_progress);
 
             adContainer = itemView.findViewById(R.id.ad_item);
-            adChoicesContainer = (LinearLayout) itemView.findViewById(R.id.ad_choices_container);
-            adCallToAction = (TextView) itemView.findViewById(R.id.ad_call_to_action);
-            adBody = (TextView) itemView.findViewById(R.id.ad_body);
-            adMedia = (MediaView) itemView.findViewById(R.id.ad_media);
-            adIcon = (ImageView) itemView.findViewById(R.id.ad_icon);
-            adTitle = (TextView) itemView.findViewById(R.id.ad_title);
+            adClose = (ImageView) itemView.findViewById(R.id.ad_close);
 
             binding.setVariable(BR.holder, this);
             binding.setVariable(BR.cover, AsyncImageLoader.DEFAULT_COVER_VIDEO_DRAWABLE);
@@ -913,7 +891,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                 continue;
 
             if ((index - mStartIndex) % AD_STEPS == 0) {
-                NativeAd nativeAd = nextAd();
+                AbsNativeAd nativeAd = nextAd();
                 if (nativeAd != null) {
                     AdItem ad = new AdItem(item);
                     ad.setNativeAd(nativeAd);
@@ -959,7 +937,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     private boolean mShowAds = false;
 
-    private List<NativeAd> mNativeAd = new ArrayList<>();
+    private List<AbsNativeAd> mNativeAd = new ArrayList<>();
 
     public void setShowAds(boolean showAds) {
         LogUtil.d(TAG, "facebookAD setShowAds : " + showAds);
@@ -967,16 +945,20 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         mShowAds = showAds;
     }
 
-    public void setNativeAd(List<NativeAd> nativeAd) {
+    public void setNativeAd(List<AbsNativeAd> nativeAd) {
         synchronized (mNativeAd) {
             mNativeAd.clear();
             mNativeAd.addAll(nativeAd);
         }
     }
 
+    public boolean checkAds(List<AbsNativeAd> nativeAd) {
+        return nativeAd != null && nativeAd.size() > 0;
+    }
+
     private int mNextAdIndex = 0;
 
-    private NativeAd nextAd() {
+    private AbsNativeAd nextAd() {
         if (mNativeAd.size() <= 0) {
             return null;
         }
@@ -984,7 +966,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         if (mNextAdIndex >= mNativeAd.size()) {
             mNextAdIndex = 0;
         }
-        NativeAd ad = mNativeAd.get(mNextAdIndex);
+        AbsNativeAd ad = mNativeAd.get(mNextAdIndex);
         mNextAdIndex++;
         return ad;
     }

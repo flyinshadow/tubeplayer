@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.ad.nativead.AbsNativeAd;
 import com.facebook.ads.NativeAd;
 
 import org.videolan.libvlc.Media;
@@ -15,7 +16,7 @@ import org.videolan.medialibrary.media.MediaWrapper;
  */
 
 public class AdItem extends MediaWrapper implements Parcelable {
-    private NativeAd mNativeAd;
+    private AbsNativeAd mNativeAd;
 
     public AdItem(MediaWrapper media) {
         super(media.getUri(),
@@ -55,11 +56,11 @@ public class AdItem extends MediaWrapper implements Parcelable {
         return TYPE_AD;
     }
 
-    public void setNativeAd(NativeAd nativeAd) {
+    public void setNativeAd(AbsNativeAd nativeAd) {
         mNativeAd = nativeAd;
     }
 
-    public NativeAd getNativeAd() {
+    public AbsNativeAd getNativeAd() {
         return mNativeAd;
     }
 }

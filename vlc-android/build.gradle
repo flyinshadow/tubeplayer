@@ -229,31 +229,14 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:' + rootProject.ext.constraintLayoutVersion
     //    compile 'com.android.support:gridlayout-v7:'+rootProject.ext.appCompatVersion
     compile 'com.android.support:cardview-v7:' + rootProject.ext.appCompatVersion
-    testCompile 'junit:junit:4.12'
-    //google 分析
-    compile 'com.google.firebase:firebase-core:11.2.0'
-    compile 'com.google.firebase:firebase-config:11.2.0'
-    compile 'com.google.firebase:firebase-ads:11.2.0'
-    //mobvista
-//    compile(name: 'mobvista_alphab', ext: 'aar')
-//    compile(name: 'mobvista_appwall', ext: 'aar')
-//    compile(name: 'mobvista_common', ext: 'aar')
-//    compile(name: 'mobvista_interstitial', ext: 'aar')
-//    compile(name: 'mobvista_mvjscommon', ext: 'aar')
-    //mopub
-//    compile('com.mopub:mopub-sdk:4.16.1@aar') {
-//        transitive = true
-//    }
     compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true;
     }
-    //facebook
-    compile 'com.facebook.android:audience-network-sdk:4.+'
-    //百度
-//    compile(name: 'DuappsAd-CW-v1.0.9.8.1-release', ext: 'aar')
-//    compile(name: 'DuappsAd-Trigger-1.0', ext: 'aar')
 
     compile 'com.android.support:multidex:1.0.1'
+
+    compile project(':ad')
+    compile project(':buy')
 
     compile ('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
         exclude module: 'support-v4'
@@ -291,7 +274,7 @@ def revision() {
 
 repositories {
     flatDir {
-        dirs 'libs'
+        dirs '../../ad-all-in-one/ad/libs','libs'
     }
 }
 

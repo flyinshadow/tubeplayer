@@ -3,10 +3,10 @@ buildscript {
     repositories {
         flatDir dirs: "gradle/plugins"
 //        jcenter{url "http://jcenter.bintray.com/"}
-        jcenter{}
         maven { url 'https://maven.google.com'  }
 //        maven { url "https://s3.amazonaws.com/moat-sdk-builds" }
-        maven { url 'https://maven.fabric.io/public' }
+        maven { url 'http://s3.amazonaws.com/fabric-artifacts/public' } //maven.fabric.io镜像站点
+        jcenter{}
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
@@ -17,19 +17,19 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter{}
         maven { url 'https://maven.google.com'  }
 //        maven { url "https://s3.amazonaws.com/moat-sdk-builds" }
+        jcenter{}
     }
 }
 
 ext {
-    appCompatVersion = '25.3.1'
+    appCompatVersion = '26.1.0'
     constraintLayoutVersion = '1.0.2'
-    buildToolsVersion = "25.0.3"
-    compileSdkVersion = 25
+    buildToolsVersion = "26.0.3"
+    compileSdkVersion = 26
     minSdkVersion = 9
-    targetSdkVersion = 25
+    targetSdkVersion = 26
 //    versionName = '2.1.10'
 //    versionCode = 2011000
     versionName = '1.0.6'

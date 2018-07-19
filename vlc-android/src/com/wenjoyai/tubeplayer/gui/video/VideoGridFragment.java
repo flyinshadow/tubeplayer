@@ -53,6 +53,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.ad.ADFactory;
+import com.example.ad.nativead.AbsNativeAd;
 import com.facebook.ads.NativeAd;
 import com.wenjoyai.tubeplayer.MediaParsingService;
 import com.wenjoyai.tubeplayer.PlaybackService;
@@ -60,7 +62,6 @@ import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.ad.ADManager;
-import com.wenjoyai.tubeplayer.ad.BannerAD;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
 import com.wenjoyai.tubeplayer.gui.RenameFileFragment;
@@ -122,11 +123,10 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 
     //ad
     private FrameLayout mAdContainer;
-    private BannerAD mBannerAD;
     //    private boolean mAdLoaded = false;
     private boolean mShowAd = false;
 
-    private List<NativeAd> mNativeAdList = null;
+    private List<AbsNativeAd> mNativeAdList = null;
 
     private RecyclerViewHeader mHeader;
     private LinearLayout mDirectories;
@@ -252,7 +252,6 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
 //            public void run() {
-        loadBanner();
         //加载feed流广告
         loadFeedNative();
 //            }
@@ -285,9 +284,6 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
             mHandler.removeCallbacks(mSwipeRefreshRunnable);
         }
 //        mVideoAdapter.clear();
-        if (null != mBannerAD) {
-            mBannerAD.destroy();
-        }
     }
 
     protected void onMedialibraryReady() {
@@ -601,7 +597,7 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
                     @Override
                     public void run() {
                         mVideoAdapter.setShowAds(mFolderGroup == null && mShowAd);
-                        if (checkAds()) {
+                        if (checkAds(mNativeAdList)) {
                             mVideoAdapter.setNativeAd(mNativeAdList);
                         }
                         LogUtil.d(TAG, "aaaa updateList displayList size:" + displayList.size());
@@ -731,9 +727,6 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         Log.e("yNativeAD", "aaaa onParsingServiceFinished");
         mParsingStarted = false;
         mParsingFinished = true;
-        if (checkAds() && !mShowAd) {
-            mShowAd = true;
-        }
 
         if (!mParsed) {
             PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).edit().putBoolean(KEY_PARSING_ONCE, true).apply();
@@ -960,75 +953,52 @@ public class VideoGridFragment extends MediaBrowserFragment implements MediaUpda
         }
     }
 
-    private void loadBanner(){
-            String adID = "";
-            if (ADManager.sPlatForm == ADManager.AD_MobVista) {
-            } else if (ADManager.sPlatForm == ADManager.AD_Google) {
-                adID = ADConstants.google_video_grid_bannar;
-            } else if (ADManager.sPlatForm == ADManager.AD_Facebook) {
-                adID = ADConstants.facebook_video_grid_bannar;
-            }
-            if (!TextUtils.isEmpty(adID)) {
-                mBannerAD = new BannerAD();
-                mBannerAD.loadAD(getActivity(), ADManager.sPlatForm, adID, new BannerAD.ADListener() {
-                    @Override
-                    public void onLoadedSuccess(View view) {
-                        if (null != view) {
-                            mAdContainer.removeAllViews();
-                            mAdContainer.addView(view);
-                        }
-                        StatisticsManager.submitAd(getActivity(), StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_GOOGLE_VIDEO_BANNER);
-                    }
-
-                @Override
-                public void onLoadedFailed() {
-
-                }
-
-                @Override
-                public void onAdClick() {
-
-                }
-
-                @Override
-                public void onAdClose() {
-
-                    }
-                });
-            }
-    }
-
-    private boolean checkAds() {
-        return mNativeAdList != null && mNativeAdList.size() > 0;
+    private boolean checkAds(List<AbsNativeAd> nativeAd) {
+        return mVideoAdapter != null && mVideoAdapter.checkAds(nativeAd);
     }
 
     private boolean mParsed = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext()).getBoolean(KEY_PARSING_ONCE, false);
 
-    private ADManager.ADNumListener mAdNumListener = new ADManager.ADNumListener() {
-        @Override
-        public void onLoadedSuccess(List<NativeAd> list , boolean needGif){
-            mNativeAdList = list;
-            Log.e("yNativeAD", "aaaa onLoadedSuccess list:" + (list == null ? 0 : list.size()));
-            if (checkAds()) {
-                mVideoAdapter.setNativeAd(mNativeAdList);
-                if (mParsingFinished || mParsed) {
-                    mHandler.sendEmptyMessage(UPDATE_LIST);
+    public void loadFeedNative() {
+        ADManager.getInstance().observerFeedNatives(new ADFactory.ADNumListener() {
+            @Override
+            public void onLoadedResult(List<AbsNativeAd> list) {
+                for (AbsNativeAd ad : list) {
+                    LogUtil.d(TAG, "yADNative onLoadedSuccess mAdId=" + ad.getAdId());
+                }
+                if (onFeedLoaded(list)) {
+                    if (mParsingFinished || mParsed) {
+                        mHandler.sendEmptyMessage(UPDATE_LIST);
+                    }
                 }
             }
 
-            if (needGif&& getActivity() instanceof MainActivity){
-                ((MainActivity)getActivity()).showGif(new NeedFreshListener() {
-                    @Override
-                    public void fresh() {
-                        mVideoAdapter.notifyDataSetChanged();
+            @Override
+            public void onLoadedFirstSuccess(List<AbsNativeAd> list) {
+                for (AbsNativeAd ad : list) {
+                    LogUtil.d(TAG, "yADNative onLoadedSuccess mAdId=" + ad.getAdId());
+                }
+                if (onFeedLoaded(list)) {
+                    if (mParsingFinished || mParsed) {
+                        mHandler.sendEmptyMessage(UPDATE_LIST);
                     }
-                });
+                }
             }
-        }
-    };
 
-    public void loadFeedNative() {
-        ADManager.getInstance().getNativeAdlist(mAdNumListener);
+            @Override
+            public void onAllError() {
+
+            }
+        });
+    }
+
+    private boolean onFeedLoaded(List<AbsNativeAd> list) {
+        mNativeAdList = list;
+        if (checkAds(mNativeAdList)) {
+            mVideoAdapter.setNativeAd(mNativeAdList);
+            return true;
+        }
+        return false;
     }
 
     public int getCurrentViewMode() {

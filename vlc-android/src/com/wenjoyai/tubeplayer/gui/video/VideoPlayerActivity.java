@@ -105,15 +105,13 @@ import android.widget.Toast;
 
 import com.facebook.ads.NativeAdScrollView;
 import com.facebook.ads.NativeAdView;
+import com.wenjoyai.buy.RemoveAdManager;
 import com.wenjoyai.tubeplayer.BuildConfig;
 import com.wenjoyai.tubeplayer.PlaybackService;
 import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.ad.ADManager;
-import com.wenjoyai.tubeplayer.ad.GifAD;
-import com.wenjoyai.tubeplayer.ad.Interstitial;
-import com.wenjoyai.tubeplayer.ad.RotateAD;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
 import com.wenjoyai.tubeplayer.gui.PlaybackServiceActivity;
@@ -390,11 +388,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     protected boolean mIsBenchmark = false;
 
-    //广告
-    private RotateAD mRotateAD;
-    private boolean mIsAdLoadSuc = false;
-    private Interstitial mInterstitial;
-
     //包括关闭按钮
     private FrameLayout mNativeFrameLayout;
     private FrameLayout mNativeContainer;
@@ -413,8 +406,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private long mPlayTime = 0;
     private long mPlayLength = 0;
 
-    private GifAD mGifImageView;
-
     private static LibVLC LibVLC() {
         return VLCInstance.get();
     }
@@ -422,7 +413,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @Override
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     protected void onCreate(Bundle savedInstanceState) {
-        LogUtil.e(TAG,"--- onCreate");
+        LogUtil.e(TAG, "--- onCreate");
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
         applyTheme();
         super.onCreate(savedInstanceState);
@@ -480,21 +471,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mRootView = findViewById(R.id.player_root);
         mActionBarView = (ViewGroup) mActionBar.getCustomView();
         //Remove ActionBar extra space
-        Toolbar toolbar = (Toolbar)mActionBarView.getParent();
+        Toolbar toolbar = (Toolbar) mActionBarView.getParent();
         toolbar.setContentInsetsAbsolute(0, 0);
-        mGifImageView = (GifAD)findViewById(R.id.main_gif_ad);
-        if (null!= mGifImageView) {
-            mGifImageView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PLAY_GIF + "click");
-                    mGifImageView.setVisibility(View.GONE);
-                    mHandler.removeCallbacks(mGifRunnable);
-                    loadPauseNative();
-                    pause();
-                }
-            });
-        }
 
         mTitle = (TextView) mActionBarView.findViewById(R.id.player_overlay_title);
         if (!AndroidUtil.isJellyBeanOrLater) {
@@ -519,7 +497,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
             mTextureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
                 @Override
                 public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-                    LogUtil.d(TAG, "onSurfaceTextureAvailable mService="+ mService + ", mTransitionEnd=" + mTransitionEnd);
+                    LogUtil.d(TAG, "onSurfaceTextureAvailable mService=" + mService + ", mTransitionEnd=" + mTransitionEnd);
                     if (mService != null && mTransitionEnd) {
                         if (!mSwitchingView) {
                             mHandler.sendEmptyMessage(START_PLAYBACK);
@@ -599,10 +577,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         if (mPresentation == null) {
             // Orientation
             // Tips
-            if (!BuildConfig.DEBUG && !VLCApplication.showTvUi() && !mSettings.getBoolean(PREF_TIPS_SHOWN, false)) {
-                ((ViewStubCompat) findViewById(R.id.player_overlay_tips)).inflate();
-                mOverlayTips = findViewById(R.id.overlay_tips_layout);
-            }
+//            if (!BuildConfig.DEBUG && !VLCApplication.showTvUi() && !mSettings.getBoolean(PREF_TIPS_SHOWN, false)) {
+//                ((ViewStubCompat) findViewById(R.id.player_overlay_tips)).inflate();
+//                mOverlayTips = findViewById(R.id.overlay_tips_layout);
+//            }
 
             //Set margins for TV overscan
             if (VLCApplication.showTvUi()) {
@@ -632,19 +610,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         mMedialibrary = VLCApplication.getMLInstance();
 
         initAD();
-        if (ADManager.sLevel>=ADManager.Level_Big) {
-            preloadWall();
-        }
-        //返回广告
-        if (ADManager.sLevel>=ADManager.Level_Big){//如果是level 3才会加载返回广告
-            mHandler.postDelayed(mBackInterstitialRunnable,ADManager.back_ad_delay_time*1000);
-        }
-
-        initPauseNative();
-        //gif
-        if (null!= mGifImageView) {
-            mHandler.postDelayed(mGifRunnable, 10 * 1000);
-        }
 
         mTranstionAnimIn = AnimationUtils.loadAnimation(this, R.anim.pause_ad_left_in);
         mTranstionAnimOut = AnimationUtils.loadAnimation(this, R.anim.pause_ad_leave_right);
@@ -733,36 +698,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     private Animation mTranstionAnimIn;
     private Animation mTranstionAnimOut;
-    Runnable mBackInterstitialRunnable = new Runnable() {
-        @Override
-        public void run() {
-            loadInterstitial();
-        }
-    };
-
-    Runnable mGifRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if (null!= mGifImageView) {
-                if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded() && !ADManager.getInstance().mIsPauseADShown) {
-                    mGifImageView.setVisibility(View.VISIBLE);
-                    StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PLAY_GIF + "shown");
-                    mHandler.postDelayed(mGifHideRunnable, 60 * 1000);
-                }
-            }
-        }
-    };
-
-    Runnable mGifHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if (null!= mGifImageView) {
-                StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PLAY_GIF + "gone");
-                mGifImageView.setVisibility(View.GONE);
-            }
-        }
-    };
-
 
     @Override
     protected void onResume() {
@@ -918,7 +853,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     protected void onStart() {
-        LogUtil.e(TAG,"---- onStart");
+        LogUtil.e(TAG, "---- onStart");
         super.onStart();
         mMedialibrary.pauseBackgroundOperations();
         mHelper.onStart();
@@ -941,7 +876,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onStop() {
-        LogUtil.e(TAG,"---- onStop");
+        LogUtil.e(TAG, "---- onStop");
         super.onStop();
         mMedialibrary.resumeBackgroundOperations();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mServiceReceiver);
@@ -992,14 +927,14 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     private void restoreBrightness() {
         if (mRestoreAutoBrightness != -1f) {
             int brightness = (int) (mRestoreAutoBrightness * 255f);
-            try{
+            try {
                 Settings.System.putInt(getContentResolver(),
                         Settings.System.SCREEN_BRIGHTNESS,
                         brightness);
                 Settings.System.putInt(getContentResolver(),
                         Settings.System.SCREEN_BRIGHTNESS_MODE,
                         Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -1017,19 +952,12 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     @Override
     protected void onDestroy() {
         LogUtil.d(TAG, "---- onDestroy");
-        if (null != mInterstitial) {
-            mInterstitial.show();
-        }
 
-        LogUtil.d(TAG, "onDestroy mPlayTime=" + mPlayTime + ", mPlayLength=" + mPlayLength);
+//        LogUtil.d(TAG, "onDestroy mPlayTime=" + mPlayTime + ", mPlayLength=" + mPlayLength);
         // 播放进度2分钟以上提示评分
         if (mPlayTime >= 120000) {
             RateDialog.tryToShow(VLCApplication.getAppContext(), 5);
         }
-
-        mHandler.removeCallbacks(mBackInterstitialRunnable);
-        mHandler.removeCallbacks(mGifRunnable);
-        mHandler.removeCallbacks(mGifHideRunnable);
 
         super.onDestroy();
         if (mReceiver != null)
@@ -1343,12 +1271,12 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
     }
 
     private static void start(Context context, Uri uri, String title, boolean fromStart, int openedPosition, ImageView sharedImageView, MediaWrapper media) {
-            Intent intent = getIntent(context, uri, title, fromStart, openedPosition);
+        Intent intent = getIntent(context, uri, title, fromStart, openedPosition);
         if (sharedImageView != null && !TextUtils.isEmpty(ViewCompat.getTransitionName(sharedImageView))) {
             intent.putExtra(PLAY_EXTRA_ITEM, media);
             intent.putExtra(PLAY_EXTRA_THUMB_TRANSITION_NAME, ViewCompat.getTransitionName(sharedImageView));
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    (Activity)context,
+                    (Activity) context,
                     sharedImageView,
                     ViewCompat.getTransitionName(sharedImageView));
 
@@ -1979,21 +1907,15 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                 break;
             case MediaPlayer.Event.Playing:
                 onPlaying();
-                if (mRotateAD != null) {
-                    mRotateAD.setVisibility(View.INVISIBLE);
-                }
-                if (mNativeFrameLayout != null && mNativeFrameLayout.getVisibility()==View.VISIBLE) {
+                if (mNativeFrameLayout != null && mNativeFrameLayout.getVisibility() == View.VISIBLE) {
                     mNativeFrameLayout.startAnimation(mTranstionAnimOut);
                     mNativeFrameLayout.setVisibility(View.GONE);
                 }
                 break;
             case MediaPlayer.Event.Paused:
                 updateOverlayPausePlay();
-                if (mIsAdLoadSuc) {
-                    mRotateAD.setVisibility(View.VISIBLE);
-                }
                 //pause 广告
-                loadPauseNative();
+                showPauseNative();
                 break;
             case MediaPlayer.Event.Stopped:
                 exitOK();
@@ -2147,7 +2069,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
                     width = mVideoWidth;
                     height = mVideoHeight;
                 }
-                LogUtil.d(TAG, "TubeStatisticsManager path=" + path +", width=" + width + ", height=" + height);
+                LogUtil.d(TAG, "TubeStatisticsManager path=" + path + ", width=" + width + ", height=" + height);
                 if (mw.getType() == MediaWrapper.TYPE_VIDEO) {
                     String videoInfoType = StatisticsManager.getVideoInfoType(mService.getCurrentMediaWrapper(), width, height);
                     StatisticsManager.submitVideoPlaySuccess(this, FileUtils.getFileExt(path), videoInfoType);
@@ -2513,7 +2435,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (mNativeFrameLayout != null && mNativeFrameLayout.getVisibility()==View.VISIBLE) {
+        if (mNativeFrameLayout != null && mNativeFrameLayout.getVisibility() == View.VISIBLE) {
             mNativeFrameLayout.startAnimation(mTranstionAnimOut);
             mNativeFrameLayout.setVisibility(View.GONE);
         }
@@ -2682,8 +2604,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         try {
             mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, vol, 0);
 
-        /* Since android 4.3, the safe volume warning dialog is displayed only with the FLAG_SHOW_UI flag.
-         * We don't want to always show the default UI volume, so show it only when volume is not set. */
+            /* Since android 4.3, the safe volume warning dialog is displayed only with the FLAG_SHOW_UI flag.
+             * We don't want to always show the default UI volume, so show it only when volume is not set. */
             int newVol = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
             if (vol != newVol)
                 mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, vol, AudioManager.FLAG_SHOW_UI);
@@ -4212,88 +4134,38 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         setTheme(ThemeFragment.sThemeActionBarStyles[themeIndex]);
     }
 
-    /**
-     * 对appwall做预加载，建议开发者使用，会提高收入
-     */
-    public void preloadWall() {
-//        MobVistaSDK sdk = MobVistaSDKFactory.getMobVistaSDK();
-//        Map<String, Object> preloadMap = new HashMap<String, Object>();
-//        preloadMap.put(MobVistaConstans.PROPERTIES_LAYOUT_TYPE, MobVistaConstans.LAYOUT_APPWALL);
-//        preloadMap.put(MobVistaConstans.PROPERTIES_UNIT_ID, ADConstants.mobvista_library_roate_offer_wall);
-//        preloadMap.put(MobVistaConstans.PRELOAD_RESULT_LISTENER, new PreloadListener() {
-//            @Override
-//            public void onPreloadSucceed() {
-////                Log.e(TAG, "onPreloadSucceed");
-//                mIsAdLoadSuc = true;
+    private void showPauseNative() {
+        //todo:
+//        if (RemoveAdManager.rmAd()) {
+//            if (null != mNativeFrameLayout) {
+//                mNativeFrameLayout.setVisibility(View.GONE);
 //            }
-//
-//            @Override
-//            public void onPreloadFaild(String s) {
-////                Log.e(TAG, "onPreloadFaild"+s);
+//        } else {
+//            Random random = new Random();
+//            int index = random.nextInt(2);
+//            if (index == 0) {
+//                if (ADManager.getInstance().canShowPause()) {
+//                    if (mNativeFrameLayout != null && mNativeContainer != null) {
+//                        mIsActive = isActive;
+//                        mNativeFrameLayout.setVisibility(View.VISIBLE);
+//                        mNativeContainer.setVisibility(View.VISIBLE);
+//                        mAdClose.setVisibility(View.VISIBLE);
+//                        ADManager.getInstance().showPauseAd(mNativeContainer);
+//                        StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "shown");
+//                        mNativeFrameLayout.startAnimation(mTranstionAnimIn);
+//                    }
+//                }
 //            }
-//        });
-//        sdk.preload(preloadMap);
-    }
+//            else {
+//                RateDialog.tryToShow(VLCApplication.getAppContext(), 5);
+//            }
+//        }
 
-    public void loadInterstitial() {
-        String adID = "";
-        if (ADManager.sPlatForm == ADManager.AD_MobVista) {
-        } else if (ADManager.sPlatForm == ADManager.AD_Google) {
-            adID = ADConstants.google_video_back_interstitial;
-        } else if (ADManager.sPlatForm == ADManager.AD_Facebook) {
-            adID = ADConstants.facebook_video_back_interstitial;
-        }
-        if (!TextUtils.isEmpty(adID)) {
-            mInterstitial = new Interstitial();
-            mInterstitial.loadAD(this, ADManager.sPlatForm , adID, new Interstitial.ADListener() {
-                @Override
-                public void onLoadedSuccess() {
-                }
-
-                @Override
-                public void onLoadedFailed() {
-
-                }
-
-                @Override
-                public void onAdDisplayed() {
-                }
-
-                @Override
-                public void onAdClose() {
-                    
-                }
-            });
-        }
-    }
-
-    private void initPauseNative(){
-        mNativeFrameLayout = (FrameLayout)findViewById(R.id.ad_frame_layout);
-        mNativeContainer = (FrameLayout)findViewById(R.id.ad_container);
-        ImageView adClose = (ImageView) findViewById(R.id.ad_close_iv);
-        if (adClose != null) {
-            adClose.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mNativeFrameLayout.startAnimation(mTranstionAnimOut);
-                    mNativeFrameLayout.setVisibility(View.GONE);
-                    play();
-                }
-            });
-        }
-    }
-    NativeAdScrollView scrollView;
-    private void loadPauseNative(){
-        if (ADManager.getInstance().mPauseManager != null && ADManager.getInstance().mPauseManager.isLoaded()) {
+        if (ADManager.getInstance().canShowPause()) {
             if (mNativeFrameLayout != null && mNativeContainer != null) {
-                ADManager.getInstance().mIsPauseADShown = true;
                 mNativeFrameLayout.setVisibility(View.VISIBLE);
-                if (scrollView != null) {
-                    mNativeContainer.removeView(scrollView);
-                }
-                scrollView = new NativeAdScrollView(VideoPlayerActivity.this, ADManager.getInstance().mPauseManager, NativeAdView.Type.HEIGHT_300);
+                mNativeContainer.setVisibility(View.VISIBLE);
                 StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_PAUSE_ADS + "shown");
-                mNativeContainer.addView(scrollView);
                 mNativeFrameLayout.startAnimation(mTranstionAnimIn);
             }
         }
@@ -4379,16 +4251,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
      * 初始化广告view
      */
     private void initAD() {
-//        mRotateAD = (RotateAD) findViewById(R.id.player_roate_ad);
-//        if (null != mRotateAD) {
-//            mRotateAD.setOnClick(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    openWall();
-//                    StatisticsManager.submitAd(VideoPlayerActivity.this, StatisticsManager.TYPE_AD, StatisticsManager.ITEM_AD_VIDEO_NAME);
-//                }
-//            });
-//        }
+//        initPauseNative();
     }
 
 

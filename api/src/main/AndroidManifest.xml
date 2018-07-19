@@ -22,9 +22,25 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wenjoyai.tubeplayer.plugin.api">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.wenjoyai.tubeplayer.plugin.api">
 
-    <uses-sdk android:minSdkVersion="9" />
+    <uses-sdk tools:overrideLibrary="com.cloudtech.ads,
+                android.support.v7.cardview,
+                android.support.coreui,
+                android.support.fragment,
+                android.support.coreutils,
+                android.support.compat,
+                android.arch.lifecycle,
+                android.support.v7.appcompat,
+                 android.support.design,
+                android.support.v7.preference,
+                android.support.graphics.drawable,
+                android.support.v7.recyclerview,
+                android.support.v4,
+                android.support.mediacompat,
+                android.support.fragment,
+                android.support.coreutils" />
 
     <application android:allowBackup="true" android:label="@string/app_name"
         android:supportsRtl="true">
