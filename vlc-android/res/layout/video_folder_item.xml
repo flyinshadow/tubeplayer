@@ -165,6 +165,7 @@
                 android:scaleType="fitCenter"
                 vlc:layout_constraintStart_toEndOf="@id/ad_action_tv"
                 vlc:layout_constraintEnd_toEndOf="@id/ad_item"
+                android:visibility="invisible"
                 />
 
         </android.support.constraint.ConstraintLayout>

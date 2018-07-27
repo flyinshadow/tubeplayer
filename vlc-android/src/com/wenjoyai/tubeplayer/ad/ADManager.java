@@ -43,6 +43,7 @@ public class ADManager {
      * TODO: 2.0
      * 购买去广告 要么关掉此功能，要么设置key
      */
+//    public static String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApXGWnE1i10BX648WmqnPBZkcxHrYJIMjoz9XCEKz1b4QF3RfSNHQzsKVuX6zefOgnugIEA8FLApHwsizwoDR9KdurxK1WcbEGPSkZ20hDzJ22+fl0YyUemlQvQDjATa3GN0qvXPHyvpswrh74nfxrsPxZcsoEF3+u+YVRZJ+OznNwaYQK34euu6F3q6e3KOicTVS/+rnZJL3hXf4akecv6wNUiTpomkHGWi1w1K6MD9WAa0Gfj3mxk+cJPWz2yd48lc2pfmVzOpuF0yKgQc/Ha73HyIjvW23cznpCXkmE9f94bJn4o1x2x4iz5n6aXUvpp9T72ZTLl9UbCSmREUV+QIDAQAB";
     public static String base64EncodedPublicKey = "";
 
     private static volatile ADManager instance;
@@ -89,7 +90,7 @@ public class ADManager {
         /**
          * 设置默认的广告平台 ADConfig.sNativeDefaultPlatForm
          */
-        setdefaultPlatForm(ADInit.AD_Facebook,ADInit.AD_Google);
+        setdefaultPlatForm(ADInit.AD_Facebook,ADInit.AD_Facebook);
 
         /**
          * 远程配置
@@ -108,6 +109,7 @@ public class ADManager {
 
         mOpenList.clear();
         mOpenIndex = 0;
+        mOpenList.add(new ADWrapper(ADInit.AD_Facebook, ADConstants.facebook_first_open_interstitial));
         mOpenList.add(new ADWrapper(ADInit.AD_Google, ADConstants.google_first_open_interstitial));
         mOpenList.add(new ADWrapper(ADInit.AD_Yeahmobi, ADConstants.yeahmobi_open_interstitial));
         mOpenList.add(new ADWrapper(ADInit.AD_DuAd, ADConstants.baidu_first_open_interstitial));
@@ -118,18 +120,18 @@ public class ADManager {
             }
         }
 
-//        mBackList.clear();
-//        mBackIndex = 0;
-//        mBackList.add(new ADWrapper(ADInit.AD_Facebook, ADConstants.facebook_back_or_drawer_interstitial));
-//        mBackList.add(new ADWrapper(ADInit.AD_Google, ADConstants.google_back_or_drawer_interstitial));
-//        mBackList.add(new ADWrapper(ADInit.AD_Yeahmobi, ADConstants.yeahmobi_back_or_drawer_interstitial));
-//        mBackList.add(new ADWrapper(ADInit.AD_DuAd, ADConstants.baidu_back_or_drawer_interstitial));
-//        for (int i = 0; i < mBackList.size(); i++) {
-//            if (mBackList.get(i).platform == ADConfig.sOtherDefaultPlatForm) {
-//                mBackIndex = i;
-//                break;
-//            }
-//        }
+        mBackList.clear();
+        mBackIndex = 0;
+        mBackList.add(new ADWrapper(ADInit.AD_Facebook, ADConstants.facebook_back_or_drawer_interstitial));
+        mBackList.add(new ADWrapper(ADInit.AD_Google, ADConstants.google_back_or_drawer_interstitial));
+        mBackList.add(new ADWrapper(ADInit.AD_Yeahmobi, ADConstants.yeahmobi_back_or_drawer_interstitial));
+        mBackList.add(new ADWrapper(ADInit.AD_DuAd, ADConstants.baidu_back_or_drawer_interstitial));
+        for (int i = 0; i < mBackList.size(); i++) {
+            if (mBackList.get(i).platform == ADConfig.sOtherDefaultPlatForm) {
+                mBackIndex = i;
+                break;
+            }
+        }
 
         mFeedList.clear();
         mFeedIndex = 0;

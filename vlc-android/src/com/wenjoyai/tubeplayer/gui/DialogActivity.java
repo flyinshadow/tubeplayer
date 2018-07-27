@@ -38,6 +38,7 @@ import com.wenjoyai.tubeplayer.gui.dialogs.VlcLoginDialog;
 import com.wenjoyai.tubeplayer.gui.dialogs.VlcProgressDialog;
 import com.wenjoyai.tubeplayer.gui.dialogs.VlcQuestionDialog;
 import com.wenjoyai.tubeplayer.gui.network.MRLPanelFragment;
+import com.wenjoyai.tubeplayer.rate.RateDialog;
 
 public class DialogActivity extends AppCompatActivity {
 

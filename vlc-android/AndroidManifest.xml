@@ -672,14 +672,14 @@
             <!--android:value="@integer/google_play_services_version" />-->
 
         <!--百度-->
-        <!--<meta-data-->
-            <!--android:name="app_license"-->
-            <!--android:value="67abfc1ff831c072bcf81282c9d932fa" />-->
+        <meta-data
+            android:name="app_license"
+            android:value="5c89efb44d49f45d0aa35f4b353a3393" />
 
-        <!--<provider-->
-            <!--android:name="com.duapps.ad.stats.DuAdCacheProvider"-->
-            <!--android:authorities="com.wenjoyai.tubeplayer.DuAdCacheProvider"-->
-            <!--android:exported="false"/>-->
+        <provider
+            android:name="com.duapps.ad.stats.DuAdCacheProvider"
+            android:authorities="${applicationId}.DuAdCacheProvider"
+            android:exported="false"/>
 
         <!--<receiver android:name="com.duapps.ad.base.PackageAddReceiver">-->
             <!--<intent-filter>-->
@@ -702,7 +702,7 @@
             android:value="2301bcb79379a657c0cfe136cf70c72e70c5025b" />
 
         <!--facebook ad-->
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="236470546883809"/>
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="2016444078685446"/>
     </application>
 
 </manifest>

@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "688375929521",
-    "firebase_url": "https://mixvideoplayer.firebaseio.com",
-    "project_id": "mixvideoplayer",
-    "storage_bucket": "mixvideoplayer.appspot.com"
+    "project_number": "157780355823",
+    "firebase_url": "https://hd-media-player.firebaseio.com",
+    "project_id": "hd-media-player",
+    "storage_bucket": "hd-media-player.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:688375929521:android:4c2c4360514e53cc",
+        "mobilesdk_app_id": "1:157780355823:android:c260998e07d636bc",
         "android_client_info": {
-          "package_name": "mx.max.mix.dx.mxplayer.maxplayer.mixplayer.dxplayer.mplayer"
+          "package_name": "media.video.mx.player.mxplayer.videoplayer.mediaplayer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "688375929521-g9gscqi4edirhrufemcsnhdvamalont8.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "mx.max.mix.dx.mxplayer.maxplayer.mixplayer.dxplayer.mplayer",
-            "certificate_hash": "61272858845595b9f98c5a3030779ad78b8eb8bd"
-          }
-        },
-        {
-          "client_id": "688375929521-blk0g1hnferavkuaosr7e8uv0uqha8ut.apps.googleusercontent.com",
+          "client_id": "157780355823-4gocf080qebhmnhcta0fcf9a3c2tpep3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAtt3wXlUaxQkuLJROkoeLucgxe9J5PHug"
+          "current_key": "AIzaSyAPNTZ_OUQAMeQn8VhNjPU22UvQHF-pGp0"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "688375929521-blk0g1hnferavkuaosr7e8uv0uqha8ut.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

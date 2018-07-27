@@ -55,6 +55,7 @@ import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.gui.ThemeFragment;
 import com.wenjoyai.tubeplayer.gui.preferences.PreferencesActivity;
 import com.wenjoyai.tubeplayer.gui.view.PopupLayout;
+import com.wenjoyai.tubeplayer.rate.RateDialog;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 
 public class PopupManager implements PlaybackService.Callback, GestureDetector.OnDoubleTapListener,
@@ -360,6 +361,8 @@ public class PopupManager implements PlaybackService.Callback, GestureDetector.O
                 break;
             case R.id.popup_close:
                 stopPlayback();
+                // 浮窗播放结束尝试弹出评分提示
+                RateDialog.tryToShow(VLCApplication.getAppContext(), 5);
                 break;
             case R.id.popup_expand:
                 expandToVideoPlayer();

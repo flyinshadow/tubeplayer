@@ -99,6 +99,7 @@ import com.wenjoyai.tubeplayer.interfaces.IRefreshable;
 import com.wenjoyai.tubeplayer.interfaces.ISortable;
 import com.wenjoyai.tubeplayer.media.MediaDatabase;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
+import com.wenjoyai.tubeplayer.rate.RateDialog;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.Permissions;
 import com.wenjoyai.tubeplayer.util.VLCInstance;
@@ -146,6 +147,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
     private boolean mIsResumed = true;//当前页面是否在前台
     private static SharedPreferences sSettings = PreferenceManager.getDefaultSharedPreferences(VLCApplication.getAppContext());
     private long mOpenCount;//启动次数
+    private long mDrawOpenCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,22 +167,25 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         setContentView(R.layout.main);
 
         //开始广告缓存
-        ADManager.getInstance().config(this, new RemoveAdManager.RemoveAdListener() {
-            @Override
-            public void InitFinished() {
-                loadAdAndShow();
-            }
+//        ADManager.getInstance().config(this, new RemoveAdManager.RemoveAdListener() {
+//            @Override
+//            public void InitFinished() {
+//                loadAdAndShow();
+//            }
+//
+//            @Override
+//            public void queryFailed() {
+//                loadAdAndShow();
+//            }
+//
+//            @Override
+//            public void purchaseResult() {
+//                loadAdAndShow();
+//            }
+//        });
+        ADManager.getInstance().config(this, null);
+        loadAdAndShow();
 
-            @Override
-            public void queryFailed() {
-                loadAdAndShow();
-            }
-
-            @Override
-            public void purchaseResult() {
-                loadAdAndShow();
-            }
-        });
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -222,6 +227,14 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 super.onDrawerOpened(drawerView);
                 if (mNavigationView.requestFocus())
                     ((NavigationMenuView) mNavigationView.getFocusedChild()).setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
+                if (mOpenCount == 1 || mOpenCount == 0) {
+                    if (mDrawOpenCount != 0) {
+                        ADManager.getInstance().tryshowBackOrDrawerInterstitial();
+                    }
+                } else {
+                    ADManager.getInstance().tryshowBackOrDrawerInterstitial();
+                }
+                mDrawOpenCount++;
             }
         };
 
@@ -258,18 +271,18 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         mOpenCount++;
         sSettings.edit().putLong(OPEN_COUNT, mOpenCount).apply();
 
-        if (getIntent() != null && getIntent().getExtras() != null) {
-            boolean changeTheme = getIntent().getExtras().getBoolean(ThemeFragment.EXTRA_CHANGE_THEME);
-            if (changeTheme) {
-                LogUtil.d(TAG, "Theme changed, try to show RateDialog");
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        RateDialog.tryToShow(VLCApplication.getAppContext(), 5);
-                    }
-                }, 1500);
-            }
-        }
+//        if (getIntent() != null && getIntent().getExtras() != null) {
+//            boolean changeTheme = getIntent().getExtras().getBoolean(ThemeFragment.EXTRA_CHANGE_THEME);
+//            if (changeTheme) {
+//                LogUtil.d(TAG, "Theme changed, try to show RateDialog");
+//                mHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        RateDialog.tryToShow(VLCApplication.getAppContext(), 5);
+//                    }
+//                }, 1500);
+//            }
+//        }
     }
 
     private void submitNetwork() {
@@ -311,7 +324,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
         long second = mSettings.getLong(KEY_LAST_OPEN_TIME, 0);
         if (second == 0 || (System.currentTimeMillis() / 1000 - second) / 60 >= 2) {
             mSettings.edit().putLong(KEY_LAST_OPEN_TIME, System.currentTimeMillis() / 1000).apply();
-
+            //加载播放返回或者侧边栏ad
+            ADManager.getInstance().loadBackOrDrawerInterstitial(this);
             ADManager.getInstance().loadOpenAD(MainActivity.this, new ADManager.OpenADListener() {
                 @Override
                 public void onLoadedSuccess(final AbsInterstitial interstitial) {
@@ -582,6 +596,9 @@ public class MainActivity extends AudioPlayerContainerActivity implements Filter
                 ((VideoGridFragment) fragment).toggleVideoMode(viewMode);
             }
         }
+
+        // 屏幕旋转时尝试弹出评分提示
+        RateDialog.tryToShow(this, 5);
     }
 
     private Fragment getFragment(int id) {

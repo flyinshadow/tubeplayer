@@ -34,7 +34,7 @@ import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.AudioPlayerContainerActivity;
 import com.wenjoyai.tubeplayer.gui.BaseActivity;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
-import com.wenjoyai.tubeplayer.gui.RateDialog;
+import com.wenjoyai.tubeplayer.rate.RateDialog;
 import com.wenjoyai.tubeplayer.gui.SearchActivity;
 import com.wenjoyai.tubeplayer.gui.tv.MainTvActivity;
 import com.wenjoyai.tubeplayer.gui.tv.audioplayer.AudioPlayerActivity;

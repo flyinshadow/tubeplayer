@@ -1,4 +1,4 @@
-package com.wenjoyai.tubeplayer.gui;
+package com.wenjoyai.tubeplayer.rate;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,12 +25,14 @@ import com.wenjoyai.tubeplayer.R;
 import com.wenjoyai.tubeplayer.VLCApplication;
 import com.wenjoyai.tubeplayer.ad.MyToast;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
+import com.wenjoyai.tubeplayer.gui.DialogActivity;
 import com.wenjoyai.tubeplayer.gui.video.VideoGridFragment;
 import com.wenjoyai.tubeplayer.util.LogUtil;
 import com.wenjoyai.tubeplayer.util.ShareUtils;
 import com.wenjoyai.tubeplayer.util.Util;
 
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by yuqilin on 2017/9/13.
@@ -78,6 +80,18 @@ public class RateDialog extends DialogFragment implements View.OnClickListener, 
             LogUtil.d(TAG, "rate tip will not show when media parsing");
             return false;
         }
+        // 如果国家是中国大陆或者土耳其，不谈评分
+        if(Locale.getDefault().toString().equals("zh_CN")|| Locale.getDefault().toString().equals("tr_TR")) {
+            LogUtil.d(TAG, "rate will not show in this Locale: " + Locale.getDefault().toString());
+            return false;
+        }
+
+        // 评分加权值未达标
+        if (!RateManager.checkRateWeight()) {
+            LogUtil.d(TAG, "rate weight not reach the minimum : " + RateManager.getWeightSum());
+            return false;
+        }
+
         long lastTime = sSettings.getLong(RateDialog.KEY_RATE_SHOW_LAST, 0);
         long nextTime = sSettings.getLong(RateDialog.KEY_RATE_SHOW_NEXT, 0);
         int count = sSettings.getInt(RateDialog.KEY_RATE_SHOW_COUNT, 0);
@@ -143,7 +157,7 @@ public class RateDialog extends DialogFragment implements View.OnClickListener, 
                              Bundle savedInstanceState) {
         if (getDialog() != null && getDialog().getWindow() != null) {
             getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            getDialog().getWindow().setWindowAnimations(R.style.DialogAnimation);
+            getDialog().getWindow().setWindowAnimations(R.style.RateDialogAnimation);
         }
 
         View v = inflater.inflate(R.layout.rate, container, false);
@@ -174,6 +188,7 @@ public class RateDialog extends DialogFragment implements View.OnClickListener, 
         score(mDefaultScore == 0 ? 5 : mDefaultScore);
 
 //        setCancelable(false);
+        getDialog().setCanceledOnTouchOutside(false);
 
         return v;
     }
@@ -228,7 +243,7 @@ public class RateDialog extends DialogFragment implements View.OnClickListener, 
         long time = new Date().getTime();
         switch (view.getId()) {
             case R.id.rate_action:
-                if (mRateScore >= 4) {
+                if (mRateScore >= 3) {
                     MyToast.makeText(VLCApplication.getAppContext(), "", Toast.LENGTH_LONG).show();
                     StatisticsManager.submitRate(VLCApplication.getAppContext(), StatisticsManager.ITEM_RATE_STAR);
                     ShareUtils.launchAppDetail(VLCApplication.getAppContext(), VLCApplication.getAppContext().getPackageName());
@@ -306,8 +321,6 @@ public class RateDialog extends DialogFragment implements View.OnClickListener, 
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
 
-        LogUtil.d(TAG, "onDismiss");
-
         long currentTime = new Date().getTime();
         long lastTime = sSettings.getLong(KEY_RATE_SHOW_LAST, 0);
         int count = sSettings.getInt(KEY_RATE_SHOW_COUNT, 0);
@@ -316,24 +329,33 @@ public class RateDialog extends DialogFragment implements View.OnClickListener, 
                 " nextTime:" + mNextTime + "(" + Util.millisToDate(mNextTime) + ")" +
                 " count:" + count);
         // 未点击任意按钮
-        if (mNextTime == 0) {
-            if (lastTime == 0 || currentTime - lastTime >= CHECK_COUNT_PERIOD) {
-                lastTime = currentTime;
-                count = 0;
-                sSettings.edit().putLong(KEY_RATE_SHOW_LAST, lastTime).apply();
-            }
-            // 上次提示在一天内
-            if (currentTime - lastTime < CHECK_COUNT_PERIOD) {
-                // 最多5次
-                if (count < 5) {
-                    count++;
-                    sSettings.edit().putInt(KEY_RATE_SHOW_COUNT, count).apply();
-                } else {
-                    // 超过5次，下次提示在一天后
-                    mNextTime = lastTime + CHECK_COUNT_PERIOD;
-                    LogUtil.d(TAG, "onDismiss, reach 5 times nextTime:" + mNextTime + "(" + Util.millisToDate(mNextTime) + ")");
-                }
-            }
+        if (mNextTime < currentTime) {
+//            if (lastTime == 0 || currentTime - lastTime >= CHECK_COUNT_PERIOD) {
+//                lastTime = currentTime;
+//                count = 0;
+//                sSettings.edit().putLong(KEY_RATE_SHOW_LAST, lastTime).apply();
+//            }
+//            // 上次提示在一天内
+//            if (currentTime - lastTime < CHECK_COUNT_PERIOD) {
+//                // 最多5次
+//                if (count < 5) {
+//                    count++;
+//                    sSettings.edit().putInt(KEY_RATE_SHOW_COUNT, count).apply();
+//                } else {
+//                    // 超过5次，下次提示在一天后
+//                    mNextTime = lastTime + CHECK_COUNT_PERIOD;
+//                    LogUtil.d(TAG, "onDismiss, reach 5 times nextTime:" + mNextTime + "(" + Util.millisToDate(mNextTime) + ")");
+//                }
+//            }
+
+            // 等同于Cancel
+            StatisticsManager.submitRate(getActivity(), StatisticsManager.ITEM_RATE_CANCEL);
+            long time = new Date().getTime();
+            LogUtil.d(TAG, "rate dismiss last time:" + time + "(" + Util.millisToDate(time) + ")");
+            time = Util.getDateNext(1);
+            LogUtil.d(TAG, "rate dismiss next time:" + time + "(" + Util.millisToDate(time) + ")");
+            mNextTime = time;
+
         } else {
             // 重置计数
             sSettings.edit().putInt(KEY_RATE_SHOW_COUNT, 0).apply();
@@ -391,14 +413,14 @@ public class RateDialog extends DialogFragment implements View.OnClickListener, 
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        LogUtil.d(TAG, "onFling e1[" + e1.getX() + "," + e1.getY() + "], e2[" + e2.getX() + "," + e2.getY() + "], velocityX=" + velocityX + ", velocityY=" + velocityY);
-        if (e1.getX() - e2.getX() > MIN_FLING_DISTANCE_X && Math.abs(velocityX) > MIN_FLING_VELOCITY_X) {
-            // fling left
-            dismissRate(R.anim.anim_leave_left);
-        } else if (e2.getX() - e1.getX() > MIN_FLING_DISTANCE_X && Math.abs(velocityX) > MIN_FLING_VELOCITY_X) {
-            // fling right
-            dismissRate(R.anim.anim_leave_right);
-        }
+//        LogUtil.d(TAG, "onFling e1[" + e1.getX() + "," + e1.getY() + "], e2[" + e2.getX() + "," + e2.getY() + "], velocityX=" + velocityX + ", velocityY=" + velocityY);
+//        if (e1.getX() - e2.getX() > MIN_FLING_DISTANCE_X && Math.abs(velocityX) > MIN_FLING_VELOCITY_X) {
+//            // fling left
+//            dismissRate(R.anim.anim_leave_left);
+//        } else if (e2.getX() - e1.getX() > MIN_FLING_DISTANCE_X && Math.abs(velocityX) > MIN_FLING_VELOCITY_X) {
+//            // fling right
+//            dismissRate(R.anim.anim_leave_right);
+//        }
         return false;
     }
 

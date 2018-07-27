@@ -115,7 +115,7 @@ import com.wenjoyai.tubeplayer.ad.ADManager;
 import com.wenjoyai.tubeplayer.firebase.StatisticsManager;
 import com.wenjoyai.tubeplayer.gui.MainActivity;
 import com.wenjoyai.tubeplayer.gui.PlaybackServiceActivity;
-import com.wenjoyai.tubeplayer.gui.RateDialog;
+import com.wenjoyai.tubeplayer.rate.RateDialog;
 import com.wenjoyai.tubeplayer.gui.ThemeFragment;
 import com.wenjoyai.tubeplayer.gui.audio.PlaylistAdapter;
 import com.wenjoyai.tubeplayer.gui.browser.FilePickerActivity;
@@ -131,6 +131,7 @@ import com.wenjoyai.tubeplayer.gui.tv.audioplayer.AudioPlayerActivity;
 import com.wenjoyai.tubeplayer.interfaces.IPlaybackSettingsController;
 import com.wenjoyai.tubeplayer.media.MediaDatabase;
 import com.wenjoyai.tubeplayer.media.MediaUtils;
+import com.wenjoyai.tubeplayer.rate.RateManager;
 import com.wenjoyai.tubeplayer.util.AndroidDevices;
 import com.wenjoyai.tubeplayer.util.FileUtils;
 import com.wenjoyai.tubeplayer.util.LogUtil;
@@ -954,9 +955,16 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
         LogUtil.d(TAG, "---- onDestroy");
 
 //        LogUtil.d(TAG, "onDestroy mPlayTime=" + mPlayTime + ", mPlayLength=" + mPlayLength);
-        // 播放进度2分钟以上提示评分
-        if (mPlayTime >= 120000) {
-            RateDialog.tryToShow(VLCApplication.getAppContext(), 5);
+        if (mPlayTime >= 30000 && !mSwitchingView) {
+            RateManager.setRateWeight(RateManager.RateWeight.PLAY_TIME, 1);
+        }
+        if(ADManager.getInstance().canShowBackOrDrawerInterstitial()&&!mSwitchToPopup){//不是小窗导致的ondestroy
+            ADManager.getInstance().tryshowBackOrDrawerInterstitial();
+        } else {
+            // 播放进度30s以上，播放返回再提示评分
+            if (mPlayTime >= 30000 && !mSwitchingView) {
+                RateDialog.tryToShow(VLCApplication.getAppContext(), 5);
+            }
         }
 
         super.onDestroy();
@@ -2871,10 +2879,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IVLCVout.C
 
                 if (Permissions.canDrawOverlays(this)) {
                     LogUtil.d(TAG, "switchToPopupMode try to show RateDialog");
-                    // 小窗提示评分
-                    RateDialog.tryToShow(this, 5);
-
                     switchToPopupMode();
+                    // 2018/4/6 小窗播放完成后尝试弹评分
                 } else {
                     Permissions.checkDrawOverlaysPermission(this);
                 }

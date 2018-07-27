@@ -722,7 +722,7 @@
     <string name="media_view_mode">View mode</string>
     <string name="file_name">Filename</string>
     <string name="about_version">V%1$s</string>
-    <string name="share_app_text">"I'm using a professional video player app, come and enjoy playing video. https://play.google.com/store/apps/details?id=mx.max.mix.dx.mxplayer.maxplayer.mixplayer.dxplayer.mplayer"</string>
+    <string name="share_app_text">"I'm using a professional video player app, come and enjoy playing video. https://play.google.com/store/apps/details?id=media.video.mx.player.mxplayer.videoplayer.mediaplayer"</string>
     <string name="rate_stars">Love Video Player?</string>
     <string name="rate_content_default">You’ve experienced Video Player successfully. Please support us with a 5-star ratings.</string>
     <string name="rate_content_1_4">Would you mind giving us some feedbacks so that we can do better?</string>

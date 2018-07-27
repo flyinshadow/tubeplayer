@@ -36,6 +36,7 @@ import android.support.v4.util.SimpleArrayMap;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.example.ad.ADInit;
 import com.google.android.gms.ads.MobileAds;
 import com.wenjoyai.tubeplayer.ad.ADConstants;
 import com.wenjoyai.tubeplayer.gui.DialogActivity;
@@ -169,19 +170,9 @@ public class VLCApplication extends MultiDexApplication {
                     AndroidDevices.setRemoteControlReceiverEnabled(false);
                 /**     初始化广告     */
                 Looper.prepare();
-//                MobVistaSDK sdk = MobVistaSDKFactory.getMobVistaSDK();
-//                Map<String, String> map = sdk.getMVConfigurationMap(ADConstants.APP_ID,ADConstants.APP_KEY);
-//                sdk.init(map, VLCApplication.this);
+                //初始化广告
+                ADInit.initial(instance, ADConstants.GOOGLE_APP_ID, ADConstants.yeahmobi_open_interstitial);
 
-                //初始化google广告
-                MobileAds.initialize(instance, ADConstants.GOOGLE_APP_ID);
-
-                //百度广告
-
-                /**
-                 * the sdk initialization 初始化SDK
-                 */
-//                DuAdNetwork.init(instance, getConfigJSON(getApplicationContext()));
                 Looper.loop();
             }
         });
