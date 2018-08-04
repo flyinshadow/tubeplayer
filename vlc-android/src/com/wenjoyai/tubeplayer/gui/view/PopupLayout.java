@@ -143,10 +143,14 @@ public class PopupLayout extends RelativeLayout implements ScaleGestureDetector.
         mPopupWidth = VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_width);
         mPopupHeight = VLCApplication.getAppResources().getDimensionPixelSize(R.dimen.video_pip_height);
 
+        int type = WindowManager.LayoutParams.TYPE_PHONE;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        }
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 mPopupWidth,
                 mPopupHeight,
-                WindowManager.LayoutParams.TYPE_PHONE,
+                type,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.OPAQUE);
 

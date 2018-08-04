@@ -19,10 +19,10 @@ public class ADConstants {
     public static String facebook_back_or_drawer_interstitial = "2016444078685446_2024980741165113";
 
     /***************  google      *********************/
-    public static final String GOOGLE_APP_ID = "ca-app-pub-8002733251692869~7147743342";
+    public static final String GOOGLE_APP_ID = "ca-app-pub-8002733251692869~6699156362";
     //首页第一次进入
-    public static final String google_first_open_interstitial = "ca-app-pub-8002733251692869/7837158427";
-    public static String google_back_or_drawer_interstitial = "ca-app-pub-8002733251692869/8172720833";
+    public static final String google_first_open_interstitial = "ca-app-pub-8002733251692869/7264851311";
+    public static String google_back_or_drawer_interstitial = "ca-app-pub-8002733251692869/3642243026";
 
     /***************  baidu      *********************/
     //首页第一次进入
